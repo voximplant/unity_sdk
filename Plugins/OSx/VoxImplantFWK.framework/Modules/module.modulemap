@@ -1,0 +1,6 @@
+framework module VoxImplantFWK {
+  umbrella header "VoxImplantFWK.h"
+
+  export *
+  module * { export * }
+}
