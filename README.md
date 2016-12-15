@@ -59,7 +59,7 @@ In order to enable Android part open a Build Settings and check the "Google Andr
 - Find a 'jniLibs' dir at same level as the 'AndroidManifest.xml' and copy into it the 'armeabi-v71/libjingle_peerconnection_so.so' file and the 'x86/libjingle_peerconnection_so.so' file.
 - Add build and load lib configuration into 'build.gradle' file:
 
-```json
+```
 dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
     compile 'com.google.code.gson:gson:2.6.1'
