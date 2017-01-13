@@ -50,7 +50,7 @@ PluginImporter:
       enabled: 1
       settings:
         CompileFlags: 
-        FrameworkDependencies: 
+        FrameworkDependencies: CoreTelephony;
   userData: 
   assetBundleName: 
   assetBundleVariant: 
