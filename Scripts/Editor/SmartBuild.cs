@@ -18,7 +18,9 @@ public class ScriptBatch
         {
             return;
         }
-			
+#if UNITY_5_5
+        EditorUserBuildSettings.androidBuildSystem = AndroidBuildSystem.ADT;
+#endif
         // Build player.
 		BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, path, BuildTarget.Android, BuildOptions.AcceptExternalModificationsToPlayer);
     }
@@ -44,7 +46,7 @@ public class ScriptBatch
 		BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, path, BuildTarget.iOS, BuildOptions.AcceptExternalModificationsToPlayer);
 	}
 
-	[PostProcessBuildAttribute(1)]
+	[PostProcessBuild]
 	public static void OnPostprocessBuild(BuildTarget buildTarget, string path)
 	{
 		switch (buildTarget) {
@@ -81,7 +83,7 @@ public class ScriptBatch
 			{
 				if (path.Contains(".apk"))
 					break;
-				
+
 				string[] filesList = Directory.GetFiles(path, "UnityPlayerActivity.java", SearchOption.AllDirectories);
 
 				if (filesList.Length == 0)
@@ -116,7 +118,7 @@ public class ScriptBatch
 					{
 						if (linesList[i].Contains("{") && !variableAdd)
 						{
-							linesList.Insert(i+1, "\tprivate AVoImClient mVoxClient;" + 
+							linesList.Insert(i+1, "\tprivate AVoImClient mVoxClient;" +
 								" // don't change the name of this variable; referenced from native code\n");
 							variableAdd = true;
 						}
@@ -137,9 +139,9 @@ public class ScriptBatch
 						if (linesList[i].Contains("mUnityPlayer.resume();") && !permisionRequestAdd)
 						{
 							linesList.Insert(i+2,"\n" + "\t@TargetApi(22)\n" +
-								"\t@Override\n " + 
+								"\t@Override\n " +
 								"\tpublic void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) \n\t{\n" +
-								"\t\tmVoxClient.Init();\n" + 
+								"\t\tmVoxClient.Init();\n" +
 								"\t}");
 							permisionRequestAdd = true;
 						}
