@@ -159,7 +159,7 @@ public class ScriptBatch
 				{
 					if (Directory.Exists("Assets/androidPartSDK/comvoximplant/") && Directory.Exists(dirList[0]))
 					{
-						string newPackagePath = dirList[0] + "/com/voximplant";
+						string newPackagePath = dirList[0] + "/com/voximplant/sdk";
 						if (Directory.Exists(newPackagePath))
 							Directory.Delete(newPackagePath,true);
 
