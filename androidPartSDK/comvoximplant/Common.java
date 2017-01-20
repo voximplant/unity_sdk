@@ -1,4 +1,4 @@
-package com.voximplant;
+package com.voximplant.sdk;
 
 import java.util.ArrayList;
 import java.util.List;

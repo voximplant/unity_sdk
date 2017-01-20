@@ -1,4 +1,4 @@
-package com.voximplant;
+package com.voximplant.sdk;
 
 import android.Manifest;
 import android.app.Dialog;

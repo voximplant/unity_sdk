@@ -1,4 +1,4 @@
-package com.voximplant;
+package com.voximplant.sdk;
 
 /**
  * Created by omen on 12.09.2016.

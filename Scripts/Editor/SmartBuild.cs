@@ -84,6 +84,7 @@ public class ScriptBatch
 				if (path.Contains(".apk"))
 					break;
 
+        string classPath = "/com/voximplant/sdk";
 				string[] filesList = Directory.GetFiles(path, "UnityPlayerActivity.java", SearchOption.AllDirectories);
 
 				if (filesList.Length == 0)
@@ -126,7 +127,7 @@ public class ScriptBatch
 						if (linesList[i].Contains("import") && !importsTargetAdd)
 						{
 							linesList.Insert(i+1, "import android.annotation.TargetApi;");
-							linesList.Insert(i+2, "import com.voximplant.AVoImClient;");
+							linesList.Insert(i+2, "import com.voximplant.sdk.AVoImClient;");
 							importsTargetAdd = true;
 						}
 
@@ -159,7 +160,7 @@ public class ScriptBatch
 				{
 					if (Directory.Exists("Assets/androidPartSDK/comvoximplant/") && Directory.Exists(dirList[0]))
 					{
-						string newPackagePath = dirList[0] + "/com/voximplant/sdk";
+						string newPackagePath = dirList[0] + classPath;
 						if (Directory.Exists(newPackagePath))
 							Directory.Delete(newPackagePath,true);
 
