@@ -158,14 +158,21 @@ public class ScriptBatch
 
 				if (dirList.Length != 0)
 				{
-					if (Directory.Exists("Assets/androidPartSDK/comvoximplant/") && Directory.Exists(dirList[0]))
+
+          string[] dirAndrPart = Directory.GetDirectories("Assets/", "androidPartSDK", SearchOption.AllDirectories);
+          if (dirAndrPart == null)
+              {
+                  EditorUtility.DisplayDialog("Error", "Folder 'androidPartSDK' did not fiend in Assets folder", "Ok");
+                  return;
+              }
+					if (Directory.Exists(dirAndrPart[0] + "/comvoximplant/") && Directory.Exists(dirList[0]))
 					{
 						string newPackagePath = dirList[0] + classPath;
 						if (Directory.Exists(newPackagePath))
 							Directory.Delete(newPackagePath,true);
 
 						Directory.CreateDirectory(newPackagePath);
-						string[] fileList = Directory.GetFiles("Assets/androidPartSDK/comvoximplant/","*.java");
+						string[] fileList = Directory.GetFiles(dirAndrPart[0] + "/comvoximplant/","*.java");
 
 						foreach(string filePath in fileList)
 						{
