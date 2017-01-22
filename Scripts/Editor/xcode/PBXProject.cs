@@ -751,7 +751,7 @@ namespace GooglePlayGames.xcode
 			project.project.AddReference(productGroup.guid, fileRef.guid);
 		}
 
-		/** This function must be called only after the project the library is in has
+		/* This function must be called only after the project the library is in has
             been added as a dependency via AddExternalProjectDependency. projectPath must be
             the same as the 'path' parameter passed to the AddExternalProjectDependency.
             remoteFileGuid must be the guid of the referenced file as specified in
