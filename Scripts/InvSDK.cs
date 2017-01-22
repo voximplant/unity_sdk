@@ -87,6 +87,12 @@ namespace Invoice
             if (AndroidPlatform())
                 jo.Call("closeConnection");
         }
+
+        /**
+        Initiate Voximplant cloud connection. After successful connection a
+        "login" method should be called.
+        @method connect
+        */
         public void connect()
         {
             if (AndroidPlatform())
