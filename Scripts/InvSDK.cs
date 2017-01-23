@@ -187,12 +187,14 @@ namespace Invoice
             if (AndroidPlatform())
                 jo.Call("setCamera", (p == CameraSet.CAMERA_FACING_FRONT)?"1":"0");
         }
-	
+
+	// Internal
         public void disableTls()
         {
             if (AndroidPlatform())
                 jo.Call("disableTls");
         }
+	
         public void disconnectCall(string p)
         {
             if (AndroidPlatform())
