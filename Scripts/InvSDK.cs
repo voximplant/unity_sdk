@@ -104,35 +104,57 @@ namespace Invoice
         }
 	
 	/**
-        Login into Voximplant cloud. Should be called after "connect" call followed by successful connection event.
+        Login into Voximplant cloud. Should be called after "connect" in the "OnConnectionSuccessful" handler.
         @method login
-	@param {LoginClassParam} pLogin Login information
+	@param {LoginClassParam} pLogin Username and password. Username is a fully-qualified string that includes Voximplant user, application and account names. The format is: "username@appname.accname.voximplant.com"
         */
         public void login(LoginClassParam pLogin)
         {
             if (AndroidPlatform())
                 jo.Call("login", Invoice.JsonUtility.ToJson(pLogin));
         }
+	
+	/**
+	Start a new outgoing call.
+	@method call
+	@param {CallClassParam} pCall Call options: number to call, video call flag and custom data to send alongside the call. For SIP compatibility reasons number should be a non-empty string even if the number itself is not used by a Voximplant cloud scenario. "OnCallConnected" will be called on call success, or "OnCallFailed" will be called if Voximplant cloud rejects a call or network error occur.  
+	*/
         public void call(CallClassParam pCall) 
         {
             if (AndroidPlatform())
                 jo.Call("call", Invoice.JsonUtility.ToJson(pCall));
         }
+	
+	/**
+	Answer incoming call. Should be called from the "OnIncomingCall" handler
+	@method answer
+	*/
         public void answer()
         {
             if (AndroidPlatform())
                 jo.Call("answer");
         }
+	
+	/**
+	Decline an incoming call. Should be called from the "OnIncomingCall" handler
+	@method declineCall
+	*/
         public void declineCall()
         {
             if (AndroidPlatform())
                 jo.Call("declineCall");
         }
+	
+	/**
+	Hang up the call in progress. Should be called from the "OnIncomingCall" handler
+	@method hangup
+	*/
         public void hangup()
         {
             if (AndroidPlatform())
                 jo.Call("hangup");
         }
+	
         public void setMute(Boolean p)
         {
             if (AndroidPlatform())
