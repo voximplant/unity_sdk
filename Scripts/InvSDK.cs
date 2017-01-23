@@ -102,6 +102,12 @@ namespace Invoice
 				
 			}
         }
+	
+	/**
+        Login into Voximplant cloud. Should be called after "connect" call followed by successful connection event.
+        @method login
+	@param {LoginClassParam} pLogin Login information
+        */
         public void login(LoginClassParam pLogin)
         {
             if (AndroidPlatform())
