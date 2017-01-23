@@ -155,21 +155,39 @@ namespace Invoice
                 jo.Call("hangup");
         }
 	
+	/**
+	Mute or unmute microphone. This is reset after audio interruption
+	@method setMute
+	@param {Boolean} p 'true' to set mute status, 'false' to remove it
+	*/
         public void setMute(Boolean p)
         {
             if (AndroidPlatform())
 				jo.Call("setMute", Invoice.JsonUtility.ToJson(new BoolClassParam(p)));
         }
+	
+	/**
+	Enable or disable video stream transfer during the call
+	@method sendVideo
+	@param {Boolean} p 'true' to enable video stream, 'false' to disable it
+	*/
         public void sendVideo(Boolean p)
         {
             if (AndroidPlatform())
                 jo.Call("sendVideo", Invoice.JsonUtility.ToJson(new BoolClassParam(p)));
         }
+	
+	/**
+	Select a camera to use for the video call
+	@method setCamera
+	@param {CameraSet} p A camera to use: 'CameraSet.CAMERA_FACING_FRONT', 'CameraSet.CAMERA_FACING_BACK'
+	*/
         public void setCamera(CameraSet p)
         {
             if (AndroidPlatform())
                 jo.Call("setCamera", (p == CameraSet.CAMERA_FACING_FRONT)?"1":"0");
         }
+	
         public void disableTls()
         {
             if (AndroidPlatform())
