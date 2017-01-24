@@ -195,6 +195,11 @@ namespace Invoice
                 jo.Call("disableTls");
         }
 	
+	/**
+	Disconnect the specified call
+	@method disconnectCall
+	@param {string} p Call identifier returned by previous 'call()'.
+	*/
         public void disconnectCall(string p)
         {
             if (AndroidPlatform())
@@ -245,7 +250,7 @@ namespace Invoice
         }
 	
 	/**
-	Send arbitrary data to Voximplant cloud. Data can be received in VoxEngine scenario by subscribing to the 'CallEvents.InfoReceived' event
+	Send arbitrary data to Voximplant cloud. Data can be received in VoxEngine scenario by subscribing to the 'CallEvents.InfoReceived' event. Optional SIP headers can be automatically passed to second call via VoxEngine 'easyProcess()' method.
 	@method sendInfo
 	@param {InfoClassParam} pParam Call identifier returned by previous 'call()', data MIME type string, data string and optional SIP headers list as an array of 'PairKeyValue' objects with 'key' and 'value' properties.
 	*/
@@ -255,12 +260,17 @@ namespace Invoice
                 jo.Call("sendInfo", Invoice.JsonUtility.ToJson(pParam));
         }
 	
-	
+	/**
+	Simplified version of 'sendInfo' that uses predefined MIME type to send a text message. Message can be received in VoxEngine scenario by subscribing to the 'CallEvents.MessageReceived' event. Optional SIP headers can be automatically passed to second call via VoxEngine 'easyProcess()' method.
+	@method sendMessage
+	@param {SendMessageClassParam} pParam Call identifier returned by previous 'call()', message string and optional SIP headers list as an array of 'PairKeyValue' objects with 'key' and 'value' properties.
+	*/
         public void sendMessage(SendMessageClassParam pParam)
         {
             if (AndroidPlatform())
                 jo.Call("sendMessage", Invoice.JsonUtility.ToJson(pParam));
         }
+	
         public void setCameraResolution(CameraResolutionClassParam pParam)
         {
             if (AndroidPlatform())
