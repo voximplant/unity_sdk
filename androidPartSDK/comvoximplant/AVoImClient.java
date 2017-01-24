@@ -32,6 +32,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -40,7 +41,7 @@ public class AVoImClient implements VoxImplantCallback {
     public VoxImplantClient client;
     private Context cntx;
     private UnityPlayer unityPlayer;
-    private Call        _activeCall;
+    private Map<String, Call> mCallsMap;
     private String sdkObjName = "SDK";
     private Dialog mCurVideoDialog;
     private String TAG = this.getClass().getSimpleName();
@@ -138,6 +139,7 @@ public class AVoImClient implements VoxImplantCallback {
 
     public AVoImClient(Context pCntx) {
         cntx = pCntx;
+        mCallsMap = new HashMap<String, Call>();
         Log.d("VOXIMPLANT", "Create instance");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Log.d("VOXIMPLANT", "Request permissions");
@@ -179,24 +181,22 @@ public class AVoImClient implements VoxImplantCallback {
             }
         });
     }
-    public void call(String p){
+    public String call(String p){
         CallClassParam param = GetJsonObj(p, CallClassParam.class);
         String callId = client.createCall(param.userCall, param.videoCall, param.customData);
         Map<String, String> headers = new HashMap<String, String>();
         client.startCall(callId, headers);
-        _activeCall = new Call(callId, false, param.videoCall);
+        mCallsMap.put(callId, new Call(callId, false, param.videoCall));
+        return callId;
     }
-    public void answer(){
-        if (_activeCall != null)
-            client.answerCall(_activeCall.id);
+    public void answer(String pCallId){
+        client.answerCall(pCallId);
     }
-    public void declineCall(){
-        if (_activeCall != null)
-            client.declineCall(_activeCall.id);
+    public void declineCall(String pCallId){
+        client.declineCall(pCallId);
     }
-    public void hangup(){
-        if (_activeCall != null)
-            client.disconnectCall(_activeCall.id);
+    public void hangup(String pCallId){
+        client.disconnectCall(pCallId);
     }
     public void setMute(String p){
         client.setMute(((BoolClassParam)GetJsonObj(p,BoolClassParam.class)).value);
@@ -283,16 +283,16 @@ public class AVoImClient implements VoxImplantCallback {
     }
 
     @Override
-    public void onCallConnected(String s, Map<String, String> map) {
+    public void onCallConnected(final String s, Map<String, String> map) {
         unityPlayer.UnitySendMessage(sdkObjName,"faonCallConnected",GetParamListToString(new ArrayList<Object>(Arrays.asList(s,map))));
         Log.d(TAG, "before handler if");
-        if (_activeCall.video) {
+        if (mCallsMap.get(s).video) {
             Log.d(TAG, "if (_activeCall.video) ");
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
                     Log.d(TAG, " public void run() ");
-                    mCurVideoDialog = showDialog();
+                    mCurVideoDialog = showDialog(s);
                 }
             });
         }
@@ -302,7 +302,7 @@ public class AVoImClient implements VoxImplantCallback {
 
     private GLSurfaceView mVideo;
 
-    private Dialog showDialog(){
+    private Dialog showDialog(final String pCallId){
         FrameLayout frameLayout = new FrameLayout(cntx);
         frameLayout.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         frameLayout.setBackgroundColor(Color.WHITE);
@@ -313,7 +313,7 @@ public class AVoImClient implements VoxImplantCallback {
         btnHungup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                hangup();
+                hangup(pCallId);
             }
         });
 
@@ -383,7 +383,7 @@ public class AVoImClient implements VoxImplantCallback {
     @Override
     public void onIncomingCall(String s, String s1, String s2, boolean b, Map<String, String> map) {
         unityPlayer.UnitySendMessage(sdkObjName,"faonIncomingCall",GetParamListToString(new ArrayList<Object>(Arrays.asList(s,s1,s2,b,map))));
-        _activeCall = new Call(s, true, b);
+        mCallsMap.put(s, new Call(s, true, b));
     }
     @Override
     public void onSIPInfoReceivedInCall(String callId, String type, String content, Map<String, String> headers) {

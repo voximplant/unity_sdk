@@ -26,6 +26,8 @@ namespace Invoice
         InvSDK inv;
 		InvSDKios invios;
 
+		private string mActiveCallId = "";
+
         void Start()
         {
 			Dictionary<string, string> dic = new Dictionary<string, string>();
@@ -69,13 +71,15 @@ namespace Invoice
         }
         public void onClickCall()
         {
+			
 			invios.call(new CallClassParamios(callNum.text, video.isOn, p2p.isOn, "", null));
-            inv.call(new CallClassParam(callNum.text, video.isOn, ""));
+			mActiveCallId = inv.call(new CallClassParam(callNum.text, video.isOn, ""));
+			addLog("StartCall with ID: " + mActiveCallId);
         }
         public void onClickAnswer()
         {
 			invios.answer();
-            inv.answer();
+			inv.answer(mActiveCallId);
         }
         public void onClickDecline()
         {
@@ -89,7 +93,7 @@ namespace Invoice
         public void onHangup()
         {
 			invios.hangup();
-            inv.hangup();
+			inv.hangup(mActiveCallId);
         }
         public void setMute()
         {

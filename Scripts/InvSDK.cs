@@ -97,10 +97,6 @@ namespace Invoice
         {
             if (AndroidPlatform())
                 jo.Call("connect");
-			else if (OSxPlatform())
-			{
-				
-			}
         }
 	
 	/**
@@ -119,40 +115,41 @@ namespace Invoice
 	@method call
 	@param {CallClassParam} pCall Call options: number to call, video call flag and custom data to send alongside the call. For SIP compatibility reasons number should be a non-empty string even if the number itself is not used by a Voximplant cloud scenario. "OnCallConnected" will be called on call success, or "OnCallFailed" will be called if Voximplant cloud rejects a call or network error occur.  
 	*/
-        public void call(CallClassParam pCall) 
+        public string call(CallClassParam pCall) 
         {
             if (AndroidPlatform())
-                jo.Call("call", Invoice.JsonUtility.ToJson(pCall));
+                return jo.Call<string>("call", Invoice.JsonUtility.ToJson(pCall));
+			return "";
         }
 	
 	/**
 	Answer incoming call. Should be called from the "OnIncomingCall" handler
 	@method answer
 	*/
-        public void answer()
+        public void answer(string pCallId)
         {
             if (AndroidPlatform())
-                jo.Call("answer");
+                jo.Call("answer", pCallId);
         }
 	
 	/**
 	Decline an incoming call. Should be called from the "OnIncomingCall" handler
 	@method declineCall
 	*/
-        public void declineCall()
+        public void declineCall(string pCallId)
         {
             if (AndroidPlatform())
-                jo.Call("declineCall");
+                jo.Call("declineCall", pCallId);
         }
 	
 	/**
 	Hang up the call in progress. Should be called from the "OnIncomingCall" handler
 	@method hangup
 	*/
-        public void hangup()
+        public void hangup(string pCallId)
         {
             if (AndroidPlatform())
-                jo.Call("hangup");
+				jo.Call("hangup", pCallId);
         }
 	
 	/**
