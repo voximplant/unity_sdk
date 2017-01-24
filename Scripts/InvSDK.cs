@@ -300,7 +300,7 @@ namespace Invoice
 	/**
 	Called if login() call results in the successful login
 	@event onLoginSuccessful
-	@param {string} p Display name of logged in user
+	@param {string} username Display name of logged in user
 	*/
         public void faonLoginSuccessful(string p)
         {
@@ -312,7 +312,7 @@ namespace Invoice
 	/**
 	Called if login() call results in the failed login
 	@event onLoginFailed
-	@param {string} p Failure reason
+	@param {string} error Failure reason
 	*/
         public void faonLoginFailed(string p)
         {
@@ -324,7 +324,7 @@ namespace Invoice
 	/**
 	Called after key requested with 'requestOneTimeKey' is requested and returned from the Voximplant cloud
 	@event onOneTimeKeyGenerated
-	@param {string} p Key string that should be used in a hash for the 'loginUsingOneTimeKey'
+	@param {string} key Key string that should be used in a hash for the 'loginUsingOneTimeKey'
 	*/
         public void faonOneTimeKeyGenerated(string p)
         {
@@ -358,7 +358,7 @@ namespace Invoice
 	/**
 	Called if connect() failed to establish a Voximplant cloud connection
 	@event onConnectionFailedWithError
-	@param {string} p Error message
+	@param {string} error Error message
 	*/
         public void faonConnectionFailedWithError(string p)
         {
@@ -368,18 +368,26 @@ namespace Invoice
         }
 	
 	/**
-	Called after call() method successfully established a call with Voximplant cloud.
+	Called after call() method successfully established a call with the Voximplant cloud
 	@event onCallConnected
-	@param {string} p Connected call identifier. It's same identifier returned by the call() function and it can be used in other function to specify one of multiple calls.
+	@param {string} callid Connected call identifier. It's same identifier returned by the call() function and it can be used in other function to specify one of multiple calls
+	@param {string} headers Dictionary with optional SIP headers that was sent by Voximplant while accepting the call 
         */
 	public void faonCallConnected(string p)
         {
             addLog("faonCallConnected: " + p);
             JSONNode node = GetParamList(p);
             if (onCallConnected != null)
+	    	//! 1 arg iOS limit, unpack
                 onCallConnected(node[0].Value, node[1].AsDictionary);
         }
 	
+	/**
+	Called after call is gracefully disconnected from the Voximplant cloud
+	@event onCallDisconnected
+	@param {string} callid Call identifier, previously returned by the call() function
+	@param {string} headers Dictionary with optional SIP headers that was sent by Voximplant while disconnecting the call
+	*/
         public void faonCallDisconnected(string p)
         {
             addLog("faonCallDisconnected: " + p);
@@ -387,6 +395,7 @@ namespace Invoice
             if (onCallDisconnected != null)
                 onCallDisconnected(node[0].Value, node[1].AsDictionary);
         }
+	
         public void faonCallRinging(string p)
         {
             addLog("faonCallRinging: " + p);
