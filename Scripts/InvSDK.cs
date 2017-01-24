@@ -82,6 +82,11 @@ namespace Invoice
                 LogMethod(pMsg);
         }
 
+
+        /**
+        Close connection to the Voximplant cloud that was previously established via 'connect' call.
+        @method closeConnection
+        */
         public void closeConnection()
         {
             if (AndroidPlatform())
@@ -89,8 +94,7 @@ namespace Invoice
         }
 
         /**
-        Initiate Voximplant cloud connection. After successful connection a
-        "login" method should be called.
+        Initiate Voximplant cloud connection. After successful connection a "login" method should be called.
         @method connect
         */
         public void connect()
@@ -225,7 +229,7 @@ namespace Invoice
         }
 	
 	/**
-	Request a one-time key that can be used on your backend to create a login hash for the 'loginUsingOneTimeKey'
+	Request a one-time key that can be used on your backend to create a login hash for the 'loginUsingOneTimeKey'. Key is returned via 'onOneTimeKeyGenerated' event.
 	@method requestOneTimeKey
 	@param {string} pName Fully-qualified user name to get a one-time key for. Format is 'user@app.acc.voximplant.com'
 	*/
@@ -268,60 +272,119 @@ namespace Invoice
                 jo.Call("sendMessage", Invoice.JsonUtility.ToJson(pParam));
         }
 	
+	/**
+	Set local camera resolution. Increasing resolution increases video quality, but also uses more cpu and bandwidth.
+	@method setCameraResolution
+	@param {CameraResolutionClassParam} pParam Camera resolutino as width and height, in pixels
+	*/
         public void setCameraResolution(CameraResolutionClassParam pParam)
         {
             if (AndroidPlatform())
                 jo.Call("setCameraResolution", Invoice.JsonUtility.ToJson(pParam));
         }
+	
+	/**
+	Enable or disable loud speaker, if available
+	@method setUseLoudspeaker
+	@param {bool} pUseLoudSpeaker 'true' to enable loud speaker, 'false' to disable it
+	*/
         public void setUseLoudspeaker(bool pUseLoudSpeaker)
         {
             if (AndroidPlatform())
                 jo.Call("setUseLoudspeaker", Invoice.JsonUtility.ToJson(new BoolClassParam(pUseLoudSpeaker)));
         }
 
+	/**
+	Called if login() call results in the successful login
+	@event onLoginSuccessful
+	@param {string} username Display name of logged in user
+	*/
         public void faonLoginSuccessful(string p)
         {
             addLog("faonLoginSuccessful: " + p);
             if (onLoginSuccessful != null)
                 onLoginSuccessful(p);
         }
+
+	/**
+	Called if login() call results in the failed login
+	@event onLoginFailed
+	@param {string} error Failure reason
+	*/
         public void faonLoginFailed(string p)
         {
             addLog("faonLoginFailed: " + p);
             if (onLoginFailed != null)
                 onLoginFailed(p);
         }
+	
+	/**
+	Called after key requested with 'requestOneTimeKey' is requested and returned from the Voximplant cloud
+	@event onOneTimeKeyGenerated
+	@param {string} key Key string that should be used in a hash for the 'loginUsingOneTimeKey'
+	*/
         public void faonOneTimeKeyGenerated(string p)
         {
             addLog("faonOneTimeKeyGenerated: " + p);
             if (onOneTimeKeyGenerated != null)
                 onOneTimeKeyGenerated(p);
         }
+	
+	/**
+	Called after connect() successfully connects to Voximplant cloud
+	@event onConnectionSuccessful
+	*/
         public void faonConnectionSuccessful()
         {
             addLog("faonConnectionSuccessful");
             if (onConnectionSuccessful != null)
                 onConnectionSuccessful();
         }
+	
+	/**
+	Called after connection to Voximplant cloud is closed for any reason
+	@event onConnectionClosed
+	*/
         public void faonConnectionClosed()
         {
             addLog("faonConnectionClosed");
             if (onConnectionClosed != null)
                 onConnectionClosed();
         }
+
+	/**
+	Called if connect() failed to establish a Voximplant cloud connection
+	@event onConnectionFailedWithError
+	@param {string} error Error message
+	*/
         public void faonConnectionFailedWithError(string p)
         {
             addLog("faonConnectionFailedWithError" + p);
             if (onConnectionFailedWithError != null)
                 onConnectionFailedWithError(p);
         }
-        public void faonCallConnected(string p)
+	
+	/**
+	Called after call() method successfully established a call with the Voximplant cloud
+	@event onCallConnected
+	@param {string} callid Connected call identifier. It's same identifier returned by the call() function and it can be used in other function to specify one of multiple calls
+	@param {string} headers Dictionary with optional SIP headers that was sent by Voximplant while accepting the call 
+        */
+	public void faonCallConnected(string p)
         {
             addLog("faonCallConnected: " + p);
             JSONNode node = GetParamList(p);
             if (onCallConnected != null)
+	    	//! 1 arg iOS limit, unpack
                 onCallConnected(node[0].Value, node[1].AsDictionary);
         }
+	
+	/**
+	Called after call is gracefully disconnected from the Voximplant cloud
+	@event onCallDisconnected
+	@param {string} callid Call identifier, previously returned by the call() function
+	@param {string} headers Dictionary with optional SIP headers that was sent by Voximplant while disconnecting the call
+	*/
         public void faonCallDisconnected(string p)
         {
             addLog("faonCallDisconnected: " + p);
@@ -329,6 +392,7 @@ namespace Invoice
             if (onCallDisconnected != null)
                 onCallDisconnected(node[0].Value, node[1].AsDictionary);
         }
+	
         public void faonCallRinging(string p)
         {
             addLog("faonCallRinging: " + p);
