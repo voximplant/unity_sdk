@@ -84,7 +84,7 @@ namespace Invoice
 
 
         /**
-        Close connection to the Voximplant cloud that was previously established via 'connect' call.
+        Close connection to the Voximplant cloud that was previously established via 'connect' call
         @method closeConnection
         */
         public void closeConnection()
@@ -94,7 +94,7 @@ namespace Invoice
         }
 
         /**
-        Initiate Voximplant cloud connection. After successful connection a "login" method should be called.
+        Initiate Voximplant cloud connection. After successful connection a "login" method should be called
         @method connect
         */
         public void connect()
@@ -108,7 +108,7 @@ namespace Invoice
         }
 	
 	/**
-        Login into Voximplant cloud. Should be called after "connect" in the "onConnectionSuccessful" handler.
+        Login into Voximplant cloud. Should be called after "connect" in the "OnConnectionSuccessful" handler
         @method login
 	@param {LoginClassParam} pLogin Username and password. Username is a fully-qualified string that includes Voximplant user, application and account names. The format is: "username@appname.accname.voximplant.com"
         */
@@ -119,9 +119,9 @@ namespace Invoice
         }
 	
 	/**
-	Start a new outgoing call.
+	Start a new outgoing call
 	@method call
-	@param {CallClassParam} pCall Call options: number to call, video call flag and custom data to send alongside the call. For SIP compatibility reasons number should be a non-empty string even if the number itself is not used by a Voximplant cloud scenario. "OnCallConnected" will be called on call success, or "OnCallFailed" will be called if Voximplant cloud rejects a call or network error occur.  
+	@param {CallClassParam} pCall Call options: number to call, video call flag and custom data to send alongside the call. For SIP compatibility reasons number should be a non-empty string even if the number itself is not used by a Voximplant cloud scenario. "OnCallConnected" will be called on call success, or "OnCallFailed" will be called if Voximplant cloud rejects a call or network error occur 
 	*/
         public void call(CallClassParam pCall) 
         {
@@ -140,7 +140,7 @@ namespace Invoice
         }
 	
 	/**
-	Decline an incoming call. Should be called from the "onIncomingCall" handler
+	Decline an incoming call. Should be called from the "OnIncomingCall" handler
 	@method declineCall
 	*/
         public void declineCall()
@@ -150,7 +150,7 @@ namespace Invoice
         }
 	
 	/**
-	Hang up the call in progress. Should be called from the "onIncomingCall" handler
+	Hang up the call in progress. Should be called from the "OnIncomingCall" handler
 	@method hangup
 	*/
         public void hangup()
@@ -232,7 +232,7 @@ namespace Invoice
         }
 	
 	/**
-	Request a one-time key that can be used on your backend to create a login hash for the 'loginUsingOneTimeKey'. Key is returned via 'onOneTimeKeyGenerated' event.
+	Request a one-time key that can be used on your backend to create a login hash for the 'loginUsingOneTimeKey'. Key is returned via 'OnOneTimeKeyGenerated' event
 	@method requestOneTimeKey
 	@param {string} pName Fully-qualified user name to get a one-time key for. Format is 'user@app.acc.voximplant.com'
 	*/
@@ -254,9 +254,9 @@ namespace Invoice
         }
 	
 	/**
-	Send arbitrary data to Voximplant cloud. Data can be received in VoxEngine scenario by subscribing to the 'CallEvents.InfoReceived' event. Optional SIP headers can be automatically passed to second call via VoxEngine 'easyProcess()' method.
+	Send arbitrary data to Voximplant cloud. Data can be received in VoxEngine scenario by subscribing to the 'CallEvents.InfoReceived' event. Optional SIP headers can be automatically passed to second call via VoxEngine 'easyProcess()' method
 	@method sendInfo
-	@param {InfoClassParam} pParam Call identifier, data MIME type string, data string and optional SIP headers list as an array of 'PairKeyValue' objects with 'key' and 'value' properties.
+	@param {InfoClassParam} pParam Call identifier, data MIME type string, data string and optional SIP headers list as an array of 'PairKeyValue' objects with 'key' and 'value' properties
 	*/
         public void sendInfo(InfoClassParam pParam)
         {
@@ -265,9 +265,9 @@ namespace Invoice
         }
 	
 	/**
-	Simplified version of 'sendInfo' that uses predefined MIME type to send a text message. Message can be received in VoxEngine scenario by subscribing to the 'CallEvents.MessageReceived' event. Optional SIP headers can be automatically passed to second call via VoxEngine 'easyProcess()' method.
+	Simplified version of 'sendInfo' that uses predefined MIME type to send a text message. Message can be received in VoxEngine scenario by subscribing to the 'CallEvents.MessageReceived' event. Optional SIP headers can be automatically passed to second call via VoxEngine 'easyProcess()' method
 	@method sendMessage
-	@param {SendMessageClassParam} pParam Call identifier, message string and optional SIP headers list as an array of 'PairKeyValue' objects with 'key' and 'value' properties.
+	@param {SendMessageClassParam} pParam Call identifier, message string and optional SIP headers list as an array of 'PairKeyValue' objects with 'key' and 'value' properties
 	*/
         public void sendMessage(SendMessageClassParam pParam)
         {
@@ -276,7 +276,7 @@ namespace Invoice
         }
 	
 	/**
-	Set local camera resolution. Increasing resolution increases video quality, but also uses more cpu and bandwidth.
+	Set local camera resolution. Increasing resolution increases video quality, but also uses more cpu and bandwidth
 	@method setCameraResolution
 	@param {CameraResolutionClassParam} pParam Camera resolutino as width and height, in pixels
 	*/
@@ -299,7 +299,7 @@ namespace Invoice
 
 	/**
 	Called if login() call results in the successful login
-	@event onLoginSuccessful
+	@event OnLoginSuccessful
 	@param {string} username Display name of logged in user
 	*/
         public void faonLoginSuccessful(string p)
@@ -311,7 +311,7 @@ namespace Invoice
 
 	/**
 	Called if login() call results in the failed login
-	@event onLoginFailed
+	@event OnLoginFailed
 	@param {string} error Failure reason
 	*/
         public void faonLoginFailed(string p)
@@ -323,7 +323,7 @@ namespace Invoice
 	
 	/**
 	Called after key requested with 'requestOneTimeKey' is requested and returned from the Voximplant cloud
-	@event onOneTimeKeyGenerated
+	@event OnOneTimeKeyGenerated
 	@param {string} key Key string that should be used in a hash for the 'loginUsingOneTimeKey'
 	*/
         public void faonOneTimeKeyGenerated(string p)
@@ -335,7 +335,7 @@ namespace Invoice
 	
 	/**
 	Called after connect() successfully connects to Voximplant cloud
-	@event onConnectionSuccessful
+	@event OnConnectionSuccessful
 	*/
         public void faonConnectionSuccessful()
         {
@@ -346,7 +346,7 @@ namespace Invoice
 	
 	/**
 	Called after connection to Voximplant cloud is closed for any reason
-	@event onConnectionClosed
+	@event OnConnectionClosed
 	*/
         public void faonConnectionClosed()
         {
@@ -357,7 +357,7 @@ namespace Invoice
 
 	/**
 	Called if connect() failed to establish a Voximplant cloud connection
-	@event onConnectionFailedWithError
+	@event OnConnectionFailedWithError
 	@param {string} error Error message
 	*/
         public void faonConnectionFailedWithError(string p)
@@ -369,7 +369,7 @@ namespace Invoice
 	
 	/**
 	Called after call() method successfully established a call with the Voximplant cloud
-	@event onCallConnected
+	@event OnCallConnected
 	@param {string} callid Connected call identifier. It's same identifier returned by the call() function and it can be used in other function to specify one of multiple calls
 	@param {Dictionary} headers Optional SIP headers that was sent by Voximplant while accepting the call 
         */
@@ -384,7 +384,7 @@ namespace Invoice
 	
 	/**
 	Called after call is gracefully disconnected from the Voximplant cloud
-	@event onCallDisconnected
+	@event OnCallDisconnected
 	@param {string} callid Call identifier, previously returned by the call() function
 	@param {Dictionary} headers Optional SIP headers that was sent by Voximplant while disconnecting the call
 	*/
@@ -398,7 +398,7 @@ namespace Invoice
 	
 	/**
 	Called when Voximplant cloud sends RINGING SIP notificatoin via 'call.ring()' method. As response to that event client can play some "ringing" sounds or inform user about "call in progress" some other way
-	@event onCallRinging
+	@event OnCallRinging
 	@param {string} callid Call identifier, previously returned by the call() function
 	@param {Dictionary} headers Optional SIP headers that was sent by Voximplant as an argument to the 'call.ring()' method call
 	*/
@@ -414,7 +414,7 @@ namespace Invoice
 	
 	/**
 	Called when Voximplant cloud rejects a call
-	@event onCallFailed
+	@event OnCallFailed
 	@param {string} callid Call identifier, previously returned by the call() function
 	@param {int} code Status code
 	@param {string} reason Text description while call failed
@@ -430,7 +430,7 @@ namespace Invoice
 	
 	/**
 	Called when Voximplant cloud connects audio source to the call. If client previously played a progress tone, it should be stopped
-	@event onCallAudioStarted
+	@event OnCallAudioStarted
 	@param {string} callid Call identifier, previously returned by the call() function
 	*/
         public void faonCallAudioStarted(string p)
@@ -442,7 +442,7 @@ namespace Invoice
 	
 	/**
 	Called when Voximplant directs a new call to a user logged in from this SDK instance. SDK can handle multiple incoming and/or outgoing calls at once and target specified call via the 'callid' string returned by 'call()' method and received by this event
-	@event onIncomingCall
+	@event OnIncomingCall
 	@param {string} callid Call identifier
 	@param {string} from Caller SIP URI
 	@param {string} name Caller display name
@@ -459,7 +459,7 @@ namespace Invoice
 	
 	/**
 	Called if SIP 'info' message is received. That message can be sent from a Voximplant cloud scenario or forwarded from a caller
-	@event onSIPInfoReceivedInCall
+	@event OnSIPInfoReceivedInCall
 	@param {string} callid Call identifier
 	@param {string} type Data MIME type string
 	@param {string} content Data string
@@ -474,8 +474,8 @@ namespace Invoice
         }
 	
 	/**
-	Called if Voximplant-specified 'message' is recived. It's a specialized type of a more general SIP 'info' message.
-	@event onMessageReceivedInCall
+	Called if Voximplant-specified 'message' is recived. It's a specialized type of a more general SIP 'info' message
+	@event OnMessageReceivedInCall
 	@param {string} callid Call identifier
 	@param {string} text Message text
 	*/
@@ -489,7 +489,7 @@ namespace Invoice
 	
 	/**
 	Called when packet loss data is received from the Voximplant cloud
-	@event onNetStatsReceived
+	@event OnNetStatsReceived
 	@param {string} callid Call identifier
 	@param {int} loss Packet loss from 0 (no loss) to 100 (all lost)
 	*/
