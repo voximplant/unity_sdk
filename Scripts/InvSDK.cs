@@ -202,7 +202,7 @@ namespace Invoice
 	/**
 	Disconnect the specified call
 	@method disconnectCall
-	@param {string} p Call identifier returned by previous 'call()'.
+	@param {string} p Call identifier
 	*/
         public void disconnectCall(string p)
         {
@@ -245,7 +245,7 @@ namespace Invoice
 	/**
 	Send DTMF signal to the specified call
 	@method sendDTMF
-	@param {DTFMClassParam} pParam Call identifier returned by previous 'call()' and DTMF digit number (0-9, 10 for '*', 11 for '#')
+	@param {DTFMClassParam} pParam Call identifier and DTMF digit number (0-9, 10 for '*', 11 for '#')
 	*/
         public void sendDTMF(DTFMClassParam pParam)
         {
@@ -256,7 +256,7 @@ namespace Invoice
 	/**
 	Send arbitrary data to Voximplant cloud. Data can be received in VoxEngine scenario by subscribing to the 'CallEvents.InfoReceived' event. Optional SIP headers can be automatically passed to second call via VoxEngine 'easyProcess()' method.
 	@method sendInfo
-	@param {InfoClassParam} pParam Call identifier returned by previous 'call()', data MIME type string, data string and optional SIP headers list as an array of 'PairKeyValue' objects with 'key' and 'value' properties.
+	@param {InfoClassParam} pParam Call identifier, data MIME type string, data string and optional SIP headers list as an array of 'PairKeyValue' objects with 'key' and 'value' properties.
 	*/
         public void sendInfo(InfoClassParam pParam)
         {
@@ -267,7 +267,7 @@ namespace Invoice
 	/**
 	Simplified version of 'sendInfo' that uses predefined MIME type to send a text message. Message can be received in VoxEngine scenario by subscribing to the 'CallEvents.MessageReceived' event. Optional SIP headers can be automatically passed to second call via VoxEngine 'easyProcess()' method.
 	@method sendMessage
-	@param {SendMessageClassParam} pParam Call identifier returned by previous 'call()', message string and optional SIP headers list as an array of 'PairKeyValue' objects with 'key' and 'value' properties.
+	@param {SendMessageClassParam} pParam Call identifier, message string and optional SIP headers list as an array of 'PairKeyValue' objects with 'key' and 'value' properties.
 	*/
         public void sendMessage(SendMessageClassParam pParam)
         {
@@ -371,7 +371,7 @@ namespace Invoice
 	Called after call() method successfully established a call with the Voximplant cloud
 	@event onCallConnected
 	@param {string} callid Connected call identifier. It's same identifier returned by the call() function and it can be used in other function to specify one of multiple calls
-	@param {string} headers Dictionary with optional SIP headers that was sent by Voximplant while accepting the call 
+	@param {Dictionary} headers Optional SIP headers that was sent by Voximplant while accepting the call 
         */
 	public void faonCallConnected(string p)
         {
@@ -386,7 +386,7 @@ namespace Invoice
 	Called after call is gracefully disconnected from the Voximplant cloud
 	@event onCallDisconnected
 	@param {string} callid Call identifier, previously returned by the call() function
-	@param {string} headers Dictionary with optional SIP headers that was sent by Voximplant while disconnecting the call
+	@param {Dictionary} headers Optional SIP headers that was sent by Voximplant while disconnecting the call
 	*/
         public void faonCallDisconnected(string p)
         {
@@ -396,13 +396,30 @@ namespace Invoice
                 onCallDisconnected(node[0].Value, node[1].AsDictionary);
         }
 	
-        public void faonCallRinging(string p)
+	/**
+	Called when Voximplant cloud sends RINGING SIP notificatoin via 'call.ring()' method. As response to that event client can play some "ringing" sounds or inform user about "call in progress" some other way
+	@event onCallRinging
+	@param {string} callid Call identifier, previously returned by the call() function
+	@param {Dictionary} headers Optional SIP headers that was sent by Voximplant as an argument to the 'call.ring()' method call
+	*/
+	public void faonCallRinging(string p)
         {
             addLog("faonCallRinging: " + p);
             JSONNode node = GetParamList(p);
             if (onCallRinging != null)
-                onCallRinging(node[0].Value, node[1].AsDictionary);
+                onCallRinging(node[0].Value, node[1].
+		
+		);
         }
+	
+	/**
+	Called when Voximplant cloud rejects a call
+	@event onCallFailed
+	@param {string} callid Call identifier, previously returned by the call() function
+	@param {int} code Status code
+	@param {string} reason Text description while call failed
+	@param {Dictionary} headers Optional SIP headers that was sent by Voximplant while call was rejected
+	*/
         public void faonCallFailed(string p)
         {
             addLog("faonCallFailed: " + p);
@@ -410,12 +427,28 @@ namespace Invoice
             if (onCallFailed != null)
                 onCallFailed(node[0].Value, node[1].AsInt, node[2].Value, node[3].AsDictionary);
         }
+	
+	/**
+	Called when Voximplant cloud connects audio source to the call. If client previously played a progress tone, it should be stopped
+	@event onCallAudioStarted
+	@param {string} callid Call identifier, previously returned by the call() function
+	*/
         public void faonCallAudioStarted(string p)
         {
             addLog("faonCallAudioStarted" + p);
             if (onCallAudioStarted != null)
                 onCallAudioStarted(p);
         }
+	
+	/**
+	Called when Voximplant directs a new call to a user logged in from this SDK instance. SDK can handle multiple incoming and/or outgoing calls at once and target specified call via the 'callid' string returned by 'call()' method and received by this event
+	@event onIncomingCall
+	@param {string} callid Call identifier
+	@param {string} from Caller SIP URI
+	@param {string} name Caller display name
+	@param {bool} isVideo 'true' if incoming call is a video call. Video can be enabled or disabled during a call
+	@param {Dictionary} headers Optional SIP headers that was set by a caller
+	*/
         public void faonIncomingCall(string p)
         {
             addLog("faonIncomingCall: " + p);
@@ -423,6 +456,15 @@ namespace Invoice
             if (onIncomingCall != null)
                 onIncomingCall(node[0].Value, node[1].Value, node[2].Value, node[3].AsBool, node[4].AsDictionary);
         }
+	
+	/**
+	Called if SIP 'info' message is received. That message can be sent from a Voximplant cloud scenario or forwarded from a caller
+	@event onSIPInfoReceivedInCall
+	@param {string} callid Call identifier
+	@param {string} type Data MIME type string
+	@param {string} content Data string
+	@param {Dictionary} headers Optional SIP headers set by a info sender
+	*/
         public void faonSIPInfoReceivedInCall(string p)
         {
             addLog("faonSIPInfoReceivedInCall");
@@ -430,6 +472,13 @@ namespace Invoice
             if (onSIPInfoReceivedInCall != null)
                 onSIPInfoReceivedInCall(node[0].Value, node[1].Value, node[2].Value, node[3].AsDictionary);
         }
+	
+	/**
+	Called if Voximplant-specified 'message' is recived. It's a specialized type of a more general SIP 'info' message.
+	@event onMessageReceivedInCall
+	@param {string} callid Call identifier
+	@param {string} text Message text
+	*/
         public void faonMessageReceivedInCall(string p)
         {
             addLog("faonMessageReceivedInCall");
@@ -437,6 +486,13 @@ namespace Invoice
             if (onMessageReceivedInCall != null)
                 onMessageReceivedInCall(node[0].Value, node[1].Value, node[2].AsDictionary);
         }
+	
+	/**
+	Called when packet loss data is received from the Voximplant cloud
+	@event onNetStatsReceived
+	@param {string} callid Call identifier
+	@param {int} loss Packet loss from 0 (no loss) to 100 (all lost)
+	*/
         public void faonNetStatsReceived(string p)
         {
             addLog("faonMessageReceivedInCall");
@@ -450,6 +506,7 @@ namespace Invoice
             JSONNode rootNode = JSON.Parse(p);
             return rootNode;
         }
+	
         public static PairKeyValue[] GetDictionaryToArray(Dictionary<string, string> pDic)
         {
             PairKeyValue[] list = new PairKeyValue[pDic.Count];
