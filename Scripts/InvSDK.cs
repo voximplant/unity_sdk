@@ -82,6 +82,11 @@ namespace Invoice
                 LogMethod(pMsg);
         }
 
+
+        /**
+        Close connection to the Voximplant cloud that was previously established via 'connect' call.
+        @method closeConnection
+        */
         public void closeConnection()
         {
             if (AndroidPlatform())
@@ -89,8 +94,7 @@ namespace Invoice
         }
 
         /**
-        Initiate Voximplant cloud connection. After successful connection a
-        "login" method should be called.
+        Initiate Voximplant cloud connection. After successful connection a "login" method should be called.
         @method connect
         */
         public void connect()
@@ -271,23 +275,40 @@ namespace Invoice
                 jo.Call("sendMessage", Invoice.JsonUtility.ToJson(pParam));
         }
 	
+	/**
+	Set local camera resolution. Increasing resolution increases video quality, but also uses more cpu and bandwidth.
+	@method setCameraResolution
+	@param {CameraResolutionClassParam} pParam Camera resolutino as width and height, in pixels
+	*/
         public void setCameraResolution(CameraResolutionClassParam pParam)
         {
             if (AndroidPlatform())
                 jo.Call("setCameraResolution", Invoice.JsonUtility.ToJson(pParam));
         }
+	
+	/**
+	Enable or disable loud speaker, if available
+	@method setUseLoudspeaker
+	@param {bool} pUseLoudSpeaker 'true' to enable loud speaker, 'false' to disable it
+	*/
         public void setUseLoudspeaker(bool pUseLoudSpeaker)
         {
             if (AndroidPlatform())
                 jo.Call("setUseLoudspeaker", Invoice.JsonUtility.ToJson(new BoolClassParam(pUseLoudSpeaker)));
         }
 
+	/**
+	Called if login() call results in successful login
+	@event onLoginSuccessful
+	@param {string} p Display name of logged in user
+	*/
         public void faonLoginSuccessful(string p)
         {
             addLog("faonLoginSuccessful: " + p);
             if (onLoginSuccessful != null)
                 onLoginSuccessful(p);
         }
+	
         public void faonLoginFailed(string p)
         {
             addLog("faonLoginFailed: " + p);
