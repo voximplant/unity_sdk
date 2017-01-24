@@ -200,21 +200,40 @@ namespace Invoice
             if (AndroidPlatform())
                 jo.Call("disconnectCall", Invoice.JsonUtility.ToJson(new StringClassParam(p)));
         }
+	
+	/**
+	If called before any other SDK methods, enables debug logging into target platform default debug log facility
+	@method enableDebugLogging
+	*/
         public void enableDebugLogging()
         {
             if (AndroidPlatform())
                 jo.Call("enableDebugLogging");
         }
+	
+	/**
+	Login using a hash created from one-time key requested via 'requestOneTimeKey' and password. The has can be calculated on your backend so Voximplant password is never used in the application. Hash is calculated as 'MD5(one-time-key + "|" + MD5(vox-user + ":voximplant.com:" + vox-pass))'
+	@method loginUsingOneTimeKey
+	@param {LoginOneTimeKeyClassParam} pLogin Fully-qualified user name and hash to authenticate. Note that hash is created not from a fully-qualified user name, but from a bare user name, without the "@app.acc.voximplant.com" part
+	*/
         public void loginUsingOneTimeKey(LoginOneTimeKeyClassParam pLogin)
         {
             if (AndroidPlatform())
                 jo.Call("loginUsingOneTimeKey", Invoice.JsonUtility.ToJson(pLogin));
         }
+	
+	/**
+	Request a one-time key that can be used on your backend to create a login hash for the 'loginUsingOneTimeKey'
+	@method requestOneTimeKey
+	@param {string} pName Fully-qualified user name to get a one-time key for. Format is 'user@app.acc.voximplant.com'
+	*/
         public void requestOneTimeKey(string pName)
         {
             if (AndroidPlatform())
                 jo.Call("requestOneTimeKey", Invoice.JsonUtility.ToJson(new StringClassParam(pName)));
         }
+	
+	
         public void sendDTMF(DTFMClassParam pParam)
         {
             if (AndroidPlatform())
