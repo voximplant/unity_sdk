@@ -108,7 +108,7 @@ namespace Invoice
         }
 	
 	/**
-        Login into Voximplant cloud. Should be called after "connect" in the "OnConnectionSuccessful" handler.
+        Login into Voximplant cloud. Should be called after "connect" in the "onConnectionSuccessful" handler.
         @method login
 	@param {LoginClassParam} pLogin Username and password. Username is a fully-qualified string that includes Voximplant user, application and account names. The format is: "username@appname.accname.voximplant.com"
         */
@@ -140,7 +140,7 @@ namespace Invoice
         }
 	
 	/**
-	Decline an incoming call. Should be called from the "OnIncomingCall" handler
+	Decline an incoming call. Should be called from the "onIncomingCall" handler
 	@method declineCall
 	*/
         public void declineCall()
@@ -150,7 +150,7 @@ namespace Invoice
         }
 	
 	/**
-	Hang up the call in progress. Should be called from the "OnIncomingCall" handler
+	Hang up the call in progress. Should be called from the "onIncomingCall" handler
 	@method hangup
 	*/
         public void hangup()
