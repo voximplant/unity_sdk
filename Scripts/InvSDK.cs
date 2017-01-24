@@ -233,17 +233,29 @@ namespace Invoice
                 jo.Call("requestOneTimeKey", Invoice.JsonUtility.ToJson(new StringClassParam(pName)));
         }
 	
-	
+	/**
+	Send DTMF signal to the specified call
+	@method sendDTMF
+	@param {DTFMClassParam} pParam Call identifier returned by previous 'call()' and DTMF digit number (0-9, 10 for '*', 11 for '#')
+	*/
         public void sendDTMF(DTFMClassParam pParam)
         {
             if (AndroidPlatform())
                 jo.Call("sendDTMF", Invoice.JsonUtility.ToJson(pParam));
         }
+	
+	/**
+	Send arbitrary data to Voximplant cloud. Data can be received in VoxEngine scenario by subscribing to the 'CallEvents.InfoReceived' event
+	@method sendInfo
+	@param {InfoClassParam} pParam Call identifier returned by previous 'call()', data MIME type string, data string and optional SIP headers list as an array of 'PairKeyValue' objects with 'key' and 'value' properties.
+	*/
         public void sendInfo(InfoClassParam pParam)
         {
             if (AndroidPlatform())
                 jo.Call("sendInfo", Invoice.JsonUtility.ToJson(pParam));
         }
+	
+	
         public void sendMessage(SendMessageClassParam pParam)
         {
             if (AndroidPlatform())
