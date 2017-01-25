@@ -51,13 +51,6 @@ namespace Invoice
 
         void Start()
         {
-			Dictionary<string, string> dic = new Dictionary<string, string>();
-			dic.Add("key1", "value1");
-
-            InfoClassParam param = new InfoClassParam("qwe", "asd", "zxc");
-			JSONObject jsonObject = new JSONObject();
-			JSONSerialize.Serialize(param, jsonObject);
-
 			addLog("Target platform: " + Application.platform);
 
 			invios = GameObject.FindObjectOfType<InvSDKios>();
@@ -110,7 +103,7 @@ namespace Invoice
 			
         private void Inv_onConnectionSuccessful()
         {
-            addLog("Connect done!");
+            addLog("Connect from Android done!");
         }
 
         public void onClickConnect()

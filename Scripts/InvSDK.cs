@@ -36,6 +36,11 @@ namespace Invoice
         public event deligateOnCallRinging onCallRinging;
         public event deligateOnCallDisconnected onCallDisconnected;
         public event deligateOnCallConnected onCallConnected;
+		/**
+		Called if connect() failed to establish a Voximplant cloud connection
+		@event onConnectionFailedWithError
+		@param {string} error Error message
+		*/
         public event deligateOnConnectionFailedWithError onConnectionFailedWithError;
         public event deligateOnConnectionClosed onConnectionClosed;
         public event deligateOnConnectionSuccessful onConnectionSuccessful;
