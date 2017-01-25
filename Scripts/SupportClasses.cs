@@ -97,7 +97,7 @@ namespace Invoice
         }
     }
 	[System.Serializable]
-    public class CallClassParam
+    public class _CallClassParam
     {
 		[JSONItem("userCall", typeof(string))]
         public string userCall;
@@ -105,8 +105,10 @@ namespace Invoice
         public bool videoCall;
 		[JSONItem("customData", typeof(string))]
         public string customData;
+		[JSONArray("headers",typeof(PairKeyValue))]
+		public PairKeyValue[] headers;
 
-        public CallClassParam(string pCallUser, bool pVideoCall, string pCustomData)
+		public _CallClassParam(string pCallUser, bool pVideoCall, bool pP2P, string pCustomData, Dictionary<string, string> pHeader = null)
         {
             userCall = pCallUser;
             videoCall = pVideoCall;
@@ -114,7 +116,7 @@ namespace Invoice
         }
     }
 	[System.Serializable]
-	public class CallClassParamios
+	public class CallClassParam
 	{
 		[JSONItem("userCall", typeof(string))]
 		public string userCall;
@@ -125,7 +127,7 @@ namespace Invoice
 		[JSONArray("headers",typeof(PairKeyValue))]
 		public PairKeyValue[] headers;
 
-		public CallClassParamios(string pCallUser, bool pVideoCall, bool pP2P, string pCustomData, Dictionary<string, string> pHeader = null)
+		public CallClassParam(string pCallUser, bool pVideoCall, bool pP2P, string pCustomData, Dictionary<string, string> pHeader = null)
 		{
 			userCall = pCallUser;
 			videoCall = pVideoCall;

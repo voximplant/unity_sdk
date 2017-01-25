@@ -419,7 +419,7 @@ extern "C"
         [delegates setRemSizeViews:[[ViewLayoutSize alloc] initWithParam:xPos withyPos:yPos withWidth:pWidth withHeight:pHeight]];
     }
 
-    void iosSDKstartCall(const char* pId, bool pWithVideo, const char* pCustom, const char* pHeaders)
+    const char* iosSDKstartCall(const char* pId, bool pWithVideo, const char* pCustom, const char* pHeaders)
     {
         [delegates setState:SAMPLE_STATE_PROGRESSING];
         activeCallId = [sdk createCall:[NSString stringWithUTF8String:pId] withVideo:pWithVideo andCustomData:[[NSString alloc] initWithUTF8String:pCustom]];
@@ -432,9 +432,10 @@ extern "C"
             JsonDic *headers = [[JsonDic alloc] initWithJSONString:[[NSString alloc] initWithUTF8String:pHeaders]];
             [sdk startCall:activeCallId withHeaders:headers.dic];
         }
+        return [activeCallId UTF8String];
     }
 
-    void iosSDKanswerCall(const char* pHeaders)
+    void iosSDKanswerCall(const char* pCallId, const char* pHeaders)
     {
         if (activeCallId != Nil)
         {
@@ -448,7 +449,7 @@ extern "C"
         }
     }
 
-    void iosSDKHungup(const char* pHeaders)
+    void iosSDKHungup(const char* pCallId, const char* pHeaders)
     {
         [delegates setState:SAMPLE_STATE_TERMINATING];
         if (pHeaders == Nil)
@@ -460,7 +461,7 @@ extern "C"
         }
     }
 
-    void iosSDKDecline(const char* pHeaders)
+    void iosSDKDecline(const char* pCallId, const char* pHeaders)
     {
         [delegates setState:SAMPLE_STATE_TERMINATING];
 
@@ -554,4 +555,8 @@ extern "C"
         [sdk setUseLoudspeaker:pUseLoudspeaker];
     }
 
+    void iosSDKCloseConnection()
+    {
+        [sdk closeConnection];
+    }
 }

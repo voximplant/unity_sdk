@@ -28,7 +28,6 @@ namespace Invoice
         public GameObject mCallRingPanel;
 
         InvSDK inv;
-		InvSDKios invios;
 
 		private CallInner mActiveCallId;
         private CallInner mIncCallId;
@@ -53,12 +52,13 @@ namespace Invoice
         {
 			addLog("Target platform: " + Application.platform);
 
-			invios = GameObject.FindObjectOfType<InvSDKios>();
-			invios.init("SDKIOS", new SizeView(0,0, 100, 100), new SizeView(0, 150, 100, 100));
-			invios.LogMethod += addLog;
-			invios.onConnectionSuccessful += Invios_onConnectionSuccessful;
+//			invios = GameObject.FindObjectOfType<InvSDKios>();
+//			invios.init("SDKIOS", new SizeView(0,0, 100, 100), new SizeView(0, 150, 100, 100));
+//			invios.LogMethod += addLog;
+//			invios.onConnectionSuccessful += Invios_onConnectionSuccessful;
 
             inv = GameObject.FindObjectOfType<InvSDK>();
+			inv.init("SDK", new SizeView(0,0, 100, 100), new SizeView(0, 150, 100, 100));
             inv.LogMethod += addLog;
             inv.onConnectionSuccessful += Inv_onConnectionSuccessful;
             inv.onIncomingCall += Inv_onIncomingCall;
@@ -79,7 +79,7 @@ namespace Invoice
             mBtnHung.SetActive(true);
         }
 
-        private void Inv_onMessageReceivedInCall(string callId, string text)
+		private void Inv_onMessageReceivedInCall(string callId, string text, Dictionary<string, string> headers)
         {
             addLog(callId + " : " + text);
         }
@@ -96,30 +96,22 @@ namespace Invoice
             mIncCallId = new CallInner(callId, displayName, true, videoCall);
         }
 
-        private void Invios_onConnectionSuccessful ()
-        {
-			addLog("Connect from iso done!");
-        }
-			
         private void Inv_onConnectionSuccessful()
         {
-            addLog("Connect from Android done!");
+            addLog("Connect done!");
         }
 
         public void onClickConnect()
         {
-			invios.connect();
 			inv.connect();
         }
         public void onClickLogin()
         {
-			invios.login(new LoginClassParam(name.text, pass.text));
             inv.login(new LoginClassParam(name.text, pass.text));
         }
         public void onClickCall()
         {
-			invios.call(new CallClassParamios(callNum.text, video.isOn, p2p.isOn, "", null));
-			string callID = inv.call(new CallClassParam(callNum.text, video.isOn, ""));
+			string callID = inv.call(new CallClassParam(callNum.text, video.isOn, p2p.isOn, "", null));
             mActiveCallId = new CallInner(callID, "own", false, video.isOn);
             mBtnHung.SetActive(true);
             addLog("StartCall with ID: " + mActiveCallId.id);
@@ -128,39 +120,33 @@ namespace Invoice
         {
             mCallRingPanel.SetActive(false);
             mActiveCallId = mIncCallId;
-            invios.answer();
-			inv.answer(mActiveCallId.id);
+			inv.answer(mActiveCallId.id, null);
         }
         public void onClickDecline()
         {
             mCallRingPanel.SetActive(false);
-            inv.declineCall(mIncCallId.id);
+            inv.declineCall(mIncCallId.id, null);
         }
         public void onHangup()
         {
-			invios.hangup();
-			inv.hangup(mActiveCallId.id);
+			inv.hangup(mActiveCallId.id, null);
         }
         public void setMute()
         {
-			invios.setMute(mute.isOn);
             inv.setMute(mute.isOn);
         }
         public void sendVideo()
         {
-			invios.sendVideo(video.isOn);
             inv.sendVideo(video.isOn);
         }
         public void switchCam()
         {
             if (faceCam.isOn)
 			{
-				invios.setCamera(CameraSet.CAMERA_FACING_FRONT);
                 inv.setCamera(CameraSet.CAMERA_FACING_FRONT);
 			}
             else
 			{
-				invios.setCamera(CameraSet.CAMERA_FACING_BACK);
                 inv.setCamera(CameraSet.CAMERA_FACING_BACK);
 			}
         }
