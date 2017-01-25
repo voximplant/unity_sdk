@@ -260,7 +260,7 @@ public class AVoImClient implements VoxImplantCallback {
     }
     @Override
     public void onLoginFailed(LoginFailureReason loginFailureReason) {
-        unityPlayer.UnitySendMessage(sdkObjName,"faonLoginSuccessful", GetParamListToString(new ArrayList<Object>(Arrays.asList(loginFailureReason))));
+        unityPlayer.UnitySendMessage(sdkObjName,"faonLoginFailed", GetParamListToString(new ArrayList<Object>(Arrays.asList(loginFailureReason))));
     }
     @Override
     public void onOneTimeKeyGenerated(String s) {

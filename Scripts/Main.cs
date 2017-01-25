@@ -22,11 +22,32 @@ namespace Invoice
         public Toggle video;
         public Toggle mute;
         public Toggle faceCam;
+        public GameObject mBtnHung;
+        public Text mIncName;
+
+        public GameObject mCallRingPanel;
 
         InvSDK inv;
 		InvSDKios invios;
 
-		private string mActiveCallId = "";
+		private CallInner mActiveCallId;
+        private CallInner mIncCallId;
+
+        private class CallInner
+        {
+            public string id;
+            public string fromName;
+            public bool incoming;
+            public bool video;
+
+            public CallInner(string pId, string pFrom, bool pInc, bool pVideo)
+            {
+                id = pId;
+                fromName = pFrom;
+                incoming = pInc;
+                video = pVideo;
+            }
+        }
 
         void Start()
         {
@@ -47,9 +68,42 @@ namespace Invoice
             inv = GameObject.FindObjectOfType<InvSDK>();
             inv.LogMethod += addLog;
             inv.onConnectionSuccessful += Inv_onConnectionSuccessful;
+            inv.onIncomingCall += Inv_onIncomingCall;
+            inv.onCallRinging += Inv_onCallRinging;
+            inv.onMessageReceivedInCall += Inv_onMessageReceivedInCall;
+            inv.onCallConnected += Inv_onCallConnected;
+            inv.onCallDisconnected += Inv_onCallDisconnected;
         }
 
-        void Invios_onConnectionSuccessful ()
+        private void Inv_onCallDisconnected(string callId, Dictionary<string, string> headers)
+        {
+            mBtnHung.SetActive(false);
+            mCallRingPanel.SetActive(false);
+        }
+
+        private void Inv_onCallConnected(string callId, Dictionary<string, string> headers)
+        {
+            mBtnHung.SetActive(true);
+        }
+
+        private void Inv_onMessageReceivedInCall(string callId, string text)
+        {
+            addLog(callId + " : " + text);
+        }
+
+        private void Inv_onCallRinging(string callId, Dictionary<string, string> headers)
+        {
+            mCallRingPanel.SetActive(true);
+        }
+
+        private void Inv_onIncomingCall(string callId, string from, string displayName, bool videoCall, Dictionary<string, string> headers)
+        {
+            mCallRingPanel.SetActive(true);
+            mIncName.text = displayName;
+            mIncCallId = new CallInner(callId, displayName, true, videoCall);
+        }
+
+        private void Invios_onConnectionSuccessful ()
         {
 			addLog("Connect from iso done!");
         }
@@ -71,29 +125,28 @@ namespace Invoice
         }
         public void onClickCall()
         {
-			
 			invios.call(new CallClassParamios(callNum.text, video.isOn, p2p.isOn, "", null));
-			mActiveCallId = inv.call(new CallClassParam(callNum.text, video.isOn, ""));
-			addLog("StartCall with ID: " + mActiveCallId);
+			string callID = inv.call(new CallClassParam(callNum.text, video.isOn, ""));
+            mActiveCallId = new CallInner(callID, "own", false, video.isOn);
+            mBtnHung.SetActive(true);
+            addLog("StartCall with ID: " + mActiveCallId.id);
         }
         public void onClickAnswer()
         {
-			invios.answer();
-			inv.answer(mActiveCallId);
+            mCallRingPanel.SetActive(false);
+            mActiveCallId = mIncCallId;
+            invios.answer();
+			inv.answer(mActiveCallId.id);
         }
         public void onClickDecline()
         {
-            Dictionary<string, string> dic = new Dictionary<string, string>();
-            dic.Add("key", "value");
-            dic.Add("key1", "value1");
-            InfoClassParam param = new InfoClassParam("qwe", "asd", "zxc", dic);
-            inv.sendInfo(param);
-            //inv.declineCall();
+            mCallRingPanel.SetActive(false);
+            inv.declineCall(mIncCallId.id);
         }
         public void onHangup()
         {
 			invios.hangup();
-			inv.hangup(mActiveCallId);
+			inv.hangup(mActiveCallId.id);
         }
         public void setMute()
         {
@@ -125,32 +178,5 @@ namespace Invoice
             _logStrNum += 1;
             _scroll.verticalNormalizedPosition = 0f;
         }
-
-       /* private void onConnectSuccessful()
-        {
-            addLog("Connect done!");
-        }
-        private void onConnectFailed(string pErr)
-        {
-            addLog("Connect failed" + pErr);
-        }
-        private void onLoginSeccessful(string s)
-        {
-            addLog("Login seccessful: " + s);
-        }
-        private void onLoginFailed(string s)
-        {
-            addLog("Login failed: " + s);
-        }
-        private void onCallRinging(string p, Dictionary<string, string> p2)
-        {
-            addLog("Call ringing: " + p);
-        }
-        private void onCallFailed(string p, int p1, string p2, Dictionary<string, string> p3)
-        {
-            addLog("Call failed: " + p);
-        }*/
-
-
     }
 }

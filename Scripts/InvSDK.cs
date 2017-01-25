@@ -11,21 +11,21 @@ namespace Invoice
         private AndroidJavaObject jo;
         public Action<String> LogMethod;
 
-        public delegate void deligateOnLoginSuccessful(string p1);
-        public delegate void deligateOnLoginFailed(string p1);
-        public delegate void deligateOnOneTimeKeyGenerated(string p1);
+        public delegate void deligateOnLoginSuccessful(string displayName);
+        public delegate void deligateOnLoginFailed(LoginFailureReason reason);
+        public delegate void deligateOnOneTimeKeyGenerated(string key);
         public delegate void deligateOnConnectionSuccessful();
         public delegate void deligateOnConnectionClosed();
-        public delegate void deligateOnConnectionFailedWithError(string p1);
-        public delegate void deligateOnCallConnected(string p1, Dictionary<string, string> p2);
-        public delegate void deligateOnCallDisconnected(string p1, Dictionary<string, string> p2);
-        public delegate void deligateOnCallRinging(string p1, Dictionary<string, string> p2);
-        public delegate void deligateOnCallFailed(string p1, int p2, string p3, Dictionary<string, string> p4);
-        public delegate void deligateOnCallAudioStarted(string p1);
-        public delegate void deligatonIncomingCall(String p1, String p2, String p3, Boolean p4, Dictionary<String, String> p5);
-        public delegate void deligateOnSIPInfoReceivedInCall(string p1, string p2, string p3, Dictionary<string, string> p4);
-        public delegate void deligateOnMessageReceivedInCall(string p1, string p2, Dictionary<string, string> p3);
-        public delegate void deligateOnNetStatsReceived(string p1, int p2);
+        public delegate void deligateOnConnectionFailedWithError(string reason);
+        public delegate void deligateOnCallConnected(string callId, Dictionary<string, string> headers);
+        public delegate void deligateOnCallDisconnected(string callId, Dictionary<string, string> headers);
+        public delegate void deligateOnCallRinging(string callId, Dictionary<string, string> headers);
+        public delegate void deligateOnCallFailed(string callId, int code, string reason, Dictionary<string, string> headers);
+        public delegate void deligateOnCallAudioStarted(string callId);
+        public delegate void deligatonIncomingCall(String callId, String from, String displayName, Boolean videoCall, Dictionary<String, String> headers);
+        public delegate void deligateOnSIPInfoReceivedInCall(string callId, string type, string content, Dictionary<string, string> headers);
+        public delegate void deligateOnMessageReceivedInCall(string callId, string text);
+        public delegate void deligateOnNetStatsReceived(string callId, int packetLoss);
 
         public event deligateOnNetStatsReceived onNetStatsReceived;
         public event deligateOnMessageReceivedInCall onMessageReceivedInCall;
@@ -315,7 +315,32 @@ namespace Invoice
         {
             addLog("faonLoginFailed: " + p);
             if (onLoginFailed != null)
-                onLoginFailed(p);
+            {
+                switch (p)
+                {
+                    case "INVALID_PASSWORD":
+                    {
+                        onLoginFailed(LoginFailureReason.INVALID_PASSWORD);
+                        break;
+                    }
+                    case "INVALID_USERNAME":
+                    {
+                        onLoginFailed(LoginFailureReason.INVALID_USERNAME);
+                        break;
+                    }
+                    case "ACCOUNT_FROZEN":
+                    {
+                        onLoginFailed(LoginFailureReason.ACCOUNT_FROZEN);
+                        break;
+                    }
+                    case "INTERNAL_ERROR":
+                    {
+                        onLoginFailed(LoginFailureReason.INTERNAL_ERROR);
+                        break;
+                    }
+                }
+            }
+                
         }
 	
 	/**
@@ -432,11 +457,11 @@ namespace Invoice
             addLog("faonMessageReceivedInCall");
             JSONNode node = GetParamList(p);
             if (onMessageReceivedInCall != null)
-                onMessageReceivedInCall(node[0].Value, node[1].Value, node[2].AsDictionary);
+                onMessageReceivedInCall(node[0].Value, node[1].Value);
         }
         public void faonNetStatsReceived(string p)
         {
-            addLog("faonMessageReceivedInCall");
+            addLog("faonNetStatsReceived");
             JSONNode node = GetParamList(p);
             if (onNetStatsReceived != null)
                 onNetStatsReceived(node[0], node[1].AsInt);
