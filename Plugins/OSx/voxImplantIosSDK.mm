@@ -111,8 +111,6 @@ enum SDKState
 @implementation DelegateSDK
 
 VoxImplant * sdk;
-enum SDKState state;
-NSString * activeCallId;
 NSString * unityObjName;
 UIAlertView * currentAlertView;
 UIView * remoteView;
@@ -132,44 +130,6 @@ ViewLayoutSize * sizeRemote;
     sizeRemote = pRemSize;
 }
 
-
--(SDKState)getState
-{
-    return state;
-}
-
--(void) setState:(enum SDKState) s
-{
-    state = s;
-    switch (state)
-    {
-        case SAMPLE_STATE_DISCONNECTED:
-        case SAMPLE_STATE_CONN_CONNECTED:
-        {
-            break;
-        }
-        case SAMPLE_STATE_ALERTING:
-        case SAMPLE_STATE_CONNECTING:
-        case SAMPLE_STATE_TERMINATING:
-        case SAMPLE_STATE_CONN_CONNECTING:
-        case SAMPLE_STATE_CONN_LOGGING_IN:
-        {
-            break;
-        }
-
-        case SAMPLE_STATE_IDLE:
-        {
-
-            break;
-        }
-        case SAMPLE_STATE_PROGRESSING:
-        case SAMPLE_STATE_CONNECTED:
-        {
-            break;
-        }
-    }
-}
-
 - (void)setObjName:(const char*)objName
 {
     unityObjName = [[NSString alloc] initWithUTF8String:objName];
@@ -184,14 +144,11 @@ ViewLayoutSize * sizeRemote;
 
 -(void)onConnectionSuccessful
 {
-    [self setState:SAMPLE_STATE_CONN_LOGGING_IN];
     [self callUnityObject:"fiosonConnectionSuccessful" Parameter:Nil];
 }
 
 -(void)onConnectionFailedWithError:(NSString *)reason
 {
-    [self setState:SAMPLE_STATE_DISCONNECTED];
-
     NSError *writeError = [NSError alloc];
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[NSArray arrayWithObjects:reason, nil] options:NSJSONWritingPrettyPrinted error:&writeError];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
@@ -201,7 +158,6 @@ ViewLayoutSize * sizeRemote;
 
 -(void)onConnectionClosed
 {
-    [self setState:SAMPLE_STATE_DISCONNECTED];
     [self callUnityObject:"fiosonConnectionClosed" Parameter:Nil];
 }
 
@@ -214,7 +170,6 @@ ViewLayoutSize * sizeRemote;
 }
 -(void)onLoginSuccessfulWithDisplayName:(NSString *)displayName
 {
-    [self setState:SAMPLE_STATE_IDLE];
     NSError *writeError = [NSError alloc];
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[NSArray arrayWithObjects:displayName, nil] options:NSJSONWritingPrettyPrinted error:&writeError];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
@@ -231,8 +186,7 @@ ViewLayoutSize * sizeRemote;
 
 -(void) onCallConnected:(NSString *)callId withHeaders:(NSDictionary *)headers
 {
-    [self setState:SAMPLE_STATE_CONNECTED];
-    [sdk attachAudioTo:activeCallId];
+    [sdk attachAudioTo:callId];
     UIView *rootView = [UIApplication sharedApplication].keyWindow.rootViewController.view;
     // create remoteView
     if (sizeRemote != nil)
@@ -264,9 +218,6 @@ ViewLayoutSize * sizeRemote;
         currentAlertView = Nil;
         [v dismissWithClickedButtonIndex:0 animated:false];
     }
-    [self setState:SAMPLE_STATE_IDLE];
-    activeCallId = Nil;
-
     [sdk setLocalPreview:Nil];
     [sdk setRemoteView: Nil];
     [self removeView:localView];
@@ -281,9 +232,6 @@ ViewLayoutSize * sizeRemote;
 
 -(void) onCallFailed:(NSString *)callId withCode:(int)code andReason:(NSString *)reason withHeaders:(NSDictionary *)headers
 {
-    [self setState:SAMPLE_STATE_IDLE];
-    activeCallId = Nil;
-
     [sdk setLocalPreview:Nil];
     [sdk setRemoteView: Nil];
     [self removeView:localView];
@@ -300,16 +248,6 @@ ViewLayoutSize * sizeRemote;
 
 -(void)onIncomingCall:(NSString *)callId caller:(NSString *)from named:(NSString *)displayName  withVideo: (bool) videoCall withHeaders:(NSDictionary *)headers
 {
-    if (state == SAMPLE_STATE_IDLE)
-    {
-        [self setState:SAMPLE_STATE_ALERTING];
-        activeCallId = callId;
-    }
-    else
-    {
-        [sdk declineCall:callId withHeaders:Nil];
-    }
-
     NSError *writeError = [NSError alloc];
     NSArray *array = [[NSArray alloc] initWithObjects:callId, from, displayName, videoCall ? @"true" : @"false", headers, nil];
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:array options:NSJSONWritingPrettyPrinted error:&writeError];
@@ -421,7 +359,7 @@ extern "C"
 
     void iosSDKstartCall(const char* pId, bool pWithVideo, const char* pCustom, const char* pHeaders)
     {
-        [delegates setState:SAMPLE_STATE_PROGRESSING];
+        NSString * activeCallId = [NSString alloc];
         activeCallId = [sdk createCall:[NSString stringWithUTF8String:pId] withVideo:pWithVideo andCustomData:[[NSString alloc] initWithUTF8String:pCustom]];
         [sdk attachAudioTo:activeCallId];
 
@@ -432,44 +370,43 @@ extern "C"
             JsonDic *headers = [[JsonDic alloc] initWithJSONString:[[NSString alloc] initWithUTF8String:pHeaders]];
             [sdk startCall:activeCallId withHeaders:headers.dic];
         }
+
+        UnitySendMessage([unityObjName UTF8String], "fiosonOnStartCall", [activeCallId UTF8String]);
     }
 
-    void iosSDKanswerCall(const char* pHeaders)
+    void iosSDKanswerCall(const char* pCallId, const char* pHeaders)
     {
-        if (activeCallId != Nil)
+        if (pCallId != Nil)
         {
             if (pHeaders == Nil)
-                [sdk answerCall:activeCallId withHeaders:Nil];
+                [sdk answerCall:[NSString stringWithUTF8String:pCallId] withHeaders:Nil];
             else
             {
                 JsonDic *headers = [[JsonDic alloc] initWithJSONString:[[NSString alloc] initWithUTF8String:pHeaders]];
-                [sdk answerCall:activeCallId withHeaders:headers.dic];
+                [sdk answerCall:[NSString stringWithUTF8String:pCallId] withHeaders:headers.dic];
             }
         }
     }
 
-    void iosSDKHungup(const char* pHeaders)
+    void iosSDKHungup(const char* pCallId, const char* pHeaders)
     {
-        [delegates setState:SAMPLE_STATE_TERMINATING];
         if (pHeaders == Nil)
-            [sdk disconnectCall:activeCallId withHeaders:Nil];
+            [sdk disconnectCall:[NSString stringWithUTF8String:pCallId] withHeaders:Nil];
         else
         {
             JsonDic *headers = [[JsonDic alloc] initWithJSONString:[[NSString alloc] initWithUTF8String:pHeaders]];
-            [sdk disconnectCall:activeCallId withHeaders:headers.dic];
+            [sdk disconnectCall:[NSString stringWithUTF8String:pCallId] withHeaders:headers.dic];
         }
     }
 
-    void iosSDKDecline(const char* pHeaders)
+    void iosSDKDecline(const char* pCallId, const char* pHeaders)
     {
-        [delegates setState:SAMPLE_STATE_TERMINATING];
-
-        if (pHeaders == Nil)
-            [sdk declineCall:activeCallId withHeaders:Nil];
+         if (pHeaders == Nil)
+            [sdk declineCall:[NSString stringWithUTF8String:pCallId] withHeaders:Nil];
         else
         {
             JsonDic *headers = [[JsonDic alloc] initWithJSONString:[[NSString alloc] initWithUTF8String:pHeaders]];
-            [sdk declineCall:activeCallId withHeaders:headers.dic];
+            [sdk declineCall:[NSString stringWithUTF8String:pCallId] withHeaders:headers.dic];
         }
     }
 
@@ -554,4 +491,8 @@ extern "C"
         [sdk setUseLoudspeaker:pUseLoudspeaker];
     }
 
+    void iosSDKCloseConnection()
+    {
+        [sdk closeConnection];
+    }
 }
