@@ -68,6 +68,7 @@ public class AVoImClient implements VoxImplantCallback {
         public String userCall;
         public Boolean videoCall;
         public String customData;
+        public PairKeyValue[] headers;
 
         public CallClassParam(String pCallUser, Boolean pVideoCall, String pCustomData)
         {
@@ -184,9 +185,9 @@ public class AVoImClient implements VoxImplantCallback {
     public String call(String p){
         CallClassParam param = GetJsonObj(p, CallClassParam.class);
         String callId = client.createCall(param.userCall, param.videoCall, param.customData);
-        Map<String, String> headers = new HashMap<String, String>();
-        client.startCall(callId, headers);
+        client.startCall(callId, GetMapFromList(param.headers));
         mCallsMap.put(callId, new Call(callId, false, param.videoCall));
+        onStartCall(callId);
         return callId;
     }
     public void answer(String pCallId){
@@ -297,6 +298,10 @@ public class AVoImClient implements VoxImplantCallback {
             });
         }
         Log.d(TAG, "after handler if");
+    }
+
+    public void onStartCall(String s) {
+        unityPlayer.UnitySendMessage(sdkObjName,"faonOnStartCall", s);
     }
 
 

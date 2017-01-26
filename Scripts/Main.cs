@@ -15,7 +15,7 @@ namespace Invoice
         public ScrollRect _scroll;
         int _logStrNum = 0;
 
-        public InputField name;
+        public InputField loginName;
         public InputField pass;
         public InputField callNum;
         public Toggle p2p;
@@ -52,31 +52,48 @@ namespace Invoice
         {
 			addLog("Target platform: " + Application.platform);
 
-//			invios = GameObject.FindObjectOfType<InvSDKios>();
-//			invios.init("SDKIOS", new SizeView(0,0, 100, 100), new SizeView(0, 150, 100, 100));
-//			invios.LogMethod += addLog;
-//			invios.onConnectionSuccessful += Invios_onConnectionSuccessful;
-
             inv = GameObject.FindObjectOfType<InvSDK>();
 			inv.init("SDK", new SizeView(0,0, 100, 100), new SizeView(0, 150, 100, 100));
             inv.LogMethod += addLog;
             inv.onConnectionSuccessful += Inv_onConnectionSuccessful;
             inv.onIncomingCall += Inv_onIncomingCall;
             inv.onCallRinging += Inv_onCallRinging;
+			inv.onCallFailed += Inv_onCallFailed;
             inv.onMessageReceivedInCall += Inv_onMessageReceivedInCall;
             inv.onCallConnected += Inv_onCallConnected;
             inv.onCallDisconnected += Inv_onCallDisconnected;
+			inv.onStartCall += Inv_onStartCall;
+
+			setMute();
+			sendVideo();
+			switchCam();
+        }
+
+        void Inv_onStartCall (string callId)
+        {
+			mActiveCallId = new CallInner(callId, "own", false, video.isOn);
+        }
+
+        private void Inv_onCallFailed (string callId, int code, string reason, Dictionary<string, string> headers)
+        {
+			mBtnHung.SetActive(false);
+			mCallRingPanel.SetActive(false);
+			mActiveCallId = null;
+			mIncCallId = null; 
         }
 
         private void Inv_onCallDisconnected(string callId, Dictionary<string, string> headers)
         {
             mBtnHung.SetActive(false);
             mCallRingPanel.SetActive(false);
+			mActiveCallId = null;
+			mIncCallId = null; 
         }
 
         private void Inv_onCallConnected(string callId, Dictionary<string, string> headers)
         {
-            mBtnHung.SetActive(true);
+			addLog("Call connected");
+			mBtnHung.SetActive(true);
         }
 
 		private void Inv_onMessageReceivedInCall(string callId, string text, Dictionary<string, string> headers)
@@ -86,7 +103,7 @@ namespace Invoice
 
         private void Inv_onCallRinging(string callId, Dictionary<string, string> headers)
         {
-            mCallRingPanel.SetActive(true);
+			addLog("Call ringing");
         }
 
         private void Inv_onIncomingCall(string callId, string from, string displayName, bool videoCall, Dictionary<string, string> headers)
@@ -107,14 +124,12 @@ namespace Invoice
         }
         public void onClickLogin()
         {
-            inv.login(new LoginClassParam(name.text, pass.text));
+			inv.login(new LoginClassParam(loginName.text, pass.text));
         }
         public void onClickCall()
         {
-			string callID = inv.call(new CallClassParam(callNum.text, video.isOn, p2p.isOn, "", null));
-            mActiveCallId = new CallInner(callID, "own", false, video.isOn);
+			inv.call(new CallClassParam(callNum.text, video.isOn, p2p.isOn, "", null));
             mBtnHung.SetActive(true);
-            addLog("StartCall with ID: " + mActiveCallId.id);
         }
         public void onClickAnswer()
         {
@@ -129,6 +144,7 @@ namespace Invoice
         }
         public void onHangup()
         {
+			addLog("Hungup CallID: <<" + mActiveCallId.id + ">>");
 			inv.hangup(mActiveCallId.id, null);
         }
         public void setMute()

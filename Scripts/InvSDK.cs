@@ -4,6 +4,7 @@ using UnityEngine;
 using SimpleJSON;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace Invoice
 {
@@ -28,6 +29,7 @@ namespace Invoice
         public delegate void deligateOnSIPInfoReceivedInCall(string callId, string type, string content, Dictionary<string, string> headers);
 		public delegate void deligateOnMessageReceivedInCall(string callId, string text, Dictionary<string, string> headers);
         public delegate void deligateOnNetStatsReceived(string callId, int packetLoss);
+		public delegate void deligateOnStartCall(string callId);
 
 		/**
 		Called when packet loss data is received from the Voximplant cloud
@@ -133,6 +135,12 @@ namespace Invoice
 		@param {string} username Display name of logged in user
 		*/
         public event deligateOnLoginSuccessful onLoginSuccessful;
+		/**
+		Called when you start call
+		@event onStartCall
+		@param {string} callid Call identifier, previously returned by the call() function
+		*/
+		public event deligateOnStartCall onStartCall;
 
 		[DllImport ("__Internal")]
 		private static extern void iosSDKinit(string pUnityObj);
@@ -143,8 +151,8 @@ namespace Invoice
 		[DllImport ("__Internal")]
 		private static extern void iosSDKlogin(string pLogin, string pPass);
 
-		[DllImport ("__Internal")]
-		private static extern string iosSDKstartCall(string pId, bool pWithVideo, string pCustomData, string pHeaderJson);
+		[DllImport ("__Internal", CallingConvention = CallingConvention.Cdecl)]
+		private static extern void iosSDKstartCall(string pId, bool pWithVideo, string pCustomData, string pHeaderJson);
 
 		[DllImport ("__Internal")]
 		private static extern void iosSDKanswerCall(string pCallId, string pHeaderJson);
@@ -200,30 +208,6 @@ namespace Invoice
 		[DllImport ("__Internal")]
 		private static extern void iosSDKsetRemoteSize(int xPos, int yPos, int pWidth, int pHeight);
 
-//        public void Start()
-//        {
-//            if (AndroidPlatform())
-//            {
-//                try
-//                {
-//                    jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-//                }
-//                catch (UnityException e)
-//                {
-//					Debug.logger.Log("JC Error: " + e.Message);
-//                }
-//
-//                try
-//                {
-//                    jo = jc.GetStatic<AndroidJavaObject>("currentActivity").Get<AndroidJavaObject>("mVoxClient");
-//                }
-//                catch (AndroidJavaException e)
-//                {
-//                    Debug.logger.Log("JO Error: " + e.Message);
-//                }
-//            }
-//
-//        }
         private bool AndroidPlatform()
         {
             return Application.platform == RuntimePlatform.Android;
@@ -277,6 +261,7 @@ namespace Invoice
 				}
 			}
 		}
+
 		public void init(String pObjectNameSDK, SizeView pLocalView, SizeView pRemoteView)
 		{
 			init(pObjectNameSDK);
@@ -329,16 +314,12 @@ namespace Invoice
 		@method call
 		@param {CallClassParam} pCall Call options: number to call, video call flag and custom data to send alongside the call. For SIP compatibility reasons number should be a non-empty string even if the number itself is not used by a Voximplant cloud scenario. "OnCallConnected" will be called on call success, or "OnCallFailed" will be called if Voximplant cloud rejects a call or network error occur 
 		*/
-        public string call(CallClassParam pCall) 
+        public void call(CallClassParam pCall) 
         {
-			addLog("Call to user " + pCall.userCall);
             if (AndroidPlatform())
-                return jo.Call<string>("call", Invoice.JsonUtility.ToJson(pCall));
-			if (IPhonePlatform()){
-				return iosSDKstartCall(pCall.userCall, pCall.videoCall, pCall.customData, Invoice.JsonUtility.ToJson(new PairKeyValueArray(pCall.headers)));
-			}
-			return "";
-
+                jo.Call<string>("call", Invoice.JsonUtility.ToJson(pCall));
+			if (IPhonePlatform())
+				iosSDKstartCall(pCall.userCall, pCall.videoCall, pCall.customData, Invoice.JsonUtility.ToJson(new PairKeyValueArray(pCall.headers)));
         }
 	
 		/**
@@ -347,12 +328,12 @@ namespace Invoice
 		@param {string} p Call identifier
 		@param {Dictionary} (Only for iOS) headers Optional SIP headers set by a info sender
 		*/
-        public void answer(string pCallId, Dictionary<string, string> pHeader)
+        public void answer(string pCallId, Dictionary<string, string> pHeader = null)
         {
             if (AndroidPlatform())
                 jo.Call("answer", pCallId);
 			if (IPhonePlatform())
-				iosSDKanswerCall(pCallId, Invoice.JsonUtility.ToJson(pHeader)); 
+				iosSDKanswerCall(pCallId, Invoice.JsonUtility.ToJson(new PairKeyValueArray(GetDictionaryToArray(pHeader)))); 
         }
 	
 		/**
@@ -361,12 +342,12 @@ namespace Invoice
 		@param {string} p Call identifier
 		@param {Dictionary} (Only for iOS) headers Optional SIP headers set by a info sender
 		*/
-        public void declineCall(string pCallId, Dictionary<string, string> pHeader)
+        public void declineCall(string pCallId, Dictionary<string, string> pHeader = null)
         {
             if (AndroidPlatform())
                 jo.Call("declineCall", pCallId);
 			if (IPhonePlatform())
-				iosSDKDecline(pCallId, Invoice.JsonUtility.ToJson(pHeader));
+				iosSDKDecline(pCallId, Invoice.JsonUtility.ToJson(new PairKeyValueArray(GetDictionaryToArray(pHeader))));
         }
 	
 		/**
@@ -375,12 +356,12 @@ namespace Invoice
 		@param {string} p Call identifier
 		@param {Dictionary} (Only for iOS) headers Optional SIP headers set by a info sender
 		*/
-        public void hangup(string pCallId, Dictionary<string, string> pHeader)
+		public void hangup(string pCallId, Dictionary<string, string> pHeader = null)
         {
             if (AndroidPlatform())
 				jo.Call("hangup", pCallId);
 			if (IPhonePlatform())
-				iosSDKHungup(pCallId, Invoice.JsonUtility.ToJson(pHeader));
+				iosSDKHungup(pCallId, Invoice.JsonUtility.ToJson(new PairKeyValueArray(GetDictionaryToArray(pHeader))));
         }
 	
 		/**
@@ -437,12 +418,12 @@ namespace Invoice
 		@param {string} p Call identifier
 		@param {Dictionary} (Only for iOS) headers Optional SIP headers set by a info sender
 		*/
-        public void disconnectCall(string p, Dictionary<string, string> pHeader)
+        public void disconnectCall(string p, Dictionary<string, string> pHeader = null)
         {
             if (AndroidPlatform())
                 jo.Call("disconnectCall", Invoice.JsonUtility.ToJson(new StringClassParam(p)));
 			if (IPhonePlatform())
-				iosSDKdisconnectCall(p, Invoice.JsonUtility.ToJson(pHeader));
+				iosSDKdisconnectCall(p, Invoice.JsonUtility.ToJson(new PairKeyValueArray(GetDictionaryToArray(pHeader))));
         }
 	
 		/**
@@ -505,7 +486,7 @@ namespace Invoice
             if (AndroidPlatform())
                 jo.Call("sendInfo", Invoice.JsonUtility.ToJson(pParam));
 			if (IPhonePlatform())
-				iosSDKsendInfo(pParam.callId,pParam.mimeType,pParam.content, Invoice.JsonUtility.ToJson(pParam.headers));
+				iosSDKsendInfo(pParam.callId,pParam.mimeType,pParam.content, Invoice.JsonUtility.ToJson(new PairKeyValueArray(pParam.headers)));
         }
 	
 		/**
@@ -518,7 +499,7 @@ namespace Invoice
             if (AndroidPlatform())
                 jo.Call("sendMessage", Invoice.JsonUtility.ToJson(pParam));
 			if (IPhonePlatform())
-				iosSDKsendMessage(pParam.callId, pParam.text, Invoice.JsonUtility.ToJson(pParam.headers));
+				iosSDKsendMessage(pParam.callId, pParam.text, Invoice.JsonUtility.ToJson(new PairKeyValueArray(pParam.headers)));
         }
 	
 		/**
@@ -673,6 +654,13 @@ namespace Invoice
                 onNetStatsReceived(node[0], node[1].AsInt);
         }
 
+		public void faonOnStartCall(string p)
+		{
+			addLog("faonOnStartCall: " + p);
+			if (onStartCall != null)
+				onStartCall(p);
+		}
+
 		// callbacks from iOS sdk
 		public void fiosonConnectionSuccessful()
 		{
@@ -797,6 +785,13 @@ namespace Invoice
 				onNetStatsReceived(node[0].Value, node[1].AsInt);
 		}
 
+		public void fiosonOnStartCall(string p)
+		{
+			addLog("fiosonOnStartCall: " + p);
+			if (onStartCall != null)
+				onStartCall(p);
+		}
+
         public static JSONNode GetParamList(string p)
         {
             JSONNode rootNode = JSON.Parse(p);
@@ -805,6 +800,9 @@ namespace Invoice
 	
         public static PairKeyValue[] GetDictionaryToArray(Dictionary<string, string> pDic)
         {
+			if (pDic == null)
+				return new PairKeyValue[0];
+
             PairKeyValue[] list = new PairKeyValue[pDic.Count];
             int i = 0;
             foreach (KeyValuePair<string, string> pair in pDic)

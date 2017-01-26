@@ -97,25 +97,6 @@ namespace Invoice
         }
     }
 	[System.Serializable]
-    public class _CallClassParam
-    {
-		[JSONItem("userCall", typeof(string))]
-        public string userCall;
-		[JSONItem("videoCall", typeof(bool))]
-        public bool videoCall;
-		[JSONItem("customData", typeof(string))]
-        public string customData;
-		[JSONArray("headers",typeof(PairKeyValue))]
-		public PairKeyValue[] headers;
-
-		public _CallClassParam(string pCallUser, bool pVideoCall, bool pP2P, string pCustomData, Dictionary<string, string> pHeader = null)
-        {
-            userCall = pCallUser;
-            videoCall = pVideoCall;
-            customData = pCustomData;
-        }
-    }
-	[System.Serializable]
 	public class CallClassParam
 	{
 		[JSONItem("userCall", typeof(string))]
@@ -262,6 +243,9 @@ namespace Invoice
 	{
 		public static string ToJson(object obj)
 		{
+			if (obj == null)
+				return null;
+
 			JSONObject jsonObject = new JSONObject();
 			JSONSerialize.Serialize(obj, jsonObject);
 			return jsonObject.ToString();
