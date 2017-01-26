@@ -407,9 +407,7 @@ namespace Invoice
             addLog("faonCallRinging: " + p);
             JSONNode node = GetParamList(p);
             if (onCallRinging != null)
-                onCallRinging(node[0].Value, node[1].
-		
-		);
+		onCallRinging(node[0].Value, node[1].AsDictionary);
         }
 	
 	/**
