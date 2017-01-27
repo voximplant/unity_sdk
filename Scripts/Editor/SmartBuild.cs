@@ -84,7 +84,7 @@ public class ScriptBatch
 				if (path.Contains(".apk"))
 					break;
 
-        string classPath = "/com/voximplant/sdk";
+        		string classPath = "/com/voximplant/sdk";
 				string[] filesList = Directory.GetFiles(path, "UnityPlayerActivity.java", SearchOption.AllDirectories);
 
 				if (filesList.Length == 0)
@@ -154,18 +154,62 @@ public class ScriptBatch
 				if (!existModifiy)
 					File.WriteAllLines(activityPath, linesList.ToArray());
 
+				filesList = Directory.GetFiles(path, "AndroidManifest.xml", SearchOption.AllDirectories);
+				if (filesList.Length == 0)
+				{
+					EditorUtility.DisplayDialog("Error", "Can't find AndroidManifest.xml", "Ok");
+					return;
+				}
+
+				string activityPathManifest = filesList[0];
+
+				string[] allLinesManifest = File.ReadAllLines( activityPathManifest );
+				List<string> linesListManifest = new List<string>(allLinesManifest);
+
+				bool existModifiyManifest = false;
+				bool permissionAdd = false;
+				for(int i = 0; i < linesListManifest.Count; i++)
+				{
+					if (linesList[i].Contains("<uses-permission android:name=\"android.permission.RECORD_AUDIO\" />"))
+					{
+						existModifiyManifest = true;
+					}
+				}
+
+				if (!existModifiyManifest)
+				{
+					for(int i = 0; i < linesListManifest.Count; i++)
+					{
+						if (linesListManifest[i].Contains("</application>") && !permissionAdd)
+						{
+							linesListManifest.Insert(i+1, "<uses-permission android:name=\"android.permission.RECORD_AUDIO\" />");
+							linesListManifest.Insert(i+2, "<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\" />");
+							linesListManifest.Insert(i+3, "<uses-permission android:name=\"android.permission.INTERNET\" />");
+							linesListManifest.Insert(i+4, "<uses-permission android:name=\"android.permission.CAMERA\" />");
+							linesListManifest.Insert(i+5, "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />");
+
+							permissionAdd = true;
+						}
+					}
+				}
+
+				//write file
+				if (!existModifiyManifest)
+					File.WriteAllLines(activityPathManifest, linesListManifest.ToArray());
+
+
 				// add package additional files
 				string[] dirList = Directory.GetDirectories(path,"src", SearchOption.AllDirectories);
 
 				if (dirList.Length != 0)
 				{
 
-          string[] dirAndrPart = Directory.GetDirectories("Assets/", "androidPartSDK", SearchOption.AllDirectories);
-          if (dirAndrPart == null)
-              {
-                  EditorUtility.DisplayDialog("Error", "Folder 'androidPartSDK' did not fiend in Assets folder", "Ok");
-                  return;
-              }
+					string[] dirAndrPart = Directory.GetDirectories("Assets/", "androidPartSDK", SearchOption.AllDirectories);
+					if (dirAndrPart == null)
+					{
+					  EditorUtility.DisplayDialog("Error", "Folder 'androidPartSDK' did not fiend in Assets folder", "Ok");
+					  return;
+					}
 					if (Directory.Exists(dirAndrPart[0] + "/comvoximplant/") && Directory.Exists(dirList[0]))
 					{
 						string newPackagePath = dirList[0] + classPath;
