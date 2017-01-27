@@ -128,6 +128,11 @@ public class ScriptBatch
 						{
 							linesList.Insert(i+1, "import android.annotation.TargetApi;");
 							linesList.Insert(i+2, "import com.voximplant.sdk.AVoImClient;");
+						
+							linesList.Insert(i+3, "import android.app.AlertDialog;");
+							linesList.Insert(i+4, "import android.content.DialogInterface;");
+							linesList.Insert(i+5, "import android.content.pm.PackageManager;");
+
 							importsTargetAdd = true;
 						}
 
@@ -139,11 +144,7 @@ public class ScriptBatch
 
 						if (linesList[i].Contains("mUnityPlayer.resume();") && !permisionRequestAdd)
 						{
-							linesList.Insert(i+2,"\n" + "\t@TargetApi(22)\n" +
-								"\t@Override\n " +
-								"\tpublic void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) \n\t{\n" +
-								"\t\tmVoxClient.Init();\n" +
-								"\t}");
+							linesList.Insert(i+2,"\n" + "@TargetApi(22)\n\t@Override\n \tpublic void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)\n\t{\n\t\tif (grantResults.length > 0) {\n\t\t\tboolean audioAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;\n\t\t\tboolean videoAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;\n\t\t\tif (!audioAccepted && !videoAccepted) {\n\t\t\t\tshowPermissionAlertDialog();\n\t\t\t}\n\t\t\tmVoxClient.Init();\n\t\t} else {\n\t\t\tshowPermissionAlertDialog();\n\t\t}\n\t}\n\n\tprivate void showPermissionAlertDialog() {\n\t\tAlertDialog.Builder builder = new AlertDialog.Builder(this);\n\t\tbuilder.setMessage(\"Permissions for audio and video are not granted. Closing application\")\n\t\t\t\t.setTitle(\"Permission error\");\n\t\tbuilder.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n\t\t\t@Override\n\t\t\tpublic void onClick(DialogInterface dialogInterface, int i) {\n\t\t\t\tfinish();\n\t\t\t\tSystem.exit(0);\n\t\t\t}\n\t\t});\n\t\tbuilder.show();\n\t}");
 							permisionRequestAdd = true;
 						}
 					}

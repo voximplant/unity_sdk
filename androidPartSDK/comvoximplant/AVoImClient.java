@@ -1,25 +1,14 @@
 package com.voximplant.sdk;
 
 import android.Manifest;
-import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.hardware.Camera;
-import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -32,9 +21,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
 
 public class AVoImClient implements VoxImplantCallback {
 
@@ -43,8 +30,29 @@ public class AVoImClient implements VoxImplantCallback {
     private UnityPlayer unityPlayer;
     private Map<String, Call> mCallsMap;
     private String sdkObjName = "SDK";
-    private Dialog mCurVideoDialog;
+    private DialogFragment mVideoLocalDialog;
+    private DialogFragment mVideoRemoteDialog;
+    private ViewLayoutSize mSizeLocal = new ViewLayoutSize(-1,-1,-1,-1);
+    private ViewLayoutSize mSizeRemote = new ViewLayoutSize(-1,-1,-1,-1);
     private String TAG = this.getClass().getSimpleName();
+
+    public class ViewLayoutSize {
+        public int x_pos;
+        public int y_pos;
+        public int width;
+        public int height;
+
+        public ViewLayoutSize(int pX, int pY, int pW, int pH){
+            x_pos = pX;
+            y_pos = pY;
+            width = pW;
+            height = pH;
+        }
+
+        public int[] getArray(){
+            return new int[]{x_pos, y_pos, width, height};
+        }
+    }
 
     public class LoginClassParam    {
         public String login;
@@ -163,7 +171,7 @@ public class AVoImClient implements VoxImplantCallback {
         client.setAndroidContext(cntx);
         client.setCallback(this);
         client.setCamera(Camera.CameraInfo.CAMERA_FACING_FRONT);
-        client.setCameraResolution(320, 240);
+        client.setCameraResolution(320, 320);
         Log.d("VOXIMPLANT", "End init");
     }
 
@@ -254,6 +262,12 @@ public class AVoImClient implements VoxImplantCallback {
         BoolClassParam param = GetJsonObj(pUseLoudSpeaker, BoolClassParam.class);
         client.setUseLoudspeaker(param.value);
     }
+    public void setLocalSize(String pSizejson){
+        mSizeLocal = GetJsonObj(pSizejson, ViewLayoutSize.class);
+    }
+    public void setRemoteSize(String pSizejson){
+        mSizeRemote = GetJsonObj(pSizejson, ViewLayoutSize.class);
+    }
 
     @Override
     public void onLoginSuccessful(String s) {
@@ -286,92 +300,23 @@ public class AVoImClient implements VoxImplantCallback {
     @Override
     public void onCallConnected(final String s, Map<String, String> map) {
         unityPlayer.UnitySendMessage(sdkObjName,"faonCallConnected",GetParamListToString(new ArrayList<Object>(Arrays.asList(s,map))));
-        Log.d(TAG, "before handler if");
         if (mCallsMap.get(s).video) {
-            Log.d(TAG, "if (_activeCall.video) ");
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
-                @Override
-                public void run() {
-                    Log.d(TAG, " public void run() ");
-                    mCurVideoDialog = showDialog(s);
-                }
-            });
+            mVideoLocalDialog = CallDialogFragment.showDialog(UnityPlayer.currentActivity, mSizeLocal.getArray(), true);
+            mVideoRemoteDialog = CallDialogFragment.showDialog(UnityPlayer.currentActivity, mSizeRemote.getArray(), false);
         }
-        Log.d(TAG, "after handler if");
     }
 
     public void onStartCall(String s) {
         unityPlayer.UnitySendMessage(sdkObjName,"faonOnStartCall", s);
-    }
-
-
-    private GLSurfaceView mVideo;
-
-    private Dialog showDialog(final String pCallId){
-        FrameLayout frameLayout = new FrameLayout(cntx);
-        frameLayout.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        frameLayout.setBackgroundColor(Color.WHITE);
-        Log.d(TAG, "Create button");
-        Button btnHungup = new Button(cntx);
-        btnHungup.setText("Hungup");
-        btnHungup.setGravity(Gravity.BOTTOM);
-        btnHungup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                hangup(pCallId);
-            }
-        });
-
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.WRAP_CONTENT,
-                FrameLayout.LayoutParams.WRAP_CONTENT);
-        params.setMargins(10,10,10,10);
-        params.gravity = Gravity.CENTER_HORIZONTAL;
-        frameLayout.addView(btnHungup, params);
-
-        Log.d(TAG, "Create GL surface");
-        if(mVideo == null) {
-            mVideo = new GLSurfaceView(cntx);
-            Log.d(TAG, "Set remote view");
-            VoxImplantClient.instance().setRemoteView(mVideo);
-            VoxImplantClient.instance().sendVideo(true);
-            mVideo.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            frameLayout.addView(mVideo);
-        }
-        mVideo.requestLayout();
-
-        Log.d(TAG, "Create Dialog");
-        Dialog dialog = new Dialog(this.cntx);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                //nothing;
-            }
-        });
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.addContentView(frameLayout, new RelativeLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT));
-        Log.d(TAG, "Show Dialog");
-        dialog.show();
-        Log.d(TAG, "return dialog");
-        return dialog;
+        mCallsMap.put(s, new Call(s, false, true));
     }
 
     @Override
     public void onCallDisconnected(String s, Map<String, String> map) {
         unityPlayer.UnitySendMessage(sdkObjName,"faonCallDisconnected",GetParamListToString(new ArrayList<Object>(Arrays.asList(s,map))));
-
-        // Close active video dialog
-        if(mCurVideoDialog != null) {
-            mCurVideoDialog.dismiss();
-            mCurVideoDialog = null;
-            VoxImplantClient.instance().setRemoteView(null);
-            VoxImplantClient.instance().sendVideo(false);
-        }
-
+        mCallsMap.remove(s);
+        mVideoLocalDialog.dismiss();
+        mVideoRemoteDialog.dismiss();
     }
     @Override
     public void onCallRinging(String s, Map<String, String> map) {

@@ -225,21 +225,22 @@ namespace Invoice
 
 		public void setLocalSizeView(SizeView pSize)
 		{
+			if (AndroidPlatform())
+				jo.Call("setLocalSize", Invoice.JsonUtility.ToJson(pSize));
 			if (IPhonePlatform())
 				iosSDKsetLocalSize(pSize.x_pos, pSize.y_pos, pSize.width, pSize.height);
 		}
 
 		public void setRemoteSizeView(SizeView pSize)
 		{
+			if (AndroidPlatform())
+				jo.Call("setRemoteSize", Invoice.JsonUtility.ToJson(pSize));
 			if (IPhonePlatform())
 				iosSDKsetRemoteSize(pSize.x_pos, pSize.y_pos, pSize.width, pSize.height);
 		}
 
-		public void init(String pObjectNameSDK)
+		public void init(String pObjectNameSDK, SizeView pLocalView, SizeView pRemoteView)
 		{
-			if (IPhonePlatform())
-				iosSDKinit(pObjectNameSDK);
-			
 			if (AndroidPlatform())
 			{
 				try
@@ -260,16 +261,12 @@ namespace Invoice
 					Debug.logger.Log("JO Error: " + e.Message);
 				}
 			}
-		}
-
-		public void init(String pObjectNameSDK, SizeView pLocalView, SizeView pRemoteView)
-		{
-			init(pObjectNameSDK);
 			if (IPhonePlatform())
-			{
-				setLocalSizeView(pLocalView);
-				setRemoteSizeView(pRemoteView);
-			}
+				iosSDKinit(pObjectNameSDK);
+			
+			setLocalSizeView(pLocalView);
+			setRemoteSizeView(pRemoteView);
+
 		}
 			
         /**

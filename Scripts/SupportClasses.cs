@@ -38,13 +38,17 @@ namespace Invoice
         CAMERA_FACING_BACK
     }
 
+	[System.Serializable]
 	public class SizeView
 	{
+		[JSONItem("x_pos",typeof(int))]
 		public int x_pos;
+		[JSONItem("y_pos",typeof(int))]
 		public int y_pos;
+		[JSONItem("width",typeof(int))]
 		public int width;
+		[JSONItem("height",typeof(int))]
 		public int height;
-
 		public SizeView(int pXpos, int pYpos, int pWidth, int pHeight)
 		{
 			x_pos = pXpos;
