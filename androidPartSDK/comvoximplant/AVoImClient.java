@@ -3,11 +3,13 @@ package com.voximplant.sdk;
 import android.Manifest;
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.PermissionChecker;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -152,17 +154,36 @@ public class AVoImClient implements VoxImplantCallback {
         Log.d("VOXIMPLANT", "Create instance");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Log.d("VOXIMPLANT", "Request permissions");
-            ActivityCompat.requestPermissions(UnityPlayer.currentActivity,
-                    new String[]{   Manifest.permission.RECORD_AUDIO,
-                            Manifest.permission.MODIFY_AUDIO_SETTINGS,
-                            Manifest.permission.INTERNET,
-                            Manifest.permission.CAMERA,
-                            Manifest.permission.ACCESS_NETWORK_STATE},1);
+            String[] ListPermission = new String[]{   Manifest.permission.RECORD_AUDIO,
+                    Manifest.permission.MODIFY_AUDIO_SETTINGS,
+                    Manifest.permission.INTERNET,
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.ACCESS_NETWORK_STATE};
+
+            if (!isPermissionGranted(ListPermission)) {
+                ActivityCompat.requestPermissions(UnityPlayer.currentActivity, ListPermission, 1);
+            }
         }
         else {
-            Log.d("VOXIMPLANT", "Init");
             Init();
         }
+    }
+
+    private boolean isPermissionGranted(String[] pListPermissions){
+        for (String permission: pListPermissions) {
+            if (checkSelfPermission(cntx, permission) != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static int checkSelfPermission(Context context, String permission) {
+        if (permission == null) {
+            throw new IllegalArgumentException("permission is null");
+        }
+
+        return context.checkPermission(permission, android.os.Process.myPid(), android.os.Process.myUid());
     }
 
     public void Init(){

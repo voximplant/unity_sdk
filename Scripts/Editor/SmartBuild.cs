@@ -168,6 +168,7 @@ public class ScriptBatch
 
 				bool existModifiyManifest = false;
 				bool permissionAdd = false;
+				bool metadataAdd = false;
 				for(int i = 0; i < linesListManifest.Count; i++)
 				{
 					if (linesList[i].Contains("<uses-permission android:name=\"android.permission.RECORD_AUDIO\" />"))
@@ -190,6 +191,13 @@ public class ScriptBatch
 
 							permissionAdd = true;
 						}
+
+						if (linesListManifest[i].Contains("</intent-filter>") && !metadataAdd)
+						{
+							linesListManifest.Insert(i+1, "<meta-data android:name=\"unityplayer.SkipPermissionsDialog\" android:value=\"true\" />");
+							metadataAdd = true;
+						}
+
 					}
 				}
 
