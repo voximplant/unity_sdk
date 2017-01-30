@@ -239,7 +239,7 @@ namespace Invoice
 				iosSDKsetRemoteSize(pSize.x_pos, pSize.y_pos, pSize.width, pSize.height);
 		}
 
-		public void init(String pObjectNameSDK, SizeView pLocalView, SizeView pRemoteView)
+		public void init(String pObjectNameSDK, SizeView pLocalView = null, SizeView pRemoteView = null)
 		{
 			if (AndroidPlatform())
 			{
@@ -264,6 +264,8 @@ namespace Invoice
 			if (IPhonePlatform())
 				iosSDKinit(pObjectNameSDK);
 			
+			if (pLocalView == null) pLocalView = new SizeView(0, 0, 100, 100);
+			if (pRemoteView == null) pRemoteView = new SizeView(0, 150, 100, 100);
 			setLocalSizeView(pLocalView);
 			setRemoteSizeView(pRemoteView);
 
