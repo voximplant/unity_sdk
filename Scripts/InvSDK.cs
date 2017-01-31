@@ -239,6 +239,13 @@ namespace Invoice
 				iosSDKsetRemoteSize(pSize.x_pos, pSize.y_pos, pSize.width, pSize.height);
 		}
 
+		/**
+		Initiate SDK
+		@method init
+		@param {String} pObjectNameSDK Name of Unity GameObject to receive SDK events. Script connected to that object calls this 'init' method
+		@param {SizeView} pLocalView Optional view to display local video into. Default is SizeView(0, 0, 100, 100)
+		@param {SizeView} pRemoteView Optional view to display remote video into. Default is SizeView(0, 150, 100, 100)
+		*/
 		public void init(String pObjectNameSDK, SizeView pLocalView = null, SizeView pRemoteView = null)
 		{
 			if (AndroidPlatform())
