@@ -163,6 +163,9 @@ public class AVoImClient implements VoxImplantCallback {
             if (!isPermissionGranted(ListPermission)) {
                 ActivityCompat.requestPermissions(UnityPlayer.currentActivity, ListPermission, 1);
             }
+            else {
+                Init();
+            }
         }
         else {
             Init();
