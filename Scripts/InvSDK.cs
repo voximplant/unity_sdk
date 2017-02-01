@@ -539,8 +539,9 @@ namespace Invoice
         public void faonLoginSuccessful(string p)
         {
             addLog("faonLoginSuccessful: " + p);
+            JSONNode node = GetParamList(p);
             if (onLoginSuccessful != null)
-                onLoginSuccessful(p);
+                onLoginSuccessful(node[0].Value);
         }
         public void faonLoginFailed(string p)
         {
@@ -697,8 +698,9 @@ namespace Invoice
 		public void fiosonLoginSuccessful(string p)
 		{
 			addLog("fiosonLoginSuccessful: " + p);
+      JSONNode node = GetParamList(p);
 			if (onLoginSuccessful != null)
-				onLoginSuccessful(p);
+				onLoginSuccessful(node[0].Value);
 		}
 		public void fiosonLoginFailed(string p)
 		{
