@@ -545,9 +545,10 @@ namespace Invoice
         public void faonLoginFailed(string p)
         {
             addLog("faonLoginFailed: " + p);
+            JSONNode node = GetParamList(p);
             if (onLoginFailed != null)
             {
-                switch (p)
+                switch (node[0].Value)
                 {
                     case "INVALID_PASSWORD":
                     {
@@ -565,6 +566,11 @@ namespace Invoice
                         break;
                     }
                     case "INTERNAL_ERROR":
+                    {
+                        onLoginFailed(LoginFailureReason.INTERNAL_ERROR);
+                        break;
+                    }
+                    default:
                     {
                         onLoginFailed(LoginFailureReason.INTERNAL_ERROR);
                         break;
@@ -697,9 +703,10 @@ namespace Invoice
 		public void fiosonLoginFailed(string p)
 		{
 			addLog("fiosonLoginFailed: " + p);
+      JSONNode node = GetParamList(p);
 			if (onLoginFailed != null)
 			{
-				switch (p)
+				switch (node[0].Value)
 				{
 				case "INVALID_PASSWORD":
 					{
@@ -717,6 +724,11 @@ namespace Invoice
 						break;
 					}
 				case "INTERNAL_ERROR":
+					{
+						onLoginFailed(LoginFailureReason.INTERNAL_ERROR);
+						break;
+					}
+				default:
 					{
 						onLoginFailed(LoginFailureReason.INTERNAL_ERROR);
 						break;
