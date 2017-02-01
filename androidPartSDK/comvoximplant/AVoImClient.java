@@ -172,6 +172,10 @@ public class AVoImClient implements VoxImplantCallback {
         }
     }
 
+    public void setSDKObjectName(String name) {
+        this.sdkObjName = name;
+    }
+    
     private boolean isPermissionGranted(String[] pListPermissions){
         for (String permission: pListPermissions) {
             if (checkSelfPermission(cntx, permission) != PackageManager.PERMISSION_GRANTED) {
