@@ -33,14 +33,14 @@ namespace Invoice
 
 		/**
 		Called when packet loss data is received from the Voximplant cloud
-		@event OnNetStatsReceived
+		@event onNetStatsReceived
 		@param {string} callid Call identifier
 		@param {int} loss Packet loss from 0 (no loss) to 100 (all lost)
 		*/
         public event deligateOnNetStatsReceived onNetStatsReceived;
 		/**
 		Called if Voximplant-specified 'message' is recived. It's a specialized type of a more general SIP 'info' message
-		@event OnMessageReceivedInCall
+		@event onMessageReceivedInCall
 		@param {string} callid Call identifier
 		@param {string} text Message text
 		@param {Dictionary} (Only for iOS) headers Optional SIP headers set by a info sender 
@@ -48,7 +48,7 @@ namespace Invoice
         public event deligateOnMessageReceivedInCall onMessageReceivedInCall;
 		/**
 		Called if SIP 'info' message is received. That message can be sent from a Voximplant cloud scenario or forwarded from a caller
-		@event OnSIPInfoReceivedInCall
+		@event onSIPInfoReceivedInCall
 		@param {string} callid Call identifier
 		@param {string} type Data MIME type string
 		@param {string} content Data string
@@ -57,7 +57,7 @@ namespace Invoice
         public event deligateOnSIPInfoReceivedInCall onSIPInfoReceivedInCall;
 		/**
 		Called when Voximplant directs a new call to a user logged in from this SDK instance. SDK can handle multiple incoming and/or outgoing calls at once and target specified call via the 'callid' string returned by 'call()' method and received by this event
-		@event OnIncomingCall
+		@event onIncomingCall
 		@param {string} callid Call identifier
 		@param {string} from Caller SIP URI
 		@param {string} name Caller display name
@@ -67,13 +67,13 @@ namespace Invoice
         public event deligatonIncomingCall onIncomingCall;
 		/**
 		Called when Voximplant cloud connects audio source to the call. If client previously played a progress tone, it should be stopped
-		@event OnCallAudioStarted
+		@event onCallAudioStarted
 		@param {string} callid Call identifier, previously returned by the call() function
 		*/
         public event deligateOnCallAudioStarted onCallAudioStarted;
 		/**
 		Called when Voximplant cloud rejects a call
-		@event OnCallFailed
+		@event onCallFailed
 		@param {string} callid Call identifier, previously returned by the call() function
 		@param {int} code Status code
 		@param {string} reason Text description while call failed
@@ -82,21 +82,21 @@ namespace Invoice
         public event deligateOnCallFailed onCallFailed;
 		/**
 		Called when Voximplant cloud sends RINGING SIP notificatoin via 'call.ring()' method. As response to that event client can play some "ringing" sounds or inform user about "call in progress" some other way
-		@event OnCallRinging
+		@event onCallRinging
 		@param {string} callid Call identifier, previously returned by the call() function
 		@param {Dictionary} headers Optional SIP headers that was sent by Voximplant as an argument to the 'call.ring()' method call
 		*/
         public event deligateOnCallRinging onCallRinging;
 		/**
 		Called after call is gracefully disconnected from the Voximplant cloud
-		@event OnCallDisconnected
+		@event onCallDisconnected
 		@param {string} callid Call identifier, previously returned by the call() function
 		@param {Dictionary} headers Optional SIP headers that was sent by Voximplant while disconnecting the call
 		*/
         public event deligateOnCallDisconnected onCallDisconnected;
 		/**
 		Called after call() method successfully established a call with the Voximplant cloud
-		@event OnCallConnected
+		@event onCallConnected
 		@param {string} callid Connected call identifier. It's same identifier returned by the call() function and it can be used in other function to specify one of multiple calls
 		@param {Dictionary} headers Optional SIP headers that was sent by Voximplant while accepting the call 
 	    */
@@ -109,29 +109,29 @@ namespace Invoice
         public event deligateOnConnectionFailedWithError onConnectionFailedWithError;
 		/**
 		Called after connection to Voximplant cloud is closed for any reason
-		@event OnConnectionClosed
+		@event onConnectionClosed
 		*/
         public event deligateOnConnectionClosed onConnectionClosed;
 		/**
 		Called after connect() successfully connects to Voximplant cloud
-		@event OnConnectionSuccessful
+		@event onConnectionSuccessful
 		*/
         public event deligateOnConnectionSuccessful onConnectionSuccessful;
 		/**
 		Called after key requested with 'requestOneTimeKey' is requested and returned from the Voximplant cloud
-		@event OnOneTimeKeyGenerated
+		@event onOneTimeKeyGenerated
 		@param {string} key Key string that should be used in a hash for the 'loginUsingOneTimeKey'
 		*/
         public event deligateOnOneTimeKeyGenerated onOneTimeKeyGenerated;
 		/**
 		Called if login() call results in the failed login
-		@event OnLoginFailed
+		@event onLoginFailed
 		@param {string} error Failure reason
 		*/
         public event deligateOnLoginFailed onLoginFailed;
 		/**
 		Called if login() call results in the successful login
-		@event OnLoginSuccessful
+		@event onLoginSuccessful
 		@param {string} username Display name of logged in user
 		*/
         public event deligateOnLoginSuccessful onLoginSuccessful;
