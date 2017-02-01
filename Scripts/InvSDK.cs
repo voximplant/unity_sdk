@@ -267,6 +267,7 @@ namespace Invoice
 				{
 					Debug.logger.Log("JO Error: " + e.Message);
 				}
+				jo.Call("setSDKObjectName", pObjectNameSDK);
 			}
 			if (IPhonePlatform())
 				iosSDKinit(pObjectNameSDK);
