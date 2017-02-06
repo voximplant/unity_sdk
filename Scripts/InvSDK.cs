@@ -6,7 +6,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Invoice
+namespace Voximplant
 {
     class InvSDK: MonoBehaviour, IUnitySDKCallbacks
     {
@@ -43,7 +43,7 @@ namespace Invoice
 		@event onMessageReceivedInCall
 		@param {string} callid Call identifier
 		@param {string} text Message text
-		@param {Dictionary} (Only for iOS) headers Optional SIP headers set by a info sender 
+		@param {Dictionary} (Only for iOS) headers Optional SIP headers set by a info sender
 		*/
         public event deligateOnMessageReceivedInCall onMessageReceivedInCall;
 		/**
@@ -98,7 +98,7 @@ namespace Invoice
 		Called after call() method successfully established a call with the Voximplant cloud
 		@event onCallConnected
 		@param {string} callid Connected call identifier. It's same identifier returned by the call() function and it can be used in other function to specify one of multiple calls
-		@param {Dictionary} headers Optional SIP headers that was sent by Voximplant while accepting the call 
+		@param {Dictionary} headers Optional SIP headers that was sent by Voximplant while accepting the call
 	    */
         public event deligateOnCallConnected onCallConnected;
 		/**
@@ -208,6 +208,12 @@ namespace Invoice
 		[DllImport ("__Internal")]
 		private static extern void iosSDKsetRemoteSize(int xPos, int yPos, int pWidth, int pHeight);
 
+		[DllImport ("__Internal")]
+		private static extern void iosSDKsetLocalView(bool pState);
+
+		[DllImport ("__Internal")]
+		private static extern void iosSDKsetRemoteView(bool pState);
+
         private bool AndroidPlatform()
         {
             return Application.platform == RuntimePlatform.Android;
@@ -226,7 +232,7 @@ namespace Invoice
 		public void setLocalSizeView(SizeView pSize)
 		{
 			if (AndroidPlatform())
-				jo.Call("setLocalSize", Invoice.JsonUtility.ToJson(pSize));
+				jo.Call("setLocalSize", JsonUtility.ToJson(pSize));
 			if (IPhonePlatform())
 				iosSDKsetLocalSize(pSize.x_pos, pSize.y_pos, pSize.width, pSize.height);
 		}
@@ -234,7 +240,7 @@ namespace Invoice
 		public void setRemoteSizeView(SizeView pSize)
 		{
 			if (AndroidPlatform())
-				jo.Call("setRemoteSize", Invoice.JsonUtility.ToJson(pSize));
+				jo.Call("setRemoteSize", JsonUtility.ToJson(pSize));
 			if (IPhonePlatform())
 				iosSDKsetRemoteSize(pSize.x_pos, pSize.y_pos, pSize.width, pSize.height);
 		}
@@ -271,14 +277,14 @@ namespace Invoice
 			}
 			if (IPhonePlatform())
 				iosSDKinit(pObjectNameSDK);
-			
+
 			if (pLocalView == null) pLocalView = new SizeView(0, 0, 100, 100);
 			if (pRemoteView == null) pRemoteView = new SizeView(0, 150, 100, 100);
 			setLocalSizeView(pLocalView);
 			setRemoteSizeView(pRemoteView);
 
 		}
-			
+
         /**
         Close connection to the Voximplant cloud that was previously established via 'connect' call
         @method closeConnection
@@ -302,7 +308,7 @@ namespace Invoice
 			if (IPhonePlatform())
 				iosSDKconnect();
         }
-	
+
 		/**
         Login into Voximplant cloud. Should be called after "connect" in the "OnConnectionSuccessful" handler
         @method login
@@ -311,24 +317,24 @@ namespace Invoice
         public void login(LoginClassParam pLogin)
         {
             if (AndroidPlatform())
-                jo.Call("login", Invoice.JsonUtility.ToJson(pLogin));
+                jo.Call("login", JsonUtility.ToJson(pLogin));
 			if (IPhonePlatform())
 				iosSDKlogin(pLogin.login, pLogin.pass);
         }
-	
+
 		/**
 		Start a new outgoing call
 		@method call
-		@param {CallClassParam} pCall Call options: number to call, video call flag and custom data to send alongside the call. For SIP compatibility reasons number should be a non-empty string even if the number itself is not used by a Voximplant cloud scenario. "OnCallConnected" will be called on call success, or "OnCallFailed" will be called if Voximplant cloud rejects a call or network error occur 
+		@param {CallClassParam} pCall Call options: number to call, video call flag and custom data to send alongside the call. For SIP compatibility reasons number should be a non-empty string even if the number itself is not used by a Voximplant cloud scenario. "OnCallConnected" will be called on call success, or "OnCallFailed" will be called if Voximplant cloud rejects a call or network error occur
 		*/
-        public void call(CallClassParam pCall) 
+        public void call(CallClassParam pCall)
         {
             if (AndroidPlatform())
-                jo.Call<string>("call", Invoice.JsonUtility.ToJson(pCall));
+                jo.Call<string>("call", JsonUtility.ToJson(pCall));
 			if (IPhonePlatform())
-				iosSDKstartCall(pCall.userCall, pCall.videoCall, pCall.customData, Invoice.JsonUtility.ToJson(new PairKeyValueArray(pCall.headers)));
+				iosSDKstartCall(pCall.userCall, pCall.videoCall, pCall.customData, JsonUtility.ToJson(new PairKeyValueArray(pCall.headers)));
         }
-	
+
 		/**
 		Answer incoming call. Should be called from the "OnIncomingCall" handler
 		@method answer
@@ -340,9 +346,9 @@ namespace Invoice
             if (AndroidPlatform())
                 jo.Call("answer", pCallId);
 			if (IPhonePlatform())
-				iosSDKanswerCall(pCallId, Invoice.JsonUtility.ToJson(new PairKeyValueArray(GetDictionaryToArray(pHeader)))); 
+				iosSDKanswerCall(pCallId, JsonUtility.ToJson(new PairKeyValueArray(GetDictionaryToArray(pHeader))));
         }
-	
+
 		/**
 		Decline an incoming call. Should be called from the "OnIncomingCall" handler
 		@method declineCall
@@ -354,9 +360,9 @@ namespace Invoice
             if (AndroidPlatform())
                 jo.Call("declineCall", pCallId);
 			if (IPhonePlatform())
-				iosSDKDecline(pCallId, Invoice.JsonUtility.ToJson(new PairKeyValueArray(GetDictionaryToArray(pHeader))));
+				iosSDKDecline(pCallId, JsonUtility.ToJson(new PairKeyValueArray(GetDictionaryToArray(pHeader))));
         }
-	
+
 		/**
 		Hang up the call in progress. Should be called from the "OnIncomingCall" handler
 		@method hangup
@@ -368,35 +374,61 @@ namespace Invoice
             if (AndroidPlatform())
 				jo.Call("hangup", pCallId);
 			if (IPhonePlatform())
-				iosSDKHungup(pCallId, Invoice.JsonUtility.ToJson(new PairKeyValueArray(GetDictionaryToArray(pHeader))));
+				iosSDKHungup(pCallId, JsonUtility.ToJson(new PairKeyValueArray(GetDictionaryToArray(pHeader))));
         }
-	
+
 		/**
 		Mute or unmute microphone. This is reset after audio interruption
 		@method setMute
-		@param {Boolean} p 'true' to set mute status, 'false' to remove it
+		@param {Boolean} pState 'true' to set mute status, 'false' to remove it
 		*/
-        public void setMute(Boolean p)
+        public void setMute(Boolean pState)
         {
             if (AndroidPlatform())
-				jo.Call("setMute", Invoice.JsonUtility.ToJson(new BoolClassParam(p)));
+				jo.Call("setMute", JsonUtility.ToJson(new BoolClassParam(pState)));
 			if (IPhonePlatform())
-				iosSDKsetMute(p);
+				iosSDKsetMute(pState);
         }
-	
+
 		/**
 		Enable or disable video stream transfer during the call
 		@method sendVideo
-		@param {Boolean} p 'true' to enable video stream, 'false' to disable it
+		@param {Boolean} pState 'true' to enable video stream, 'false' to disable it
 		*/
-        public void sendVideo(Boolean p)
+        public void sendVideo(Boolean pState)
         {
             if (AndroidPlatform())
-                jo.Call("sendVideo", Invoice.JsonUtility.ToJson(new BoolClassParam(p)));
+				jo.Call("sendVideo", JsonUtility.ToJson(new BoolClassParam(pState)));
 			if (IPhonePlatform())
-				iosSDKsendVideo(p);
+				iosSDKsendVideo(pState);
         }
-	
+
+		/**
+		Show or close local video view
+		@method setLocalView
+		@param {Boolean} pState 'true' to show video view, 'false' to close it
+		*/
+		public void setLocalView(Boolean pState)
+		{
+			if (AndroidPlatform())
+				jo.Call("setLocalView", JsonUtility.ToJson(new BoolClassParam(pState)));
+			if (IPhonePlatform())
+				iosSDKsetLocalView(pState);
+		}
+
+		/**
+		Show or close remote video view
+		@method setRemoteView
+		@param {Boolean} pState 'true' to show video view, 'false' to close it
+		*/
+		public void setRemoteView(Boolean pState)
+		{
+			if (AndroidPlatform())
+				jo.Call("setRemoteView", JsonUtility.ToJson(new BoolClassParam(pState)));
+			if (IPhonePlatform())
+				iosSDKsetRemoteView(pState);
+		}
+
 		/**
 		Select a camera to use for the video call
 		@method setCamera
@@ -418,7 +450,7 @@ namespace Invoice
 			if (IPhonePlatform())
 				iosSDKdisableTls();
         }
-	
+
 		/**
 		Disconnect the specified call
 		@method disconnectCall
@@ -428,11 +460,11 @@ namespace Invoice
         public void disconnectCall(string p, Dictionary<string, string> pHeader = null)
         {
             if (AndroidPlatform())
-                jo.Call("disconnectCall", Invoice.JsonUtility.ToJson(new StringClassParam(p)));
+                jo.Call("disconnectCall", JsonUtility.ToJson(new StringClassParam(p)));
 			if (IPhonePlatform())
-				iosSDKdisconnectCall(p, Invoice.JsonUtility.ToJson(new PairKeyValueArray(GetDictionaryToArray(pHeader))));
+				iosSDKdisconnectCall(p, JsonUtility.ToJson(new PairKeyValueArray(GetDictionaryToArray(pHeader))));
         }
-	
+
 		/**
 		If called before any other SDK methods, enables debug logging into target platform default debug log facility
 		@method enableDebugLogging
@@ -443,7 +475,7 @@ namespace Invoice
                 jo.Call("enableDebugLogging");
 			// TODO add enabled on iPhone
         }
-	
+
 		/**
 		Login using a hash created from one-time key requested via 'requestOneTimeKey' and password. The has can be calculated on your backend so Voximplant password is never used in the application. Hash is calculated as 'MD5(one-time-key + "|" + MD5(vox-user + ":voximplant.com:" + vox-pass))'
 		@method loginUsingOneTimeKey
@@ -452,11 +484,11 @@ namespace Invoice
         public void loginUsingOneTimeKey(LoginOneTimeKeyClassParam pLogin)
         {
             if (AndroidPlatform())
-                jo.Call("loginUsingOneTimeKey", Invoice.JsonUtility.ToJson(pLogin));
+                jo.Call("loginUsingOneTimeKey",  JsonUtility.ToJson(pLogin));
 			if (IPhonePlatform())
 				iosSDKloginUsingOneTimeKey(pLogin.name, pLogin.hash);
         }
-	
+
 		/**
 		Request a one-time key that can be used on your backend to create a login hash for the 'loginUsingOneTimeKey'. Key is returned via 'OnOneTimeKeyGenerated' event
 		@method requestOneTimeKey
@@ -465,11 +497,11 @@ namespace Invoice
         public void requestOneTimeKey(string pName)
         {
             if (AndroidPlatform())
-                jo.Call("requestOneTimeKey", Invoice.JsonUtility.ToJson(new StringClassParam(pName)));
+                jo.Call("requestOneTimeKey",  JsonUtility.ToJson(new StringClassParam(pName)));
 			if (IPhonePlatform())
 				iosSDKrequestOneTimeKey(pName);
         }
-	
+
 		/**
 		Send DTMF signal to the specified call
 		@method sendDTMF
@@ -478,11 +510,11 @@ namespace Invoice
         public void sendDTMF(DTFMClassParam pParam)
         {
             if (AndroidPlatform())
-                jo.Call("sendDTMF", Invoice.JsonUtility.ToJson(pParam));
+                jo.Call("sendDTMF",  JsonUtility.ToJson(pParam));
 			if (IPhonePlatform())
 				iosSDKsendDTFM(pParam.callId, pParam.digit);
         }
-	
+
 		/**
 		Send arbitrary data to Voximplant cloud. Data can be received in VoxEngine scenario by subscribing to the 'CallEvents.InfoReceived' event. Optional SIP headers can be automatically passed to second call via VoxEngine 'easyProcess()' method
 		@method sendInfo
@@ -491,11 +523,11 @@ namespace Invoice
         public void sendInfo(InfoClassParam pParam)
         {
             if (AndroidPlatform())
-                jo.Call("sendInfo", Invoice.JsonUtility.ToJson(pParam));
+                jo.Call("sendInfo",  JsonUtility.ToJson(pParam));
 			if (IPhonePlatform())
-				iosSDKsendInfo(pParam.callId,pParam.mimeType,pParam.content, Invoice.JsonUtility.ToJson(new PairKeyValueArray(pParam.headers)));
+				iosSDKsendInfo(pParam.callId,pParam.mimeType,pParam.content,  JsonUtility.ToJson(new PairKeyValueArray(pParam.headers)));
         }
-	
+
 		/**
 		Simplified version of 'sendInfo' that uses predefined MIME type to send a text message. Message can be received in VoxEngine scenario by subscribing to the 'CallEvents.MessageReceived' event. Optional SIP headers can be automatically passed to second call via VoxEngine 'easyProcess()' method
 		@method sendMessage
@@ -504,11 +536,11 @@ namespace Invoice
         public void sendMessage(SendMessageClassParam pParam)
         {
             if (AndroidPlatform())
-                jo.Call("sendMessage", Invoice.JsonUtility.ToJson(pParam));
+                jo.Call("sendMessage",  JsonUtility.ToJson(pParam));
 			if (IPhonePlatform())
-				iosSDKsendMessage(pParam.callId, pParam.text, Invoice.JsonUtility.ToJson(new PairKeyValueArray(pParam.headers)));
+				iosSDKsendMessage(pParam.callId, pParam.text,  JsonUtility.ToJson(new PairKeyValueArray(pParam.headers)));
         }
-	
+
 		/**
 		Set local camera resolution. Increasing resolution increases video quality, but also uses more cpu and bandwidth
 		@method setCameraResolution
@@ -517,11 +549,11 @@ namespace Invoice
         public void setCameraResolution(CameraResolutionClassParam pParam)
         {
             if (AndroidPlatform())
-                jo.Call("setCameraResolution", Invoice.JsonUtility.ToJson(pParam));
+                jo.Call("setCameraResolution",  JsonUtility.ToJson(pParam));
 			if (IPhonePlatform())
 				iosSDKsetCameraResolution(pParam.width, pParam.height);
         }
-	
+
 		/**
 		Enable or disable loud speaker, if available
 		@method setUseLoudspeaker
@@ -530,7 +562,7 @@ namespace Invoice
         public void setUseLoudspeaker(bool pUseLoudSpeaker)
         {
             if (AndroidPlatform())
-                jo.Call("setUseLoudspeaker", Invoice.JsonUtility.ToJson(new BoolClassParam(pUseLoudSpeaker)));
+                jo.Call("setUseLoudspeaker",  JsonUtility.ToJson(new BoolClassParam(pUseLoudSpeaker)));
 			if (IPhonePlatform())
 				iosSDKsetUseLoudspeaker(pUseLoudSpeaker);
         }
@@ -578,7 +610,7 @@ namespace Invoice
                     }
                 }
             }
-                
+
         }
         public void faonOneTimeKeyGenerated(string p)
         {
@@ -743,7 +775,7 @@ namespace Invoice
 			addLog("fiosonOneTimeKeyGenerated: " + p);
 			if (onOneTimeKeyGenerated != null)
 				onOneTimeKeyGenerated(p);
-		}			
+		}
 		public void fiosonCallConnected(string p)
 		{
 			addLog("fiosonCallConnected: " + p);
@@ -819,7 +851,7 @@ namespace Invoice
             JSONNode rootNode = JSON.Parse(p);
             return rootNode;
         }
-	
+
         public static PairKeyValue[] GetDictionaryToArray(Dictionary<string, string> pDic)
         {
 			if (pDic == null)

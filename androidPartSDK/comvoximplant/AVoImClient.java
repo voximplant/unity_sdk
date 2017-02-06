@@ -2,6 +2,7 @@ package com.voximplant.sdk;
 
 import android.Manifest;
 import android.app.DialogFragment;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
@@ -9,7 +10,6 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.PermissionChecker;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -30,7 +30,6 @@ public class AVoImClient implements VoxImplantCallback {
     public VoxImplantClient client;
     private Context cntx;
     private UnityPlayer unityPlayer;
-    private Map<String, Call> mCallsMap;
     private String sdkObjName = "SDK";
     private DialogFragment mVideoLocalDialog;
     private DialogFragment mVideoRemoteDialog;
@@ -150,7 +149,6 @@ public class AVoImClient implements VoxImplantCallback {
 
     public AVoImClient(Context pCntx) {
         cntx = pCntx;
-        mCallsMap = new HashMap<String, Call>();
         Log.d("VOXIMPLANT", "Create instance");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Log.d("VOXIMPLANT", "Request permissions");
@@ -163,9 +161,6 @@ public class AVoImClient implements VoxImplantCallback {
             if (!isPermissionGranted(ListPermission)) {
                 ActivityCompat.requestPermissions(UnityPlayer.currentActivity, ListPermission, 1);
             }
-            else {
-                Init();
-            }
         }
         else {
             Init();
@@ -175,7 +170,7 @@ public class AVoImClient implements VoxImplantCallback {
     public void setSDKObjectName(String name) {
         this.sdkObjName = name;
     }
-    
+
     private boolean isPermissionGranted(String[] pListPermissions){
         for (String permission: pListPermissions) {
             if (checkSelfPermission(cntx, permission) != PackageManager.PERMISSION_GRANTED) {
@@ -184,6 +179,7 @@ public class AVoImClient implements VoxImplantCallback {
         }
         return true;
     }
+
 
     private static int checkSelfPermission(Context context, String permission) {
         if (permission == null) {
@@ -222,7 +218,6 @@ public class AVoImClient implements VoxImplantCallback {
         CallClassParam param = GetJsonObj(p, CallClassParam.class);
         String callId = client.createCall(param.userCall, param.videoCall, param.customData);
         client.startCall(callId, GetMapFromList(param.headers));
-        mCallsMap.put(callId, new Call(callId, false, param.videoCall));
         onStartCall(callId);
         return callId;
     }
@@ -235,12 +230,45 @@ public class AVoImClient implements VoxImplantCallback {
     public void hangup(String pCallId){
         client.disconnectCall(pCallId);
     }
-    public void setMute(String p){
-        client.setMute(((BoolClassParam)GetJsonObj(p,BoolClassParam.class)).value);
+    public void setMute(String pState){
+        client.setMute(((BoolClassParam)GetJsonObj(pState,BoolClassParam.class)).value);
     }
-    public void sendVideo(String p){
-        client.sendVideo(((BoolClassParam)GetJsonObj(p,BoolClassParam.class)).value);
+    public void sendVideo(String pState){
+        client.sendVideo(((BoolClassParam)GetJsonObj(pState,BoolClassParam.class)).value);
     }
+    public void setRemoteView(String pState) {
+        if (((BoolClassParam)GetJsonObj(pState,BoolClassParam.class)).value) {
+            if (mVideoRemoteDialog != null) {
+                dismissByTag("remote");
+            }
+            mVideoRemoteDialog = CallDialogFragment.showDialog(UnityPlayer.currentActivity, mSizeRemote.getArray(), false);
+        }
+        else
+        if (mVideoRemoteDialog != null){
+            dismissByTag("remote");
+        }
+
+    }
+    public void setLocalView(String pState) {
+        if (((BoolClassParam)GetJsonObj(pState,BoolClassParam.class)).value) {
+            if (mVideoLocalDialog != null) {
+                dismissByTag("local");
+            }
+            mVideoLocalDialog = CallDialogFragment.showDialog(UnityPlayer.currentActivity, mSizeLocal.getArray(), true);
+        }
+        else
+        if (mVideoLocalDialog != null) {
+            dismissByTag("local");
+        }
+    }
+
+    public void dismissByTag(String pTag){
+        Fragment prev = UnityPlayer.currentActivity.getFragmentManager().findFragmentByTag(pTag);
+        if (prev != null) {
+            ((DialogFragment)prev).dismiss();
+        }
+    }
+
     public void setCamera(String p){
         client.setCamera(Integer.parseInt(p));
     }
@@ -328,23 +356,15 @@ public class AVoImClient implements VoxImplantCallback {
     @Override
     public void onCallConnected(final String s, Map<String, String> map) {
         unityPlayer.UnitySendMessage(sdkObjName,"faonCallConnected",GetParamListToString(new ArrayList<Object>(Arrays.asList(s,map))));
-        if (mCallsMap.get(s).video) {
-            mVideoLocalDialog = CallDialogFragment.showDialog(UnityPlayer.currentActivity, mSizeLocal.getArray(), true);
-            mVideoRemoteDialog = CallDialogFragment.showDialog(UnityPlayer.currentActivity, mSizeRemote.getArray(), false);
-        }
     }
 
     public void onStartCall(String s) {
         unityPlayer.UnitySendMessage(sdkObjName,"faonOnStartCall", s);
-        mCallsMap.put(s, new Call(s, false, true));
     }
 
     @Override
     public void onCallDisconnected(String s, Map<String, String> map) {
         unityPlayer.UnitySendMessage(sdkObjName,"faonCallDisconnected",GetParamListToString(new ArrayList<Object>(Arrays.asList(s,map))));
-        mCallsMap.remove(s);
-        mVideoLocalDialog.dismiss();
-        mVideoRemoteDialog.dismiss();
     }
     @Override
     public void onCallRinging(String s, Map<String, String> map) {
@@ -361,7 +381,6 @@ public class AVoImClient implements VoxImplantCallback {
     @Override
     public void onIncomingCall(String s, String s1, String s2, boolean b, Map<String, String> map) {
         unityPlayer.UnitySendMessage(sdkObjName,"faonIncomingCall",GetParamListToString(new ArrayList<Object>(Arrays.asList(s,s1,s2,b,map))));
-        mCallsMap.put(s, new Call(s, true, b));
     }
     @Override
     public void onSIPInfoReceivedInCall(String callId, String type, String content, Map<String, String> headers) {

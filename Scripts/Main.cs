@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using SimpleJSON;
+using Voximplant;
 
 namespace Invoice
 {
     public class Main : MonoBehaviour
     {
-
         public Text _log;
         public ScrollRect _scroll;
         int _logStrNum = 0;
@@ -24,6 +24,9 @@ namespace Invoice
         public Toggle faceCam;
         public GameObject mBtnHung;
         public Text mIncName;
+
+		public Toggle mLocalView;
+		public Toggle mRemoteView;
 
         public GameObject mCallRingPanel;
 
@@ -88,12 +91,16 @@ namespace Invoice
             mCallRingPanel.SetActive(false);
 			mActiveCallId = null;
 			mIncCallId = null; 
+			inv.setLocalView(false);
+			inv.setRemoteView(false);
         }
 
         private void Inv_onCallConnected(string callId, Dictionary<string, string> headers)
         {
 			addLog("Call connected");
 			mBtnHung.SetActive(true);
+			inv.setLocalView(mLocalView.isOn);
+			inv.setRemoteView(mRemoteView.isOn);
         }
 
 		private void Inv_onMessageReceivedInCall(string callId, string text, Dictionary<string, string> headers)
@@ -144,7 +151,6 @@ namespace Invoice
         }
         public void onHangup()
         {
-			addLog("Hungup CallID: <<" + mActiveCallId.id + ">>");
 			inv.hangup(mActiveCallId.id, null);
         }
         public void setMute()
@@ -166,6 +172,15 @@ namespace Invoice
                 inv.setCamera(CameraSet.CAMERA_FACING_BACK);
 			}
         }
+
+		public void onChangeLocalView()
+		{
+			inv.setLocalView(mLocalView.isOn);
+		}
+		public void onChangeRemoteView()
+		{
+			inv.setRemoteView(mRemoteView.isOn);
+		}
 
         public void addLog(string pMsg)
         {

@@ -21,7 +21,7 @@ using System.Text.RegularExpressions;
 using System.Diagnostics;
 #endif
 
-namespace Invoice
+namespace Voximplant
 {
 
 	public static class Extensions

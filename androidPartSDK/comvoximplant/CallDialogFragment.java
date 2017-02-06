@@ -12,9 +12,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -26,6 +26,8 @@ import com.zingaya.voximplant.VoxImplantClient;
 import org.webrtc.SurfaceViewRenderer;
 
 public class CallDialogFragment extends DialogFragment {
+
+    private static final String TAG = CallDialogFragment.class.getSimpleName();
 
     private static final String ARG_SIZE = "size";
     private static final String ARG_LOCAL = "islocal";
@@ -48,7 +50,6 @@ public class CallDialogFragment extends DialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         // Hide title of the dialog
         setStyle(STYLE_NO_FRAME, 0);
 
@@ -129,9 +130,10 @@ public class CallDialogFragment extends DialogFragment {
 
     @Override
     public void onDismiss(DialogInterface dialogInterface) {
-        VoxImplantClient.instance().setRemoteView(null);
-        VoxImplantClient.instance().setLocalPreview(null);
-
+        if (isLocal)
+            VoxImplantClient.instance().setLocalPreview(null);
+        else
+            VoxImplantClient.instance().setRemoteView(null);
         if (this.Render != null) {
             Render.release();
             Render = null;
@@ -139,16 +141,17 @@ public class CallDialogFragment extends DialogFragment {
         super.onDismiss(dialogInterface);
     }
 
-    public static DialogFragment showDialog(Activity activity, int[] pViewParams, boolean pIsLocal) {
+    public static CallDialogFragment showDialog(Activity activity, int[] pViewParams, boolean pIsLocal) {
         FragmentTransaction ft = activity.getFragmentManager().beginTransaction();
-        Fragment prev = activity.getFragmentManager().findFragmentByTag("dialogChangeCountry");
+        String tag = pIsLocal?"local":"remote";
+        Fragment prev = activity.getFragmentManager().findFragmentByTag(tag);
         if (prev != null) {
             ft.remove(prev);
         }
-        ft.addToBackStack(null);
+        //ft.addToBackStack(tag);
         // Create and show the dialog.
         CallDialogFragment newFragment = CallDialogFragment.newInstance(pViewParams, pIsLocal);
-        newFragment.show(ft, "dialog");
+        newFragment.show(ft, tag);
         return newFragment;
     }
 

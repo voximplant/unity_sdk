@@ -4,24 +4,7 @@
 #import <VoxImplantFWK/VoxImplant.h>
 #import <VoxImplantFWK/VoxImplantDelegate.h>
 
-enum SDKState
-{
-    SAMPLE_STATE_DISCONNECTED,
-    SAMPLE_STATE_CONN_CONNECTING,
-    SAMPLE_STATE_CONN_CONNECTED,
-    SAMPLE_STATE_CONN_LOGGING_IN,
-
-    SAMPLE_STATE_IDLE,
-    SAMPLE_STATE_ALERTING,
-    SAMPLE_STATE_PROGRESSING,
-    SAMPLE_STATE_CONNECTED,
-    SAMPLE_STATE_CONNECTING,
-    SAMPLE_STATE_TERMINATING
-
-};
-
 @interface DelegateSDK:NSObject
--(SDKState)getState;
 @end
 
 @interface ViewLayoutSize : NSObject
@@ -187,28 +170,65 @@ ViewLayoutSize * sizeRemote;
 -(void) onCallConnected:(NSString *)callId withHeaders:(NSDictionary *)headers
 {
     [sdk attachAudioTo:callId];
-    UIView *rootView = [UIApplication sharedApplication].keyWindow.rootViewController.view;
-    // create remoteView
-    if (sizeRemote != nil)
-    {
-        remoteView=[[UIView alloc]initWithFrame:CGRectMake(sizeRemote.x_pos, sizeRemote.y_pos, sizeRemote.width, sizeRemote.heigth)];
-        [rootView addSubview:remoteView];
-        [sdk setRemoteView:remoteView];
-    }
-    // create localView
-    if (sizeLocal != nil)
-    {
-        localView=[[UIView alloc]initWithFrame:CGRectMake(sizeLocal.x_pos, sizeLocal.y_pos, sizeLocal.width, sizeLocal.heigth)];
-        [rootView addSubview:localView];
-        [sdk setLocalPreview:localView];
-    }
-
     NSError *writeError = [NSError alloc];
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[NSArray arrayWithObjects:callId, headers, nil] options:NSJSONWritingPrettyPrinted error:&writeError];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 
     [self callUnityObject:"fiosonCallConnected" Parameter:[self getCharFromNs:jsonString]];
 }
+
+-(void) setLocaView:(bool)pState
+{
+    if (pState)
+    {
+        if (sizeLocal != nil)
+        {
+            UIView *rootView = [UIApplication sharedApplication].keyWindow.rootViewController.view;
+            if (localView != nil)
+            {
+                [sdk setLocalPreview:Nil];
+                [self removeView:localView];
+                localView = nil;
+            }
+            localView=[[UIView alloc]initWithFrame:CGRectMake(sizeLocal.x_pos, sizeLocal.y_pos, sizeLocal.width, sizeLocal.heigth)];
+            [rootView addSubview:localView];
+            [sdk setLocalPreview:localView];
+        }
+    }
+    else
+    {
+        [sdk setLocalPreview:Nil];
+        [self removeView:localView];
+        localView = nil;
+    }
+}
+
+-(void) setRemoteView:(bool)pState
+{
+    if (pState)
+    {
+        if (sizeRemote != nil)
+        {
+            UIView *rootView = [UIApplication sharedApplication].keyWindow.rootViewController.view;
+            if (remoteView != nil)
+            {
+                [sdk setRemoteView:Nil];
+                [self removeView:remoteView];
+                remoteView = nil;
+            }
+            remoteView=[[UIView alloc]initWithFrame:CGRectMake(sizeRemote.x_pos, sizeRemote.y_pos, sizeRemote.width, sizeRemote.heigth)];
+            [rootView addSubview:remoteView];
+            [sdk setRemoteView:remoteView];
+        }
+    }
+    else
+    {
+        [sdk setRemoteView:Nil];
+        [self removeView:remoteView];
+        remoteView = nil;
+    }
+}
+
 
 -(void) onCallDisconnected:(NSString *)callId withHeaders:(NSDictionary *)headers
 {
@@ -218,10 +238,6 @@ ViewLayoutSize * sizeRemote;
         currentAlertView = Nil;
         [v dismissWithClickedButtonIndex:0 animated:false];
     }
-    [sdk setLocalPreview:Nil];
-    [sdk setRemoteView: Nil];
-    [self removeView:localView];
-    [self removeView:remoteView];
 
     NSError *writeError = [NSError alloc];
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[NSArray arrayWithObjects:callId, headers, nil] options:NSJSONWritingPrettyPrinted error:&writeError];
@@ -232,11 +248,6 @@ ViewLayoutSize * sizeRemote;
 
 -(void) onCallFailed:(NSString *)callId withCode:(int)code andReason:(NSString *)reason withHeaders:(NSDictionary *)headers
 {
-    [sdk setLocalPreview:Nil];
-    [sdk setRemoteView: Nil];
-    [self removeView:localView];
-    [self removeView:remoteView];
-
     NSError *writeError = [NSError alloc];
     NSArray *array = [[NSArray alloc] initWithObjects:callId, [NSString stringWithFormat:@"%d",code], reason, headers, nil];
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:array options:NSJSONWritingPrettyPrinted error:&writeError];
@@ -264,16 +275,6 @@ ViewLayoutSize * sizeRemote;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[NSArray arrayWithObjects:array, nil] options:NSJSONWritingPrettyPrinted error:&writeError];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     [self callUnityObject:"fiosonCallAudioStarted" Parameter:[self getCharFromNs:jsonString]];
-}
-
--(void) onAudioInterruptionBegan
-{
-
-}
-
--(void)onAudioInterruptionEnded
-{
-
 }
 
 - (void) onNetStatsReceivedInCall: (NSString *)callId withStats: (const struct VoxImplantNetworkInfo *)stats
@@ -355,6 +356,16 @@ extern "C"
     void iosSDKsetRemoteSize(int xPos, int yPos, int pWidth, int pHeight)
     {
         [delegates setRemSizeViews:[[ViewLayoutSize alloc] initWithParam:xPos withyPos:yPos withWidth:pWidth withHeight:pHeight]];
+    }
+
+    void iosSDKsetLocalView(bool pState)
+    {
+        [delegates setLocaView:pState];
+    }
+
+    void iosSDKsetRemoteView(bool pState)
+    {
+        [delegates setRemoteView:pState];
     }
 
     void iosSDKstartCall(const char* pId, bool pWithVideo, const char* pCustom, const char* pHeaders)
