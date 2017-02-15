@@ -1,0 +1,433 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		488D8126EA7A0FD348BC413D010ED9CA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */; };
+		AA107D544E52338BB62122F5471F044F /* Pods-unity-bridge-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 35F081B82284815C3515078728E688AF /* Pods-unity-bridge-dummy.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		011063B04E791CE84CBBF4A9AFBA2043 /* RTCEAGLVideoView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCEAGLVideoView.h; path = WebRTC.framework/Headers/RTCEAGLVideoView.h; sourceTree = "<group>"; };
+		04F92F100492C8130F011055F9B691FE /* Pods-unity-bridge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-unity-bridge.release.xcconfig"; sourceTree = "<group>"; };
+		08A1C0BB26A11D34A4ED86022E7D4FD4 /* Pods-unity-bridge-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-unity-bridge-resources.sh"; sourceTree = "<group>"; };
+		0E96F1210FB1B33B563B61B13907FFB5 /* RTCMediaConstraints.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCMediaConstraints.h; path = WebRTC.framework/Headers/RTCMediaConstraints.h; sourceTree = "<group>"; };
+		1399BE65334D0DA5E1A7298CA8607C49 /* RTCRtpCodecParameters.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCRtpCodecParameters.h; path = WebRTC.framework/Headers/RTCRtpCodecParameters.h; sourceTree = "<group>"; };
+		18542BA1E0AD01C26BD33FC6BBEDC6FA /* libVoxImplantSDK.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; name = libVoxImplantSDK.a; path = lib/libVoxImplantSDK.a; sourceTree = "<group>"; };
+		1A3402F0F3F8407DCCEF1DD4DDF45931 /* RTCSessionDescription.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCSessionDescription.h; path = WebRTC.framework/Headers/RTCSessionDescription.h; sourceTree = "<group>"; };
+		1CAC8854DBC6CE096C77A8753F206240 /* Pods-unity-bridge-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-unity-bridge-acknowledgements.plist"; sourceTree = "<group>"; };
+		20037FAFC9AB0FD8813D7615FF4EC3B4 /* VoxImplantDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VoxImplantDelegate.h; path = include/VoxImplantDelegate.h; sourceTree = "<group>"; };
+		20FA55047CC49169E145A4394097AFDB /* RTCMacros.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCMacros.h; path = WebRTC.framework/Headers/RTCMacros.h; sourceTree = "<group>"; };
+		317CC66BFB8D6033C3D091CE189C4A22 /* RTCDispatcher.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCDispatcher.h; path = WebRTC.framework/Headers/RTCDispatcher.h; sourceTree = "<group>"; };
+		35F081B82284815C3515078728E688AF /* Pods-unity-bridge-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-unity-bridge-dummy.m"; sourceTree = "<group>"; };
+		38A1A443F07D7FFD03ACD5157D8A00F3 /* RTCVideoFrame.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCVideoFrame.h; path = WebRTC.framework/Headers/RTCVideoFrame.h; sourceTree = "<group>"; };
+		38A1AAA3752CBBEC16D2B8FADADE7B8D /* RTCMediaStreamTrack.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCMediaStreamTrack.h; path = WebRTC.framework/Headers/RTCMediaStreamTrack.h; sourceTree = "<group>"; };
+		3B2EFAA0E369D999DCF58E67A465DB04 /* RTCAudioSource.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCAudioSource.h; path = WebRTC.framework/Headers/RTCAudioSource.h; sourceTree = "<group>"; };
+		3C1B373D2D8DB8F09B4BE5FE665E6F7B /* RTCDataChannel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCDataChannel.h; path = WebRTC.framework/Headers/RTCDataChannel.h; sourceTree = "<group>"; };
+		3F9319E3A1F078DAA07A93D3B9FDA38B /* RTCLogging.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCLogging.h; path = WebRTC.framework/Headers/RTCLogging.h; sourceTree = "<group>"; };
+		3FC22408BE888BFCE30F4CA08B0B2DD0 /* RTCCameraPreviewView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCCameraPreviewView.h; path = WebRTC.framework/Headers/RTCCameraPreviewView.h; sourceTree = "<group>"; };
+		408C3C2485FBCA07D68CEF840D2149F6 /* RTCLegacyStatsReport.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCLegacyStatsReport.h; path = WebRTC.framework/Headers/RTCLegacyStatsReport.h; sourceTree = "<group>"; };
+		427AF239C086CA4BE13969548EA96569 /* Pods-unity-bridge-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-unity-bridge-acknowledgements.markdown"; sourceTree = "<group>"; };
+		44D5773C8FEF4B33A9307854E6253CB4 /* RTCSSLAdapter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCSSLAdapter.h; path = WebRTC.framework/Headers/RTCSSLAdapter.h; sourceTree = "<group>"; };
+		4B11530AB9DEB9C5389116FF27E411D2 /* RTCTracing.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCTracing.h; path = WebRTC.framework/Headers/RTCTracing.h; sourceTree = "<group>"; };
+		50D51840F22646DE04F5FF310A57C28C /* RTCConfiguration.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCConfiguration.h; path = WebRTC.framework/Headers/RTCConfiguration.h; sourceTree = "<group>"; };
+		525E6017DB5B2D47A5D4E0970F6A435E /* RTCDataChannelConfiguration.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCDataChannelConfiguration.h; path = WebRTC.framework/Headers/RTCDataChannelConfiguration.h; sourceTree = "<group>"; };
+		52A365B20BC08C069731EA2E6A3821B1 /* RTCRtpSender.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCRtpSender.h; path = WebRTC.framework/Headers/RTCRtpSender.h; sourceTree = "<group>"; };
+		57672507A40AB6A8B860A9B3CA06FF56 /* RTCMediaSource.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCMediaSource.h; path = WebRTC.framework/Headers/RTCMediaSource.h; sourceTree = "<group>"; };
+		6D6EDF24A370969DE292CD577F3006ED /* RTCVideoRenderer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCVideoRenderer.h; path = WebRTC.framework/Headers/RTCVideoRenderer.h; sourceTree = "<group>"; };
+		73397022F46BEB5F905B9FA4946F9994 /* libPods-unity-bridge.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-unity-bridge.a"; path = "libPods-unity-bridge.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		778A126B5BD23FF8CA08F57AB2F0EA8F /* RTCFieldTrials.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCFieldTrials.h; path = WebRTC.framework/Headers/RTCFieldTrials.h; sourceTree = "<group>"; };
+		7F05A514CE338A40450B45F5B91CA420 /* RTCVideoTrack.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCVideoTrack.h; path = WebRTC.framework/Headers/RTCVideoTrack.h; sourceTree = "<group>"; };
+		841B4AAFBEC65F946BD4A7A1669C9DED /* UIDevice+RTCDevice.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIDevice+RTCDevice.h"; path = "WebRTC.framework/Headers/UIDevice+RTCDevice.h"; sourceTree = "<group>"; };
+		844631B5ED1D9C1807DAD165F1D97BEF /* RTCIceServer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCIceServer.h; path = WebRTC.framework/Headers/RTCIceServer.h; sourceTree = "<group>"; };
+		87593AB3BE411506ECB7144D0C44EDAF /* Pods-unity-bridge-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-unity-bridge-frameworks.sh"; sourceTree = "<group>"; };
+		896E80EC56EA78078B2390483E40678C /* RTCRtpReceiver.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCRtpReceiver.h; path = WebRTC.framework/Headers/RTCRtpReceiver.h; sourceTree = "<group>"; };
+		8F091556A5BACF2CF6BEC50323FA6091 /* RTCRtpEncodingParameters.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCRtpEncodingParameters.h; path = WebRTC.framework/Headers/RTCRtpEncodingParameters.h; sourceTree = "<group>"; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		A9274026DF06C75E9ABD1CEFBFE8B1CB /* WebRTC.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WebRTC.h; path = WebRTC.framework/Headers/WebRTC.h; sourceTree = "<group>"; };
+		B9F5A000DA53234D9E8BA046400F8EE8 /* RTCVideoSource.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCVideoSource.h; path = WebRTC.framework/Headers/RTCVideoSource.h; sourceTree = "<group>"; };
+		BA051CCF634E5105494EBADE658B12D0 /* RTCIceCandidate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCIceCandidate.h; path = WebRTC.framework/Headers/RTCIceCandidate.h; sourceTree = "<group>"; };
+		BD5381CE85732BC90621F869AA93BFF6 /* RTCAVFoundationVideoSource.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCAVFoundationVideoSource.h; path = WebRTC.framework/Headers/RTCAVFoundationVideoSource.h; sourceTree = "<group>"; };
+		C2D2C0D9AE0547C3946FE111F16AA7F7 /* RTCPeerConnection.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCPeerConnection.h; path = WebRTC.framework/Headers/RTCPeerConnection.h; sourceTree = "<group>"; };
+		CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		CD592BC7E7351B53552B653060FC94EF /* RTCAudioTrack.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCAudioTrack.h; path = WebRTC.framework/Headers/RTCAudioTrack.h; sourceTree = "<group>"; };
+		D04C1ABCED2F4B5793FC4AC6833FFE04 /* RTCFileLogger.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCFileLogger.h; path = WebRTC.framework/Headers/RTCFileLogger.h; sourceTree = "<group>"; };
+		D0707D3C2A03A1158964B9E99223D12B /* RTCRtpParameters.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCRtpParameters.h; path = WebRTC.framework/Headers/RTCRtpParameters.h; sourceTree = "<group>"; };
+		D501C6DC7759E113050BC879A44F1618 /* VoxImplant.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VoxImplant.h; path = include/VoxImplant.h; sourceTree = "<group>"; };
+		D5797626F85A51C13D86052CE2237AD8 /* RTCPeerConnectionFactory.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCPeerConnectionFactory.h; path = WebRTC.framework/Headers/RTCPeerConnectionFactory.h; sourceTree = "<group>"; };
+		D9653D65EDE6D6D1FE59D9244DCCEC0A /* RTCMediaStream.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCMediaStream.h; path = WebRTC.framework/Headers/RTCMediaStream.h; sourceTree = "<group>"; };
+		E077017016575835DDFD361AE9BADA07 /* RTCMetrics.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCMetrics.h; path = WebRTC.framework/Headers/RTCMetrics.h; sourceTree = "<group>"; };
+		E7EDD47594BD813778247CE07A798A44 /* RTCMetricsSampleInfo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCMetricsSampleInfo.h; path = WebRTC.framework/Headers/RTCMetricsSampleInfo.h; sourceTree = "<group>"; };
+		F365C6097FFD27B71D2994FA018EC817 /* WebRTC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WebRTC.framework; sourceTree = "<group>"; };
+		FCF8C1B96E01F8DC274CC91B66258C82 /* Pods-unity-bridge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-unity-bridge.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2D4956FF0FA3258974C8679AF5D47AFB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				488D8126EA7A0FD348BC413D010ED9CA /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0B5D62203436A4D5DBEE86501E0DBC39 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				5DB024C03D7C618E649DA8FD8651D6BE /* Pods-unity-bridge */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		1EC41C265EC7CBC9D59B4F01E7743288 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				73397022F46BEB5F905B9FA4946F9994 /* libPods-unity-bridge.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		365206A08F7B0C692EB8FED2E193D613 /* VoxImplantSDK */ = {
+			isa = PBXGroup;
+			children = (
+				D501C6DC7759E113050BC879A44F1618 /* VoxImplant.h */,
+				20037FAFC9AB0FD8813D7615FF4EC3B4 /* VoxImplantDelegate.h */,
+				4589DE31A4381755DC2FA09251484A0A /* Frameworks */,
+			);
+			name = VoxImplantSDK;
+			path = VoxImplantSDK;
+			sourceTree = "<group>";
+		};
+		4589DE31A4381755DC2FA09251484A0A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				18542BA1E0AD01C26BD33FC6BBEDC6FA /* libVoxImplantSDK.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5DB024C03D7C618E649DA8FD8651D6BE /* Pods-unity-bridge */ = {
+			isa = PBXGroup;
+			children = (
+				427AF239C086CA4BE13969548EA96569 /* Pods-unity-bridge-acknowledgements.markdown */,
+				1CAC8854DBC6CE096C77A8753F206240 /* Pods-unity-bridge-acknowledgements.plist */,
+				35F081B82284815C3515078728E688AF /* Pods-unity-bridge-dummy.m */,
+				87593AB3BE411506ECB7144D0C44EDAF /* Pods-unity-bridge-frameworks.sh */,
+				08A1C0BB26A11D34A4ED86022E7D4FD4 /* Pods-unity-bridge-resources.sh */,
+				FCF8C1B96E01F8DC274CC91B66258C82 /* Pods-unity-bridge.debug.xcconfig */,
+				04F92F100492C8130F011055F9B691FE /* Pods-unity-bridge.release.xcconfig */,
+			);
+			name = "Pods-unity-bridge";
+			path = "Target Support Files/Pods-unity-bridge";
+			sourceTree = "<group>";
+		};
+		7531C8F8DE19F1AA3C8A7AC97A91DC29 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		7DB346D0F39D3F0E887471402A8071AB = {
+			isa = PBXGroup;
+			children = (
+				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
+				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
+				C4FDFCEDCA6225B5B040D437BEEF9F51 /* Pods */,
+				1EC41C265EC7CBC9D59B4F01E7743288 /* Products */,
+				0B5D62203436A4D5DBEE86501E0DBC39 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		80B3DF89D77F84F321698C0F252C5217 /* VoxImplantWebRTC */ = {
+			isa = PBXGroup;
+			children = (
+				3B2EFAA0E369D999DCF58E67A465DB04 /* RTCAudioSource.h */,
+				CD592BC7E7351B53552B653060FC94EF /* RTCAudioTrack.h */,
+				BD5381CE85732BC90621F869AA93BFF6 /* RTCAVFoundationVideoSource.h */,
+				3FC22408BE888BFCE30F4CA08B0B2DD0 /* RTCCameraPreviewView.h */,
+				50D51840F22646DE04F5FF310A57C28C /* RTCConfiguration.h */,
+				3C1B373D2D8DB8F09B4BE5FE665E6F7B /* RTCDataChannel.h */,
+				525E6017DB5B2D47A5D4E0970F6A435E /* RTCDataChannelConfiguration.h */,
+				317CC66BFB8D6033C3D091CE189C4A22 /* RTCDispatcher.h */,
+				011063B04E791CE84CBBF4A9AFBA2043 /* RTCEAGLVideoView.h */,
+				778A126B5BD23FF8CA08F57AB2F0EA8F /* RTCFieldTrials.h */,
+				D04C1ABCED2F4B5793FC4AC6833FFE04 /* RTCFileLogger.h */,
+				BA051CCF634E5105494EBADE658B12D0 /* RTCIceCandidate.h */,
+				844631B5ED1D9C1807DAD165F1D97BEF /* RTCIceServer.h */,
+				408C3C2485FBCA07D68CEF840D2149F6 /* RTCLegacyStatsReport.h */,
+				3F9319E3A1F078DAA07A93D3B9FDA38B /* RTCLogging.h */,
+				20FA55047CC49169E145A4394097AFDB /* RTCMacros.h */,
+				0E96F1210FB1B33B563B61B13907FFB5 /* RTCMediaConstraints.h */,
+				57672507A40AB6A8B860A9B3CA06FF56 /* RTCMediaSource.h */,
+				D9653D65EDE6D6D1FE59D9244DCCEC0A /* RTCMediaStream.h */,
+				38A1AAA3752CBBEC16D2B8FADADE7B8D /* RTCMediaStreamTrack.h */,
+				E077017016575835DDFD361AE9BADA07 /* RTCMetrics.h */,
+				E7EDD47594BD813778247CE07A798A44 /* RTCMetricsSampleInfo.h */,
+				C2D2C0D9AE0547C3946FE111F16AA7F7 /* RTCPeerConnection.h */,
+				D5797626F85A51C13D86052CE2237AD8 /* RTCPeerConnectionFactory.h */,
+				1399BE65334D0DA5E1A7298CA8607C49 /* RTCRtpCodecParameters.h */,
+				8F091556A5BACF2CF6BEC50323FA6091 /* RTCRtpEncodingParameters.h */,
+				D0707D3C2A03A1158964B9E99223D12B /* RTCRtpParameters.h */,
+				896E80EC56EA78078B2390483E40678C /* RTCRtpReceiver.h */,
+				52A365B20BC08C069731EA2E6A3821B1 /* RTCRtpSender.h */,
+				1A3402F0F3F8407DCCEF1DD4DDF45931 /* RTCSessionDescription.h */,
+				44D5773C8FEF4B33A9307854E6253CB4 /* RTCSSLAdapter.h */,
+				4B11530AB9DEB9C5389116FF27E411D2 /* RTCTracing.h */,
+				38A1A443F07D7FFD03ACD5157D8A00F3 /* RTCVideoFrame.h */,
+				6D6EDF24A370969DE292CD577F3006ED /* RTCVideoRenderer.h */,
+				B9F5A000DA53234D9E8BA046400F8EE8 /* RTCVideoSource.h */,
+				7F05A514CE338A40450B45F5B91CA420 /* RTCVideoTrack.h */,
+				841B4AAFBEC65F946BD4A7A1669C9DED /* UIDevice+RTCDevice.h */,
+				A9274026DF06C75E9ABD1CEFBFE8B1CB /* WebRTC.h */,
+				B17DC213BF9C571ED359C711F53E24A7 /* Frameworks */,
+			);
+			name = VoxImplantWebRTC;
+			path = VoxImplantWebRTC;
+			sourceTree = "<group>";
+		};
+		B17DC213BF9C571ED359C711F53E24A7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F365C6097FFD27B71D2994FA018EC817 /* WebRTC.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7531C8F8DE19F1AA3C8A7AC97A91DC29 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C4FDFCEDCA6225B5B040D437BEEF9F51 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				365206A08F7B0C692EB8FED2E193D613 /* VoxImplantSDK */,
+				80B3DF89D77F84F321698C0F252C5217 /* VoxImplantWebRTC */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		15441CBBE4C741360A3EB1AA6BA8518D /* Pods-unity-bridge */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 42B61D8117C6C506CF35260E8A83A8BD /* Build configuration list for PBXNativeTarget "Pods-unity-bridge" */;
+			buildPhases = (
+				42C6D927B9CF7C09F37FCA4D8CB5F4E5 /* Sources */,
+				2D4956FF0FA3258974C8679AF5D47AFB /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-unity-bridge";
+			productName = "Pods-unity-bridge";
+			productReference = 73397022F46BEB5F905B9FA4946F9994 /* libPods-unity-bridge.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0700;
+			};
+			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
+			productRefGroup = 1EC41C265EC7CBC9D59B4F01E7743288 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				15441CBBE4C741360A3EB1AA6BA8518D /* Pods-unity-bridge */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		42C6D927B9CF7C09F37FCA4D8CB5F4E5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA107D544E52338BB62122F5471F044F /* Pods-unity-bridge-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		015A368F878AC3E2CEAE21DDE8026304 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		0E8910B80456E12064CFF8BA6C6D0737 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FCF8C1B96E01F8DC274CC91B66258C82 /* Pods-unity-bridge.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACH_O_TYPE = staticlib;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		44CDBB6D11DE06DB64D6268622BDC47E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E64DFA169C39F679FD14B9783DC9621B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 04F92F100492C8130F011055F9B691FE /* Pods-unity-bridge.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACH_O_TYPE = staticlib;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				015A368F878AC3E2CEAE21DDE8026304 /* Debug */,
+				44CDBB6D11DE06DB64D6268622BDC47E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		42B61D8117C6C506CF35260E8A83A8BD /* Build configuration list for PBXNativeTarget "Pods-unity-bridge" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0E8910B80456E12064CFF8BA6C6D0737 /* Debug */,
+				E64DFA169C39F679FD14B9783DC9621B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+}
