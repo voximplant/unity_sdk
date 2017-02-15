@@ -22,3 +22,6 @@ DerivedData
 
 # JB products
 .idea
+
+# Built static libraries
+*.a
