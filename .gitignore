@@ -26,5 +26,11 @@ DerivedData
 # Built static libraries
 *.a
 
-# Built unity project
-package/ios/*
+# Unity
+ios/*
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+Assets/AssetStoreTools*
