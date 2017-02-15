@@ -27,10 +27,10 @@ DerivedData
 *.a
 
 # Unity
-ios/*
-[Ll]ibrary/
-[Tt]emp/
-[Oo]bj/
-[Bb]uild/
-[Bb]uilds/
-Assets/AssetStoreTools*
+package/ios/*
+package/[Ll]ibrary/
+package/[Tt]emp/
+package/[Oo]bj/
+package/[Bb]uild/
+package/[Bb]uilds/
+package/Assets/AssetStoreTools*
