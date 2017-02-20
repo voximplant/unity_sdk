@@ -37,7 +37,7 @@ cp ./build/libunity-bridge.a ../../package/Plugins/iOS
 
 # Copy framework dependencies
 
-cp ./Pods/VoxImplantWebRTC/WebRTC.framework/WebRTC ../../package/Plugins/iOS/WebRTC.a
-cp ./Pods/VoxImplantSDK/lib/libVoxImplantSDK.a ../../package/Plugins/iOS
+cp -R ./Pods/VoxImplantWebRTC/WebRTC.framework ../../package/Assets/Plugins/iOS
+cp ./Pods/VoxImplantSDK/lib/libVoxImplantSDK.a ../../package/Assets/Plugins/iOS
 
 cd -
