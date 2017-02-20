@@ -36,11 +36,21 @@ Code checking permissions might look like this:
 ```
 
 Required Player Settings:
-    * bundle identifier
-	* minimum API level: 16
+* bundle identifier
+* minimum API level: 16
 
 #### iOS
-You are all set.
+* Update description for user on why app needs access to microphone and camera by modifying `Assets > Plugins > Editor > Voximplant > VoxiOSExport.cs` file
+
+```csharp
+    ...
+    plist.root.SetString("NSMicrophoneUsageDescription", "&");
+    plist.root.SetString("NSCameraUsageDescription", "&");
+    ...
+```
+
+You are all set, however app behaviour when user refuse to grant permissions is undefined. Refer to `[AVAudioSession sharedInstance].recordPermission` and `[AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo]` to check current permissions and decide what to do.
 
 Required Player Settings:
-    * minimal supported SDK: 8.0+
+* minimal supported SDK: 8.0+
+* 
