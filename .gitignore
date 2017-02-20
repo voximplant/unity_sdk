@@ -34,3 +34,4 @@ package/[Oo]bj/
 package/[Bb]uild/
 package/[Bb]uilds/
 package/Assets/AssetStoreTools*
+package/android/*
