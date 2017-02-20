@@ -1,0 +1,48 @@
+apply plugin: 'com.android.library'
+apply from: 'fat-aar.gradle'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+}
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+dependencies {
+    // Unity, will be provided during project export from unity
+    provided fileTree(include: ['*.jar'], dir: 'libs')
+
+    embedded group: 'org.slf4j', name: 'slf4j-api', version: '1.7.23'
+    embedded group: 'com.ning', name: 'async-http-client', version: '1.9.40'
+    embedded 'com.fasterxml.jackson.core:jackson-core:2.8.6'
+    embedded 'com.fasterxml.jackson.core:jackson-annotations:2.8.6'
+    embedded 'com.fasterxml.jackson.core:jackson-databind:2.7.6'
+    embedded group: 'com.google.code.gson', name: 'gson', version: '2.8.0'
+    embedded name: 'voximplant-release', ext: 'aar'
+
+    // Voximplant transitive dependencies
+    embedded 'com.android.support:support-compat:25.1.1'
+    embedded 'com.android.support:appcompat-v7:25.1.1'
+    embedded group: 'io.netty', name: 'netty', version: '3.10.6.Final'
+
+//    embedded group: 'io.pristine', name: 'libjingle_peerconnection', version: '7113'
+}
