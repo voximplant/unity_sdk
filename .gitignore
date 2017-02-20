@@ -35,3 +35,6 @@ package/[Bb]uild/
 package/[Bb]uilds/
 package/Assets/AssetStoreTools*
 package/android/*
+
+# Gradle
+.gradle
