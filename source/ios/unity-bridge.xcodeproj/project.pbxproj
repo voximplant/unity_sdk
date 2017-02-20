@@ -1,0 +1,318 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C01458B61E538E3700D1C973 /* voxImplantIosSDK.mm in Sources */ = {isa = PBXBuildFile; fileRef = C01458B51E538E3700D1C973 /* voxImplantIosSDK.mm */; };
+		C781A03172725B994985259E /* libPods-unity-bridge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC99EEA9D89ACB34B8C4E14F /* libPods-unity-bridge.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C01458A71E53896700D1C973 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		5106FEF89F8342BFE716941F /* Pods-unity-bridge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unity-bridge.debug.xcconfig"; path = "Pods/Target Support Files/Pods-unity-bridge/Pods-unity-bridge.debug.xcconfig"; sourceTree = "<group>"; };
+		521C30A3D8F1E517389E78E1 /* Pods-unity-bridge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unity-bridge.release.xcconfig"; path = "Pods/Target Support Files/Pods-unity-bridge/Pods-unity-bridge.release.xcconfig"; sourceTree = "<group>"; };
+		C01458A91E53896700D1C973 /* libunity-bridge.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libunity-bridge.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C01458B51E538E3700D1C973 /* voxImplantIosSDK.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = voxImplantIosSDK.mm; sourceTree = "<group>"; };
+		FC99EEA9D89ACB34B8C4E14F /* libPods-unity-bridge.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-unity-bridge.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C01458A61E53896700D1C973 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C781A03172725B994985259E /* libPods-unity-bridge.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		06BD3AEABFBE71E1E249C2C9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FC99EEA9D89ACB34B8C4E14F /* libPods-unity-bridge.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2CF304433E9CC0D16C53F3AB /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5106FEF89F8342BFE716941F /* Pods-unity-bridge.debug.xcconfig */,
+				521C30A3D8F1E517389E78E1 /* Pods-unity-bridge.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		C01458A01E53896700D1C973 = {
+			isa = PBXGroup;
+			children = (
+				C01458AB1E53896700D1C973 /* unity-bridge */,
+				C01458AA1E53896700D1C973 /* Products */,
+				2CF304433E9CC0D16C53F3AB /* Pods */,
+				06BD3AEABFBE71E1E249C2C9 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		C01458AA1E53896700D1C973 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C01458A91E53896700D1C973 /* libunity-bridge.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C01458AB1E53896700D1C973 /* unity-bridge */ = {
+			isa = PBXGroup;
+			children = (
+				C01458B51E538E3700D1C973 /* voxImplantIosSDK.mm */,
+			);
+			path = "unity-bridge";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C01458A81E53896700D1C973 /* unity-bridge */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C01458B21E53896700D1C973 /* Build configuration list for PBXNativeTarget "unity-bridge" */;
+			buildPhases = (
+				1D6AAA0CCA3730FADA569E5E /* [CP] Check Pods Manifest.lock */,
+				C01458A51E53896700D1C973 /* Sources */,
+				C01458A61E53896700D1C973 /* Frameworks */,
+				C01458A71E53896700D1C973 /* CopyFiles */,
+				E8269BAE97D08E8ED00C8A45 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "unity-bridge";
+			productName = "unity-bridge";
+			productReference = C01458A91E53896700D1C973 /* libunity-bridge.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C01458A11E53896700D1C973 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = voximplant;
+				TargetAttributes = {
+					C01458A81E53896700D1C973 = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = C01458A41E53896700D1C973 /* Build configuration list for PBXProject "unity-bridge" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = C01458A01E53896700D1C973;
+			productRefGroup = C01458AA1E53896700D1C973 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C01458A81E53896700D1C973 /* unity-bridge */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1D6AAA0CCA3730FADA569E5E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E8269BAE97D08E8ED00C8A45 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-unity-bridge/Pods-unity-bridge-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C01458A51E53896700D1C973 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C01458B61E538E3700D1C973 /* voxImplantIosSDK.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		C01458B01E53896700D1C973 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		C01458B11E53896700D1C973 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C01458B31E53896700D1C973 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5106FEF89F8342BFE716941F /* Pods-unity-bridge.debug.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		C01458B41E53896700D1C973 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 521C30A3D8F1E517389E78E1 /* Pods-unity-bridge.release.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C01458A41E53896700D1C973 /* Build configuration list for PBXProject "unity-bridge" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01458B01E53896700D1C973 /* Debug */,
+				C01458B11E53896700D1C973 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01458B21E53896700D1C973 /* Build configuration list for PBXNativeTarget "unity-bridge" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01458B31E53896700D1C973 /* Debug */,
+				C01458B41E53896700D1C973 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C01458A11E53896700D1C973 /* Project object */;
+}
