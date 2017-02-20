@@ -14,22 +14,22 @@ namespace Voximplant
         private AndroidJavaObject jo;
         public Action<String> LogMethod;
 
-        public delegate void deligateOnLoginSuccessful(string displayName);
-        public delegate void deligateOnLoginFailed(LoginFailureReason reason);
-        public delegate void deligateOnOneTimeKeyGenerated(string key);
-        public delegate void deligateOnConnectionSuccessful();
-        public delegate void deligateOnConnectionClosed();
-        public delegate void deligateOnConnectionFailedWithError(string reason);
-        public delegate void deligateOnCallConnected(string callId, Dictionary<string, string> headers);
-        public delegate void deligateOnCallDisconnected(string callId, Dictionary<string, string> headers);
-        public delegate void deligateOnCallRinging(string callId, Dictionary<string, string> headers);
-        public delegate void deligateOnCallFailed(string callId, int code, string reason, Dictionary<string, string> headers);
-        public delegate void deligateOnCallAudioStarted(string callId);
+        public delegate void delegateOnLoginSuccessful(string displayName);
+        public delegate void delegateOnLoginFailed(LoginFailureReason reason);
+        public delegate void delegateOnOneTimeKeyGenerated(string key);
+        public delegate void delegateOnConnectionSuccessful();
+        public delegate void delegateOnConnectionClosed();
+        public delegate void delegateOnConnectionFailedWithError(string reason);
+        public delegate void delegateOnCallConnected(string callId, Dictionary<string, string> headers);
+        public delegate void delegateOnCallDisconnected(string callId, Dictionary<string, string> headers);
+        public delegate void delegateOnCallRinging(string callId, Dictionary<string, string> headers);
+        public delegate void delegateOnCallFailed(string callId, int code, string reason, Dictionary<string, string> headers);
+        public delegate void delegateOnCallAudioStarted(string callId);
         public delegate void deligatonIncomingCall(String callId, String from, String displayName, Boolean videoCall, Dictionary<String, String> headers);
-        public delegate void deligateOnSIPInfoReceivedInCall(string callId, string type, string content, Dictionary<string, string> headers);
-		public delegate void deligateOnMessageReceivedInCall(string callId, string text, Dictionary<string, string> headers);
-        public delegate void deligateOnNetStatsReceived(string callId, int packetLoss);
-		public delegate void deligateOnStartCall(string callId);
+        public delegate void delegateOnSIPInfoReceivedInCall(string callId, string type, string content, Dictionary<string, string> headers);
+		public delegate void delegateOnMessageReceivedInCall(string callId, string text, Dictionary<string, string> headers);
+        public delegate void delegateOnNetStatsReceived(string callId, int packetLoss);
+		public delegate void delegateOnStartCall(string callId);
 
 		/**
 		Called when packet loss data is received from the Voximplant cloud
@@ -37,7 +37,7 @@ namespace Voximplant
 		@param {string} callid Call identifier
 		@param {int} loss Packet loss from 0 (no loss) to 100 (all lost)
 		*/
-        public event deligateOnNetStatsReceived onNetStatsReceived;
+        public event delegateOnNetStatsReceived onNetStatsReceived;
 		/**
 		Called if Voximplant-specified 'message' is recived. It's a specialized type of a more general SIP 'info' message
 		@event onMessageReceivedInCall
@@ -45,7 +45,7 @@ namespace Voximplant
 		@param {string} text Message text
 		@param {Dictionary} (Only for iOS) headers Optional SIP headers set by a info sender
 		*/
-        public event deligateOnMessageReceivedInCall onMessageReceivedInCall;
+        public event delegateOnMessageReceivedInCall onMessageReceivedInCall;
 		/**
 		Called if SIP 'info' message is received. That message can be sent from a Voximplant cloud scenario or forwarded from a caller
 		@event onSIPInfoReceivedInCall
@@ -54,7 +54,7 @@ namespace Voximplant
 		@param {string} content Data string
 		@param {Dictionary} headers Optional SIP headers set by a info sender
 		*/
-        public event deligateOnSIPInfoReceivedInCall onSIPInfoReceivedInCall;
+        public event delegateOnSIPInfoReceivedInCall onSIPInfoReceivedInCall;
 		/**
 		Called when Voximplant directs a new call to a user logged in from this SDK instance. SDK can handle multiple incoming and/or outgoing calls at once and target specified call via the 'callid' string returned by 'call()' method and received by this event
 		@event onIncomingCall
@@ -70,7 +70,7 @@ namespace Voximplant
 		@event onCallAudioStarted
 		@param {string} callid Call identifier, previously returned by the call() function
 		*/
-        public event deligateOnCallAudioStarted onCallAudioStarted;
+        public event delegateOnCallAudioStarted onCallAudioStarted;
 		/**
 		Called when Voximplant cloud rejects a call
 		@event onCallFailed
@@ -79,68 +79,68 @@ namespace Voximplant
 		@param {string} reason Text description while call failed
 		@param {Dictionary} headers Optional SIP headers that was sent by Voximplant while call was rejected
 		*/
-        public event deligateOnCallFailed onCallFailed;
+        public event delegateOnCallFailed onCallFailed;
 		/**
 		Called when Voximplant cloud sends RINGING SIP notificatoin via 'call.ring()' method. As response to that event client can play some "ringing" sounds or inform user about "call in progress" some other way
 		@event onCallRinging
 		@param {string} callid Call identifier, previously returned by the call() function
 		@param {Dictionary} headers Optional SIP headers that was sent by Voximplant as an argument to the 'call.ring()' method call
 		*/
-        public event deligateOnCallRinging onCallRinging;
+        public event delegateOnCallRinging onCallRinging;
 		/**
 		Called after call is gracefully disconnected from the Voximplant cloud
 		@event onCallDisconnected
 		@param {string} callid Call identifier, previously returned by the call() function
 		@param {Dictionary} headers Optional SIP headers that was sent by Voximplant while disconnecting the call
 		*/
-        public event deligateOnCallDisconnected onCallDisconnected;
+        public event delegateOnCallDisconnected onCallDisconnected;
 		/**
 		Called after call() method successfully established a call with the Voximplant cloud
 		@event onCallConnected
 		@param {string} callid Connected call identifier. It's same identifier returned by the call() function and it can be used in other function to specify one of multiple calls
 		@param {Dictionary} headers Optional SIP headers that was sent by Voximplant while accepting the call
 	    */
-        public event deligateOnCallConnected onCallConnected;
+        public event delegateOnCallConnected onCallConnected;
 		/**
 		Called if connect() failed to establish a Voximplant cloud connection
 		@event onConnectionFailedWithError
 		@param {string} error Error message
 		*/
-        public event deligateOnConnectionFailedWithError onConnectionFailedWithError;
+        public event delegateOnConnectionFailedWithError onConnectionFailedWithError;
 		/**
 		Called after connection to Voximplant cloud is closed for any reason
 		@event onConnectionClosed
 		*/
-        public event deligateOnConnectionClosed onConnectionClosed;
+        public event delegateOnConnectionClosed onConnectionClosed;
 		/**
 		Called after connect() successfully connects to Voximplant cloud
 		@event onConnectionSuccessful
 		*/
-        public event deligateOnConnectionSuccessful onConnectionSuccessful;
+        public event delegateOnConnectionSuccessful onConnectionSuccessful;
 		/**
 		Called after key requested with 'requestOneTimeKey' is requested and returned from the Voximplant cloud
 		@event onOneTimeKeyGenerated
 		@param {string} key Key string that should be used in a hash for the 'loginUsingOneTimeKey'
 		*/
-        public event deligateOnOneTimeKeyGenerated onOneTimeKeyGenerated;
+        public event delegateOnOneTimeKeyGenerated onOneTimeKeyGenerated;
 		/**
 		Called if login() call results in the failed login
 		@event onLoginFailed
 		@param {string} error Failure reason
 		*/
-        public event deligateOnLoginFailed onLoginFailed;
+        public event delegateOnLoginFailed onLoginFailed;
 		/**
 		Called if login() call results in the successful login
 		@event onLoginSuccessful
 		@param {string} username Display name of logged in user
 		*/
-        public event deligateOnLoginSuccessful onLoginSuccessful;
+        public event delegateOnLoginSuccessful onLoginSuccessful;
 		/**
 		Called when you start call
 		@event onStartCall
 		@param {string} callid Call identifier, previously returned by the call() function
 		*/
-		public event deligateOnStartCall onStartCall;
+		public event delegateOnStartCall onStartCall;
 
 		[DllImport ("__Internal")]
 		private static extern void iosSDKinit(string pUnityObj);
