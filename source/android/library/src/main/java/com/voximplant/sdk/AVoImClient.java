@@ -24,8 +24,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AVoImClient implements VoxImplantCallback {
+    private static AVoImClient inst = null;
+    public static AVoImClient instance() {
+        if (inst == null) {
+            inst = new AVoImClient();
+        }
+
+        return inst;
+    }
+
     private VoxImplantClient client;
-    private UnityPlayer unityPlayer;
     private String sdkObjName = "SDK";
     private DialogFragment mVideoLocalDialog;
     private DialogFragment mVideoRemoteDialog;
@@ -153,9 +161,11 @@ public class AVoImClient implements VoxImplantCallback {
         }
     }
 
-    public AVoImClient() { }
+    public AVoImClient() {
+        Init();
+    }
 
-    public void Init() {
+    private void Init() {
         Log.d("VOXIMPLANT", "Start init");
         client = VoxImplantClient.instance();
         client.setAndroidContext(UnityPlayer.currentActivity.getApplicationContext());
@@ -167,33 +177,6 @@ public class AVoImClient implements VoxImplantCallback {
 
     public void setSDKObjectName(String name) {
         this.sdkObjName = name;
-    }
-
-    public static String[] getRequiredPermissions() {
-        return new String[]{Manifest.permission.RECORD_AUDIO,
-                Manifest.permission.MODIFY_AUDIO_SETTINGS,
-                Manifest.permission.INTERNET,
-                Manifest.permission.CAMERA,
-                Manifest.permission.ACCESS_NETWORK_STATE
-        };
-    }
-
-    public static boolean areRequiredPermissionsGranted(Context context) {
-        for (String permission : getRequiredPermissions()) {
-            if (checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-
-    private static int checkSelfPermission(Context context, String permission) {
-        if (permission == null) {
-            throw new IllegalArgumentException("permission is null");
-        }
-
-        return context.checkPermission(permission, android.os.Process.myPid(), android.os.Process.myUid());
     }
 
     public void closeConnection() {

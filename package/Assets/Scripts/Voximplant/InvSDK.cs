@@ -4,6 +4,7 @@ using UnityEngine;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using SimpleJSON;
 
 namespace Voximplant
@@ -252,36 +253,82 @@ namespace Voximplant
 		@param {SizeView} pLocalView Optional view to display local video into. Default is SizeView(0, 0, 100, 100)
 		@param {SizeView} pRemoteView Optional view to display remote video into. Default is SizeView(0, 150, 100, 100)
 		*/
-		public void init(String pObjectNameSDK, SizeView pLocalView = null, SizeView pRemoteView = null)
+		public void init(String pObjectNameSDK, Action<bool> initCallback, SizeView pLocalView = null, SizeView pRemoteView = null)
 		{
-			if (AndroidPlatform())
-			{
-				try
-				{
-					jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-				}
-				catch (UnityException e)
-				{
-					Debug.logger.Log("JC Error: " + e.Message);
-				}
+		    if (pLocalView == null) pLocalView = new SizeView(0, 0, 100, 100);
+		    if (pRemoteView == null) pRemoteView = new SizeView(0, 150, 100, 100);
 
-				try
-				{
-					jo = jc.GetStatic<AndroidJavaObject>("currentActivity").Get<AndroidJavaObject>("mVoxClient");
-				}
-				catch (AndroidJavaException e)
-				{
-					Debug.logger.Log("JO Error: " + e.Message);
-				}
-				jo.Call("setSDKObjectName", pObjectNameSDK);
-			}
-			if (IPhonePlatform())
-				iosSDKinit(pObjectNameSDK);
+		    Action finishInit = () => {
+		        setLocalSizeView(pLocalView);
+		        setRemoteSizeView(pRemoteView);
+		        initCallback(true);
+		    };
 
-			if (pLocalView == null) pLocalView = new SizeView(0, 0, 100, 100);
-			if (pRemoteView == null) pRemoteView = new SizeView(0, 150, 100, 100);
-			setLocalSizeView(pLocalView);
-			setRemoteSizeView(pRemoteView);
+		    if (IPhonePlatform()) {
+		        iosSDKinit(pObjectNameSDK);
+		        finishInit();
+		    } else if (AndroidPlatform()) {
+		        Action initJava = () => {
+		            try {
+		                jc = new AndroidJavaClass("com.voximplant.sdk.AVoImClient");
+		            }
+		            catch (UnityException e) {
+		                Debug.logger.Log("JC Error: " + e.Message);
+		                initCallback(false);
+		                return;
+		            }
+
+		            try {
+		                jo = jc.CallStatic<AndroidJavaObject>("instance");
+		            }
+		            catch (AndroidJavaException e) {
+		                Debug.logger.Log("JO Error: " + e.Message);
+		                initCallback(false);
+		                return;
+		            }
+		            jo.Call("setSDKObjectName", pObjectNameSDK);
+
+		            finishInit();
+		        };
+
+
+		        var requester = PermissionsRequester.Instance;
+		        if (requester == null) {
+		            initJava(); // No permissions support at all
+		            return;
+		        }
+
+		        string[] permissions = {
+		            "android.permission.RECORD_AUDIO",
+		            "android.permission.MODIFY_AUDIO_SETTINGS",
+		            "android.permission.INTERNET",
+		            "android.permission.CAMERA"
+		        };
+
+		        bool requestPermissions = false;
+		        foreach (var permission in permissions) {
+		            if (!requester.IsPermissionGranted(permission)) {
+		                requestPermissions = true;
+		                break;
+		            }
+		        }
+
+		        if (requestPermissions) {
+		            requester.RequestPermissions(permissions, statuses => {
+		                foreach (var status in statuses)
+		                {
+		                    if (!status.Granted) {
+		                        initCallback(false);
+		                        return;
+		                    }
+		                }
+
+		                initJava();
+		            });
+		        } else {
+		            initJava();
+		        }
+		    }
 
 		}
 
