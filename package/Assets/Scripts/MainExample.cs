@@ -56,7 +56,16 @@ namespace Invoice
 			addLog("Target platform: " + Application.platform);
 
             inv = gameObject.AddComponent<InvSDK>();
-			inv.init(gameObject.name, new SizeView(0,0, 100, 100), new SizeView(0, 150, 100, 100));
+			inv.init(gameObject.name, success => {
+			        if (success) {
+			            setMute();
+			            sendVideo();
+			            switchCam();
+			        }
+
+			        addLog(string.Format("Init finished, permissions status: ${0}", success));
+			    },
+			    new SizeView(0,0, 100, 100), new SizeView(0, 150, 100, 100));
             inv.LogMethod += addLog;
             inv.onConnectionSuccessful += Inv_onConnectionSuccessful;
             inv.onIncomingCall += Inv_onIncomingCall;
@@ -66,10 +75,6 @@ namespace Invoice
             inv.onCallConnected += Inv_onCallConnected;
             inv.onCallDisconnected += Inv_onCallDisconnected;
 			inv.onStartCall += Inv_onStartCall;
-
-			setMute();
-			sendVideo();
-			switchCam();
         }
 
         void Inv_onStartCall (string callId)
