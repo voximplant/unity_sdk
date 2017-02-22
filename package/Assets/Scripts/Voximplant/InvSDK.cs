@@ -268,6 +268,7 @@ namespace Voximplant
 		        iosSDKinit(pObjectNameSDK);
 		        finishInit();
 		    } else if (AndroidPlatform()) {
+#if UNITY_ANDROID || UNITY_EDITOR
 		        Action initJava = () => {
 		            try {
 		                jc = new AndroidJavaClass("com.voximplant.sdk.AVoImClient");
@@ -328,6 +329,7 @@ namespace Voximplant
 		        } else {
 		            initJava();
 		        }
+#endif
 		    }
 
 		}
