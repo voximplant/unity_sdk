@@ -12,15 +12,6 @@ namespace Voximplant
             if (buildTarget != BuildTarget.iOS)
                 return;
 
-            var plistPath = path + "/Info.plist";
-
-            var plist = new PlistDocument();
-            plist.ReadFromFile(plistPath);
-            plist.root.SetString("NSMicrophoneUsageDescription", "&");
-            plist.root.SetString("NSCameraUsageDescription", "&");
-            plist.WriteToFile(plistPath);
-
-
             var projectPath = path + "/Unity-iPhone.xcodeproj/project.pbxproj";
             var proj = new PBXProject();
             proj.ReadFromFile(projectPath);
