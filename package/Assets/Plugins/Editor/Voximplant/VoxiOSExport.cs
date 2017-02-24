@@ -27,6 +27,10 @@ namespace Voximplant
                 proj.SetBuildProperty(target, "LD_RUNPATH_SEARCH_PATHS", "$(inherited) @executable_path/Frameworks");
             }
 
+            // Link twice as we have circular dependencies
+			proj.AddBuildProperty(targets, "OTHER_LDFLAGS", "-lVoxImplantSDK");
+            proj.AddBuildProperty(targets, "OTHER_LDFLAGS", "-lvoximplant-bridge");
+
             proj.AddDynamicFramework(unityTargetGuid, "Frameworks/Plugins/iOS/WebRTC.framework");
 
             proj.WriteToFile(projectPath);
