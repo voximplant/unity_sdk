@@ -247,7 +247,7 @@ namespace Voximplant
 		}
 
 		/**
-		Initiate SDK
+		Initialize the SDK
 		@method init
 		@param {String} pObjectNameSDK Name of Unity GameObject to receive SDK events. Script connected to that object calls this 'init' method
 		@param {SizeView} pLocalView Optional view to display local video into. Default is SizeView(0, 0, 100, 100)
@@ -347,7 +347,7 @@ namespace Voximplant
         }
 
         /**
-        Initiate Voximplant cloud connection. After successful connection a "login" method should be called
+        Initiate connection to the Voximplant cloud. After successful connection a "login" method should be called
         @method connect
         */
         public void connect()
