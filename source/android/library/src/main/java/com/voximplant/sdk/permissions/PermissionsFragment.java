@@ -19,11 +19,11 @@ public class PermissionsFragment extends Fragment {
         void onRequestPermissionResult(boolean z);
     }
 
-    public static PermissionsFragment getInstance(Activity parentActivity) {
-        if (Build.VERSION.SDK_INT < 23) {
-            return null;
-        }
+    public static boolean RequirePermissionsRequests() {
+        return Build.VERSION.SDK_INT >= 23;
+    }
 
+    public static PermissionsFragment getInstance(Activity parentActivity) {
         Throwable th;
         PermissionsFragment fragment = (PermissionsFragment) parentActivity.getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
         if (fragment == null) {
