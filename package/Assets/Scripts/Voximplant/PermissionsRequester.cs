@@ -67,12 +67,16 @@ namespace Voximplant
             get
             {
                 if (theInstance == null) {
-                    theInstance = new PermissionsRequester();
-                    if (!theInstance.InitializeFragment()) {
-                        Debug.Log("No permissions request are available");
-                        theInstance = null;
+                    if (RequirePermissionRequests()) {
+                        theInstance = new PermissionsRequester();
+
+                        if (!theInstance.InitializeFragment()) {
+                            Debug.Log("No permissions request are available");
+                            theInstance = null;
+                        }
                     }
                 }
+
                 return theInstance;
             }
         }
@@ -97,6 +101,20 @@ namespace Voximplant
     return permissionsFragment != null &&
         permissionsFragment.GetRawObject() != IntPtr.Zero;
 #endif
+        }
+
+        protected static bool RequirePermissionRequests()
+        {
+            bool requirePermissions = false;
+#if UNITY_ANDROID
+            AndroidJavaClass ajc = new AndroidJavaClass(FRAGMENT_CLASSNAME);
+
+    if (ajc != null) {
+      // Get the PermissionsRequesterFragment object
+      requirePermissions = ajc.CallStatic<Boolean>("RequirePermissionsRequests");
+    }
+#endif
+            return requirePermissions;
         }
 
         public bool IsPermissionGranted(string permission) {
