@@ -1,14 +1,14 @@
 PODS:
-  - VoxImplantSDK (1.1.0):
-    - VoxImplantWebRTC (~> 55.0.1)
-  - VoxImplantWebRTC (55.0.1)
+  - VoxImplantSDK (1.2.0):
+    - VoxImplantWebRTC (~> 57.0.0)
+  - VoxImplantWebRTC (57.0.0)
 
 DEPENDENCIES:
   - VoxImplantSDK
 
 SPEC CHECKSUMS:
-  VoxImplantSDK: 1da5d8dcaedc3271eee0f6d260be1ef67c18adec
-  VoxImplantWebRTC: 4f0a4a4641b0bb7707634819171d8c59c14c15eb
+  VoxImplantSDK: 4ac89b4541529da9d88c2108ed696d72bbea11a7
+  VoxImplantWebRTC: 89f40b1bcf8bb14e5d8a41d829d71b3badd850b5
 
 PODFILE CHECKSUM: 58ad0a104f7d85ddd78287fbddcae4b25dd4f680
 

@@ -2,58 +2,12 @@
 //Objective-C Code
 #import <Foundation/Foundation.h>
 
-#import <VoxImplantSDK/VoxImplant.h>
+#import <VoxImplant/VoxImplant.h>
+#import "JsonDic.h"
 
 extern "C" void UnitySendMessage(const char *obj, const char *method, const char *msg);
 
 @interface ProxyingVoxImplantDelegate : NSObject <VoxImplantDelegate>
-@end
-
-@interface JsonDic : NSObject
-
-@property NSArray *list;
-@property NSMutableDictionary *dic;
-
-- (instancetype)initWithJSONString:(NSString *)JSONString;
-
-@end
-
-@implementation JsonDic
-
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-
-    }
-    return self;
-}
-
-- (instancetype)initWithJSONString:(NSString *)JSONString {
-    self = [super init];
-    if (self) {
-
-        NSError *error = nil;
-        NSData *JSONData = [JSONString dataUsingEncoding:NSUTF8StringEncoding];
-        NSDictionary *JSONDictionary = [NSJSONSerialization JSONObjectWithData:JSONData options:0 error:&error];
-
-        if (!error && JSONDictionary) {
-
-            //Loop method
-            for (NSString *key in JSONDictionary) {
-                [self setValue:[JSONDictionary valueForKey:key] forKey:key];
-            }
-
-            if (_list != Nil) {
-                _dic = [[NSMutableDictionary alloc] init];
-                for (NSDictionary *item in _list) {
-                    [_dic setValue:item[@"value"] forKey:item[@"key"]];
-                }
-            }
-        }
-    }
-    return self;
-}
-
 @end
 
 @implementation ProxyingVoxImplantDelegate {
@@ -73,12 +27,12 @@ extern "C" void UnitySendMessage(const char *obj, const char *method, const char
 }
 
 - (void)callMethod:(NSString *)methodName withParameter:(NSString *)parameter {
-    parameter = parameter ? parameter : @"";
+    parameter = parameter ?: @"";
     UnitySendMessage([unityObjName UTF8String], [methodName UTF8String], [parameter UTF8String]);
 }
 
 - (void)callMethod:(NSString *)methodName withJSONParameter:(id)jsonParameter {
-    NSError *writeError = [NSError alloc];
+    NSError *writeError;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonParameter
                                                        options:0
                                                          error:&writeError];
@@ -109,6 +63,7 @@ extern "C" void UnitySendMessage(const char *obj, const char *method, const char
 }
 
 - (void)onLoginSuccessfulWithDisplayName:(NSString *)displayName andAuthParams:(NSDictionary *)authParams {
+    displayName = displayName ?: @"";
     [self callMethod:@"fiosonLoginSuccessful" withJSONParameter:@[displayName]];
 }
 

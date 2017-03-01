@@ -89,9 +89,11 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "${PODS_ROOT}/VoxImplantSDK/VoxImplant.framework"
   install_framework "${PODS_ROOT}/VoxImplantWebRTC/WebRTC.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "${PODS_ROOT}/VoxImplantSDK/VoxImplant.framework"
   install_framework "${PODS_ROOT}/VoxImplantWebRTC/WebRTC.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then

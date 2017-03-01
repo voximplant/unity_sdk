@@ -1,0 +1,6 @@
+framework module VoxImplant {
+  umbrella header "VoxImplant.h"
+
+  export *
+  module * { export * }
+}

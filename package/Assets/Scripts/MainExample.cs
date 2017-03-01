@@ -61,8 +61,7 @@ namespace Invoice
 			        }
 
 			        addLog(string.Format("Init finished, permissions status: ${0}", success));
-			    },
-			    new SizeView(0,0, 100, 100), new SizeView(0, 150, 100, 100));
+			    });
             _voximplant.LogMethod += addLog;
             _voximplant.ConnectionSuccessful += InvConnectionSuccessful;
             _voximplant.IncomingCall += InvIncomingCall;
@@ -93,16 +92,12 @@ namespace Invoice
             mCallRingPanel.SetActive(false);
 			mActiveCallId = null;
 			mIncCallId = null; 
-			_voximplant.setLocalView(false);
-			_voximplant.setRemoteView(false);
         }
 
         private void InvCallConnected(string callId, Dictionary<string, string> headers)
         {
 			addLog("Call connected");
 			mBtnHung.SetActive(true);
-			_voximplant.setLocalView(mLocalView.isOn);
-			_voximplant.setRemoteView(mRemoteView.isOn);
         }
 
 		private void InvMessageReceivedInCall(string callId, string text, Dictionary<string, string> headers)
@@ -137,23 +132,23 @@ namespace Invoice
         }
         public void onClickCall()
         {
-			_voximplant.call(new CallClassParam(callNum.text, video.isOn, p2p.isOn, "", null));
+			_voximplant.call(new CallClassParam(callNum.text, video.isOn, p2p.isOn, ""));
             mBtnHung.SetActive(true);
         }
         public void onClickAnswer()
         {
             mCallRingPanel.SetActive(false);
             mActiveCallId = mIncCallId;
-			_voximplant.answer(mActiveCallId.id, null);
+			_voximplant.answer(mActiveCallId.id);
         }
         public void onClickDecline()
         {
             mCallRingPanel.SetActive(false);
-            _voximplant.declineCall(mIncCallId.id, null);
+            _voximplant.declineCall(mIncCallId.id);
         }
         public void onHangup()
         {
-			_voximplant.hangup(mActiveCallId.id, null);
+			_voximplant.hangup(mActiveCallId.id);
         }
         public void setMute()
         {
@@ -174,15 +169,6 @@ namespace Invoice
                 _voximplant.setCamera(Camera.CAMERA_FACING_BACK);
 			}
         }
-
-		public void onChangeLocalView()
-		{
-			_voximplant.setLocalView(mLocalView.isOn);
-		}
-		public void onChangeRemoteView()
-		{
-			_voximplant.setRemoteView(mRemoteView.isOn);
-		}
 
         public void addLog(string pMsg)
         {

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C01458B61E538E3700D1C973 /* voxImplantIosSDK.mm in Sources */ = {isa = PBXBuildFile; fileRef = C01458B51E538E3700D1C973 /* voxImplantIosSDK.mm */; };
 		C781A03172725B994985259E /* libPods-unity-bridge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC99EEA9D89ACB34B8C4E14F /* libPods-unity-bridge.a */; };
+		D62AAF7ED6A3626FC6E389EC /* JsonDic.m in Sources */ = {isa = PBXBuildFile; fileRef = D62AA6906A632A6D3201F78D /* JsonDic.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +29,8 @@
 		521C30A3D8F1E517389E78E1 /* Pods-unity-bridge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unity-bridge.release.xcconfig"; path = "Pods/Target Support Files/Pods-unity-bridge/Pods-unity-bridge.release.xcconfig"; sourceTree = "<group>"; };
 		C01458A91E53896700D1C973 /* libunity-bridge.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libunity-bridge.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C01458B51E538E3700D1C973 /* voxImplantIosSDK.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = voxImplantIosSDK.mm; sourceTree = "<group>"; };
+		D62AA6906A632A6D3201F78D /* JsonDic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JsonDic.m; sourceTree = "<group>"; };
+		D62AAFB3F3EF6FEC07956A23 /* JsonDic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JsonDic.h; sourceTree = "<group>"; };
 		FC99EEA9D89ACB34B8C4E14F /* libPods-unity-bridge.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-unity-bridge.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -82,6 +85,8 @@
 			isa = PBXGroup;
 			children = (
 				C01458B51E538E3700D1C973 /* voxImplantIosSDK.mm */,
+				D62AA6906A632A6D3201F78D /* JsonDic.m */,
+				D62AAFB3F3EF6FEC07956A23 /* JsonDic.h */,
 			);
 			path = "unity-bridge";
 			sourceTree = "<group>";
@@ -179,6 +184,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C01458B61E538E3700D1C973 /* voxImplantIosSDK.mm in Sources */,
+				D62AAF7ED6A3626FC6E389EC /* JsonDic.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
