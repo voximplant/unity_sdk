@@ -103,7 +103,7 @@ namespace Voximplant
 #endif
         }
 
-        protected static bool RequirePermissionRequests()
+        public static bool RequirePermissionRequests()
         {
             bool requirePermissions = false;
 #if UNITY_ANDROID

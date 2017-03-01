@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <unityVersion>5.5.1f1</unityVersion>
+    <unityVersion>5.5.1p4</unityVersion>
   </PropertyGroup>
   <PropertyGroup>
-    <unityProcessId>57145</unityProcessId>
+    <unityProcessId>66901</unityProcessId>
   </PropertyGroup>
   <PropertyGroup>
     <LangVersion>4</LangVersion>
@@ -57,10 +57,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\MainExample.cs" />
-    <Compile Include="Assets\Scripts\Voximplant\InvSDK.cs" />
+    <Compile Include="Assets\Scripts\Voximplant\AndroidSDK.cs" />
+    <Compile Include="Assets\Scripts\Voximplant\GameObjectExtension.cs" />
     <Compile Include="Assets\Scripts\Voximplant\JSON\JsonSerializer.cs" />
     <Compile Include="Assets\Scripts\Voximplant\JSON\SimpleJson.cs" />
+    <Compile Include="Assets\Scripts\Voximplant\PermissionsRequester.cs" />
     <Compile Include="Assets\Scripts\Voximplant\SupportClasses.cs" />
+    <Compile Include="Assets\Scripts\Voximplant\Threading\InvokePump.cs" />
+    <Compile Include="Assets\Scripts\Voximplant\Utils.cs" />
+    <Compile Include="Assets\Scripts\Voximplant\VoximplantSDK.cs" />
+    <Compile Include="Assets\Scripts\Voximplant\iOSSDK.cs" />
     <Reference Include="UnityEngine.UI">
       <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
     </Reference>
