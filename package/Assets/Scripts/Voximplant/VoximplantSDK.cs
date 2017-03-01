@@ -292,17 +292,11 @@ namespace Voximplant
         }
 
         /**
-		Initialize the SDK
-		@method init
-		@param {String} pObjectNameSDK Name of Unity GameObject to receive SDK events. Script connected to that object calls this 'init' method
-		@param {SizeView} pLocalView Optional view to display local video into. Default is SizeView(0, 0, 100, 100)
-		@param {SizeView} pRemoteView Optional view to display remote video into. Default is SizeView(0, 150, 100, 100)
-		*/
-        public abstract void init(Action<bool> initCallback, SizeView pLocalView,
-            SizeView pRemoteView);
-
-        public abstract void setLocalSizeView(SizeView pSize);
-        public abstract void setRemoteSizeView(SizeView pSize);
+        Initialize the SDK
+        @method init
+        @param {String} pObjectNameSDK Name of Unity GameObject to receive SDK events. Script connected to that object calls this 'init' method
+        */
+        public abstract void init(Action<bool> initCallback);
 
         /**
         Close connection to the Voximplant cloud that was previously established via 'connect' call
@@ -333,7 +327,7 @@ namespace Voximplant
         /**
         Answer incoming call. Should be called from the "OnIncomingCall" handler
         @method answer
-        @param {string} p Call identifier
+        @param {string} cameraPosition Call identifier
         @param {Dictionary} (Only for iOS) headers Optional SIP headers set by a info sender
         */
         public abstract void answer(string pCallId, Dictionary<string, string> pHeader = null);
@@ -341,7 +335,7 @@ namespace Voximplant
         /**
         Decline an incoming call. Should be called from the "OnIncomingCall" handler
         @method declineCall
-        @param {string} p Call identifier
+        @param {string} cameraPosition Call identifier
         @param {Dictionary} (Only for iOS) headers Optional SIP headers set by a info sender
         */
         public abstract void declineCall(string pCallId, Dictionary<string, string> pHeader = null);
@@ -349,7 +343,7 @@ namespace Voximplant
         /**
         Hang up the call in progress. Should be called from the "OnIncomingCall" handler
         @method hangup
-        @param {string} p Call identifier
+        @param {string} cameraPosition Call identifier
         @param {Dictionary} (Only for iOS) headers Optional SIP headers set by a info sender
         */
         public abstract void hangup(string pCallId, Dictionary<string, string> pHeader = null);
@@ -369,25 +363,11 @@ namespace Voximplant
         public abstract void sendVideo(Boolean pState);
 
         /**
-        Show or close local video view
-        @method setLocalView
-        @param {Boolean} pState 'true' to show video view, 'false' to close it
-        */
-        public abstract void setLocalView(Boolean pState);
-
-        /**
-        Show or close remote video view
-        @method setRemoteView
-        @param {Boolean} pState 'true' to show video view, 'false' to close it
-        */
-        public abstract void setRemoteView(Boolean pState);
-
-        /**
-        Select a camera to use for the video call
+        Select a cameraPosition to use for the video call
         @method setCamera
-        @param {CameraSet} p A camera to use: 'CameraSet.CAMERA_FACING_FRONT', 'CameraSet.CAMERA_FACING_BACK'
+        @param {Camera} cameraPosition A cameraPosition to use: 'Camera.CAMERA_FACING_FRONT', 'Camera.CAMERA_FACING_BACK'
         */
-        public abstract void setCamera(CameraSet p);
+        public abstract void setCamera(Camera cameraPosition);
 
         // Internal
         public abstract void disableTls();
@@ -395,7 +375,7 @@ namespace Voximplant
         /**
         Disconnect the specified call
         @method disconnectCall
-        @param {string} p Call identifier
+        @param {string} cameraPosition Call identifier
         @param {Dictionary} (Only for iOS) headers Optional SIP headers set by a info sender
         */
         public abstract void disconnectCall(string p, Dictionary<string, string> pHeader = null);
@@ -414,10 +394,10 @@ namespace Voximplant
         public abstract void loginUsingOneTimeKey(LoginOneTimeKeyClassParam pLogin);
 
         /**
-		Request a one-time key that can be used on your backend to create a login hash for the 'loginUsingOneTimeKey'. Key is returned via 'OnOneTimeKeyGenerated' event
-		@method requestOneTimeKey
-		@param {string} pName Fully-qualified user name to get a one-time key for. Format is 'user@app.acc.voximplant.com'
-		*/
+        Request a one-time key that can be used on your backend to create a login hash for the 'loginUsingOneTimeKey'. Key is returned via 'OnOneTimeKeyGenerated' event
+        @method requestOneTimeKey
+        @param {string} pName Fully-qualified user name to get a one-time key for. Format is 'user@app.acc.voximplant.com'
+        */
         public abstract void requestOneTimeKey(string pName);
 
         /**
@@ -442,7 +422,7 @@ namespace Voximplant
         public abstract void sendMessage(SendMessageClassParam pParam);
 
         /**
-        Set local camera resolution. Increasing resolution increases video quality, but also uses more cpu and bandwidth
+        Set local cameraPosition resolution. Increasing resolution increases video quality, but also uses more cpu and bandwidth
         @method setCameraResolution
         @param {CameraResolutionClassParam} pParam Camera resolutino as width and height, in pixels
         */

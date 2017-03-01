@@ -10,12 +10,9 @@ namespace Voximplant
         private AndroidJavaClass jc;
         private AndroidJavaObject jo;
 
-        public override void init(Action<bool> initCallback, SizeView pLocalView,
-            SizeView pRemoteView)
+        public override void init(Action<bool> initCallback)
         {
             Action finishInit = () => {
-                setLocalSizeView(pLocalView);
-                setRemoteSizeView(pRemoteView);
                 initCallback(true);
             };
 
@@ -83,16 +80,6 @@ namespace Voximplant
 #endif
         }
 
-        public override void setLocalSizeView(SizeView pSize)
-        {
-            jo.Call("setLocalSize", JsonUtility.ToJson(pSize));
-        }
-
-        public override void setRemoteSizeView(SizeView pSize)
-        {
-            jo.Call("setRemoteSize", JsonUtility.ToJson(pSize));
-        }
-
         public override void closeConnection()
         {
             jo.Call("closeConnection");
@@ -138,19 +125,9 @@ namespace Voximplant
             jo.Call("sendVideo", JsonUtility.ToJson(new BoolClassParam(pState)));
         }
 
-        public override void setLocalView(Boolean pState)
+        public override void setCamera(Camera cameraPosition)
         {
-            jo.Call("setLocalView", JsonUtility.ToJson(new BoolClassParam(pState)));
-        }
-
-        public override void setRemoteView(Boolean pState)
-        {
-            jo.Call("setRemoteView", JsonUtility.ToJson(new BoolClassParam(pState)));
-        }
-
-        public override void setCamera(CameraSet p)
-        {
-            jo.Call("setCamera", p == CameraSet.CAMERA_FACING_FRONT ? "1" : "0");
+            jo.Call("setCamera", cameraPosition == Camera.CAMERA_FACING_FRONT ? "1" : "0");
         }
 
         public override void disableTls()

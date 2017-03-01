@@ -14,7 +14,7 @@ namespace Voximplant
         INTERNAL_ERROR
     }
 
-    public enum CameraSet
+    public enum Camera
     {
         CAMERA_FACING_FRONT,
         CAMERA_FACING_BACK

@@ -8,23 +8,10 @@ namespace Voximplant
 {
     internal class iOSSDK : VoximplantSDK
     {
-        public override void init(Action<bool> initCallback, SizeView pLocalView,
-            SizeView pRemoteView)
+        public override void init(Action<bool> initCallback)
         {
             iosSDKinit(gameObject.name);
-            setLocalSizeView(pLocalView);
-            setRemoteSizeView(pRemoteView);
             initCallback(true);
-        }
-
-        public override void setLocalSizeView(SizeView pSize)
-        {
-            iosSDKsetLocalSize(pSize.x_pos, pSize.y_pos, pSize.width, pSize.height);
-        }
-
-        public override void setRemoteSizeView(SizeView pSize)
-        {
-            iosSDKsetRemoteSize(pSize.x_pos, pSize.y_pos, pSize.width, pSize.height);
         }
 
         public override void closeConnection()
@@ -73,19 +60,9 @@ namespace Voximplant
             iosSDKsendVideo(pState);
         }
 
-        public override void setLocalView(Boolean pState)
+        public override void setCamera(Camera cameraPosition)
         {
-            iosSDKsetLocalView(pState);
-        }
-
-        public override void setRemoteView(Boolean pState)
-        {
-            iosSDKsetRemoteView(pState);
-        }
-
-        public override void setCamera(CameraSet p)
-        {
-            iosSDKsetCamera(p == CameraSet.CAMERA_FACING_FRONT);
+            iosSDKsetCamera(cameraPosition == Camera.CAMERA_FACING_FRONT);
         }
 
         public override void disableTls()
@@ -201,18 +178,6 @@ namespace Voximplant
 
         [DllImport("__Internal")]
         private static extern void iosSDKCloseConnection();
-
-        [DllImport("__Internal")]
-        private static extern void iosSDKsetLocalSize(int xPos, int yPos, int pWidth, int pHeight);
-
-        [DllImport("__Internal")]
-        private static extern void iosSDKsetRemoteSize(int xPos, int yPos, int pWidth, int pHeight);
-
-        [DllImport("__Internal")]
-        private static extern void iosSDKsetLocalView(bool pState);
-
-        [DllImport("__Internal")]
-        private static extern void iosSDKsetRemoteView(bool pState);
 
         #endregion
 

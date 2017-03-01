@@ -1,10 +1,6 @@
 package com.voximplant.sdk;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import static java.lang.System.out;
 
 /**
  * Created by omen on 12.09.2016.
@@ -27,18 +23,4 @@ public class Common {
         return p.substring(p.indexOf("{",0) + 1,p.indexOf("}",0));
     }
 
-    public static String getParamString(ArrayList<Object> p){
-        String str = "";
-        for (Object item: p) {
-            if (item instanceof Map) {
-                str += "{" + item.toString() + "}";
-            }
-            else if (item instanceof Boolean){
-                str += "{" + (((Boolean)item)?"1":"0") + "}";
-            }
-            else
-                str += "{" + item.toString() + "}";
-        }
-        return str;
-    }
 }

@@ -1,10 +1,7 @@
 package com.voximplant.sdk;
 
-import android.Manifest;
 import android.app.DialogFragment;
 import android.app.Fragment;
-import android.content.Context;
-import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.os.Handler;
 import android.os.Looper;
@@ -20,11 +17,13 @@ import com.zingaya.voximplant.VoxImplantClient.LoginFailureReason;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class AVoImClient implements VoxImplantCallback {
     private static AVoImClient inst = null;
+
     public static AVoImClient instance() {
         if (inst == null) {
             inst = new AVoImClient();
@@ -35,29 +34,7 @@ public class AVoImClient implements VoxImplantCallback {
 
     private VoxImplantClient client;
     private String sdkObjName = "SDK";
-    private DialogFragment mVideoLocalDialog;
-    private DialogFragment mVideoRemoteDialog;
-    private ViewLayoutSize mSizeLocal = new ViewLayoutSize(-1, -1, -1, -1);
-    private ViewLayoutSize mSizeRemote = new ViewLayoutSize(-1, -1, -1, -1);
     private String TAG = this.getClass().getSimpleName();
-
-    public class ViewLayoutSize {
-        public int x_pos;
-        public int y_pos;
-        public int width;
-        public int height;
-
-        public ViewLayoutSize(int pX, int pY, int pW, int pH) {
-            x_pos = pX;
-            y_pos = pY;
-            width = pW;
-            height = pH;
-        }
-
-        public int[] getArray() {
-            return new int[]{x_pos, y_pos, width, height};
-        }
-    }
 
     public class LoginClassParam {
         public String login;
@@ -225,29 +202,6 @@ public class AVoImClient implements VoxImplantCallback {
         client.sendVideo(((BoolClassParam) GetJsonObj(pState, BoolClassParam.class)).value);
     }
 
-    public void setRemoteView(String pState) {
-        if (((BoolClassParam) GetJsonObj(pState, BoolClassParam.class)).value) {
-            if (mVideoRemoteDialog != null) {
-                dismissByTag("remote");
-            }
-            mVideoRemoteDialog = CallDialogFragment.showDialog(UnityPlayer.currentActivity, mSizeRemote.getArray(), false);
-        } else if (mVideoRemoteDialog != null) {
-            dismissByTag("remote");
-        }
-
-    }
-
-    public void setLocalView(String pState) {
-        if (((BoolClassParam) GetJsonObj(pState, BoolClassParam.class)).value) {
-            if (mVideoLocalDialog != null) {
-                dismissByTag("local");
-            }
-            mVideoLocalDialog = CallDialogFragment.showDialog(UnityPlayer.currentActivity, mSizeLocal.getArray(), true);
-        } else if (mVideoLocalDialog != null) {
-            dismissByTag("local");
-        }
-    }
-
     public void dismissByTag(String pTag) {
         Fragment prev = UnityPlayer.currentActivity.getFragmentManager().findFragmentByTag(pTag);
         if (prev != null) {
@@ -288,7 +242,7 @@ public class AVoImClient implements VoxImplantCallback {
 
     public void sendInfo(String pParam) {
         InfoClassParam param = GetJsonObj(pParam, InfoClassParam.class);
-        if (param.headers.equals(null))
+        if (param.headers == null)
             client.sendInfo(param.callId, param.mimeType, param.content);
         else
             client.sendInfo(param.callId, param.mimeType, param.content, GetMapFromList(param.headers));
@@ -309,17 +263,11 @@ public class AVoImClient implements VoxImplantCallback {
         client.setUseLoudspeaker(param.value);
     }
 
-    public void setLocalSize(String pSizejson) {
-        mSizeLocal = GetJsonObj(pSizejson, ViewLayoutSize.class);
-    }
-
-    public void setRemoteSize(String pSizejson) {
-        mSizeRemote = GetJsonObj(pSizejson, ViewLayoutSize.class);
-    }
-
     @Override
     public void onLoginSuccessful(String s, LoginTokens loginTokens) {
-        UnityPlayer.UnitySendMessage(sdkObjName, "faonLoginSuccessful", GetParamListToString(new ArrayList<Object>(Arrays.asList(s))));
+        UnityPlayer.UnitySendMessage(sdkObjName,
+                "faonLoginSuccessful",
+                GetParamListToString(new ArrayList<Object>(Collections.singletonList(s))));
     }
 
     @Override
@@ -334,22 +282,30 @@ public class AVoImClient implements VoxImplantCallback {
 
     @Override
     public void onCallDisconnected(String s, Map<String, String> map, boolean b) {
-        UnityPlayer.UnitySendMessage(sdkObjName, "faonCallDisconnected", GetParamListToString(new ArrayList<Object>(Arrays.asList(s, map))));
+        UnityPlayer.UnitySendMessage(sdkObjName,
+                "faonCallDisconnected",
+                GetParamListToString(new ArrayList<>(Arrays.asList(s, map))));
     }
 
     @Override
     public void onMessageReceivedInCall(String s, String s1) {
-        UnityPlayer.UnitySendMessage(sdkObjName, "faonMessageReceivedInCall", GetParamListToString(new ArrayList<Object>(Arrays.asList(s, s1))));
+        UnityPlayer.UnitySendMessage(sdkObjName,
+                "faonMessageReceivedInCall",
+                GetParamListToString(new ArrayList<Object>(Arrays.asList(s, s1))));
     }
 
     @Override
     public void onLoginFailed(LoginFailureReason loginFailureReason) {
-        UnityPlayer.UnitySendMessage(sdkObjName, "faonLoginFailed", GetParamListToString(new ArrayList<Object>(Arrays.asList(loginFailureReason))));
+        UnityPlayer.UnitySendMessage(sdkObjName,
+                "faonLoginFailed",
+                GetParamListToString(new ArrayList<Object>(Collections.singletonList(loginFailureReason))));
     }
 
     @Override
     public void onOneTimeKeyGenerated(String s) {
-        UnityPlayer.UnitySendMessage(sdkObjName, "faonOneTimeKeyGenerated", GetParamListToString(new ArrayList<Object>(Arrays.asList(s))));
+        UnityPlayer.UnitySendMessage(sdkObjName,
+                "faonOneTimeKeyGenerated",
+                GetParamListToString(new ArrayList<Object>(Collections.singletonList(s))));
     }
 
     @Override
@@ -364,12 +320,16 @@ public class AVoImClient implements VoxImplantCallback {
 
     @Override
     public void onConnectionFailedWithError(String s) {
-        UnityPlayer.UnitySendMessage(sdkObjName, "faonConnectionFailedWithError", GetParamListToString(new ArrayList<Object>(Arrays.asList(s))));
+        UnityPlayer.UnitySendMessage(sdkObjName,
+                "faonConnectionFailedWithError",
+                GetParamListToString(new ArrayList<Object>(Collections.singletonList(s))));
     }
 
     @Override
     public void onCallConnected(final String s, Map<String, String> map) {
-        UnityPlayer.UnitySendMessage(sdkObjName, "faonCallConnected", GetParamListToString(new ArrayList<Object>(Arrays.asList(s, map))));
+        UnityPlayer.UnitySendMessage(sdkObjName,
+                "faonCallConnected",
+                GetParamListToString(new ArrayList<>(Arrays.asList(s, map))));
     }
 
     public void onStartCall(String s) {
@@ -378,32 +338,44 @@ public class AVoImClient implements VoxImplantCallback {
 
     @Override
     public void onCallRinging(String s, Map<String, String> map) {
-        UnityPlayer.UnitySendMessage(sdkObjName, "faonCallRinging", GetParamListToString(new ArrayList<Object>(Arrays.asList(s, map))));
+        UnityPlayer.UnitySendMessage(sdkObjName,
+                "faonCallRinging",
+                GetParamListToString(new ArrayList<>(Arrays.asList(s, map))));
     }
 
     @Override
     public void onCallFailed(String s, int i, String s1, Map<String, String> map) {
-        UnityPlayer.UnitySendMessage(sdkObjName, "faonCallFailed", GetParamListToString(new ArrayList<Object>(Arrays.asList(s, i, s1, map))));
+        UnityPlayer.UnitySendMessage(sdkObjName,
+                "faonCallFailed",
+                GetParamListToString(new ArrayList<>(Arrays.asList(s, i, s1, map))));
     }
 
     @Override
     public void onCallAudioStarted(String s) {
-        UnityPlayer.UnitySendMessage(sdkObjName, "faonCallAudioStarted", GetParamListToString(new ArrayList<Object>(Arrays.asList(s))));
+        UnityPlayer.UnitySendMessage(sdkObjName,
+                "faonCallAudioStarted",
+                GetParamListToString(new ArrayList<Object>(Collections.singletonList(s))));
     }
 
     @Override
     public void onIncomingCall(String s, String s1, String s2, boolean b, Map<String, String> map) {
-        UnityPlayer.UnitySendMessage(sdkObjName, "faonIncomingCall", GetParamListToString(new ArrayList<Object>(Arrays.asList(s, s1, s2, b, map))));
+        UnityPlayer.UnitySendMessage(sdkObjName,
+                "faonIncomingCall",
+                GetParamListToString(new ArrayList<>(Arrays.asList(s, s1, s2, b, map))));
     }
 
     @Override
     public void onSIPInfoReceivedInCall(String callId, String type, String content, Map<String, String> headers) {
-        UnityPlayer.UnitySendMessage(sdkObjName, "faonSIPInfoReceivedInCall", GetParamListToString(new ArrayList<Object>(Arrays.asList(callId, type, content, headers))));
+        UnityPlayer.UnitySendMessage(sdkObjName,
+                "faonSIPInfoReceivedInCall",
+                GetParamListToString(new ArrayList<>(Arrays.asList(callId, type, content, headers))));
     }
 
     @Override
     public void onNetStatsReceived(String s, NetworkInfo networkInfo) {
-        UnityPlayer.UnitySendMessage(sdkObjName, "faonNetStatsReceived", GetParamListToString(new ArrayList<Object>(Arrays.asList(s, networkInfo))));
+        UnityPlayer.UnitySendMessage(sdkObjName,
+                "faonNetStatsReceived",
+                GetParamListToString(new ArrayList<>(Arrays.asList(s, networkInfo))));
     }
 
     private String GetParamListToString(ArrayList<Object> pList) {
@@ -418,7 +390,7 @@ public class AVoImClient implements VoxImplantCallback {
     }
 
     private Map<String, String> GetMapFromList(PairKeyValue[] pList) {
-        Map<String, String> res = new HashMap<String, String>();
+        Map<String, String> res = new HashMap<>();
         for (PairKeyValue pair : pList) {
             res.put(pair.key, pair.value);
         }

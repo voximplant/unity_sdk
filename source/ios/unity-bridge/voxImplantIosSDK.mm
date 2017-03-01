@@ -6,39 +6,7 @@
 
 extern "C" void UnitySendMessage(const char *obj, const char *method, const char *msg);
 
-@interface DelegateSDK : NSObject <VoxImplantDelegate>
-@end
-
-@interface ViewLayoutSize : NSObject
-@property int x_pos;
-@property int y_pos;
-@property int width;
-@property int heigth;
-
-- (instancetype)initWithParam:(int)xPos withyPos:(int)yPos withWidth:(int)pWidth withHeight:(int)pHeight;
-@end
-
-@implementation ViewLayoutSize
-
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-
-    }
-    return self;
-}
-
-- (instancetype)initWithParam:(int)xPos withyPos:(int)yPos withWidth:(int)pWidth withHeight:(int)pHeight {
-    self = [super init];
-    if (self) {
-        [self setX_pos:xPos];
-        [self setY_pos:yPos];
-        [self setWidth:pWidth];
-        [self setHeigth:pHeight];
-    }
-    return self;
-}
-
+@interface ProxyingVoxImplantDelegate : NSObject <VoxImplantDelegate>
 @end
 
 @interface JsonDic : NSObject
@@ -88,125 +56,71 @@ extern "C" void UnitySendMessage(const char *obj, const char *method, const char
 
 @end
 
-@implementation DelegateSDK {
+@implementation ProxyingVoxImplantDelegate {
 @public
 
     VoxImplant *sdk;
     NSString *unityObjName;
     UIAlertView *currentAlertView;
-    UIView *remoteView;
-    UIView *localView;
-
-    ViewLayoutSize *sizeLocal;
-    ViewLayoutSize *sizeRemote;
-}
-
-
-- (void)setLocalSizeViews:(ViewLayoutSize *)pLocalSize {
-    sizeLocal = pLocalSize;
-}
-
-- (void)setRemSizeViews:(ViewLayoutSize *)pRemSize {
-    sizeRemote = pRemSize;
 }
 
 - (void)setObjName:(const char *)objName {
     unityObjName = [[NSString alloc] initWithUTF8String:objName];
 }
 
-- (void)callUnityObject:(const char *)method Parameter:(const char *)parameter {
-    if (parameter == nil)
-        UnitySendMessage([self getCharFromNs:unityObjName], method, "");
-    else
-        UnitySendMessage([self getCharFromNs:unityObjName], method, parameter);
+- (void)callMethod:(NSString*) methodName {
+    [self callMethod:methodName withParameter:nil];
+}
+
+- (void)callMethod:(NSString *)methodName withParameter:(NSString *)parameter {
+    parameter = parameter ? parameter : @"";
+    UnitySendMessage([unityObjName UTF8String], [methodName UTF8String], [parameter UTF8String]);
+}
+
+- (void)callMethod:(NSString *)methodName withJSONParameter:(id)jsonParameter {
+    NSError *writeError = [NSError alloc];
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonParameter
+                                                       options:0
+                                                         error:&writeError];
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+
+    if (writeError != nil) {
+        NSLog(@"Failed to call method %@ with parameter %@", methodName, jsonParameter);
+        return;
+    }
+
+    [self callMethod:methodName withParameter:jsonString];
 }
 
 - (void)onConnectionSuccessful {
-    [self callUnityObject:"fiosonConnectionSuccessful" Parameter:Nil];
+    [self callMethod:@"fiosonConnectionSuccessful"];
 }
 
 - (void)onConnectionFailedWithError:(NSString *)reason {
-    NSError *writeError = [NSError alloc];
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:@[reason] options:NSJSONWritingPrettyPrinted error:&writeError];
-    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-
-    [self callUnityObject:"fiosonConnectionFailedWithError" Parameter:[self getCharFromNs:jsonString]];
+    [self callMethod:@"fiosonConnectionFailedWithError" withJSONParameter:@[reason]];
 }
 
 - (void)onConnectionClosed {
-    [self callUnityObject:"fiosonConnectionClosed" Parameter:Nil];
+    [self callMethod:@"fiosonConnectionClosed"];
 }
 
 - (void)onLoginFailedWithErrorCode:(NSNumber *)errorCode {
-    NSError *writeError = [NSError alloc];
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:@[errorCode] options:NSJSONWritingPrettyPrinted error:&writeError];
-    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    [self callUnityObject:"fiosonLoginFailed" Parameter:[self getCharFromNs:jsonString]];
+    [self callMethod:@"fiosonLoginFailed" withJSONParameter:@[errorCode]];
 }
 
-- (void)onLoginSuccessfulWithDisplayName:(NSString *)displayName {
-    NSError *writeError = [NSError alloc];
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:@[displayName] options:NSJSONWritingPrettyPrinted error:&writeError];
-    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    [self callUnityObject:"fiosonLoginSuccessful" Parameter:[self getCharFromNs:jsonString]];
+- (void)onLoginSuccessfulWithDisplayName:(NSString *)displayName andAuthParams:(NSDictionary *)authParams {
+    [self callMethod:@"fiosonLoginSuccessful" withJSONParameter:@[displayName]];
 }
 
 - (void)onCallRinging:(NSString *)callId withHeaders:(NSDictionary *)headers {
-    NSError *writeError = [NSError alloc];
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:@[callId, headers] options:NSJSONWritingPrettyPrinted error:&writeError];
-    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    [self callUnityObject:"fiosonCallRinging" Parameter:[self getCharFromNs:jsonString]];
+    [self callMethod:@"fiosonCallRinging" withJSONParameter:@[callId, headers]];
 }
 
 - (void)onCallConnected:(NSString *)callId withHeaders:(NSDictionary *)headers {
     [sdk attachAudioTo:callId];
-    NSError *writeError = [NSError alloc];
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:@[callId, headers] options:NSJSONWritingPrettyPrinted error:&writeError];
-    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 
-    [self callUnityObject:"fiosonCallConnected" Parameter:[self getCharFromNs:jsonString]];
+    [self callMethod:@"fiosonCallConnected" withJSONParameter:@[callId, headers]];
 }
-
-- (void)setLocaView:(bool)pState {
-    if (pState) {
-        if (sizeLocal != nil) {
-            UIView *rootView = [UIApplication sharedApplication].keyWindow.rootViewController.view;
-            if (localView != nil) {
-                [sdk setLocalPreview:Nil];
-                [self removeView:localView];
-                localView = nil;
-            }
-            localView = [[UIView alloc] initWithFrame:CGRectMake(sizeLocal.x_pos, sizeLocal.y_pos, sizeLocal.width, sizeLocal.heigth)];
-            [rootView addSubview:localView];
-            [sdk setLocalPreview:localView];
-        }
-    } else {
-        [sdk setLocalPreview:Nil];
-        [self removeView:localView];
-        localView = nil;
-    }
-}
-
-- (void)setRemoteView:(bool)pState {
-    if (pState) {
-        if (sizeRemote != nil) {
-            UIView *rootView = [UIApplication sharedApplication].keyWindow.rootViewController.view;
-            if (remoteView != nil) {
-                [sdk setRemoteView:Nil];
-                [self removeView:remoteView];
-                remoteView = nil;
-            }
-            remoteView = [[UIView alloc] initWithFrame:CGRectMake(sizeRemote.x_pos, sizeRemote.y_pos, sizeRemote.width, sizeRemote.heigth)];
-            [rootView addSubview:remoteView];
-            [sdk setRemoteView:remoteView];
-        }
-    } else {
-        [sdk setRemoteView:Nil];
-        [self removeView:remoteView];
-        remoteView = nil;
-    }
-}
-
 
 - (void)onCallDisconnected:(NSString *)callId withHeaders:(NSDictionary *)headers {
     if (currentAlertView != Nil) {
@@ -215,77 +129,35 @@ extern "C" void UnitySendMessage(const char *obj, const char *method, const char
         [v dismissWithClickedButtonIndex:0 animated:false];
     }
 
-    NSError *writeError = [NSError alloc];
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:@[callId, headers] options:NSJSONWritingPrettyPrinted error:&writeError];
-    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-
-    [self callUnityObject:"fiosonCallDisconnected" Parameter:[self getCharFromNs:jsonString]];
+    [self callMethod:@"fiosonCallDisconnected" withJSONParameter:@[callId, headers]];
 }
 
 - (void)onCallFailed:(NSString *)callId withCode:(int)code andReason:(NSString *)reason withHeaders:(NSDictionary *)headers {
-    NSError *writeError = [NSError alloc];
-    NSArray *array = @[callId, [NSString stringWithFormat:@"%d", code], reason, headers];
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:array options:NSJSONWritingPrettyPrinted error:&writeError];
-    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-
-    [self callUnityObject:"fiosonCallFailed" Parameter:[self getCharFromNs:jsonString]];
+    [self callMethod:@"fiosonCallFailed" withJSONParameter:@[callId, @(code), reason, headers]];
 }
 
-
 - (void)onIncomingCall:(NSString *)callId caller:(NSString *)from named:(NSString *)displayName withVideo:(bool)videoCall withHeaders:(NSDictionary *)headers {
-    NSError *writeError = [NSError alloc];
-    NSArray *array = @[callId, from, displayName, videoCall ? @"true" : @"false", headers];
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:array options:NSJSONWritingPrettyPrinted error:&writeError];
-    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-
-    [self callUnityObject:"fiosonIncomingCall" Parameter:[self getCharFromNs:jsonString]];
+    [self callMethod:@"fiosonIncomingCall" withJSONParameter:@[callId, from, displayName, videoCall ? @"true" : @"false", headers]];
 }
 
 - (void)onCallAudioStarted:(NSString *)callId {
     [sdk attachAudioTo:callId];
-    NSError *writeError = [NSError alloc];
-    NSArray *array = @[callId];
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:@[array] options:NSJSONWritingPrettyPrinted error:&writeError];
-    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    [self callUnityObject:"fiosonCallAudioStarted" Parameter:[self getCharFromNs:jsonString]];
+
+    [self callMethod:@"fiosonCallAudioStarted" withJSONParameter:@[callId]];
 }
 
 - (void)onNetStatsReceivedInCall:(NSString *)callId withStats:(const struct VoxImplantNetworkInfo *)stats {
-    NSError *writeError = [NSError alloc];
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:@[callId, [NSString stringWithFormat:@"%ld", stats->packetLoss]] options:NSJSONWritingPrettyPrinted error:&writeError];
-    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-
-    [self callUnityObject:"fiosonNetStatsReceived" Parameter:[self getCharFromNs:jsonString]];
+    [self callMethod:@"fiosonNetStatsReceived"
+   withJSONParameter:@[callId, @(stats->packetLoss)]];
 
 }
 
 - (void)onSIPInfoReceivedInCall:(NSString *)callId withType:(NSString *)type andContent:(NSString *)content withHeaders:(NSDictionary *)headers {
-    NSError *writeError = [NSError alloc];
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:@[callId, type, content, headers] options:NSJSONWritingPrettyPrinted error:&writeError];
-    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-
-    [self callUnityObject:"fiosonSIPInfoReceivedInCall" Parameter:[self getCharFromNs:jsonString]];
+    [self callMethod:@"fiosonSIPInfoReceivedInCall" withJSONParameter:@[callId, type, content, headers]];
 }
 
 - (void)onMessageReceivedInCall:(NSString *)callId withText:(NSString *)text withHeaders:(NSDictionary *)headers {
-    NSError *writeError = [NSError alloc];
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:@[callId, text, headers] options:NSJSONWritingPrettyPrinted error:&writeError];
-    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-
-    [self callUnityObject:"fiosonMessageReceivedInCall" Parameter:[self getCharFromNs:jsonString]];
-}
-
-- (void)removeView:(UIView *)pView {
-    if (pView != nil) {
-        [pView setHidden:true];
-        [pView removeFromSuperview];
-    }
-}
-
-- (const char *)getCharFromNs:(NSString *)str {
-    NSMutableString *param = [[NSMutableString alloc] initWithFormat:@"%@", str];
-    return [param UTF8String];
-
+    [self callMethod:@"fiosonMessageReceivedInCall" withJSONParameter:@[callId, text, headers]];
 }
 
 @end
@@ -293,48 +165,32 @@ extern "C" void UnitySendMessage(const char *obj, const char *method, const char
 //C-wrapper that Unity communicates with
 extern "C"
 {
-DelegateSDK *singleton;
+ProxyingVoxImplantDelegate *singleton;
 
-void iosSDKinit(const char *pUnityObjName) {
-    singleton = [[DelegateSDK alloc] init];
+__used void iosSDKinit(const char *pUnityObjName) {
+    singleton = [[ProxyingVoxImplantDelegate alloc] init];
     singleton->sdk = [VoxImplant getInstance];
     [singleton->sdk setVoxDelegate:singleton];
     [singleton setObjName:pUnityObjName];
     [singleton->sdk setResolution:352 andHeight:288];
 }
 
-void iosSDKconnect() {
+__used void iosSDKconnect() {
     [singleton->sdk connect];
 }
 
-void iosSDKlogin(const char *pLogin, const char *pPass) {
+__used void iosSDKlogin(const char *pLogin, const char *pPass) {
     [singleton->sdk loginWithUsername:[NSString stringWithUTF8String:pLogin] andPassword:[NSString stringWithUTF8String:pPass]];
 }
 
-void iosSDKsetLocalSize(int xPos, int yPos, int pWidth, int pHeight) {
-    [singleton setLocalSizeViews:[[ViewLayoutSize alloc] initWithParam:xPos withyPos:yPos withWidth:pWidth withHeight:pHeight]];
-}
-
-void iosSDKsetRemoteSize(int xPos, int yPos, int pWidth, int pHeight) {
-    [singleton setRemSizeViews:[[ViewLayoutSize alloc] initWithParam:xPos withyPos:yPos withWidth:pWidth withHeight:pHeight]];
-}
-
-void iosSDKsetLocalView(bool pState) {
-    [singleton setLocaView:pState];
-}
-
-void iosSDKsetRemoteView(bool pState) {
-    [singleton setRemoteView:pState];
-}
-
-void iosSDKstartCall(const char *pId, bool pWithVideo, const char *pCustom, const char *pHeaders) {
+__used void iosSDKstartCall(const char *pId, bool pWithVideo, const char *pCustom, const char *pHeaders) {
     NSString *activeCallId = [singleton->sdk createCall:[NSString stringWithUTF8String:pId]
                                               withVideo:pWithVideo
                                           andCustomData:[[NSString alloc] initWithUTF8String:pCustom]];
     [singleton->sdk attachAudioTo:activeCallId];
 
     if (pHeaders == nil)
-        [singleton->sdk startCall:activeCallId withHeaders:Nil];
+        [singleton->sdk startCall:activeCallId withHeaders:nil];
     else {
         JsonDic *headers = [[JsonDic alloc] initWithJSONString:[[NSString alloc] initWithUTF8String:pHeaders]];
         [singleton->sdk startCall:activeCallId withHeaders:headers.dic];
@@ -343,7 +199,7 @@ void iosSDKstartCall(const char *pId, bool pWithVideo, const char *pCustom, cons
     UnitySendMessage([singleton->unityObjName UTF8String], "fiosonOnStartCall", [activeCallId UTF8String]);
 }
 
-void iosSDKanswerCall(const char *pCallId, const char *pHeaders) {
+__used void iosSDKanswerCall(const char *pCallId, const char *pHeaders) {
     if (pCallId != Nil) {
         if (pHeaders == Nil)
             [singleton->sdk answerCall:[NSString stringWithUTF8String:pCallId] withHeaders:Nil];
@@ -354,7 +210,7 @@ void iosSDKanswerCall(const char *pCallId, const char *pHeaders) {
     }
 }
 
-void iosSDKHungup(const char *pCallId, const char *pHeaders) {
+__used void iosSDKHungup(const char *pCallId, const char *pHeaders) {
     if (pHeaders == Nil)
         [singleton->sdk disconnectCall:[NSString stringWithUTF8String:pCallId] withHeaders:Nil];
     else {
@@ -363,7 +219,7 @@ void iosSDKHungup(const char *pCallId, const char *pHeaders) {
     }
 }
 
-void iosSDKDecline(const char *pCallId, const char *pHeaders) {
+__used void iosSDKDecline(const char *pCallId, const char *pHeaders) {
     if (pHeaders == Nil)
         [singleton->sdk declineCall:[NSString stringWithUTF8String:pCallId] withHeaders:Nil];
     else {
@@ -372,26 +228,26 @@ void iosSDKDecline(const char *pCallId, const char *pHeaders) {
     }
 }
 
-void iosSDKsetMute(bool pSetMute) {
+__used void iosSDKsetMute(bool pSetMute) {
     [singleton->sdk setMute:pSetMute];
 }
 
-void iosSDKsendVideo(bool pSendVideo) {
+__used void iosSDKsendVideo(bool pSendVideo) {
     [singleton->sdk sendVideo:pSendVideo];
 }
 
-void iosSDKsetCamera(bool pFrontCam) {
+__used void iosSDKsetCamera(bool pFrontCam) {
     if (pFrontCam)
         [singleton->sdk switchToCameraWithPosition:AVCaptureDevicePositionFront];
     else
         [singleton->sdk switchToCameraWithPosition:AVCaptureDevicePositionBack];
 }
 
-void iosSDKdisableTls() {
+__used void iosSDKdisableTls() {
     [singleton->sdk disableTLS];
 }
 
-void iosSDKdisconnectCall(const char *pCall, const char *pHeaders) {
+__used void iosSDKdisconnectCall(const char *pCall, const char *pHeaders) {
     if (pHeaders == Nil)
         [singleton->sdk disconnectCall:[NSString stringWithUTF8String:pCall] withHeaders:Nil];
     else {
@@ -400,19 +256,19 @@ void iosSDKdisconnectCall(const char *pCall, const char *pHeaders) {
     }
 }
 
-void iosSDKloginUsingOneTimeKey(const char *pUserName, const char *pOneTimeKey) {
+__used void iosSDKloginUsingOneTimeKey(const char *pUserName, const char *pOneTimeKey) {
     [singleton->sdk loginWithUsername:[NSString stringWithUTF8String:pUserName] andOneTimeKey:[NSString stringWithUTF8String:pOneTimeKey]];
 }
 
-void iosSDKrequestOneTimeKey(const char *pUserName) {
+__used void iosSDKrequestOneTimeKey(const char *pUserName) {
     [singleton->sdk requestOneTimeKeyWithUsername:[NSString stringWithUTF8String:pUserName]];
 }
 
-void iosSDKsendDTFM(const char *pCallId, int pDigit) {
+__used void iosSDKsendDTFM(const char *pCallId, int pDigit) {
     [singleton->sdk sendDTMF:[NSString stringWithUTF8String:pCallId] digit:pDigit];
 }
 
-void iosSDKsendInfo(const char *pCallId, const char *pMimeType, const char *pContent, const char *pAniHeaders) {
+__used void iosSDKsendInfo(const char *pCallId, const char *pMimeType, const char *pContent, const char *pAniHeaders) {
     if (pAniHeaders == Nil)
         [singleton->sdk sendInfo:[NSString stringWithUTF8String:pCallId] withType:[NSString stringWithUTF8String:pMimeType] content:[NSString stringWithUTF8String:pContent] andHeaders:Nil];
     else {
@@ -421,7 +277,7 @@ void iosSDKsendInfo(const char *pCallId, const char *pMimeType, const char *pCon
     }
 }
 
-void iosSDKsendMessage(const char *pCallId, const char *pMsg, const char *pAniHeaders) {
+__used void iosSDKsendMessage(const char *pCallId, const char *pMsg, const char *pAniHeaders) {
     if (pAniHeaders == Nil)
         [singleton->sdk sendMessage:[NSString stringWithUTF8String:pCallId] withText:[NSString stringWithUTF8String:pMsg] andHeaders:Nil];
     else {
@@ -430,15 +286,15 @@ void iosSDKsendMessage(const char *pCallId, const char *pMsg, const char *pAniHe
     }
 }
 
-void iosSDKsetCameraResolution(int pWidth, int pHeight) {
+__used void iosSDKsetCameraResolution(int pWidth, int pHeight) {
     [singleton->sdk setResolution:pWidth andHeight:pHeight];
 }
 
-void iosSDKsetUseLoudspeaker(bool pUseLoudspeaker) {
+__used void iosSDKsetUseLoudspeaker(bool pUseLoudspeaker) {
     [singleton->sdk setUseLoudspeaker:pUseLoudspeaker];
 }
 
-void iosSDKCloseConnection() {
+__used void iosSDKCloseConnection() {
     [singleton->sdk closeConnection];
 }
 }

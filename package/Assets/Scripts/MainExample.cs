@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections.Generic;
 using Voximplant;
+using Camera = Voximplant.Camera;
 
 namespace Invoice
 {
@@ -166,11 +167,11 @@ namespace Invoice
         {
             if (faceCam.isOn)
 			{
-                _voximplant.setCamera(CameraSet.CAMERA_FACING_FRONT);
+                _voximplant.setCamera(Camera.CAMERA_FACING_FRONT);
 			}
             else
 			{
-                _voximplant.setCamera(CameraSet.CAMERA_FACING_BACK);
+                _voximplant.setCamera(Camera.CAMERA_FACING_BACK);
 			}
         }
 
