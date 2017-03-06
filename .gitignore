@@ -39,3 +39,4 @@ package/android/*
 # Gradle
 .gradle
 android/local.properties
+.externalNativeBuild

@@ -33,11 +33,13 @@ lipo -create -output "build/libunity-bridge.a" "$PRODUCTS_PATH/Release-iphoneos/
 
 lipo -create -output "build/libPods-unity-bridge.a" "$PRODUCTS_PATH/Release-iphoneos/libPods-unity-bridge.a" "$PRODUCTS_PATH/Release-iphonesimulator/libPods-unity-bridge.a"
  
-cp ./build/libunity-bridge.a ../../package/Plugins/iOS
+mv ./build/libunity-bridge.a ./build/libVoxImplant-bridge.a
+
+cp ./build/libVoxImplant-bridge.a ../../package/Assets/Plugins/iOS
 
 # Copy framework dependencies
 
 cp -R ./Pods/VoxImplantWebRTC/WebRTC.framework ../../package/Assets/Plugins/iOS
-cp ./Pods/VoxImplantSDK/lib/libVoxImplantSDK.a ../../package/Assets/Plugins/iOS
+cp -R ./Pods/VoxImplantSDK/VoxImplant.framework ../../package/Assets/Plugins/iOS
 
 cd -

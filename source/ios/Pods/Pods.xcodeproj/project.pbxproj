@@ -15,13 +15,13 @@
 		011063B04E791CE84CBBF4A9AFBA2043 /* RTCEAGLVideoView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCEAGLVideoView.h; path = WebRTC.framework/Headers/RTCEAGLVideoView.h; sourceTree = "<group>"; };
 		04F92F100492C8130F011055F9B691FE /* Pods-unity-bridge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-unity-bridge.release.xcconfig"; sourceTree = "<group>"; };
 		08A1C0BB26A11D34A4ED86022E7D4FD4 /* Pods-unity-bridge-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-unity-bridge-resources.sh"; sourceTree = "<group>"; };
+		08E458E0709F7FCEFDA8F7498AE0B354 /* VoxImplant.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = VoxImplant.framework; sourceTree = "<group>"; };
 		0E96F1210FB1B33B563B61B13907FFB5 /* RTCMediaConstraints.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCMediaConstraints.h; path = WebRTC.framework/Headers/RTCMediaConstraints.h; sourceTree = "<group>"; };
 		1399BE65334D0DA5E1A7298CA8607C49 /* RTCRtpCodecParameters.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCRtpCodecParameters.h; path = WebRTC.framework/Headers/RTCRtpCodecParameters.h; sourceTree = "<group>"; };
-		18542BA1E0AD01C26BD33FC6BBEDC6FA /* libVoxImplantSDK.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; name = libVoxImplantSDK.a; path = lib/libVoxImplantSDK.a; sourceTree = "<group>"; };
 		1A3402F0F3F8407DCCEF1DD4DDF45931 /* RTCSessionDescription.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCSessionDescription.h; path = WebRTC.framework/Headers/RTCSessionDescription.h; sourceTree = "<group>"; };
 		1CAC8854DBC6CE096C77A8753F206240 /* Pods-unity-bridge-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-unity-bridge-acknowledgements.plist"; sourceTree = "<group>"; };
-		20037FAFC9AB0FD8813D7615FF4EC3B4 /* VoxImplantDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VoxImplantDelegate.h; path = include/VoxImplantDelegate.h; sourceTree = "<group>"; };
 		20FA55047CC49169E145A4394097AFDB /* RTCMacros.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCMacros.h; path = WebRTC.framework/Headers/RTCMacros.h; sourceTree = "<group>"; };
+		3015D75942661BA913A99EFB11DFE370 /* VoxImplant.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VoxImplant.h; path = VoxImplant.framework/Headers/VoxImplant.h; sourceTree = "<group>"; };
 		317CC66BFB8D6033C3D091CE189C4A22 /* RTCDispatcher.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCDispatcher.h; path = WebRTC.framework/Headers/RTCDispatcher.h; sourceTree = "<group>"; };
 		35F081B82284815C3515078728E688AF /* Pods-unity-bridge-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-unity-bridge-dummy.m"; sourceTree = "<group>"; };
 		38A1A443F07D7FFD03ACD5157D8A00F3 /* RTCVideoFrame.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCVideoFrame.h; path = WebRTC.framework/Headers/RTCVideoFrame.h; sourceTree = "<group>"; };
@@ -48,6 +48,7 @@
 		896E80EC56EA78078B2390483E40678C /* RTCRtpReceiver.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCRtpReceiver.h; path = WebRTC.framework/Headers/RTCRtpReceiver.h; sourceTree = "<group>"; };
 		8F091556A5BACF2CF6BEC50323FA6091 /* RTCRtpEncodingParameters.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCRtpEncodingParameters.h; path = WebRTC.framework/Headers/RTCRtpEncodingParameters.h; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		A82627FE95EB3833B4464DE1CB6A98BF /* VoxImplantDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VoxImplantDelegate.h; path = VoxImplant.framework/Headers/VoxImplantDelegate.h; sourceTree = "<group>"; };
 		A9274026DF06C75E9ABD1CEFBFE8B1CB /* WebRTC.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WebRTC.h; path = WebRTC.framework/Headers/WebRTC.h; sourceTree = "<group>"; };
 		B9F5A000DA53234D9E8BA046400F8EE8 /* RTCVideoSource.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCVideoSource.h; path = WebRTC.framework/Headers/RTCVideoSource.h; sourceTree = "<group>"; };
 		BA051CCF634E5105494EBADE658B12D0 /* RTCIceCandidate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCIceCandidate.h; path = WebRTC.framework/Headers/RTCIceCandidate.h; sourceTree = "<group>"; };
@@ -57,7 +58,6 @@
 		CD592BC7E7351B53552B653060FC94EF /* RTCAudioTrack.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCAudioTrack.h; path = WebRTC.framework/Headers/RTCAudioTrack.h; sourceTree = "<group>"; };
 		D04C1ABCED2F4B5793FC4AC6833FFE04 /* RTCFileLogger.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCFileLogger.h; path = WebRTC.framework/Headers/RTCFileLogger.h; sourceTree = "<group>"; };
 		D0707D3C2A03A1158964B9E99223D12B /* RTCRtpParameters.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCRtpParameters.h; path = WebRTC.framework/Headers/RTCRtpParameters.h; sourceTree = "<group>"; };
-		D501C6DC7759E113050BC879A44F1618 /* VoxImplant.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VoxImplant.h; path = include/VoxImplant.h; sourceTree = "<group>"; };
 		D5797626F85A51C13D86052CE2237AD8 /* RTCPeerConnectionFactory.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCPeerConnectionFactory.h; path = WebRTC.framework/Headers/RTCPeerConnectionFactory.h; sourceTree = "<group>"; };
 		D9653D65EDE6D6D1FE59D9244DCCEC0A /* RTCMediaStream.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCMediaStream.h; path = WebRTC.framework/Headers/RTCMediaStream.h; sourceTree = "<group>"; };
 		E077017016575835DDFD361AE9BADA07 /* RTCMetrics.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCMetrics.h; path = WebRTC.framework/Headers/RTCMetrics.h; sourceTree = "<group>"; };
@@ -94,23 +94,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		365206A08F7B0C692EB8FED2E193D613 /* VoxImplantSDK */ = {
+		2B63962E2ED3B86C9B39BCBC93575C58 /* VoxImplantSDK */ = {
 			isa = PBXGroup;
 			children = (
-				D501C6DC7759E113050BC879A44F1618 /* VoxImplant.h */,
-				20037FAFC9AB0FD8813D7615FF4EC3B4 /* VoxImplantDelegate.h */,
-				4589DE31A4381755DC2FA09251484A0A /* Frameworks */,
+				3015D75942661BA913A99EFB11DFE370 /* VoxImplant.h */,
+				A82627FE95EB3833B4464DE1CB6A98BF /* VoxImplantDelegate.h */,
+				C3B0970297D1B7DEBCD803298C2A3E9C /* Frameworks */,
 			);
 			name = VoxImplantSDK;
 			path = VoxImplantSDK;
-			sourceTree = "<group>";
-		};
-		4589DE31A4381755DC2FA09251484A0A /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				18542BA1E0AD01C26BD33FC6BBEDC6FA /* libVoxImplantSDK.a */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		5DB024C03D7C618E649DA8FD8651D6BE /* Pods-unity-bridge */ = {
@@ -210,10 +202,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		C3B0970297D1B7DEBCD803298C2A3E9C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				08E458E0709F7FCEFDA8F7498AE0B354 /* VoxImplant.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		C4FDFCEDCA6225B5B040D437BEEF9F51 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				365206A08F7B0C692EB8FED2E193D613 /* VoxImplantSDK */,
+				2B63962E2ED3B86C9B39BCBC93575C58 /* VoxImplantSDK */,
 				80B3DF89D77F84F321698C0F252C5217 /* VoxImplantWebRTC */,
 			);
 			name = Pods;

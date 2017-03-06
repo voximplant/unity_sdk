@@ -6,25 +6,6 @@ using SimpleJSON;
 
 namespace Voximplant
 {
-    interface IUnitySDKCallbacks
-    {
-        void faonLoginSuccessful(String var1);
-        void faonLoginFailed(String var1);
-        void faonOneTimeKeyGenerated(String var1);
-        void faonConnectionSuccessful();
-        void faonConnectionClosed();
-        void faonConnectionFailedWithError(String var1);
-        void faonCallConnected(String var1);
-        void faonCallDisconnected(String var1);
-        void faonCallRinging(String var1);
-        void faonCallFailed(String var1);
-        void faonCallAudioStarted(String var1);
-        void faonIncomingCall(String var1);
-        void faonSIPInfoReceivedInCall(String p);
-        void faonMessageReceivedInCall(String p);
-        void faonNetStatsReceived(String var1);
-    }
-
     public enum LoginFailureReason
     {
         INVALID_PASSWORD,
@@ -33,7 +14,7 @@ namespace Voximplant
         INTERNAL_ERROR
     }
 
-    public enum CameraSet
+    public enum Camera
     {
         CAMERA_FACING_FRONT,
         CAMERA_FACING_BACK
@@ -128,7 +109,7 @@ namespace Voximplant
 
 			if (pHeader != null)
 			{
-				headers = InvSDK.GetDictionaryToArray(pHeader);
+				headers = Utils.GetDictionaryToArray(pHeader);
 			}
 		}
 	}
@@ -163,7 +144,7 @@ namespace Voximplant
             content = pContent;
             if (pHeader != null)
             {
-                headers = InvSDK.GetDictionaryToArray(pHeader);
+                headers = Utils.GetDictionaryToArray(pHeader);
             }
         }
     }
@@ -182,7 +163,7 @@ namespace Voximplant
             text = pMsg;
             if (pHeader != null)
             {
-                headers = InvSDK.GetDictionaryToArray(pHeader);
+                headers = Utils.GetDictionaryToArray(pHeader);
             }
         }
     }
@@ -241,19 +222,6 @@ namespace Voximplant
 		public PairKeyValueArray(PairKeyValue[] pList)
 		{
 			list = pList;
-		}
-	}
-
-	public class JsonUtility
-	{
-		public static string ToJson(object obj)
-		{
-			if (obj == null)
-				return null;
-
-			JSONObject jsonObject = new JSONObject();
-			JSONSerialize.Serialize(obj, jsonObject);
-			return jsonObject.ToString();
 		}
 	}
 }

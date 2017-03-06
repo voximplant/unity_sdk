@@ -1,11 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Runtime.InteropServices;
-using SimpleJSON;
 using Voximplant;
+using Camera = Voximplant.Camera;
 
 namespace Invoice
 {
@@ -25,12 +22,12 @@ namespace Invoice
         public GameObject mBtnHung;
         public Text mIncName;
 
-		public Toggle mLocalView;
-		public Toggle mRemoteView;
-
         public GameObject mCallRingPanel;
 
-        InvSDK inv;
+        VoximplantSDK _voximplant;
+
+        public GameObject outgoingQuad;
+        public GameObject incomingQuad;
 
 		private CallInner mActiveCallId;
         private CallInner mIncCallId;
@@ -55,8 +52,8 @@ namespace Invoice
         {
 			addLog("Target platform: " + Application.platform);
 
-            inv = gameObject.AddComponent<InvSDK>();
-			inv.init(gameObject.name, success => {
+            _voximplant = gameObject.AddVoximplantSDK();
+			_voximplant.init(success => {
 			        if (success) {
 			            setMute();
 			            sendVideo();
@@ -64,25 +61,24 @@ namespace Invoice
 			        }
 
 			        addLog(string.Format("Init finished, permissions status: ${0}", success));
-			    },
-			    new SizeView(0,0, 100, 100), new SizeView(0, 150, 100, 100));
-            inv.LogMethod += addLog;
-            inv.onConnectionSuccessful += Inv_onConnectionSuccessful;
-            inv.onIncomingCall += Inv_onIncomingCall;
-            inv.onCallRinging += Inv_onCallRinging;
-			inv.onCallFailed += Inv_onCallFailed;
-            inv.onMessageReceivedInCall += Inv_onMessageReceivedInCall;
-            inv.onCallConnected += Inv_onCallConnected;
-            inv.onCallDisconnected += Inv_onCallDisconnected;
-			inv.onStartCall += Inv_onStartCall;
+			});
+            _voximplant.LogMethod += addLog;
+            _voximplant.ConnectionSuccessful += InvConnectionSuccessful;
+            _voximplant.IncomingCall += InvIncomingCall;
+            _voximplant.CallRinging += InvCallRinging;
+			_voximplant.CallFailed += InvCallFailed;
+            _voximplant.MessageReceivedInCall += InvMessageReceivedInCall;
+            _voximplant.CallConnected += InvCallConnected;
+            _voximplant.CallDisconnected += InvCallDisconnected;
+			_voximplant.StartCall += InvStartCall;
         }
 
-        void Inv_onStartCall (string callId)
+        void InvStartCall (string callId)
         {
 			mActiveCallId = new CallInner(callId, "own", false, video.isOn);
         }
 
-        private void Inv_onCallFailed (string callId, int code, string reason, Dictionary<string, string> headers)
+        private void InvCallFailed (string callId, int code, string reason, Dictionary<string, string> headers)
         {
 			mBtnHung.SetActive(false);
 			mCallRingPanel.SetActive(false);
@@ -90,102 +86,106 @@ namespace Invoice
 			mIncCallId = null; 
         }
 
-        private void Inv_onCallDisconnected(string callId, Dictionary<string, string> headers)
+        private void InvCallDisconnected(string callId, Dictionary<string, string> headers)
         {
             mBtnHung.SetActive(false);
             mCallRingPanel.SetActive(false);
 			mActiveCallId = null;
 			mIncCallId = null; 
-			inv.setLocalView(false);
-			inv.setRemoteView(false);
         }
 
-        private void Inv_onCallConnected(string callId, Dictionary<string, string> headers)
+        private void InvCallConnected(string callId, Dictionary<string, string> headers)
         {
 			addLog("Call connected");
 			mBtnHung.SetActive(true);
-			inv.setLocalView(mLocalView.isOn);
-			inv.setRemoteView(mRemoteView.isOn);
+
+            var remoteRenderer = outgoingQuad.GetComponent<MeshRenderer>();
+            _voximplant.beginUpdatingTextureWithVideoStream(VoximplantSDK.VideoStream.Remote, texture => {
+                if (texture != null) {
+                    Debug.Log(string.Format("Got new remote texture for rendering {0}", texture.GetNativeTexturePtr()));
+                }
+
+                remoteRenderer.material.mainTexture = texture;
+            });
+            var localRenderer = incomingQuad.GetComponent<MeshRenderer>();
+            _voximplant.beginUpdatingTextureWithVideoStream(VoximplantSDK.VideoStream.Local, texture => {
+                if (texture != null) {
+                    Debug.Log(string.Format("Got new local texture for rendering {0}", texture.GetNativeTexturePtr()));
+                }
+
+                localRenderer.material.mainTexture = texture;
+            });
         }
 
-		private void Inv_onMessageReceivedInCall(string callId, string text, Dictionary<string, string> headers)
+		private void InvMessageReceivedInCall(string callId, string text, Dictionary<string, string> headers)
         {
             addLog(callId + " : " + text);
         }
 
-        private void Inv_onCallRinging(string callId, Dictionary<string, string> headers)
+        private void InvCallRinging(string callId, Dictionary<string, string> headers)
         {
 			addLog("Call ringing");
         }
 
-        private void Inv_onIncomingCall(string callId, string from, string displayName, bool videoCall, Dictionary<string, string> headers)
+        private void InvIncomingCall(string callId, string from, string displayName, bool videoCall, Dictionary<string, string> headers)
         {
             mCallRingPanel.SetActive(true);
             mIncName.text = displayName;
             mIncCallId = new CallInner(callId, displayName, true, videoCall);
         }
 
-        private void Inv_onConnectionSuccessful()
+        private void InvConnectionSuccessful()
         {
             addLog("Connect done!");
         }
 
         public void onClickConnect()
         {
-			inv.connect();
+			_voximplant.connect();
         }
         public void onClickLogin()
         {
-			inv.login(new LoginClassParam(loginName.text, pass.text));
+			_voximplant.login(new LoginClassParam(loginName.text, pass.text));
         }
         public void onClickCall()
         {
-			inv.call(new CallClassParam(callNum.text, video.isOn, p2p.isOn, "", null));
+			_voximplant.call(new CallClassParam(callNum.text, video.isOn, p2p.isOn, ""));
             mBtnHung.SetActive(true);
         }
         public void onClickAnswer()
         {
             mCallRingPanel.SetActive(false);
             mActiveCallId = mIncCallId;
-			inv.answer(mActiveCallId.id, null);
+			_voximplant.answer(mActiveCallId.id);
         }
         public void onClickDecline()
         {
             mCallRingPanel.SetActive(false);
-            inv.declineCall(mIncCallId.id, null);
+            _voximplant.declineCall(mIncCallId.id);
         }
         public void onHangup()
         {
-			inv.hangup(mActiveCallId.id, null);
+			_voximplant.hangup(mActiveCallId.id);
         }
         public void setMute()
         {
-            inv.setMute(mute.isOn);
+            _voximplant.setMute(mute.isOn);
         }
         public void sendVideo()
         {
-            inv.sendVideo(video.isOn);
+            _voximplant.sendVideo(video.isOn);
         }
         public void switchCam()
         {
             if (faceCam.isOn)
 			{
-                inv.setCamera(CameraSet.CAMERA_FACING_FRONT);
+                _voximplant.setCamera(Camera.CAMERA_FACING_FRONT);
 			}
             else
 			{
-                inv.setCamera(CameraSet.CAMERA_FACING_BACK);
+                _voximplant.setCamera(Camera.CAMERA_FACING_BACK);
 			}
         }
-
-		public void onChangeLocalView()
-		{
-			inv.setLocalView(mLocalView.isOn);
-		}
-		public void onChangeRemoteView()
-		{
-			inv.setRemoteView(mRemoteView.isOn);
-		}
 
         public void addLog(string pMsg)
         {
