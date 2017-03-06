@@ -7,6 +7,7 @@
 
 #include <EGL/egl.h>
 #include <GLES2/gl2.h>
+#include <android/log.h>
 
 #include "LockGuard.hpp"
 
@@ -48,7 +49,6 @@ private:
     EGLContext m_sharingContext;
 
     void EnsureOGL();
-    void AssertOGLThread();
     void CleanupOGL();
 
     bool ChooseConfigAndCreateContext(EGLDisplay display);

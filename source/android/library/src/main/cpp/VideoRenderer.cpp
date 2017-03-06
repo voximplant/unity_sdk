@@ -18,6 +18,7 @@ VideoRenderer::VideoRenderer(int width, int height, EGLContext sharedContext) :
         m_display(0),
         m_context(EGL_NO_CONTEXT),
         m_resultingPixels(new uint8_t[width * height * 4]),
+        m_isInvalidated(false),
 
         m_textureIds(new GLuint[3]),
 
@@ -121,13 +122,6 @@ bool VideoRenderer::ChooseConfigAndCreateContext(EGLDisplay display) {
     return false;
 }
 
-
-void VideoRenderer::AssertOGLThread() {
-    if (m_context != EGL_NO_CONTEXT && eglGetCurrentContext() != m_context) {
-        aeprintf("Calling thread changed since creation of OGL");
-        __builtin_trap();
-    }
-}
 
 static const char s_indices[] = { 0, 3, 2, 0, 2, 1 };
 
@@ -315,7 +309,6 @@ static void initializePlaneTexture(int name, int id, int width, int height) {
 
 void VideoRenderer::EnsureOGL() {
     if (m_context != 0) {
-        AssertOGLThread();
         return;
     }
 
@@ -473,7 +466,10 @@ void VideoRenderer::CleanupOGL() {
 }
 
 bool VideoRenderer::IsValidForSize(int width, int height) {
-    return !m_isInvalidated && m_ackWidth == width && m_ackHeight == height;
+    return !m_isInvalidated
+           && (m_context == eglGetCurrentContext() || m_context == EGL_NO_CONTEXT)
+           && m_ackWidth == width
+           && m_ackHeight == height;
 }
 
 GLuint VideoRenderer::GetTargetTextureId() {

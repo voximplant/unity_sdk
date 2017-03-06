@@ -10,13 +10,14 @@
 
 #include "IUnityGraphics.h"
 #include "VideoRenderer.h"
-#include "LockGuard.hpp"
 
 static VideoRenderer **s_renderers;
 static Mutex *s_renderersMutex;
-static std::vector<VideoRenderer *> *s_destroyList;
 static EGLContext s_unityContext;
 static EGLSurface s_unitySurface;
+
+static Mutex *s_destroyListMutex;
+static std::vector<VideoRenderer *> *s_destroyList;
 
 JNIEXPORT static void JNICALL
 Java_renderBufferFrame(JNIEnv *env,
@@ -97,6 +98,8 @@ Java_renderBufferFrame(JNIEnv *env,
     bool newRendererCreated = false;
     VideoRenderer *renderer = s_renderers[stream];
     if (renderer != NULL && !renderer->IsValidForSize(width, height)) {
+        LockGuard destroyGuard(s_destroyListMutex);
+
         renderer->Detach();
         s_destroyList->push_back(renderer);
         renderer = NULL;
@@ -159,7 +162,10 @@ GetRenderEventFunc()
 
 extern "C" void UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API
 DestroyRenderer(long long textureId, EGLContext oglContext) {
+    LockGuard lock(s_destroyListMutex);
+
     std::vector<VideoRenderer *> *newList = new std::vector<VideoRenderer *>();
+
     for (std::vector<VideoRenderer *>::iterator it = s_destroyList->begin();
             it != s_destroyList->end();
             it++) {
@@ -176,13 +182,14 @@ DestroyRenderer(long long textureId, EGLContext oglContext) {
     s_destroyList = newList;
 };
 
-typedef void	(UNITY_INTERFACE_API * PluginLoadFunc)(IUnityInterfaces* unityInterfaces);
-typedef void	(UNITY_INTERFACE_API * PluginUnloadFunc)();
+typedef void	(UNITY_INTERFACE_API *PluginLoadFunc)(IUnityInterfaces* unityInterfaces);
+typedef void	(UNITY_INTERFACE_API *PluginUnloadFunc)();
 
 extern "C" void UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API
 InitializeVoximplant() {
     s_renderers = (VideoRenderer **) calloc(2, sizeof(VideoRenderer *));
     s_renderersMutex = new Mutex();
+    s_destroyListMutex = new Mutex();
     s_destroyList = new std::vector<VideoRenderer *>();
     s_unityContext = eglGetCurrentContext();
     s_unitySurface = eglGetCurrentSurface(EGL_DRAW);
