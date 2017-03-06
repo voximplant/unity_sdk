@@ -440,7 +440,7 @@ void VideoRenderer::RenderBuffer(uint8_t *yPlane, int yStride,
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, s_indices);
     testGLErrors("glDrawArrays");
 
-    glFlush();
+    glFinish();
     testGLErrors("Rendering finished");
 }
 

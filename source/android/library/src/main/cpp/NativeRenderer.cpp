@@ -122,10 +122,6 @@ Java_renderBufferFrame(JNIEnv *env,
                            degrees
     );
 
-    if (renderer->GetOGLContext() == EGL_NO_CONTEXT) {
-        __builtin_trap();
-    }
-
     if (newRendererCreated) {
         jclass clazz = env->FindClass(CLIENT_CLASS);
         jmethodID methodID = env->GetMethodID(clazz, "reportNewNativeTexture", "(JJIII)V");
