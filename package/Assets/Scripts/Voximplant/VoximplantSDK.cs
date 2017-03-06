@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 namespace Voximplant
@@ -434,6 +436,51 @@ namespace Voximplant
         @param {bool} pUseLoudSpeaker 'true' to enable loud speaker, 'false' to disable it
         */
         public abstract void setUseLoudspeaker(bool pUseLoudSpeaker);
+
+        void Start()
+        {
+            UnityEngine.Camera.onPreRender += cam => {
+                GL.IssuePluginEvent(GetRenderEventFunc(), 41);
+            };
+            UnityEngine.Camera.onPostRender += cam => {
+                GL.IssuePluginEvent(GetRenderEventFunc(), 42);
+            };
+        }
+
+#if (UNITY_IPHONE || UNITY_WEBGL) && !UNITY_EDITOR
+        [DllImport ("__Internal")]
+#else
+        [DllImport("VoximplantAndroidRendererPlugin")]
+#endif
+        private static extern IntPtr GetRenderEventFunc();
+
+        public enum VideoStream
+        {
+            Remote = 0,
+            Local
+        }
+
+        protected Dictionary<VideoStream, Action<Texture2D>> videoStreamCallbacks = new Dictionary<VideoStream, Action<Texture2D>>();
+
+        public void beginUpdatingTextureWithVideoStream(VideoStream stream, Action<Texture2D> callback)
+        {
+            Action<Texture2D> oldCallback;
+            if (videoStreamCallbacks.TryGetValue(stream, out oldCallback)) {
+                endUpdatingTexture(stream);
+            }
+
+            startVideoStreamRendering(stream);
+            videoStreamCallbacks[stream] = callback;
+        }
+
+        protected abstract void startVideoStreamRendering(VideoStream stream);
+
+        public virtual void endUpdatingTexture(VideoStream stream)
+        {
+            if (videoStreamCallbacks.ContainsKey(stream)) {
+                videoStreamCallbacks.Remove(stream);
+            }
+        }
 
         protected static LoginFailureReason LoginFailureReasonFromString(String reason)
         {

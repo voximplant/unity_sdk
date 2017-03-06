@@ -1,12 +1,37 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using SimpleJSON;
 using UnityEngine;
+using UnityEngine.Assertions;
+using UnityEngine.Rendering;
+using Voximplant.Threading;
 
 namespace Voximplant
 {
-    internal class AndroidSDK : VoximplantSDK
+    sealed internal class AndroidSDK : VoximplantSDK
     {
+#if (UNITY_IPHONE || UNITY_WEBGL) && !UNITY_EDITOR
+        [DllImport ("__Internal")]
+#else
+        [DllImport("VoximplantAndroidRendererPlugin")]
+#endif
+        private static extern void InitializeVoximplant();
+
+        private GameObject invokePumpHolder;
+        private InvokePump pump;
+
+        void Awake()
+        {
+            InitializeVoximplant();
+
+            // Ensure invoke pump
+            invokePumpHolder = new GameObject("[PermissionsRequesterHelper]"){
+                hideFlags = HideFlags.NotEditable | HideFlags.HideInHierarchy | HideFlags.HideInInspector
+            };
+            pump = invokePumpHolder.AddComponent<InvokePumpBehavior>().invokePump;
+        }
+
         private AndroidJavaClass jc;
         private AndroidJavaObject jo;
 
@@ -180,7 +205,93 @@ namespace Voximplant
             jo.Call("setUseLoudspeaker", JsonUtility.ToJson(new BoolClassParam(pUseLoudSpeaker)));
         }
 
-        // callbacks from Android sdk
+        #region Texture Rendering
+
+        private static bool IsRunningOnOpenGL()
+        {
+            switch (SystemInfo.graphicsDeviceType) {
+                case GraphicsDeviceType.OpenGLES2:
+                case GraphicsDeviceType.OpenGLES3:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+#if (UNITY_IPHONE || UNITY_WEBGL) && !UNITY_EDITOR
+        [DllImport ("__Internal")]
+#else
+        [DllImport("VoximplantAndroidRendererPlugin")]
+#endif
+        private static extern void DestroyRenderer(long textureId, long oglContext);
+
+        protected override void startVideoStreamRendering(VideoStream stream)
+        {
+            Assert.IsTrue(IsRunningOnOpenGL());
+
+            jo.Call("beginSendingVideoForStream", (int)stream);
+        }
+
+        #endregion
+
+        #region Native Callbacks
+
+        private struct NativeTextureDescriptor
+        {
+            public long textureId;
+            public long oglContext;
+            public Texture2D texture;
+        }
+
+        private Dictionary<VideoStream, NativeTextureDescriptor> nativeTextures =
+            new Dictionary<VideoStream, NativeTextureDescriptor>();
+
+        protected void faonNewNativeTexture(String p)
+        {
+            Debug.Log(string.Format("new native texture {0}", p));
+            
+            var paramList = Utils.GetParamList(p);
+            var textureId = paramList[0].AsLong;
+            var oglContext = paramList[1].AsLong;
+            var width = paramList[2].AsInt;
+            int height = paramList[3].AsInt;
+            int stream = paramList[4].AsInt;
+            var videoStream = (VideoStream) stream;
+
+            if (!videoStreamCallbacks.ContainsKey(videoStream)) {
+                return;
+            }
+
+            pump.BeginInvoke(() => {
+                var texture = Texture2D.CreateExternalTexture(width, height, TextureFormat.RGBA32, false, false, new IntPtr(textureId));
+
+                var newNativeTexture = new NativeTextureDescriptor{
+                    oglContext = oglContext,
+                    textureId = textureId,
+                    texture = texture
+                };
+                videoStreamCallbacks[videoStream](texture);
+                if (nativeTextures.ContainsKey(videoStream)) {
+                    var nativeTexture = nativeTextures[videoStream];
+                    DestroyRenderer(nativeTexture.textureId, nativeTexture.oglContext);
+                }
+                nativeTextures[videoStream] = newNativeTexture;
+            });
+        }
+
+        private void CleanupAllVideoStreams()
+        {
+            foreach (var texture in nativeTextures.Values) {
+                DestroyRenderer(texture.textureId, texture.oglContext);
+            }
+
+            nativeTextures.Clear();
+            foreach (var pair in videoStreamCallbacks) {
+                pair.Value(null);
+            }
+            videoStreamCallbacks.Clear();
+        }
+
         protected void faonLoginSuccessful(string p)
         {
             AddLog("faonLoginSuccessful: " + p);
@@ -211,6 +322,7 @@ namespace Voximplant
         protected void faonConnectionClosed()
         {
             AddLog("faonConnectionClosed");
+            CleanupAllVideoStreams();
             OnConnectionClosed();
         }
 
@@ -230,6 +342,7 @@ namespace Voximplant
         protected void faonCallDisconnected(string p)
         {
             AddLog("faonCallDisconnected: " + p);
+            CleanupAllVideoStreams();
             JSONNode node = Utils.GetParamList(p);
             OnCallDisconnected(node[0].Value, node[1].AsDictionary);
         }
@@ -244,6 +357,7 @@ namespace Voximplant
         protected void faonCallFailed(string p)
         {
             AddLog("faonCallFailed: " + p);
+            CleanupAllVideoStreams();
             JSONNode node = Utils.GetParamList(p);
             OnCallFailed(node[0].Value, node[1].AsInt, node[2].Value, node[3].AsDictionary);
         }
@@ -282,10 +396,12 @@ namespace Voximplant
             OnNetStatsReceived(node[0], node[1].AsInt);
         }
 
-        protected void faonOnStartCall(string p)
+        protected void faonOnStartCall(string callId)
         {
-            AddLog("faonOnStartCall: " + p);
-            OnStartCall(p);
+            AddLog("faonOnStartCall: " + callId);
+            OnStartCall(callId);
         }
+
+        #endregion
     }
 }

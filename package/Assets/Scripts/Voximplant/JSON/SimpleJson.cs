@@ -102,6 +102,20 @@ namespace SimpleJSON
         #endregion common interface
 
         #region typecasting properties
+        public virtual long AsLong
+        {
+            get
+            {
+                long v = 0;
+                if (long.TryParse(Value, out v))
+                    return v;
+                return 0;
+            }
+            set
+            {
+                Value = value.ToString();
+            }
+        }
         public virtual int AsInt
         {
             get

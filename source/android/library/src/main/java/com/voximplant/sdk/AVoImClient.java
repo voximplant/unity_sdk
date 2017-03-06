@@ -15,6 +15,7 @@ import com.zingaya.voximplant.VoxImplantClient;
 import com.zingaya.voximplant.VoxImplantClient.LoginFailureReason;
 
 import java.lang.reflect.Type;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -139,13 +140,15 @@ public class AVoImClient implements VoxImplantCallback {
     }
 
     public AVoImClient() {
-        Init();
-    }
-
-    private void Init() {
         Log.d("VOXIMPLANT", "Start init");
+
         client = VoxImplantClient.instance();
-        client.setAndroidContext(UnityPlayer.currentActivity.getApplicationContext());
+
+        VoxImplantClient.VoxImplantClientConfig config = new VoxImplantClient.VoxImplantClientConfig();
+        config.enableHWAcceleration = false;
+        config.provideLocalFramesInByteBuffers = true;
+
+        client.setAndroidContext(UnityPlayer.currentActivity.getApplicationContext(), config);
         client.setCallback(this);
         client.setCamera(Camera.CameraInfo.CAMERA_FACING_FRONT);
         client.setCameraResolution(320, 320);
@@ -223,7 +226,9 @@ public class AVoImClient implements VoxImplantCallback {
     }
 
     public void enableDebugLogging() {
-        VoxImplantClient.enableDebugLogging();
+
+//        VoxImplantClient.enableDebugLogging();
+
     }
 
     public void loginUsingOneTimeKey(String pLogin) {
@@ -261,6 +266,55 @@ public class AVoImClient implements VoxImplantCallback {
     public void setUseLoudspeaker(String pUseLoudSpeaker) {
         BoolClassParam param = GetJsonObj(pUseLoudSpeaker, BoolClassParam.class);
         client.setUseLoudspeaker(param.value);
+    }
+
+    public enum VideoStream {
+        VideoStreamIncoming,
+        VideoStreamOutgoing;
+
+        public static VideoStream fromInteger(int value) {
+            value = Math.min(Math.max(0, value), VideoStream.values().length - 1);
+            return VideoStream.values()[value];
+        }
+    }
+
+    private native void renderBufferFrame(ByteBuffer yPlane, int yStride,
+                                          ByteBuffer uPlane, int uStride,
+                                          ByteBuffer vPlane, int vStride,
+                                          int width, int height,
+                                          int stream,
+                                          int degrees);
+
+    public void beginSendingVideoForStream(final int stream) {
+        VideoStream videoStream = VideoStream.fromInteger(stream);
+
+        NativeVideoRenderer videoRenderer = new NativeVideoRenderer(new NativeVideoRenderer.NativeVideoRendererCallbacks() {
+            @Override
+            public void onBufferFrameRender(ByteBuffer[] planes, int[] strides, int width, int height, int degrees) {
+                renderBufferFrame(
+                        planes[0], strides[0],
+                        planes[1], strides[1],
+                        planes[2], strides[2],
+                        width, height,
+                        stream,
+                        degrees);
+            }
+        });
+
+        switch (videoStream) {
+            case VideoStreamIncoming:
+                client.setRemoteView(videoRenderer);
+                break;
+            case VideoStreamOutgoing:
+                client.setLocalPreview(videoRenderer);
+                break;
+        }
+    }
+
+    public void reportNewNativeTexture(long textureId, long oglContext, int width, int height, int stream) {
+        UnityPlayer.UnitySendMessage(sdkObjName,
+                "faonNewNativeTexture",
+                GetParamListToString(new ArrayList<Object>(Arrays.asList(textureId, oglContext, width, height, stream))));
     }
 
     @Override
@@ -333,6 +387,10 @@ public class AVoImClient implements VoxImplantCallback {
     }
 
     public void onStartCall(String s) {
+        if (s == null) {
+            Log.e("VOXIMPLANT", "Null call Id in onStartCall");
+            return;
+        }
         UnityPlayer.UnitySendMessage(sdkObjName, "faonOnStartCall", s);
     }
 

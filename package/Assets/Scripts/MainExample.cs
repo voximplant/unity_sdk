@@ -22,12 +22,12 @@ namespace Invoice
         public GameObject mBtnHung;
         public Text mIncName;
 
-		public Toggle mLocalView;
-		public Toggle mRemoteView;
-
         public GameObject mCallRingPanel;
 
         VoximplantSDK _voximplant;
+
+        public GameObject outgoingQuad;
+        public GameObject incomingQuad;
 
 		private CallInner mActiveCallId;
         private CallInner mIncCallId;
@@ -61,7 +61,7 @@ namespace Invoice
 			        }
 
 			        addLog(string.Format("Init finished, permissions status: ${0}", success));
-			    });
+			});
             _voximplant.LogMethod += addLog;
             _voximplant.ConnectionSuccessful += InvConnectionSuccessful;
             _voximplant.IncomingCall += InvIncomingCall;
@@ -98,6 +98,23 @@ namespace Invoice
         {
 			addLog("Call connected");
 			mBtnHung.SetActive(true);
+
+            var remoteRenderer = outgoingQuad.GetComponent<MeshRenderer>();
+            _voximplant.beginUpdatingTextureWithVideoStream(VoximplantSDK.VideoStream.Remote, texture => {
+                if (texture != null) {
+                    Debug.Log(string.Format("Got new remote texture for rendering {0}", texture.GetNativeTexturePtr()));
+                }
+
+                remoteRenderer.material.mainTexture = texture;
+            });
+            var localRenderer = incomingQuad.GetComponent<MeshRenderer>();
+            _voximplant.beginUpdatingTextureWithVideoStream(VoximplantSDK.VideoStream.Local, texture => {
+                if (texture != null) {
+                    Debug.Log(string.Format("Got new local texture for rendering {0}", texture.GetNativeTexturePtr()));
+                }
+
+                localRenderer.material.mainTexture = texture;
+            });
         }
 
 		private void InvMessageReceivedInCall(string callId, string text, Dictionary<string, string> headers)

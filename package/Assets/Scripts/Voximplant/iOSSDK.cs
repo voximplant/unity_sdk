@@ -116,6 +116,15 @@ namespace Voximplant
             iosSDKsetUseLoudspeaker(pUseLoudSpeaker);
         }
 
+        #region Texture Rendering
+
+        protected override void startVideoStreamRendering(VideoStream stream)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
         #region Native
 
         [DllImport("__Internal")]
