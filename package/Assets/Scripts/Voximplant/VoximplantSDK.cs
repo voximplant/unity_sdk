@@ -496,7 +496,7 @@ namespace Voximplant
         Execute specified callback, passing it every frame received from a local video preview or a remote video stream. Frames are Unity textures that can be assigned to same object to represent video.
         @method beginUpdatingTextureWithVideoStream
         @param {VideoStream} stream "VoximplantSDK.VideoStream.Local" for a local camera preview video or "VoximplantSDK.VideoStream.Remote" for a remote video.
-        @param {Action<Texture2D>> callback This method will be called with each video frame. Note that given texture should be assigned to same obect, since previous one is destroyed by a native code.
+        @param {Action<Texture2D>} callback This method will be called with each video frame. Note that given texture should be assigned to same obect, since previous one is destroyed by a native code.
         */
         public void beginUpdatingTextureWithVideoStream(VideoStream stream, Action<Texture2D> callback)
         {
