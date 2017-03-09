@@ -1,15 +1,19 @@
 PODS:
-  - VoxImplantSDK (1.2.0):
+  - VoxImplantSDK (2.0.0):
     - VoxImplantWebRTC (~> 57.0.0)
   - VoxImplantWebRTC (57.0.0)
 
 DEPENDENCIES:
-  - VoxImplantSDK
+  - VoxImplantSDK (from `VoxImplantSDK`)
+
+EXTERNAL SOURCES:
+  VoxImplantSDK:
+    :path: VoxImplantSDK
 
 SPEC CHECKSUMS:
-  VoxImplantSDK: 4ac89b4541529da9d88c2108ed696d72bbea11a7
+  VoxImplantSDK: b98c6e03810be30ac45bd2d522e177050ae11439
   VoxImplantWebRTC: 89f40b1bcf8bb14e5d8a41d829d71b3badd850b5
 
-PODFILE CHECKSUM: 58ad0a104f7d85ddd78287fbddcae4b25dd4f680
+PODFILE CHECKSUM: 0d8d45734a18f299204d39ebb5e42cead705190f
 
 COCOAPODS: 1.2.0

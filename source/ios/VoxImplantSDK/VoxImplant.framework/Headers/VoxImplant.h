@@ -1,8 +1,20 @@
 //
-//  VoxImplantSDK.h
+//  VoxImplant.h
+//  VoxImplant
 //
-//  Copyright (c) 2011-2015, Zingaya, Inc. All rights reserved.
+//  Created by Andrey Syvrachev on 20.02.17.
+//  Copyright © 2017 Andrey Syvrachev. All rights reserved.
 //
+
+#import <UIKit/UIKit.h>
+
+//! Project version number for VoxImplant.
+FOUNDATION_EXPORT double VoxImplantVersionNumber;
+
+//! Project version string for VoxImplant.
+FOUNDATION_EXPORT const unsigned char VoxImplantVersionString[];
+
+// In this header, you should import all the public headers of your framework using statements like #import <VoxImplant/PublicHeader.h>
 
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
@@ -43,14 +55,14 @@ enum VoxImplantLogLevel
  */
 @interface VoxImplant: NSObject
 
-@property (nonatomic,assign) id<VoxImplantDelegate> voxDelegate;
+@property (nonatomic,weak) id<VoxImplantDelegate> voxDelegate;
 
 ///*!
 // Returns Current delegate
 // @return Current delegate
 // */
 //
--(id<VoxImplantDelegate>)getVoxDelegate; // for compatibility only
+-(id<VoxImplantDelegate>)getVoxDelegate; // Deprecated, for compatibility only
 //
 //
 ///*!
@@ -125,13 +137,13 @@ enum VoxImplantLogLevel
  Login to VoxImplant using specified username and password
  @param user Username combined with application name, for example testuser\@testapp.testaccount.voximplant.com
  @param token Access token, received in callback:
-  - (void) onLoginSuccessfulWithDisplayName: (NSString *) displayName andAuthParams:(NSDictionary*)authParams;
+ - (void) onLoginSuccessfulWithDisplayName: (NSString *) displayName andAuthParams:(NSDictionary*)authParams;
  
-    {"accessExpire" : seconds_to_expire ,
-      "accessToken" : "accessToken_abcdef..." ,
-    "refreshExpire" : refresh_to_expire ,
-     "refreshToken" : "refreshToken_abcdef..." }
-    }
+ {"accessExpire" : seconds_to_expire ,
+ "accessToken" : "accessToken_abcdef..." ,
+ "refreshExpire" : refresh_to_expire ,
+ "refreshToken" : "refreshToken_abcdef..." }
+ }
  */
 -(void)loginWithUsername: (NSString *)user andToken:(NSString*) token;
 
@@ -236,6 +248,7 @@ enum VoxImplantLogLevel
 
 /*!
  Get call duration for established call
+ Function returns 0 if call already disconnected
  @param callId id of previously created call
  */
 
@@ -260,7 +273,7 @@ enum VoxImplantLogLevel
 
 /*!
  Set video display mode. Applies to both incoming and outgoing streams
- @param mode @link VoxImplantVideoResizeMode @/link enum
+ @param mode resize mode @link VoxImplantVideoResizeMode @/link enum
  */
 
 -(void)setVideoResizeMode:(enum VoxImplantVideoResizeMode) mode;
@@ -324,8 +337,6 @@ enum VoxImplantLogLevel
 -(BOOL) switchToCameraWithPosition: (AVCaptureDevicePosition) position;
 
 
--(void) call:(NSString *)callId appendPixelBuffer:(CVPixelBufferRef)pixelBuffer withPresentationTime:(CMTime)time;
-
 @end
 
 @interface VoxImplant (PushNotifications)
@@ -354,3 +365,4 @@ enum VoxImplantLogLevel
 
 
 @end
+
