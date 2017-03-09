@@ -17,7 +17,8 @@ add_library( # Specifies the name of the library.
              SHARED
 
              src/main/cpp/NativeRenderer.cpp
-             src/main/cpp/VideoRenderer.cpp)
+             src/main/cpp/BaseVideoRenderer.cpp
+             src/main/cpp/EGLVideoRenderer.cpp)
 
 
 include_directories(src/main/cpp/Unity/)

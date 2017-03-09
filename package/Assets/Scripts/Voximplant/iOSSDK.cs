@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using SimpleJSON;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Voximplant
 {
-    internal class iOSSDK : VoximplantSDK
+    internal sealed class iOSSDK : VoximplantSDK
     {
         public override void init(Action<bool> initCallback)
         {
@@ -120,7 +121,9 @@ namespace Voximplant
 
         protected override void startVideoStreamRendering(VideoStream stream)
         {
-            throw new NotImplementedException();
+            Assert.IsTrue(IsRunningOnOpenGL());
+
+            beginSendingVideoForStream((int) stream);
         }
 
         #endregion
@@ -188,6 +191,9 @@ namespace Voximplant
         [DllImport("__Internal")]
         private static extern void iosSDKCloseConnection();
 
+        [DllImport("__Internal")]
+        private static extern void beginSendingVideoForStream(int stream);
+
         #endregion
 
         #region Native callbacks
@@ -207,6 +213,7 @@ namespace Voximplant
         protected void fiosonConnectionClosed()
         {
             AddLog("fiosonConnectionClosed");
+            CleanupAllVideoStreams();
             OnConnectionClosed();
         }
 
@@ -241,6 +248,7 @@ namespace Voximplant
         {
             AddLog("fiosonCallDisconnected: " + p);
             JSONNode node = Utils.GetParamList(p);
+            CleanupAllVideoStreams();
             OnCallDisconnected(node[0].Value, node[1].AsDictionary);
         }
 

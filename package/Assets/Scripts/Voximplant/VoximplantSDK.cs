@@ -3,11 +3,29 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.Rendering;
+using Voximplant.Threading;
 
 namespace Voximplant
 {
     public abstract class VoximplantSDK : MonoBehaviour
     {
+#if (UNITY_IPHONE || UNITY_WEBGL) && !UNITY_EDITOR
+        [DllImport ("__Internal")]
+#else
+        [DllImport("VoximplantAndroidRendererPlugin")]
+#endif
+        private static extern void InitializeVoximplant();
+
+        private InvokePump pump;
+
+        void Awake()
+        {
+            InitializeVoximplant();
+
+            pump = gameObject.AddComponent<InvokePumpBehavior>().invokePump;
+        }
+
         public Action<String> LogMethod;
 
         protected void AddLog(String pMsg)
@@ -475,10 +493,84 @@ namespace Voximplant
 
         protected abstract void startVideoStreamRendering(VideoStream stream);
 
+        private struct NativeTextureDescriptor
+        {
+            public long textureId;
+            public long context;
+            public Texture2D texture;
+        }
+
+        private Dictionary<VideoStream, NativeTextureDescriptor> nativeTextures =
+            new Dictionary<VideoStream, NativeTextureDescriptor>();
+
+        protected void fonNewNativeTexture(String p)
+        {
+            Debug.Log(string.Format("new native texture {0}", p));
+
+            var paramList = Utils.GetParamList(p);
+            var textureId = paramList[0].AsLong;
+            var oglContext = paramList[1].AsLong;
+            var width = paramList[2].AsInt;
+            int height = paramList[3].AsInt;
+            int stream = paramList[4].AsInt;
+            var videoStream = (VideoStream) stream;
+
+            if (!videoStreamCallbacks.ContainsKey(videoStream)) {
+                return;
+            }
+
+            pump.BeginInvoke(() => {
+                var texture = Texture2D.CreateExternalTexture(width, height, TextureFormat.RGBA32, false, false, new IntPtr(textureId));
+
+                var newNativeTexture = new NativeTextureDescriptor{
+                    context = oglContext,
+                    textureId = textureId,
+                    texture = texture
+                };
+                videoStreamCallbacks[videoStream](texture);
+                if (nativeTextures.ContainsKey(videoStream)) {
+                    var nativeTexture = nativeTextures[videoStream];
+                    DestroyRenderer(nativeTexture.textureId, nativeTexture.context);
+                }
+                nativeTextures[videoStream] = newNativeTexture;
+            });
+        }
+
+        protected void CleanupAllVideoStreams()
+        {
+            foreach (var texture in nativeTextures.Values) {
+                DestroyRenderer(texture.textureId, texture.context);
+            }
+
+            nativeTextures.Clear();
+            foreach (var pair in videoStreamCallbacks) {
+                pair.Value(null);
+            }
+            videoStreamCallbacks.Clear();
+        }
+
+#if (UNITY_IPHONE || UNITY_WEBGL) && !UNITY_EDITOR
+        [DllImport ("__Internal")]
+#else
+        [DllImport("VoximplantAndroidRendererPlugin")]
+#endif
+        private static extern void DestroyRenderer(long textureId, long context);
+
         public virtual void endUpdatingTexture(VideoStream stream)
         {
             if (videoStreamCallbacks.ContainsKey(stream)) {
                 videoStreamCallbacks.Remove(stream);
+            }
+        }
+
+        protected static bool IsRunningOnOpenGL()
+        {
+            switch (SystemInfo.graphicsDeviceType) {
+                case GraphicsDeviceType.OpenGLES2:
+                case GraphicsDeviceType.OpenGLES3:
+                    return true;
+                default:
+                    return false;
             }
         }
 
