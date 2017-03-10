@@ -10,14 +10,18 @@ cmake_minimum_required(VERSION 3.4.1)
 # and CMake builds them for you. When you build your app, Gradle
 # automatically packages shared libraries with your APK.
 
+add_compile_options(-x c++)
+add_definitions(-DANDROID)
+
 add_library( # Specifies the name of the library.
              VoximplantAndroidRendererPlugin
 
              # Sets the library as a shared library.
              SHARED
 
-             src/main/cpp/NativeRenderer.cpp
-             src/main/cpp/BaseVideoRenderer.cpp
+             src/main/cpp/BaseVideoRenderer.mm
+             src/main/cpp/AndroidNativeRenderer.cpp
+             src/main/cpp/BaseOGLVideoRenderer.cpp
              src/main/cpp/EGLVideoRenderer.cpp)
 
 

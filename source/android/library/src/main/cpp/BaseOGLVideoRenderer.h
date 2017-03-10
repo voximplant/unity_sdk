@@ -5,8 +5,6 @@
 #ifndef VOX_BASEVIDEORENDERER_H
 #define VOX_BASEVIDEORENDERER_H
 
-#include <cstdint>
-
 #include "BaseImports.h"
 #include "BaseVideoRenderer.h"
 

@@ -10,10 +10,14 @@
 #include <EGL/egl.h>
 #include <GLES2/gl2.h>
 
+typedef unsigned char uint8_t;
+
 #elif IOS
 
 #define vxvprintf(...) printf(__VA_ARGS__);
 #define vxeprintf(...) printf(__VA_ARGS__);
+
+#include <cstdint>
 
 #include <OpenGLES/EAGL.h>
 #include <OpenGLES/gltypes.h>

@@ -17,9 +17,9 @@ void BaseVideoRenderer::Invalidate() {
 
 bool BaseVideoRenderer::IsValidForSize(int width, int height) {
     return !m_isInvalidated
-            && IsActiveContextMatch()
-            && m_ackWidth == width
-            && m_ackHeight == height;
+           && IsActiveContextMatch()
+           && m_ackWidth == width
+           && m_ackHeight == height;
 }
 
 BaseVideoRenderer::~BaseVideoRenderer() {

@@ -2,6 +2,8 @@
 // Created by Aleksey Zinchenko on 07/03/2017.
 //
 
+#include <cstdlib>
+
 #include "BaseImports.h"
 
 #include "BaseOGLVideoRenderer.h"

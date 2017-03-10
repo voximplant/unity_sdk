@@ -6,7 +6,7 @@
 #ifndef UNITY_BRIDGE_BASEVIDEORENDERER_H
 #define UNITY_BRIDGE_BASEVIDEORENDERER_H
 
-#import <cstdint>
+#import "BaseImports.h"
 
 class BaseVideoRenderer {
 public:
