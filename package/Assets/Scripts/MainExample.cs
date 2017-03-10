@@ -15,7 +15,6 @@ namespace Invoice
         public InputField loginName;
         public InputField pass;
         public InputField callNum;
-        public Toggle p2p;
         public Toggle video;
         public Toggle mute;
         public Toggle faceCam;
@@ -145,11 +144,11 @@ namespace Invoice
         }
         public void onClickLogin()
         {
-			_voximplant.login(new LoginClassParam(loginName.text, pass.text));
+			_voximplant.login(loginName.text, pass.text);
         }
         public void onClickCall()
         {
-			_voximplant.call(new CallClassParam(callNum.text, video.isOn, p2p.isOn, ""));
+			_voximplant.call(callNum.text, video.isOn, "");
             mBtnHung.SetActive(true);
         }
         public void onClickAnswer()

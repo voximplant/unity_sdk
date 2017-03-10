@@ -94,14 +94,15 @@ namespace Voximplant
             jo.Call("connect");
         }
 
-        public override void login(LoginClassParam pLogin)
+
+        public override void login(string username, string password)
         {
-            jo.Call("login", JsonUtility.ToJson(pLogin));
+            jo.Call("login", JsonUtility.ToJson(new LoginClassParam(username, password)));
         }
 
-        public override void call(CallClassParam pCall)
+        public override void call(string number, bool videoCall, string customData, Dictionary<string, string> header = null)
         {
-            jo.Call<string>("call", JsonUtility.ToJson(pCall));
+            jo.Call<string>("call", JsonUtility.ToJson(new CallClassParam(number, videoCall, customData, header)));
         }
 
         public override void answer(string pCallId, Dictionary<string, string> pHeader = null)
@@ -159,24 +160,24 @@ namespace Voximplant
             jo.Call("requestOneTimeKey", JsonUtility.ToJson(new StringClassParam(pName)));
         }
 
-        public override void sendDTMF(DTFMClassParam pParam)
+        public override void sendDTMF(string callId, int digit)
         {
-            jo.Call("sendDTMF", JsonUtility.ToJson(pParam));
+            jo.Call("sendDTMF", JsonUtility.ToJson(new DTFMClassParam(callId, digit)));
         }
 
-        public override void sendInfo(InfoClassParam pParam)
+        public override void sendInfo(string callId, string mimeType, string content, Dictionary<string, string> header = null)
         {
-            jo.Call("sendInfo", JsonUtility.ToJson(pParam));
+            jo.Call("sendInfo", JsonUtility.ToJson(new InfoClassParam(callId, mimeType, content, header)));
         }
 
-        public override void sendMessage(SendMessageClassParam pParam)
+        public override void sendMessage(string callId, string message, Dictionary<string, string> header = null)
         {
-            jo.Call("sendMessage", JsonUtility.ToJson(pParam));
+            jo.Call("sendMessage", JsonUtility.ToJson(new SendMessageClassParam(callId, message, header)));
         }
 
-        public override void setCameraResolution(CameraResolutionClassParam pParam)
+        public override void setCameraResolution(int width, int height)
         {
-            jo.Call("setCameraResolution", JsonUtility.ToJson(pParam));
+            jo.Call("setCameraResolution", JsonUtility.ToJson(new CameraResolutionClassParam(width, height)));
         }
 
         public override void setUseLoudspeaker(bool pUseLoudSpeaker)

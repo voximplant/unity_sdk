@@ -25,15 +25,15 @@ namespace Voximplant
             iosSDKconnect();
         }
 
-        public override void login(LoginClassParam pLogin)
+        public override void login(string username, string password)
         {
-            iosSDKlogin(pLogin.login, pLogin.pass);
+            iosSDKlogin(username, password);
         }
 
-        public override void call(CallClassParam pCall)
+        public override void call(string number, bool videoCall, string customData, Dictionary<string, string> header = null)
         {
-            iosSDKstartCall(pCall.userCall, pCall.videoCall, pCall.customData,
-                JsonUtility.ToJson(new PairKeyValueArray(pCall.headers)));
+            var pairKeyValueArray = new PairKeyValueArray(Utils.GetDictionaryToArray(header));
+            iosSDKstartCall(number, videoCall, customData, JsonUtility.ToJson(pairKeyValueArray));
         }
 
         public override void answer(string pCallId, Dictionary<string, string> pHeader = null)
@@ -91,25 +91,26 @@ namespace Voximplant
             iosSDKrequestOneTimeKey(pName);
         }
 
-        public override void sendDTMF(DTFMClassParam pParam)
+        public override void sendDTMF(string callId, int digit)
         {
-            iosSDKsendDTFM(pParam.callId, pParam.digit);
+            iosSDKsendDTFM(callId, digit);
         }
 
-        public override void sendInfo(InfoClassParam pParam)
+        public override void sendInfo(string callId, string mimeType, string content, Dictionary<string, string> header = null)
         {
-            iosSDKsendInfo(pParam.callId, pParam.mimeType, pParam.content,
-                JsonUtility.ToJson(new PairKeyValueArray(pParam.headers)));
+            var pairKeyValueArray = new PairKeyValueArray(Utils.GetDictionaryToArray(header));
+            iosSDKsendInfo(callId, mimeType, content, JsonUtility.ToJson(pairKeyValueArray));
         }
 
-        public override void sendMessage(SendMessageClassParam pParam)
+        public override void sendMessage(string callId, string message, Dictionary<string, string> header = null)
         {
-            iosSDKsendMessage(pParam.callId, pParam.text, JsonUtility.ToJson(new PairKeyValueArray(pParam.headers)));
+            var pairKeyValueArray = new PairKeyValueArray(Utils.GetDictionaryToArray(header));
+            iosSDKsendMessage(callId, message, JsonUtility.ToJson(pairKeyValueArray));
         }
 
-        public override void setCameraResolution(CameraResolutionClassParam pParam)
+        public override void setCameraResolution(int width, int height)
         {
-            iosSDKsetCameraResolution(pParam.width, pParam.height);
+            iosSDKsetCameraResolution(width, height);
         }
 
         public override void setUseLoudspeaker(bool pUseLoudSpeaker)
