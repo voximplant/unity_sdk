@@ -9,9 +9,9 @@
 
 #include "BaseImports.h"
 
-#include "BaseVideoRenderer.h"
+#include "BaseOGLVideoRenderer.h"
 
-class EAGLVideoRenderer: public BaseVideoRenderer {
+class EAGLVideoRenderer: public BaseOGLVideoRenderer {
 public:
     EAGLVideoRenderer(int width, int height, EAGLSharegroup *sharegroup);
     ~EAGLVideoRenderer();

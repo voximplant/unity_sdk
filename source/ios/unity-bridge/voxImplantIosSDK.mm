@@ -1,8 +1,10 @@
 
 
 #import "JsonDic.h"
-#import "RendererHolder.h"
+#import "EAGLRendererHolder.h"
 #import "voxImplantIosSDK.h"
+#import "iOSNativeRenderer.h"
+#import "MetalRendererHolder.h"
 
 extern "C" void UnitySendMessage(const char *obj, const char *method, const char *msg);
 
@@ -28,8 +30,8 @@ void CallUnityMethod(NSString *methodName, id parameters) {
 }
 
 @implementation ProxyingVoxImplantDelegate {
-    RendererHolder *_remoteHolder;
-    RendererHolder *_localHolder;
+    EAGLRendererHolder *_remoteHolder;
+    EAGLRendererHolder *_localHolder;
     
 @public
     UIAlertView *currentAlertView;
@@ -278,10 +280,19 @@ __used void iosSDKCloseConnection() {
 }
 
 __used void beginSendingVideoForStream(int stream) {
-    RendererHolder *holder = [[RendererHolder alloc] initWithStream:stream
-                                                nativeTextureReport:^(GLuint textureId, void *context, int width, int height) {
-                                                    CallUnityMethod(@"fonNewNativeTexture", @[@(textureId), @((long long)context), @(width), @(height), @(stream)]);
-                                                }];
+    id<VXRendererHolder> holder;
+    if (s_unityGFXRenderer == kUnityGfxRendererMetal) {
+        holder = [[MetalRendererHolder alloc] initWithStream:stream
+                                         nativeTextureReport:^(id <MTLTexture> o, void *pVoid, int width, int height) {
+                                             CallUnityMethod(@"fonNewNativeTexture", @[@((long long)o), @((long long)pVoid), @(width), @(height), @(stream)]);
+                                         }];
+    } else {
+        holder = [[EAGLRendererHolder alloc] initWithStream:stream
+                               nativeTextureReport:^(GLuint textureId, void *context, int width, int height) {
+                                   CallUnityMethod(@"fonNewNativeTexture", @[@(textureId), @((long long)context), @(width), @(height), @(stream)]);
+                               }];
+    }
+
     if (stream == 0) {
         [singleton removeRemoteRendererHolder];
         [singleton.sdk addRemoteRendererHolder:holder];

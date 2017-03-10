@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef void(^NativeTextureReportBlock)(GLuint, void *, int, int);
 
-@interface RendererHolder : NSObject <VXRendererHolder>
+@interface EAGLRendererHolder : NSObject <VXRendererHolder>
 
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithStream:(int)stream nativeTextureReport:(NativeTextureReportBlock) block NS_DESIGNATED_INITIALIZER;

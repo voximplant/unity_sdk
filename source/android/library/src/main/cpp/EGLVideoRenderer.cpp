@@ -9,10 +9,10 @@
 
 #include "BaseImports.h"
 #include "EGLVideoRenderer.h"
-#include "BaseVideoRenderer.h"
+#include "BaseOGLVideoRenderer.h"
 
 EGLVideoRenderer::EGLVideoRenderer(int width, int height, EGLContext sharedContext) :
-        BaseVideoRenderer(width, height),
+        BaseOGLVideoRenderer(width, height),
         m_display(0),
         m_context(EGL_NO_CONTEXT),
 

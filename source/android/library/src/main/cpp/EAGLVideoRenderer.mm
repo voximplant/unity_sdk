@@ -8,7 +8,7 @@
 #include "EAGLVideoRenderer.h"
 
 EAGLVideoRenderer::EAGLVideoRenderer(int width, int height, EAGLSharegroup *sharegroup):
-        BaseVideoRenderer(width, height),
+        BaseOGLVideoRenderer(width, height),
 
         m_sharegroup(sharegroup)
 {
@@ -21,7 +21,7 @@ void EAGLVideoRenderer::SetupRender() {
     
     [EAGLContext setCurrentContext:m_context];
 
-    BaseVideoRenderer::SetupRender();
+    BaseOGLVideoRenderer::SetupRender();
 }
 
 EAGLVideoRenderer::~EAGLVideoRenderer() {

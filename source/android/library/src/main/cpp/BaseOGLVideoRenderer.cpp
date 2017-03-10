@@ -4,7 +4,7 @@
 
 #include "BaseImports.h"
 
-#include "BaseVideoRenderer.h"
+#include "BaseOGLVideoRenderer.h"
 
 bool testGLErrors(const char *checkpoint) {
     GLenum error;
@@ -16,29 +16,18 @@ bool testGLErrors(const char *checkpoint) {
     return anyError;
 }
 
-BaseVideoRenderer::BaseVideoRenderer(int width, int height):
-        m_ackWidth(width), m_ackHeight(height),
+BaseOGLVideoRenderer::BaseOGLVideoRenderer(int width, int height):
+        BaseVideoRenderer(width, height),
 
-        m_isInvalidated(false),
         m_textureIds(new GLuint[3]),
 
         m_fbo(0),
         m_FBOtexture(0)
-{ }
+{
+}
 
-BaseVideoRenderer::~BaseVideoRenderer() {
+BaseOGLVideoRenderer::~BaseOGLVideoRenderer() {
     delete [] m_textureIds;
-}
-
-void BaseVideoRenderer::Invalidate() {
-    m_isInvalidated = true;
-}
-
-bool BaseVideoRenderer::IsValidForSize(int width, int height) {
-    return !m_isInvalidated
-           && IsActiveContextMatch()
-           && m_ackWidth == width
-           && m_ackHeight == height;
 }
 
 static const char s_vertexShader[] =
@@ -91,7 +80,7 @@ static const GLfloat s_uvCoordinates[] = {
     1, 0,
 };
 
-GLuint BaseVideoRenderer::LoadShader(GLenum shaderType, const char* source) {
+GLuint BaseOGLVideoRenderer::LoadShader(GLenum shaderType, const char* source) {
     GLuint shader = glCreateShader(shaderType);
     if (shader) {
         glShaderSource(shader, 1, &source, NULL);
@@ -116,7 +105,7 @@ GLuint BaseVideoRenderer::LoadShader(GLenum shaderType, const char* source) {
     return shader;
 }
 
-void BaseVideoRenderer::LoadProgram() {
+void BaseOGLVideoRenderer::LoadProgram() {
     GLuint vertexShader = LoadShader(GL_VERTEX_SHADER, s_vertexShader);
     if (!vertexShader) {
         return;
@@ -166,7 +155,7 @@ static void initializePlaneTexture(GLenum name, GLuint id, int width, int height
                  GL_LUMINANCE, GL_UNSIGNED_BYTE, NULL);
 }
 
-void BaseVideoRenderer::SetupRender() {
+void BaseOGLVideoRenderer::SetupRender() {
     glGenFramebuffers(1, &m_fbo);
     testGLErrors("glGenFramebuffers");
 
@@ -241,7 +230,10 @@ void BaseVideoRenderer::SetupRender() {
     testGLErrors("glViewport");
 }
 
-void shr(GLfloat source[], int length, int distance, GLfloat destination[]) {
+void shrGLfloat(float *source, int length, int distance, float *destination) {
+    while (distance < 0) {
+        distance += length;
+    }
     for (int i = 0; i < length; i++) {
         destination[(distance+i) % length] = source[i];
     }
@@ -249,7 +241,7 @@ void shr(GLfloat source[], int length, int distance, GLfloat destination[]) {
 
 static GLfloat rotatedUV[8];
 
-void BaseVideoRenderer::RotateByDegrees(int degrees) {
+void BaseOGLVideoRenderer::RotateByDegrees(int degrees) {
     if (degrees % 90 != 0) {
         vxeprintf("Only multiples of 90 are supported for rotations");
         degrees = 0;
@@ -262,7 +254,7 @@ void BaseVideoRenderer::RotateByDegrees(int degrees) {
         return;
     }
 
-    shr((GLfloat *) s_uvCoordinates, 8, 2 * (degrees / 90), rotatedUV);
+    shrGLfloat((GLfloat *) s_uvCoordinates, 8, 2 * (degrees / 90), rotatedUV);
 
     glVertexAttribPointer((GLuint) textureHandle, 2, GL_FLOAT, GL_FALSE, 0, rotatedUV);
     testGLErrors("glVertexAttribPointer aTextureCoord");
@@ -270,7 +262,7 @@ void BaseVideoRenderer::RotateByDegrees(int degrees) {
     testGLErrors("glEnableVertexAttribArray aTextureCoord");
 }
 
-void BaseVideoRenderer::RenderBuffer(const uint8_t *yPlane, int yStride,
+void BaseOGLVideoRenderer::RenderBuffer(const uint8_t *yPlane, int yStride,
                                     const uint8_t *uPlane, int uStride,
                                     const uint8_t *vPlane, int vStride,
                                     int width, int height,
@@ -322,7 +314,7 @@ static void uploadPlane(GLsizei width, GLsizei height, int stride, const uint8_t
     }
 }
 
-void BaseVideoRenderer::UploadTextures(const uint8_t *yPlane, int yStride,
+void BaseOGLVideoRenderer::UploadTextures(const uint8_t *yPlane, int yStride,
                                       const uint8_t *uPlane, int uStride,
                                       const uint8_t *vPlane, int vStride
 ) {
@@ -341,6 +333,6 @@ void BaseVideoRenderer::UploadTextures(const uint8_t *yPlane, int yStride,
     testGLErrors("UploadTextures");
 }
 
-GLuint BaseVideoRenderer::GetTargetTextureId() {
+GLuint BaseOGLVideoRenderer::GetTargetTextureId() {
     return m_FBOtexture;
 }

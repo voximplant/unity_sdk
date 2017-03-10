@@ -563,11 +563,12 @@ namespace Voximplant
             }
         }
 
-        protected static bool IsRunningOnOpenGL()
+        protected static bool GraphicsDeviceIsSupported()
         {
             switch (SystemInfo.graphicsDeviceType) {
                 case GraphicsDeviceType.OpenGLES2:
                 case GraphicsDeviceType.OpenGLES3:
+                case GraphicsDeviceType.Metal:
                     return true;
                 default:
                     return false;

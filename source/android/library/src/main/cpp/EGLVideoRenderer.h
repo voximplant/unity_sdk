@@ -10,9 +10,9 @@
 #include <GLES2/gl2.h>
 
 #include "LockGuard.hpp"
-#include "BaseVideoRenderer.h"
+#include "BaseOGLVideoRenderer.h"
 
-class EGLVideoRenderer: public BaseVideoRenderer {
+class EGLVideoRenderer: public BaseOGLVideoRenderer {
 public:
     EGLVideoRenderer(int width, int height, EGLContext sharedContext);
     ~EGLVideoRenderer();

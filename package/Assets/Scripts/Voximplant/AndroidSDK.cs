@@ -188,7 +188,7 @@ namespace Voximplant
 
         protected override void startVideoStreamRendering(VideoStream stream)
         {
-            Assert.IsTrue(IsRunningOnOpenGL());
+            Assert.IsTrue(GraphicsDeviceIsSupported());
 
             jo.Call("beginSendingVideoForStream", (int)stream);
         }

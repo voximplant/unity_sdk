@@ -5,20 +5,20 @@
 
 #import <WebRTC/WebRTC.h>
 
-#import "RendererHolder.h"
+#import "EAGLRendererHolder.h"
 #import "LockGuard.hpp"
 #import "EAGLVideoRenderer.h"
 #import "iOSNativeRenderer.h"
 #import "BlocksThread.h"
 
-@interface RendererHolder () <RTCVideoRenderer>
+@interface EAGLRendererHolder () <RTCVideoRenderer>
 
 @property(nonatomic, copy, readonly) NativeTextureReportBlock block;
 @property (nonatomic, strong, readonly) BlocksThread *thread;
 
 @end
 
-@implementation RendererHolder {
+@implementation EAGLRendererHolder {
     int _stream;
 }
 
@@ -73,7 +73,7 @@
     const int height = (int) frame.height;
 
     bool newRendererCreated = false;
-    EAGLVideoRenderer *renderer = s_renderers[_stream];
+    EAGLVideoRenderer *renderer = (EAGLVideoRenderer *) s_renderers[_stream];
     if (renderer != NULL && !renderer->IsValidForSize(width, height)) {
         renderer->Detach();
         if (renderer->GetEAGLContext() != nil) {
@@ -85,7 +85,7 @@
     }
     if (renderer == NULL) {
         s_renderers[_stream] = new EAGLVideoRenderer(width, height, s_unityContext.sharegroup);
-        renderer = s_renderers[_stream];
+        renderer = (EAGLVideoRenderer *) s_renderers[_stream];
 
         newRendererCreated = true;
     }
