@@ -33,6 +33,8 @@ namespace Voximplant
             proj.AddDynamicFramework(unityTargetGuid, "Frameworks/Plugins/iOS/WebRTC.framework");
             proj.AddDynamicFramework(unityTargetGuid, "Frameworks/Plugins/iOS/VoxImplant.framework");
 
+            proj.AddFrameworkToProject(unityTargetGuid, "Metal.framework", true);
+
             proj.WriteToFile(projectPath);
         }
 
