@@ -16,8 +16,13 @@ EAGLVideoRenderer::EAGLVideoRenderer(int width, int height, EAGLSharegroup *shar
 }
 
 void EAGLVideoRenderer::SetupRender() {
-    m_context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2
+    m_context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3
                                       sharegroup:m_sharegroup];
+
+    if (m_context == nil) {
+        m_context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2
+                                          sharegroup:m_sharegroup];
+    }
     
     [EAGLContext setCurrentContext:m_context];
 
