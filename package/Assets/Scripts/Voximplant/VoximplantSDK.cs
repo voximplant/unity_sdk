@@ -3,11 +3,29 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.Rendering;
+using Voximplant.Threading;
 
 namespace Voximplant
 {
     public abstract class VoximplantSDK : MonoBehaviour
     {
+#if (UNITY_IPHONE || UNITY_WEBGL) && !UNITY_EDITOR
+        [DllImport ("__Internal")]
+#else
+        [DllImport("VoximplantAndroidRendererPlugin")]
+#endif
+        private static extern void InitializeVoximplant();
+
+        private InvokePump pump;
+
+        void Awake()
+        {
+            InitializeVoximplant();
+
+            pump = gameObject.AddComponent<InvokePumpBehavior>().invokePump;
+        }
+
         public Action<String> LogMethod;
 
         protected void AddLog(String pMsg)
@@ -315,16 +333,21 @@ namespace Voximplant
         /**
         Login into Voximplant cloud. Should be called after "connect" in the "OnConnectionSuccessful" handler
         @method login
-        @param {LoginClassParam} pLogin Username and password. Username is a fully-qualified string that includes Voximplant user, application and account names. The format is: "username@appname.accname.voximplant.com"
+        @param {string} username Username is a fully-qualified string that includes Voximplant user, application and account names. The format is: "username@appname.accname.voximplant.com"
+        @param {string} password Password.
         */
-        public abstract void login(LoginClassParam pLogin);
+        public abstract void login(string username, string password);
 
         /**
         Start a new outgoing call
+        "OnCallConnected" will be called on call success, or "OnCallFailed" will be called if Voximplant cloud rejects a call or network error occur
         @method call
-        @param {CallClassParam} pCall Call options: number to call, video call flag and custom data to send alongside the call. For SIP compatibility reasons number should be a non-empty string even if the number itself is not used by a Voximplant cloud scenario. "OnCallConnected" will be called on call success, or "OnCallFailed" will be called if Voximplant cloud rejects a call or network error occur
+        @param {string} number Number to call. For SIP compatibility reasons number should be a non-empty string even if the number itself is not used by a Voximplant cloud scenario.
+        @param {bool} videoCall Video flag
+        @param {string} customData Custom data to send alongside call
+        @param {Dictionary<string, string>} Custom headers
         */
-        public abstract void call(CallClassParam pCall);
+        public abstract void call(string number, bool videoCall, string customData, Dictionary<string, string> header = null);
 
         /**
         Answer incoming call. Should be called from the "OnIncomingCall" handler
@@ -405,30 +428,37 @@ namespace Voximplant
         /**
         Send DTMF signal to the specified call
         @method sendDTMF
-        @param {DTFMClassParam} pParam Call identifier and DTMF digit number (0-9, 10 for '*', 11 for '#')
+        @param {string} callId Call identifier
+        @param {int} digit DTMF digit number (0-9, 10 for '*', 11 for '#')
         */
-        public abstract void sendDTMF(DTFMClassParam pParam);
+        public abstract void sendDTMF(string callId, int digit);
 
         /**
         Send arbitrary data to Voximplant cloud. Data can be received in VoxEngine scenario by subscribing to the 'CallEvents.InfoReceived' event. Optional SIP headers can be automatically passed to second call via VoxEngine 'easyProcess()' method
         @method sendInfo
-        @param {InfoClassParam} pParam Call identifier, data MIME type string, data string and optional SIP headers list as an array of 'PairKeyValue' objects with 'key' and 'value' properties
+        @param {string} callid Call identifier
+        @param {string} mimeType Data MIME type string
+        @param {string} content Data string
+        @param {Dictionary<string, string>} header SIP headers list as an array of 'PairKeyValue' objects with 'key' and 'value' properties
         */
-        public abstract void sendInfo(InfoClassParam pParam);
+        public abstract void sendInfo(string callId, string mimeType, string content, Dictionary<string, string> header = null);
 
         /**
         Simplified version of 'sendInfo' that uses predefined MIME type to send a text message. Message can be received in VoxEngine scenario by subscribing to the 'CallEvents.MessageReceived' event. Optional SIP headers can be automatically passed to second call via VoxEngine 'easyProcess()' method
         @method sendMessage
-        @param {SendMessageClassParam} pParam Call identifier, message string and optional SIP headers list as an array of 'PairKeyValue' objects with 'key' and 'value' properties
+        @param {string} callId Call identifier
+        @param {string} message Message string
+        @param {<Dictionary<string, string>} header Optional SIP headers list as an array of 'PairKeyValue' objects with 'key' and 'value' properties
         */
-        public abstract void sendMessage(SendMessageClassParam pParam);
+        public abstract void sendMessage(string callId, string message, Dictionary<string, string> header = null);
 
         /**
         Set local cameraPosition resolution. Increasing resolution increases video quality, but also uses more cpu and bandwidth
         @method setCameraResolution
-        @param {CameraResolutionClassParam} pParam Camera resolutino as width and height, in pixels
+        @param {int} width Width in pixels
+        @param {int} height Height in pixels
         */
-        public abstract void setCameraResolution(CameraResolutionClassParam pParam);
+        public abstract void setCameraResolution(int width, int height);
 
         /**
         Enable or disable loud speaker, if available
@@ -481,10 +511,85 @@ namespace Voximplant
 
         protected abstract void startVideoStreamRendering(VideoStream stream);
 
+        private struct NativeTextureDescriptor
+        {
+            public long textureId;
+            public long context;
+            public Texture2D texture;
+        }
+
+        private Dictionary<VideoStream, NativeTextureDescriptor> nativeTextures =
+            new Dictionary<VideoStream, NativeTextureDescriptor>();
+
+        protected void fonNewNativeTexture(String p)
+        {
+            Debug.Log(string.Format("new native texture {0}", p));
+
+            var paramList = Utils.GetParamList(p);
+            var textureId = paramList[0].AsLong;
+            var oglContext = paramList[1].AsLong;
+            var width = paramList[2].AsInt;
+            int height = paramList[3].AsInt;
+            int stream = paramList[4].AsInt;
+            var videoStream = (VideoStream) stream;
+
+            if (!videoStreamCallbacks.ContainsKey(videoStream)) {
+                return;
+            }
+
+            pump.BeginInvoke(() => {
+                var texture = Texture2D.CreateExternalTexture(width, height, TextureFormat.RGBA32, false, false, new IntPtr(textureId));
+
+                var newNativeTexture = new NativeTextureDescriptor{
+                    context = oglContext,
+                    textureId = textureId,
+                    texture = texture
+                };
+                videoStreamCallbacks[videoStream](texture);
+                if (nativeTextures.ContainsKey(videoStream)) {
+                    var nativeTexture = nativeTextures[videoStream];
+                    DestroyRenderer(nativeTexture.textureId, nativeTexture.context);
+                }
+                nativeTextures[videoStream] = newNativeTexture;
+            });
+        }
+
+        protected void CleanupAllVideoStreams()
+        {
+            foreach (var texture in nativeTextures.Values) {
+                DestroyRenderer(texture.textureId, texture.context);
+            }
+
+            nativeTextures.Clear();
+            foreach (var pair in videoStreamCallbacks) {
+                pair.Value(null);
+            }
+            videoStreamCallbacks.Clear();
+        }
+
+#if (UNITY_IPHONE || UNITY_WEBGL) && !UNITY_EDITOR
+        [DllImport ("__Internal")]
+#else
+        [DllImport("VoximplantAndroidRendererPlugin")]
+#endif
+        private static extern void DestroyRenderer(long textureId, long context);
+
         public virtual void endUpdatingTexture(VideoStream stream)
         {
             if (videoStreamCallbacks.ContainsKey(stream)) {
                 videoStreamCallbacks.Remove(stream);
+            }
+        }
+
+        protected static bool GraphicsDeviceIsSupported()
+        {
+            switch (SystemInfo.graphicsDeviceType) {
+                case GraphicsDeviceType.OpenGLES2:
+                case GraphicsDeviceType.OpenGLES3:
+                case GraphicsDeviceType.Metal:
+                    return true;
+                default:
+                    return false;
             }
         }
 

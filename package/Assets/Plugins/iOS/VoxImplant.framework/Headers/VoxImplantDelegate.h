@@ -7,7 +7,7 @@
 #import <Foundation/Foundation.h>
 
 /*!
- @protocol VoxImplantNetworkInfo
+ @struct VoxImplantNetworkInfo
  @abstract Network information
  */
 struct VoxImplantNetworkInfo

@@ -94,18 +94,11 @@ namespace Voximplant
 		[JSONArray("headers",typeof(PairKeyValue))]
 		public PairKeyValue[] headers;
 
-		public CallClassParam(string pCallUser, bool pVideoCall, bool pP2P, string pCustomData, Dictionary<string, string> pHeader = null)
+		public CallClassParam(string pCallUser, bool pVideoCall, string pCustomData, Dictionary<string, string> pHeader = null)
 		{
 			userCall = pCallUser;
 			videoCall = pVideoCall;
 			customData = pCustomData;
-
-			if (pP2P)
-			{
-				if (pHeader == null)
-					pHeader = new Dictionary<string, string>();
-				pHeader.Add("X-DirectCall","true");
-			}
 
 			if (pHeader != null)
 			{

@@ -7,8 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C004745B1E76CA5E006C5A2B /* BaseVideoRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00474581E76CA5E006C5A2B /* BaseVideoRenderer.cpp */; };
+		C004745C1E76CA5E006C5A2B /* iOSNativeRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00474591E76CA5E006C5A2B /* iOSNativeRenderer.cpp */; };
+		C004745D1E76CA5E006C5A2B /* EAGLVideoRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C004745A1E76CA5E006C5A2B /* EAGLVideoRenderer.cpp */; };
 		C01458B61E538E3700D1C973 /* voxImplantIosSDK.mm in Sources */ = {isa = PBXBuildFile; fileRef = C01458B51E538E3700D1C973 /* voxImplantIosSDK.mm */; };
 		C781A03172725B994985259E /* libPods-unity-bridge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC99EEA9D89ACB34B8C4E14F /* libPods-unity-bridge.a */; };
+		D62AA237945BDE20F51E268B /* MetalVideoRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = D62AA979E01CF3EE085EBD1F /* MetalVideoRenderer.mm */; };
+		D62AA2C853092596D7C6192F /* EGLVideoRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D62AA18F6B97C9597832E344 /* EGLVideoRenderer.cpp */; };
+		D62AA78480F0CE9BE005C8AC /* EAGLRendererHolder.mm in Sources */ = {isa = PBXBuildFile; fileRef = D62AAD11FB0CCD818D96E6F5 /* EAGLRendererHolder.mm */; };
+		D62AA7E192F6B827A7C646AB /* MetalRendererHolder.mm in Sources */ = {isa = PBXBuildFile; fileRef = D62AA5CE48FAA1DDBD4E565E /* MetalRendererHolder.mm */; };
+		D62AAD6C924F5A2CF25FDC00 /* BlocksThread.m in Sources */ = {isa = PBXBuildFile; fileRef = D62AAD7DBC816D9C4CEC0124 /* BlocksThread.m */; };
+		D62AAEC001C1890612320059 /* BaseOGLVideoRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D62AA389A9D64DFECBA35ADB /* BaseOGLVideoRenderer.cpp */; };
 		D62AAF7ED6A3626FC6E389EC /* JsonDic.m in Sources */ = {isa = PBXBuildFile; fileRef = D62AA6906A632A6D3201F78D /* JsonDic.m */; };
 /* End PBXBuildFile section */
 
@@ -27,10 +36,40 @@
 /* Begin PBXFileReference section */
 		5106FEF89F8342BFE716941F /* Pods-unity-bridge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unity-bridge.debug.xcconfig"; path = "Pods/Target Support Files/Pods-unity-bridge/Pods-unity-bridge.debug.xcconfig"; sourceTree = "<group>"; };
 		521C30A3D8F1E517389E78E1 /* Pods-unity-bridge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unity-bridge.release.xcconfig"; path = "Pods/Target Support Files/Pods-unity-bridge/Pods-unity-bridge.release.xcconfig"; sourceTree = "<group>"; };
+		C00474581E76CA5E006C5A2B /* BaseVideoRenderer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = BaseVideoRenderer.cpp; path = ../../../android/library/src/main/cpp/BaseVideoRenderer.cpp; sourceTree = "<group>"; };
+		C00474591E76CA5E006C5A2B /* iOSNativeRenderer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = iOSNativeRenderer.cpp; path = ../../../android/library/src/main/cpp/iOSNativeRenderer.cpp; sourceTree = "<group>"; };
+		C004745A1E76CA5E006C5A2B /* EAGLVideoRenderer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = EAGLVideoRenderer.cpp; path = ../../../android/library/src/main/cpp/EAGLVideoRenderer.cpp; sourceTree = "<group>"; };
 		C01458A91E53896700D1C973 /* libunity-bridge.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libunity-bridge.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C01458B51E538E3700D1C973 /* voxImplantIosSDK.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = voxImplantIosSDK.mm; sourceTree = "<group>"; };
+		D62AA016361E5CB5B0E7E1F8 /* IUnityInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IUnityInterface.h; sourceTree = "<group>"; };
+		D62AA0D52E6FFFAB2F61F24A /* iOSNativeRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSNativeRenderer.h; sourceTree = "<group>"; };
+		D62AA18F6B97C9597832E344 /* EGLVideoRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EGLVideoRenderer.cpp; sourceTree = "<group>"; };
+		D62AA1EA10E0C70CC0E14194 /* EAGLVideoRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLVideoRenderer.h; sourceTree = "<group>"; };
+		D62AA29FF8E0FD9877FACB18 /* BaseVideoRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseVideoRenderer.h; sourceTree = "<group>"; };
+		D62AA33589737E9520E40BAC /* BaseImports.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseImports.h; sourceTree = "<group>"; };
+		D62AA389A9D64DFECBA35ADB /* BaseOGLVideoRenderer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = BaseOGLVideoRenderer.cpp; sourceTree = "<group>"; };
+		D62AA4698C602BA7FA87D1B1 /* IUnityGraphicsD3D11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IUnityGraphicsD3D11.h; sourceTree = "<group>"; };
+		D62AA507CF13C0D3D18CA18F /* EAGLRendererHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLRendererHolder.h; sourceTree = "<group>"; };
+		D62AA54C04AFF6053C52C9D2 /* IUnityGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IUnityGraphics.h; sourceTree = "<group>"; };
+		D62AA560FB7BEECF7F4D80B7 /* EGLVideoRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGLVideoRenderer.h; sourceTree = "<group>"; };
+		D62AA57DC25614AE5AE91420 /* BlocksThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlocksThread.h; sourceTree = "<group>"; };
+		D62AA5CE48FAA1DDBD4E565E /* MetalRendererHolder.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MetalRendererHolder.mm; sourceTree = "<group>"; };
 		D62AA6906A632A6D3201F78D /* JsonDic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JsonDic.m; sourceTree = "<group>"; };
+		D62AA863E8DC5127434DF2E5 /* BaseOGLVideoRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseOGLVideoRenderer.h; sourceTree = "<group>"; };
+		D62AA918220C7C19B0676C86 /* AndroidNativeRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AndroidNativeRenderer.cpp; sourceTree = "<group>"; };
+		D62AA970F6C27690ECD7CC5F /* DestroyList.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DestroyList.hpp; sourceTree = "<group>"; };
+		D62AA979E01CF3EE085EBD1F /* MetalVideoRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MetalVideoRenderer.mm; sourceTree = "<group>"; };
+		D62AAA0449A98B51452AC7F0 /* DestroyList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DestroyList.h; sourceTree = "<group>"; };
+		D62AAB1A0FA639E00A997CE8 /* IUnityGraphicsD3D12.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IUnityGraphicsD3D12.h; sourceTree = "<group>"; };
+		D62AAC0D71CF9E97DFD34321 /* MetalRendererHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetalRendererHolder.h; sourceTree = "<group>"; };
+		D62AAC22C1E2E6346F95CBC2 /* voxImplantIosSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voxImplantIosSDK.h; sourceTree = "<group>"; };
+		D62AAD11FB0CCD818D96E6F5 /* EAGLRendererHolder.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EAGLRendererHolder.mm; sourceTree = "<group>"; };
+		D62AAD7DBC816D9C4CEC0124 /* BlocksThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlocksThread.m; sourceTree = "<group>"; };
+		D62AAEDE90E33D76FCDF3711 /* MetalVideoRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetalVideoRenderer.h; sourceTree = "<group>"; };
+		D62AAF4E192B333DA4AFA332 /* IUnityGraphicsMetal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IUnityGraphicsMetal.h; sourceTree = "<group>"; };
+		D62AAF4E84AC63A7FB0E73F3 /* LockGuard.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LockGuard.hpp; sourceTree = "<group>"; };
 		D62AAFB3F3EF6FEC07956A23 /* JsonDic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JsonDic.h; sourceTree = "<group>"; };
+		D62AAFE308110A17A30C3DB4 /* IUnityGraphicsD3D9.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IUnityGraphicsD3D9.h; sourceTree = "<group>"; };
 		FC99EEA9D89ACB34B8C4E14F /* libPods-unity-bridge.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-unity-bridge.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -84,11 +123,57 @@
 		C01458AB1E53896700D1C973 /* unity-bridge */ = {
 			isa = PBXGroup;
 			children = (
-				C01458B51E538E3700D1C973 /* voxImplantIosSDK.mm */,
-				D62AA6906A632A6D3201F78D /* JsonDic.m */,
+				D62AA57DC25614AE5AE91420 /* BlocksThread.h */,
+				D62AAD7DBC816D9C4CEC0124 /* BlocksThread.m */,
+				D62AA507CF13C0D3D18CA18F /* EAGLRendererHolder.h */,
+				D62AAD11FB0CCD818D96E6F5 /* EAGLRendererHolder.mm */,
 				D62AAFB3F3EF6FEC07956A23 /* JsonDic.h */,
+				D62AA6906A632A6D3201F78D /* JsonDic.m */,
+				D62AAC0D71CF9E97DFD34321 /* MetalRendererHolder.h */,
+				D62AA5CE48FAA1DDBD4E565E /* MetalRendererHolder.mm */,
+				D62AAEDE90E33D76FCDF3711 /* MetalVideoRenderer.h */,
+				D62AA979E01CF3EE085EBD1F /* MetalVideoRenderer.mm */,
+				D62AAD77B5AA2204BF309BBB /* Render */,
+				D62AAC22C1E2E6346F95CBC2 /* voxImplantIosSDK.h */,
+				C01458B51E538E3700D1C973 /* voxImplantIosSDK.mm */,
 			);
 			path = "unity-bridge";
+			sourceTree = "<group>";
+		};
+		D62AA042B972F96C52D75F20 /* Unity */ = {
+			isa = PBXGroup;
+			children = (
+				D62AA54C04AFF6053C52C9D2 /* IUnityGraphics.h */,
+				D62AA016361E5CB5B0E7E1F8 /* IUnityInterface.h */,
+				D62AAFE308110A17A30C3DB4 /* IUnityGraphicsD3D9.h */,
+				D62AA4698C602BA7FA87D1B1 /* IUnityGraphicsD3D11.h */,
+				D62AAB1A0FA639E00A997CE8 /* IUnityGraphicsD3D12.h */,
+				D62AAF4E192B333DA4AFA332 /* IUnityGraphicsMetal.h */,
+			);
+			path = Unity;
+			sourceTree = "<group>";
+		};
+		D62AAD77B5AA2204BF309BBB /* Render */ = {
+			isa = PBXGroup;
+			children = (
+				D62AA918220C7C19B0676C86 /* AndroidNativeRenderer.cpp */,
+				D62AA33589737E9520E40BAC /* BaseImports.h */,
+				D62AA389A9D64DFECBA35ADB /* BaseOGLVideoRenderer.cpp */,
+				D62AA863E8DC5127434DF2E5 /* BaseOGLVideoRenderer.h */,
+				C00474581E76CA5E006C5A2B /* BaseVideoRenderer.cpp */,
+				D62AA29FF8E0FD9877FACB18 /* BaseVideoRenderer.h */,
+				D62AAA0449A98B51452AC7F0 /* DestroyList.h */,
+				D62AA970F6C27690ECD7CC5F /* DestroyList.hpp */,
+				C004745A1E76CA5E006C5A2B /* EAGLVideoRenderer.cpp */,
+				D62AA1EA10E0C70CC0E14194 /* EAGLVideoRenderer.h */,
+				D62AA18F6B97C9597832E344 /* EGLVideoRenderer.cpp */,
+				D62AA560FB7BEECF7F4D80B7 /* EGLVideoRenderer.h */,
+				C00474591E76CA5E006C5A2B /* iOSNativeRenderer.cpp */,
+				D62AA0D52E6FFFAB2F61F24A /* iOSNativeRenderer.h */,
+				D62AAF4E84AC63A7FB0E73F3 /* LockGuard.hpp */,
+				D62AA042B972F96C52D75F20 /* Unity */,
+			);
+			path = Render;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -183,8 +268,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C004745B1E76CA5E006C5A2B /* BaseVideoRenderer.cpp in Sources */,
+				C004745C1E76CA5E006C5A2B /* iOSNativeRenderer.cpp in Sources */,
 				C01458B61E538E3700D1C973 /* voxImplantIosSDK.mm in Sources */,
 				D62AAF7ED6A3626FC6E389EC /* JsonDic.m in Sources */,
+				D62AA2C853092596D7C6192F /* EGLVideoRenderer.cpp in Sources */,
+				D62AAEC001C1890612320059 /* BaseOGLVideoRenderer.cpp in Sources */,
+				D62AA78480F0CE9BE005C8AC /* EAGLRendererHolder.mm in Sources */,
+				D62AAD6C924F5A2CF25FDC00 /* BlocksThread.m in Sources */,
+				D62AA7E192F6B827A7C646AB /* MetalRendererHolder.mm in Sources */,
+				D62AA237945BDE20F51E268B /* MetalVideoRenderer.mm in Sources */,
+				C004745D1E76CA5E006C5A2B /* EAGLVideoRenderer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -224,6 +318,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
+					"IOS=1",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -266,6 +361,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "IOS=1";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;

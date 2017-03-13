@@ -9,29 +9,8 @@ using Voximplant.Threading;
 
 namespace Voximplant
 {
-    sealed internal class AndroidSDK : VoximplantSDK
+    internal sealed class AndroidSDK : VoximplantSDK
     {
-#if (UNITY_IPHONE || UNITY_WEBGL) && !UNITY_EDITOR
-        [DllImport ("__Internal")]
-#else
-        [DllImport("VoximplantAndroidRendererPlugin")]
-#endif
-        private static extern void InitializeVoximplant();
-
-        private GameObject invokePumpHolder;
-        private InvokePump pump;
-
-        void Awake()
-        {
-            InitializeVoximplant();
-
-            // Ensure invoke pump
-            invokePumpHolder = new GameObject("[PermissionsRequesterHelper]"){
-                hideFlags = HideFlags.NotEditable | HideFlags.HideInHierarchy | HideFlags.HideInInspector
-            };
-            pump = invokePumpHolder.AddComponent<InvokePumpBehavior>().invokePump;
-        }
-
         private AndroidJavaClass jc;
         private AndroidJavaObject jo;
 
@@ -115,14 +94,15 @@ namespace Voximplant
             jo.Call("connect");
         }
 
-        public override void login(LoginClassParam pLogin)
+
+        public override void login(string username, string password)
         {
-            jo.Call("login", JsonUtility.ToJson(pLogin));
+            jo.Call("login", JsonUtility.ToJson(new LoginClassParam(username, password)));
         }
 
-        public override void call(CallClassParam pCall)
+        public override void call(string number, bool videoCall, string customData, Dictionary<string, string> header = null)
         {
-            jo.Call<string>("call", JsonUtility.ToJson(pCall));
+            jo.Call<string>("call", JsonUtility.ToJson(new CallClassParam(number, videoCall, customData, header)));
         }
 
         public override void answer(string pCallId, Dictionary<string, string> pHeader = null)
@@ -180,24 +160,24 @@ namespace Voximplant
             jo.Call("requestOneTimeKey", JsonUtility.ToJson(new StringClassParam(pName)));
         }
 
-        public override void sendDTMF(DTFMClassParam pParam)
+        public override void sendDTMF(string callId, int digit)
         {
-            jo.Call("sendDTMF", JsonUtility.ToJson(pParam));
+            jo.Call("sendDTMF", JsonUtility.ToJson(new DTFMClassParam(callId, digit)));
         }
 
-        public override void sendInfo(InfoClassParam pParam)
+        public override void sendInfo(string callId, string mimeType, string content, Dictionary<string, string> header = null)
         {
-            jo.Call("sendInfo", JsonUtility.ToJson(pParam));
+            jo.Call("sendInfo", JsonUtility.ToJson(new InfoClassParam(callId, mimeType, content, header)));
         }
 
-        public override void sendMessage(SendMessageClassParam pParam)
+        public override void sendMessage(string callId, string message, Dictionary<string, string> header = null)
         {
-            jo.Call("sendMessage", JsonUtility.ToJson(pParam));
+            jo.Call("sendMessage", JsonUtility.ToJson(new SendMessageClassParam(callId, message, header)));
         }
 
-        public override void setCameraResolution(CameraResolutionClassParam pParam)
+        public override void setCameraResolution(int width, int height)
         {
-            jo.Call("setCameraResolution", JsonUtility.ToJson(pParam));
+            jo.Call("setCameraResolution", JsonUtility.ToJson(new CameraResolutionClassParam(width, height)));
         }
 
         public override void setUseLoudspeaker(bool pUseLoudSpeaker)
@@ -207,27 +187,9 @@ namespace Voximplant
 
         #region Texture Rendering
 
-        private static bool IsRunningOnOpenGL()
-        {
-            switch (SystemInfo.graphicsDeviceType) {
-                case GraphicsDeviceType.OpenGLES2:
-                case GraphicsDeviceType.OpenGLES3:
-                    return true;
-                default:
-                    return false;
-            }
-        }
-
-#if (UNITY_IPHONE || UNITY_WEBGL) && !UNITY_EDITOR
-        [DllImport ("__Internal")]
-#else
-        [DllImport("VoximplantAndroidRendererPlugin")]
-#endif
-        private static extern void DestroyRenderer(long textureId, long oglContext);
-
         protected override void startVideoStreamRendering(VideoStream stream)
         {
-            Assert.IsTrue(IsRunningOnOpenGL());
+            Assert.IsTrue(GraphicsDeviceIsSupported());
 
             jo.Call("beginSendingVideoForStream", (int)stream);
         }
@@ -235,62 +197,6 @@ namespace Voximplant
         #endregion
 
         #region Native Callbacks
-
-        private struct NativeTextureDescriptor
-        {
-            public long textureId;
-            public long oglContext;
-            public Texture2D texture;
-        }
-
-        private Dictionary<VideoStream, NativeTextureDescriptor> nativeTextures =
-            new Dictionary<VideoStream, NativeTextureDescriptor>();
-
-        protected void faonNewNativeTexture(String p)
-        {
-            Debug.Log(string.Format("new native texture {0}", p));
-            
-            var paramList = Utils.GetParamList(p);
-            var textureId = paramList[0].AsLong;
-            var oglContext = paramList[1].AsLong;
-            var width = paramList[2].AsInt;
-            int height = paramList[3].AsInt;
-            int stream = paramList[4].AsInt;
-            var videoStream = (VideoStream) stream;
-
-            if (!videoStreamCallbacks.ContainsKey(videoStream)) {
-                return;
-            }
-
-            pump.BeginInvoke(() => {
-                var texture = Texture2D.CreateExternalTexture(width, height, TextureFormat.RGBA32, false, false, new IntPtr(textureId));
-
-                var newNativeTexture = new NativeTextureDescriptor{
-                    oglContext = oglContext,
-                    textureId = textureId,
-                    texture = texture
-                };
-                videoStreamCallbacks[videoStream](texture);
-                if (nativeTextures.ContainsKey(videoStream)) {
-                    var nativeTexture = nativeTextures[videoStream];
-                    DestroyRenderer(nativeTexture.textureId, nativeTexture.oglContext);
-                }
-                nativeTextures[videoStream] = newNativeTexture;
-            });
-        }
-
-        private void CleanupAllVideoStreams()
-        {
-            foreach (var texture in nativeTextures.Values) {
-                DestroyRenderer(texture.textureId, texture.oglContext);
-            }
-
-            nativeTextures.Clear();
-            foreach (var pair in videoStreamCallbacks) {
-                pair.Value(null);
-            }
-            videoStreamCallbacks.Clear();
-        }
 
         protected void faonLoginSuccessful(string p)
         {

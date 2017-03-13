@@ -2,8 +2,8 @@
 // Created by Aleksey Zinchenko on 03/03/2017.
 //
 
-#ifndef VOXDEMO_LOCKGUARD_HPP
-#define VOXDEMO_LOCKGUARD_HPP
+#ifndef VOX_LOCKGUARD_HPP
+#define VOX_LOCKGUARD_HPP
 
 #include <pthread.h>
 
@@ -39,4 +39,4 @@ private:
     Mutex *_ref;
 };
 
-#endif //VOXDEMO_LOCKGUARD_HPP
+#endif

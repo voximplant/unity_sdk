@@ -9,15 +9,15 @@
 #include <vector>
 
 #include "IUnityGraphics.h"
-#include "VideoRenderer.h"
+#include "EGLVideoRenderer.h"
+#include "DestroyList.h"
 
-static VideoRenderer **s_renderers;
+static EGLVideoRenderer **s_renderers;
 static Mutex *s_renderersMutex;
 static EGLContext s_unityContext;
 static EGLSurface s_unitySurface;
 
-static Mutex *s_destroyListMutex;
-static std::vector<VideoRenderer *> *s_destroyList;
+static DestroyList<EGLVideoRenderer *> *s_destroyList;
 
 JNIEXPORT static void JNICALL
 Java_renderBufferFrame(JNIEnv *env,
@@ -42,7 +42,7 @@ static JNINativeMethod gMethods[] = {
 
 void invalidateAllRenderers() {
     for (int i = 0; i < 2; i++) {
-        VideoRenderer *renderer = s_renderers[i];
+        EGLVideoRenderer *renderer = s_renderers[i];
         if (renderer == NULL) {
             continue;
         }
@@ -96,16 +96,18 @@ Java_renderBufferFrame(JNIEnv *env,
     }
 
     bool newRendererCreated = false;
-    VideoRenderer *renderer = s_renderers[stream];
+    EGLVideoRenderer *renderer = s_renderers[stream];
     if (renderer != NULL && !renderer->IsValidForSize(width, height)) {
-        LockGuard destroyGuard(s_destroyListMutex);
-
         renderer->Detach();
-        s_destroyList->push_back(renderer);
+        if (renderer->GetOGLContext() != EGL_NO_CONTEXT) {
+            s_destroyList->AddObject((void *) renderer->GetTargetTextureId(), renderer->GetOGLContext(), renderer);
+        } else {
+            delete renderer;
+        }
         renderer = NULL;
     }
     if (renderer == NULL) {
-        s_renderers[stream] = new VideoRenderer(width, height, s_unityContext);
+        s_renderers[stream] = new EGLVideoRenderer(width, height, s_unityContext);
         renderer = s_renderers[stream];
 
         newRendererCreated = true;
@@ -157,36 +159,15 @@ GetRenderEventFunc()
 }
 
 extern "C" void UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API
-DestroyRenderer(long long textureId, EGLContext oglContext) {
-    LockGuard lock(s_destroyListMutex);
-
-    std::vector<VideoRenderer *> *newList = new std::vector<VideoRenderer *>();
-
-    for (std::vector<VideoRenderer *>::iterator it = s_destroyList->begin();
-            it != s_destroyList->end();
-            it++) {
-        VideoRenderer *renderer = *it;
-        if (renderer->GetTargetTextureId() == textureId
-            && renderer->GetOGLContext() == oglContext) {
-            delete renderer;
-        } else {
-            newList->push_back(renderer);
-        }
-    }
-
-    delete s_destroyList;
-    s_destroyList = newList;
+DestroyRenderer(void *textureId, EGLContext oglContext) {
+    s_destroyList->DestroyObject(textureId, oglContext);
 };
-
-typedef void	(UNITY_INTERFACE_API *PluginLoadFunc)(IUnityInterfaces* unityInterfaces);
-typedef void	(UNITY_INTERFACE_API *PluginUnloadFunc)();
 
 extern "C" void UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API
 InitializeVoximplant() {
-    s_renderers = (VideoRenderer **) calloc(2, sizeof(VideoRenderer *));
+    s_renderers = (EGLVideoRenderer **) calloc(2, sizeof(EGLVideoRenderer *));
     s_renderersMutex = new Mutex();
-    s_destroyListMutex = new Mutex();
-    s_destroyList = new std::vector<VideoRenderer *>();
+    s_destroyList = new DestroyList<EGLVideoRenderer *>();
     s_unityContext = eglGetCurrentContext();
     s_unitySurface = eglGetCurrentSurface(EGL_DRAW);
 };

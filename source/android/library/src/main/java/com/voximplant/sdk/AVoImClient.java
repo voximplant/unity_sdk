@@ -313,7 +313,7 @@ public class AVoImClient implements VoxImplantCallback {
 
     public void reportNewNativeTexture(long textureId, long oglContext, int width, int height, int stream) {
         UnityPlayer.UnitySendMessage(sdkObjName,
-                "faonNewNativeTexture",
+                "fonNewNativeTexture",
                 GetParamListToString(new ArrayList<Object>(Arrays.asList(textureId, oglContext, width, height, stream))));
     }
 
