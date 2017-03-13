@@ -3,8 +3,8 @@
 // Copyright (c) 2017 voximplant. All rights reserved.
 //
 
-#ifndef UNITY_BRIDGE_BASEVIDEORENDERER_H
-#define UNITY_BRIDGE_BASEVIDEORENDERER_H
+#ifndef VOX_BASEVIDEORENDERER_H
+#define VOX_BASEVIDEORENDERER_H
 
 #import "BaseImports.h"
 
@@ -33,4 +33,4 @@ private:
 };
 
 
-#endif //UNITY_BRIDGE_BASEVIDEORENDERER_H
+#endif

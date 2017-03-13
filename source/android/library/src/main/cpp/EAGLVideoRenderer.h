@@ -3,8 +3,8 @@
 // Copyright (c) 2017 voximplant. All rights reserved.
 //
 
-#ifndef UNITY_BRIDGE_EAGLVIDEORENDERER_H
-#define UNITY_BRIDGE_EAGLVIDEORENDERER_H
+#ifndef VOX_EAGLVIDEORENDERER_H
+#define VOX_EAGLVIDEORENDERER_H
 #ifdef IOS
 
 #include "BaseImports.h"
@@ -31,4 +31,4 @@ private:
 
 
 #endif
-#endif //UNITY_BRIDGE_EAGLVIDEORENDERER_H
+#endif

@@ -2,8 +2,8 @@
 // Created by Aleksey Zinchenko on 07/03/2017.
 //
 
-#ifndef ANDROID_DESTROYLIST_H
-#define ANDROID_DESTROYLIST_H
+#ifndef VOX_DESTROYLIST_H
+#define VOX_DESTROYLIST_H
 
 #include <map>
 #include <memory>

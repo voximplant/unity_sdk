@@ -2,8 +2,8 @@
 // Created by Aleksey Zinchenko on 07/03/2017.
 //
 
-#ifndef VOX_BASEVIDEORENDERER_H
-#define VOX_BASEVIDEORENDERER_H
+#ifndef VOX_BASEOGLVIDEORENDERER_H
+#define VOX_BASEOGLVIDEORENDERER_H
 
 #include "BaseImports.h"
 #include "BaseVideoRenderer.h"
@@ -49,4 +49,4 @@ private:
 };
 
 
-#endif //VOX_BASEVIDEORENDERER_H
+#endif

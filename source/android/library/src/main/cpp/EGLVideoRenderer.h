@@ -36,4 +36,4 @@ private:
 };
 
 #endif
-#endif //VOX_EGLVIDEORENDERER_H
+#endif

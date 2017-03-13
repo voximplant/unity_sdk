@@ -24,7 +24,8 @@ BaseOGLVideoRenderer::BaseOGLVideoRenderer(int width, int height):
         m_textureIds(new GLuint[3]),
 
         m_fbo(0),
-        m_FBOtexture(0)
+        m_FBOtexture(0),
+        m_bufferProgram(0)
 {
 }
 
@@ -153,8 +154,7 @@ static void initializePlaneTexture(GLenum name, GLuint id, int width, int height
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, width, height, 0,
-                 GL_LUMINANCE, GL_UNSIGNED_BYTE, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, width, height, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, NULL);
 }
 
 void BaseOGLVideoRenderer::SetupRender() {

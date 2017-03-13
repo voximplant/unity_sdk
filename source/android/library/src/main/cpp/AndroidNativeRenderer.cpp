@@ -163,9 +163,6 @@ DestroyRenderer(void *textureId, EGLContext oglContext) {
     s_destroyList->DestroyObject(textureId, oglContext);
 };
 
-typedef void	(UNITY_INTERFACE_API *PluginLoadFunc)(IUnityInterfaces* unityInterfaces);
-typedef void	(UNITY_INTERFACE_API *PluginUnloadFunc)();
-
 extern "C" void UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API
 InitializeVoximplant() {
     s_renderers = (EGLVideoRenderer **) calloc(2, sizeof(EGLVideoRenderer *));

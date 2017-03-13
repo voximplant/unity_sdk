@@ -19,7 +19,7 @@ add_library( # Specifies the name of the library.
              # Sets the library as a shared library.
              SHARED
 
-             src/main/cpp/BaseVideoRenderer.mm
+             src/main/cpp/BaseVideoRenderer.cpp
              src/main/cpp/AndroidNativeRenderer.cpp
              src/main/cpp/BaseOGLVideoRenderer.cpp
              src/main/cpp/EGLVideoRenderer.cpp)
