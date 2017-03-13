@@ -23,9 +23,6 @@ DerivedData
 # JB products
 .idea
 
-# Built static libraries
-*.a
-
 # Unity
 package/ios/*
 package/[Ll]ibrary/
