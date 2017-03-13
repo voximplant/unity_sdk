@@ -143,7 +143,7 @@ void MetalVideoRenderer::RenderBuffer(const uint8_t *yPlane, int yStride, const 
     };
 
     float rotatedUV[8];
-    shrFloat((float *) uvPosData, 8, 2 * (degrees / 90), rotatedUV);
+    shrFloat((float *) uvPosData, 8, - 2 * (degrees / 90), rotatedUV);
 
     id <MTLBuffer> posBuf = [m_device newBufferWithBytes:posData length:3 * 4 * sizeof(float) options:(MTLResourceOptions)0];
     id <MTLBuffer> uvBuf = [m_device newBufferWithBytes:rotatedUV length:4 * 2 * sizeof(float) options:(MTLResourceOptions)0];
