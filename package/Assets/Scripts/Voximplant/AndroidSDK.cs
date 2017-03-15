@@ -150,9 +150,10 @@ namespace Voximplant
             jo.Call("enableDebugLogging");
         }
 
-        public override void loginUsingOneTimeKey(LoginOneTimeKeyClassParam pLogin)
+        public override void loginUsingOneTimeKey(string login, string hash)
         {
-            jo.Call("loginUsingOneTimeKey", JsonUtility.ToJson(pLogin));
+            LoginOneTimeKeyClassParam param = new LoginOneTimeKeyClassParam(login, hash);
+            jo.Call("loginUsingOneTimeKey", JsonUtility.ToJson(param));
         }
 
         public override void requestOneTimeKey(string pName)

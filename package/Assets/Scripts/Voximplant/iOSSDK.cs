@@ -81,9 +81,9 @@ namespace Voximplant
             AddLog("Debug logging is unsupported on iOS");
         }
 
-        public override void loginUsingOneTimeKey(LoginOneTimeKeyClassParam pLogin)
+        public override void loginUsingOneTimeKey(string login, string hash)
         {
-            iosSDKloginUsingOneTimeKey(pLogin.name, pLogin.hash);
+            iosSDKloginUsingOneTimeKey(login, hash);
         }
 
         public override void requestOneTimeKey(string pName)

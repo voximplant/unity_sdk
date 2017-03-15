@@ -414,9 +414,10 @@ namespace Voximplant
         /**
         Login using a hash created from one-time key requested via 'requestOneTimeKey' and password. The has can be calculated on your backend so Voximplant password is never used in the application. Hash is calculated as 'MD5(one-time-key + "|" + MD5(vox-user + ":voximplant.com:" + vox-pass))'
         @method loginUsingOneTimeKey
-        @param {LoginOneTimeKeyClassParam} pLogin Fully-qualified user name and hash to authenticate. Note that hash is created not from a fully-qualified user name, but from a bare user name, without the "@app.acc.voximplant.com" part
+        @param {string} login Fully-qualified user login.
+        @param {string} hash Hash to authenticate. Note that hash is created not from a fully-qualified user login, but from a bare user login, without the "@app.acc.voximplant.com" part
         */
-        public abstract void loginUsingOneTimeKey(LoginOneTimeKeyClassParam pLogin);
+        public abstract void loginUsingOneTimeKey(string login, string hash);
 
         /**
         Request a one-time key that can be used on your backend to create a login hash for the 'loginUsingOneTimeKey'. Key is returned via 'OnOneTimeKeyGenerated' event
