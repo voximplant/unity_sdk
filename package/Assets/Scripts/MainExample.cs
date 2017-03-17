@@ -15,10 +15,10 @@ public class MainExample : MonoBehaviour
         });
         vox.LogMethod += Debug.Log;
         vox.ConnectionSuccessful += () => {
-            vox.login(new LoginClassParam("user@conference-app." + ACC + ".voximplant.com", "unitydemo"));
+            vox.login("user@conference-app." + ACC + ".voximplant.com", "unitydemo");
         };
         vox.LoginSuccessful += (name) => {
-            vox.call(new CallClassParam("*", false, false, ""));
+            vox.call("*", false, false, "");
         };
         vox.CallConnected += (callid, headers) => {
             vox.beginUpdatingTextureWithVideoStream(VoximplantSDK.VideoStream.Remote, texture => {
