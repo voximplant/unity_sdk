@@ -345,7 +345,7 @@ namespace Voximplant
         @param {string} number Number to call. For SIP compatibility reasons number should be a non-empty string even if the number itself is not used by a Voximplant cloud scenario
         @param {bool} videoCall If 'true', video will will be sent and received for the call. Video can also be enabled or disabled dynamically during the call
         @param {string} customData Custom data to send alongside call into Voximplant JavaScript cloud scenario
-        @param {Dictionary<string, string>} headers (Only for iOS) SIP headers to send alongside the call
+        @param {Dictionary<string, string>} headers SIP headers to send alongside the call
         */
         public abstract void call(string number, bool videoCall, string customData, Dictionary<string, string> headers = null);
 
