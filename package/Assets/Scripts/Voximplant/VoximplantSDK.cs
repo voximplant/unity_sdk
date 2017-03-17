@@ -63,7 +63,7 @@ namespace Voximplant
         public delegate void SIPInfoReceivedInCallEvent(string callId, string type, string content,
             Dictionary<string, string> headers);
 
-        public delegate void MessageReceivedInCallEvent(string callId, string text, Dictionary<string, string> headers);
+        public delegate void MessageReceivedInCallEvent(string callId, string text);
 
         public delegate void NetStatsReceivedEvent(string callId, int packetLoss);
 
@@ -82,7 +82,6 @@ namespace Voximplant
         @event MessageReceivedInCall
         @param {string} callId Call identifier
         @param {string} text Message text
-        @param {Dictionary} (Only for iOS) headers Optional SIP headers set by a info sender
         */
         public event MessageReceivedInCallEvent MessageReceivedInCall;
 
@@ -289,11 +288,14 @@ namespace Voximplant
             }
         }
 
-        protected virtual void OnMessageReceivedInCall(string callId, string text,
-            Dictionary<string, string> headers)
+        protected virtual void OnMessageReceivedInCall(
+          string callId,
+          string text,
+          //! Obsolete, will be removed in new SDK
+          Dictionary<string, string> headers)
         {
             if (MessageReceivedInCall != null) {
-                MessageReceivedInCall(callId, text, headers);
+                MessageReceivedInCall(callId, text);
             }
         }
 
