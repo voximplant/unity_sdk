@@ -217,6 +217,7 @@ namespace Voximplant
 			list = pList;
 		}
 	}
+
   [System.Serializable]
   public class AnswerClassParam {
     [JSONItem("callId",typeof(string))]
@@ -224,6 +225,20 @@ namespace Voximplant
     [JSONArray("headers",typeof(PairKeyValue))]
     public PairKeyValue[] headers;
     public AnswerClassParam(string pCallId, Dictionary<string, string> pHeader = null) {
+      callId = pCallId;
+      if (pHeader != null) {
+        headers = Utils.GetDictionaryToArray(pHeader);
+      }
+    }
+  }
+
+  [System.Serializable]
+  public class DeclineCallClassParam {
+    [JSONItem("callId",typeof(string))]
+    public string callId;
+    [JSONArray("headers",typeof(PairKeyValue))]
+    public PairKeyValue[] headers;
+    public DeclineCallClassParam(string pCallId, Dictionary<string, string> pHeader = null) {
       callId = pCallId;
       if (pHeader != null) {
         headers = Utils.GetDictionaryToArray(pHeader);

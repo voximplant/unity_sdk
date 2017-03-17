@@ -102,6 +102,15 @@ public class AVoImClient implements VoxImplantCallback {
         }
     }
 
+    public class DeclineCallClassParam {
+        public String callId;
+        public PairKeyValue[] headers;
+
+        public DeclineCallClassParam(String pCallId) {
+            callId = pCallId;
+        }
+    }
+
     public class SendMessageClassParam {
         public String callId;
         public String text;
@@ -203,7 +212,11 @@ public class AVoImClient implements VoxImplantCallback {
     }
 
     public void declineCall(String pCallId) {
-        client.declineCall(pCallId);
+        AnswerClassParam param = GetJsonObj(pParam, AnswerClassParam.class);
+        if (param.headers == null)
+            client.declineCall(param.callId);
+        else
+            client.declineCall(param.callId, GetMapFromList(param.headers));
     }
 
     public void hangup(String pCallId) {

@@ -112,7 +112,7 @@ namespace Voximplant
 
         public override void declineCall(string pCallId, Dictionary<string, string> pHeader = null)
         {
-            jo.Call("declineCall", pCallId);
+            jo.Call("declineCall", JsonUtility.ToJson(new AnswerClassParam(pCallId, pHeader)));
         }
 
         public override void hangup(string pCallId, Dictionary<string, string> pHeader = null)
