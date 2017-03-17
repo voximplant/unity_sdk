@@ -18,7 +18,7 @@ public class MainExample : MonoBehaviour
             vox.login("user@conference-app." + ACC + ".voximplant.com", "unitydemo");
         };
         vox.LoginSuccessful += (name) => {
-            vox.call("*", false, false, "");
+            vox.call("*", false, "");
         };
         vox.CallConnected += (callid, headers) => {
             vox.beginUpdatingTextureWithVideoStream(VoximplantSDK.VideoStream.Remote, texture => {
