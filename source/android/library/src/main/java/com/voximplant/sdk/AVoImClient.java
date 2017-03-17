@@ -111,6 +111,24 @@ public class AVoImClient implements VoxImplantCallback {
         }
     }
 
+    public class HangupClassParam {
+        public String callId;
+        public PairKeyValue[] headers;
+
+        public HangupClassParam(String pCallId) {
+            callId = pCallId;
+        }
+    }
+
+    public class DisconnectCallClassParam {
+        public String callId;
+        public PairKeyValue[] headers;
+
+        public DisconnectCallClassParam(String pCallId) {
+            callId = pCallId;
+        }
+    }
+
     public class SendMessageClassParam {
         public String callId;
         public String text;
@@ -212,7 +230,7 @@ public class AVoImClient implements VoxImplantCallback {
     }
 
     public void declineCall(String pCallId) {
-        AnswerClassParam param = GetJsonObj(pParam, AnswerClassParam.class);
+        DeclineCallClassParam param = GetJsonObj(pParam, DeclineCallClassParam.class);
         if (param.headers == null)
             client.declineCall(param.callId);
         else
@@ -220,7 +238,11 @@ public class AVoImClient implements VoxImplantCallback {
     }
 
     public void hangup(String pCallId) {
-        client.disconnectCall(pCallId);
+        HangupClassParam param = GetJsonObj(pParam, HangupClassParam.class);
+        if (param.headers == null)
+            client.disconnectCall(param.callId);
+        else
+            client.disconnectCall(param.callId, GetMapFromList(param.headers));
     }
 
     public void setMute(String pState) {
@@ -247,8 +269,11 @@ public class AVoImClient implements VoxImplantCallback {
     }
 
     public void disconnectCall(String p) {
-        StringClassParam param = GetJsonObj(p, StringClassParam.class);
-        client.disconnectCall(param.value);
+        DisconnectCallClassParam param = GetJsonObj(pParam, DisconnectCallClassParam.class);
+        if (param.headers == null)
+            client.disconnectCall(param.callId);
+        else
+            client.disconnectCall(param.callId, GetMapFromList(param.headers));
     }
 
     public void enableDebugLogging() {

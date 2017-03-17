@@ -371,7 +371,7 @@ namespace Voximplant
         Hang up the call in progress. Should be called from the "OnIncomingCall" handler
         @method hangup
         @param {string} callId Call identifier
-        @param {Dictionary} headers (Only for iOS) Optional SIP headers set by a info sender
+        @param {Dictionary} headers Optional SIP headers set by a info sender
         */
         public abstract void hangup(string callId, Dictionary<string, string> headers = null);
 
@@ -403,7 +403,7 @@ namespace Voximplant
         Disconnect the specified call
         @method disconnectCall
         @param {string} callId Call identifier
-        @param {Dictionary} headers (Only for iOS) Optional SIP headers set by a info sender
+        @param {Dictionary} headers Optional SIP headers set by a info sender
         */
         public abstract void disconnectCall(string callId, Dictionary<string, string> headers = null);
 

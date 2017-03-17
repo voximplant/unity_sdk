@@ -245,5 +245,33 @@ namespace Voximplant
       }
     }
   }
+
+  [System.Serializable]
+  public class HangupClassParam {
+    [JSONItem("callId",typeof(string))]
+    public string callId;
+    [JSONArray("headers",typeof(PairKeyValue))]
+    public PairKeyValue[] headers;
+    public HangupClassParam(string pCallId, Dictionary<string, string> pHeader = null) {
+      callId = pCallId;
+      if (pHeader != null) {
+        headers = Utils.GetDictionaryToArray(pHeader);
+      }
+    }
+  }
+
+  [System.Serializable]
+  public class DisconnectCallClassParam {
+    [JSONItem("callId",typeof(string))]
+    public string callId;
+    [JSONArray("headers",typeof(PairKeyValue))]
+    public PairKeyValue[] headers;
+    public DisconnectCallClassParam(string pCallId, Dictionary<string, string> pHeader = null) {
+      callId = pCallId;
+      if (pHeader != null) {
+        headers = Utils.GetDictionaryToArray(pHeader);
+      }
+    }
+  }
 }
 

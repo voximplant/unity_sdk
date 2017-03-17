@@ -100,24 +100,24 @@ namespace Voximplant
             jo.Call("login", JsonUtility.ToJson(new LoginClassParam(username, password)));
         }
 
-        public override void call(string number, bool videoCall, string customData, Dictionary<string, string> header = null)
+        public override void call(string number, bool videoCall, string customData, Dictionary<string, string> headers = null)
         {
-            jo.Call<string>("call", JsonUtility.ToJson(new CallClassParam(number, videoCall, customData, header)));
+            jo.Call<string>("call", JsonUtility.ToJson(new CallClassParam(number, videoCall, customData, headers)));
         }
 
-        public override void answer(string pCallId, Dictionary<string, string> pHeader = null)
+        public override void answer(string callId, Dictionary<string, string> headers = null)
         {
-            jo.Call("answer", JsonUtility.ToJson(new AnswerClassParam(pCallId, pHeader)));
+            jo.Call("answer", JsonUtility.ToJson(new AnswerClassParam(callId, headers)));
         }
 
-        public override void declineCall(string pCallId, Dictionary<string, string> pHeader = null)
+        public override void declineCall(string callId, Dictionary<string, string> headers = null)
         {
-            jo.Call("declineCall", JsonUtility.ToJson(new AnswerClassParam(pCallId, pHeader)));
+            jo.Call("declineCall", JsonUtility.ToJson(new DeclineCallClassParam(callId, headers)));
         }
 
-        public override void hangup(string pCallId, Dictionary<string, string> pHeader = null)
+        public override void hangup(string callId, Dictionary<string, string> headers = null)
         {
-            jo.Call("hangup", pCallId);
+            jo.Call("hangup", JsonUtility.ToJson(new HangupClassParam(callId, headers)));
         }
 
         public override void setMute(Boolean pState)
@@ -140,9 +140,9 @@ namespace Voximplant
             jo.Call("disableTls");
         }
 
-        public override void disconnectCall(string p, Dictionary<string, string> pHeader = null)
+        public override void disconnectCall(string callId, Dictionary<string, string> headers = null)
         {
-            jo.Call("disconnectCall", JsonUtility.ToJson(new StringClassParam(p)));
+            jo.Call("disconnectCall", JsonUtility.ToJson(new DisconnectCallClassParam(callId, headers)));
         }
 
         public override void enableDebugLogging()
@@ -166,14 +166,14 @@ namespace Voximplant
             jo.Call("sendDTMF", JsonUtility.ToJson(new DTFMClassParam(callId, digit)));
         }
 
-        public override void sendInfo(string callId, string mimeType, string content, Dictionary<string, string> header = null)
+        public override void sendInfo(string callId, string mimeType, string content, Dictionary<string, string> headers = null)
         {
-            jo.Call("sendInfo", JsonUtility.ToJson(new InfoClassParam(callId, mimeType, content, header)));
+            jo.Call("sendInfo", JsonUtility.ToJson(new InfoClassParam(callId, mimeType, content, headers)));
         }
 
-        public override void sendMessage(string callId, string message, Dictionary<string, string> header = null)
+        public override void sendMessage(string callId, string message, Dictionary<string, string> headers = null)
         {
-            jo.Call("sendMessage", JsonUtility.ToJson(new SendMessageClassParam(callId, message, header)));
+            jo.Call("sendMessage", JsonUtility.ToJson(new SendMessageClassParam(callId, message, headers)));
         }
 
         public override void setCameraResolution(int width, int height)
