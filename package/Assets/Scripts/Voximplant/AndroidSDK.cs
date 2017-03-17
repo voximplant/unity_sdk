@@ -107,7 +107,7 @@ namespace Voximplant
 
         public override void answer(string pCallId, Dictionary<string, string> pHeader = null)
         {
-            jo.Call("answer", pCallId);
+            jo.Call("answer", JsonUtility.ToJson(new AnswerClassParam(pCallId, pHeader)));
         }
 
         public override void declineCall(string pCallId, Dictionary<string, string> pHeader = null)

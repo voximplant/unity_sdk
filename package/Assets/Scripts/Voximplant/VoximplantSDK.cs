@@ -355,7 +355,7 @@ namespace Voximplant
         Answer incoming call. Should be called from the "OnIncomingCall" handler
         @method answer
         @param {string} callId Call identifier
-        @param {Dictionary} headers (Only for iOS) Optional SIP headers set by a info sender
+        @param {Dictionary} headers Optional SIP headers set by a info sender
         */
         public abstract void answer(string callId, Dictionary<string, string> headers = null);
 

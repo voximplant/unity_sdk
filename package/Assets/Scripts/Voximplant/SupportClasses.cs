@@ -217,4 +217,18 @@ namespace Voximplant
 			list = pList;
 		}
 	}
+  [System.Serializable]
+  public class AnswerClassParam {
+    [JSONItem("callId",typeof(string))]
+    public string callId;
+    [JSONArray("headers",typeof(PairKeyValue))]
+    public PairKeyValue[] headers;
+    public AnswerClassParam(string pCallId, Dictionary<string, string> pHeader = null) {
+      callId = pCallId;
+      if (pHeader != null) {
+        headers = Utils.GetDictionaryToArray(pHeader);
+      }
+    }
+  }
 }
+
