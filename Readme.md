@@ -15,3 +15,10 @@ Required Player Settings:
 * minimal supported SDK: 8.0
 * camera usage description
 * microphone usage description
+
+
+### Voximplant package structure
+* `Plugins/Android` — Android SDK with all dependencies, packaged as .aar archive
+* `Plugins/iOS` — iOS SDK with dependencies as dynamic libraries
+* `Plugins/Editor/Voximplant` — Unity build step for iOS setting up static and dynamic libraries integration
+* `Scripts/Voximplant` — Unity-land SDK code
