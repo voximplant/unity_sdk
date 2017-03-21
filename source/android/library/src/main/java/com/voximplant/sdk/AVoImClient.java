@@ -229,7 +229,7 @@ public class AVoImClient implements VoxImplantCallback {
             client.answerCall(param.callId, GetMapFromList(param.headers));
     }
 
-    public void declineCall(String pCallId) {
+    public void declineCall(String pParam) {
         DeclineCallClassParam param = GetJsonObj(pParam, DeclineCallClassParam.class);
         if (param.headers == null)
             client.declineCall(param.callId);
@@ -237,7 +237,7 @@ public class AVoImClient implements VoxImplantCallback {
             client.declineCall(param.callId, GetMapFromList(param.headers));
     }
 
-    public void hangup(String pCallId) {
+    public void hangup(String pParam) {
         HangupClassParam param = GetJsonObj(pParam, HangupClassParam.class);
         if (param.headers == null)
             client.disconnectCall(param.callId);
@@ -268,7 +268,7 @@ public class AVoImClient implements VoxImplantCallback {
         throw new RuntimeException("Not implemented");
     }
 
-    public void disconnectCall(String p) {
+    public void disconnectCall(String pParam) {
         DisconnectCallClassParam param = GetJsonObj(pParam, DisconnectCallClassParam.class);
         if (param.headers == null)
             client.disconnectCall(param.callId);

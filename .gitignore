@@ -35,5 +35,6 @@ package/android/*
 
 # Gradle
 .gradle
-android/local.properties
+source/android/local.properties
+source/android/*.iml
 .externalNativeBuild
