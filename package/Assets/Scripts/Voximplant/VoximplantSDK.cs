@@ -316,7 +316,7 @@ namespace Voximplant
         /**
         Initialize the SDK
         @method init
-        @param {Action<bool>} callback This callback will be called after SDK is initialized. It receives 'true' boolen argument if initialization is successful.
+        @param {Action<bool>} callback This callback will be called after SDK is initialized. It receives 'true' boolean argument if initialization is successful.
         */
         public abstract void init(Action<bool> callback);
 
