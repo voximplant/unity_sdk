@@ -2,6 +2,7 @@ package com.voximplant.sdk.permissions;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -24,25 +25,38 @@ public class PermissionsFragment extends Fragment {
     }
 
     public static PermissionsFragment getInstance(Activity parentActivity) {
-        Throwable th;
-        PermissionsFragment fragment = (PermissionsFragment) parentActivity.getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+        final FragmentManager fragmentManager = parentActivity.getFragmentManager();
+        PermissionsFragment fragment = (PermissionsFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG);
         if (fragment == null) {
             try {
                 Log.i(TAG, "Creating PermissionsFragment");
-                PermissionsFragment fragment2 = new PermissionsFragment();
+                fragment = new PermissionsFragment();
                 try {
-                    FragmentTransaction trans = parentActivity.getFragmentManager().beginTransaction();
-                    trans.add(fragment2, FRAGMENT_TAG);
+                    FragmentTransaction trans = fragmentManager.beginTransaction();
+                    trans.add(fragment, FRAGMENT_TAG);
                     trans.commit();
-                    fragment = fragment2;
-                } catch (Throwable th2) {
-                    th = th2;
-                    fragment = fragment2;
+                    Runnable action = new Runnable() {
+                        @Override
+                        public void run() {
+                            fragmentManager.executePendingTransactions();
+
+                            synchronized (this) {
+                                this.notifyAll();
+                            }
+                        }
+                    };
+                    parentActivity.runOnUiThread(action);
+
+                    synchronized (action) {
+                        while (fragment.getActivity() == null) {
+                            action.wait();
+                        }
+                    }
+                } catch (Throwable th) {
                     Log.e(TAG, "Cannot launch PermissionsFragment:" + th.getMessage(), th);
                     return null;
                 }
-            } catch (Throwable th3) {
-                th = th3;
+            } catch (Throwable th) {
                 Log.e(TAG, "Cannot launch PermissionsFragment:" + th.getMessage(), th);
                 return null;
             }
