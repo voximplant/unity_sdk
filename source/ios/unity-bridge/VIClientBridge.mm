@@ -48,6 +48,7 @@ void CallUnityMethod(NSString *methodName, id parameters) {
     if (self) {
         _client = [[VIClient alloc] initWithDelegateQueue:dispatch_get_main_queue()];
         self.client.sessionDelegate = self;
+        self.client.callManagerDelegate = self;
 
         _localRenderers = [NSMutableDictionary new];
         _remoteRenderers = [NSMutableDictionary new];
