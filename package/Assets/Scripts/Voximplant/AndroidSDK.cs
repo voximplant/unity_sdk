@@ -161,7 +161,7 @@ namespace Voximplant
             jo.Call("requestOneTimeKey", JsonUtility.ToJson(new StringClassParam(pName)));
         }
 
-        public override void sendDTMF(string callId, int digit)
+        public override void sendDTMF(string callId, string digit)
         {
             jo.Call("sendDTMF", JsonUtility.ToJson(new DTFMClassParam(callId, digit)));
         }
@@ -188,7 +188,7 @@ namespace Voximplant
 
         #region Texture Rendering
 
-        protected override void startVideoStreamRendering(VideoStream stream)
+        protected override void startVideoStreamRendering(string callId, VideoStream stream)
         {
             Assert.IsTrue(GraphicsDeviceIsSupported());
 

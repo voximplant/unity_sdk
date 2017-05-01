@@ -111,9 +111,9 @@ namespace Voximplant
     {
 		[JSONItem("callId", typeof(string))]
         public string callId;
-		[JSONItem("digit", typeof(int))]
-        public int digit;
-        public DTFMClassParam(string pCallId, int pDigit)
+		[JSONItem("digit", typeof(string))]
+        public string digit;
+        public DTFMClassParam(string pCallId, string pDigit)
         {
             callId = pCallId;
             digit = pDigit;

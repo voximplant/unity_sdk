@@ -7,7 +7,6 @@
 // Created by Aleksey Zinchenko on 02/03/2017.
 //
 
-#include <stdint.h>
 #include <cstdlib>
 
 #include "BaseImports.h"
@@ -15,9 +14,9 @@
 #include "IUnityGraphics.h"
 #include "EAGLVideoRenderer.h"
 #include "DestroyList.h"
-#include "voxImplantIosSDK.h"
+#import "iOSNativeRenderer.h"
 
-BaseVideoRenderer **s_renderers;
+std::vector<BaseVideoRenderer *> *s_renderers;
 Mutex *s_renderersMutex;
 EAGLContext *s_unityContext;
 UnityGfxRenderer s_unityGFXRenderer;
@@ -25,12 +24,7 @@ UnityGfxRenderer s_unityGFXRenderer;
 DestroyList<BaseVideoRenderer *> *s_destroyList;
 
 void invalidateRenderers() {
-    BaseVideoRenderer *renderer = s_renderers[0];
-    if (renderer) {
-        renderer->Invalidate();
-    }
-    renderer = s_renderers[1];
-    if (renderer) {
+    for (auto &renderer: *s_renderers) {
         renderer->Invalidate();
     }
 }
@@ -41,7 +35,7 @@ static void UNITY_INTERFACE_API OnRenderEvent(int eventID) {
     } else if (eventID == 42) {
         bool invalidationEvent = false;
         if (s_unityGFXRenderer == kUnityGfxRendererOpenGLES20
-            ||s_unityGFXRenderer == kUnityGfxRendererOpenGLES30) {
+            || s_unityGFXRenderer == kUnityGfxRendererOpenGLES30) {
             EAGLContext *context = [EAGLContext currentContext];
             if (s_unityContext != context) {
                 s_unityContext = context;
@@ -83,7 +77,7 @@ extern "C" void	UnityRegisterRenderingPluginV5(UnityPluginLoadFunc loadPlugin, U
 
 extern "C" void UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API
 InitializeVoximplant() {
-    s_renderers = (BaseVideoRenderer **) calloc(2, sizeof(BaseVideoRenderer *));
+    s_renderers = new std::vector<BaseVideoRenderer *>();
     s_renderersMutex = new Mutex();
     s_destroyList = new DestroyList<BaseVideoRenderer *>();
     s_unityContext = [EAGLContext currentContext];
