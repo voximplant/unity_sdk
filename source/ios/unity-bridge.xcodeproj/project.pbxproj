@@ -7,19 +7,37 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9816A46C21F43C61ACC79A55 /* libPods-unity-bridge-fake.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5E4BC458CECCC8E60536758 /* libPods-unity-bridge-fake.a */; };
 		C004745B1E76CA5E006C5A2B /* BaseVideoRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00474581E76CA5E006C5A2B /* BaseVideoRenderer.cpp */; };
 		C004745C1E76CA5E006C5A2B /* iOSNativeRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00474591E76CA5E006C5A2B /* iOSNativeRenderer.cpp */; };
 		C004745D1E76CA5E006C5A2B /* EAGLVideoRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C004745A1E76CA5E006C5A2B /* EAGLVideoRenderer.cpp */; };
-		C01458B61E538E3700D1C973 /* voxImplantIosSDK.mm in Sources */ = {isa = PBXBuildFile; fileRef = C01458B51E538E3700D1C973 /* voxImplantIosSDK.mm */; };
+		C01458B61E538E3700D1C973 /* VIClientBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = C01458B51E538E3700D1C973 /* VIClientBridge.mm */; };
+		C055D5281EA96052006E7F66 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C055D5271EA96052006E7F66 /* main.m */; };
+		C055D52B1EA96052006E7F66 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C055D52A1EA96052006E7F66 /* AppDelegate.m */; };
+		C055D52E1EA96052006E7F66 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C055D52D1EA96052006E7F66 /* ViewController.m */; };
+		C055D5311EA96052006E7F66 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C055D52F1EA96052006E7F66 /* Main.storyboard */; };
+		C055D5331EA96052006E7F66 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C055D5321EA96052006E7F66 /* Assets.xcassets */; };
+		C055D5361EA96052006E7F66 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C055D5341EA96052006E7F66 /* LaunchScreen.storyboard */; };
 		C781A03172725B994985259E /* libPods-unity-bridge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC99EEA9D89ACB34B8C4E14F /* libPods-unity-bridge.a */; };
 		D62AA237945BDE20F51E268B /* MetalVideoRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = D62AA979E01CF3EE085EBD1F /* MetalVideoRenderer.mm */; };
 		D62AA2C853092596D7C6192F /* EGLVideoRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D62AA18F6B97C9597832E344 /* EGLVideoRenderer.cpp */; };
-		D62AA78480F0CE9BE005C8AC /* EAGLRendererHolder.mm in Sources */ = {isa = PBXBuildFile; fileRef = D62AAD11FB0CCD818D96E6F5 /* EAGLRendererHolder.mm */; };
-		D62AA7E192F6B827A7C646AB /* MetalRendererHolder.mm in Sources */ = {isa = PBXBuildFile; fileRef = D62AA5CE48FAA1DDBD4E565E /* MetalRendererHolder.mm */; };
-		D62AAD6C924F5A2CF25FDC00 /* BlocksThread.m in Sources */ = {isa = PBXBuildFile; fileRef = D62AAD7DBC816D9C4CEC0124 /* BlocksThread.m */; };
+		D62AA316C50E8769A3647B76 /* BaseTextureBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = D62AAD033DCE404D1610B0F5 /* BaseTextureBridge.mm */; };
+		D62AA78480F0CE9BE005C8AC /* VIEAGLRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = D62AAD11FB0CCD818D96E6F5 /* VIEAGLRenderer.mm */; };
+		D62AA7E192F6B827A7C646AB /* VIMetalRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = D62AA5CE48FAA1DDBD4E565E /* VIMetalRenderer.mm */; };
+		D62AAD6C924F5A2CF25FDC00 /* VIBlocksThread.m in Sources */ = {isa = PBXBuildFile; fileRef = D62AAD7DBC816D9C4CEC0124 /* VIBlocksThread.m */; };
 		D62AAEC001C1890612320059 /* BaseOGLVideoRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D62AA389A9D64DFECBA35ADB /* BaseOGLVideoRenderer.cpp */; };
-		D62AAF7ED6A3626FC6E389EC /* JsonDic.m in Sources */ = {isa = PBXBuildFile; fileRef = D62AA6906A632A6D3201F78D /* JsonDic.m */; };
+		D62AAF7ED6A3626FC6E389EC /* VIJsonDic.m in Sources */ = {isa = PBXBuildFile; fileRef = D62AA6906A632A6D3201F78D /* VIJsonDic.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C055D53B1EA96090006E7F66 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C01458A11E53896700D1C973 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C01458A81E53896700D1C973;
+			remoteInfo = "unity-bridge";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		C01458A71E53896700D1C973 /* CopyFiles */ = {
@@ -34,13 +52,28 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		02A87990C6CBEE71CD733BC8 /* Pods-unity-bridge-fake-unity-bridge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unity-bridge-fake-unity-bridge.debug.xcconfig"; path = "Pods/Target Support Files/Pods-unity-bridge-fake-unity-bridge/Pods-unity-bridge-fake-unity-bridge.debug.xcconfig"; sourceTree = "<group>"; };
+		0D29EBB8FFB49E93086C87D7 /* Pods-unity-bridge-fake.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unity-bridge-fake.release.xcconfig"; path = "Pods/Target Support Files/Pods-unity-bridge-fake/Pods-unity-bridge-fake.release.xcconfig"; sourceTree = "<group>"; };
 		5106FEF89F8342BFE716941F /* Pods-unity-bridge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unity-bridge.debug.xcconfig"; path = "Pods/Target Support Files/Pods-unity-bridge/Pods-unity-bridge.debug.xcconfig"; sourceTree = "<group>"; };
 		521C30A3D8F1E517389E78E1 /* Pods-unity-bridge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unity-bridge.release.xcconfig"; path = "Pods/Target Support Files/Pods-unity-bridge/Pods-unity-bridge.release.xcconfig"; sourceTree = "<group>"; };
+		8C63EC150F03654D38C5C506 /* Pods-unity-bridge-fake.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unity-bridge-fake.debug.xcconfig"; path = "Pods/Target Support Files/Pods-unity-bridge-fake/Pods-unity-bridge-fake.debug.xcconfig"; sourceTree = "<group>"; };
+		B5E4BC458CECCC8E60536758 /* libPods-unity-bridge-fake.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-unity-bridge-fake.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C00474581E76CA5E006C5A2B /* BaseVideoRenderer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = BaseVideoRenderer.cpp; path = ../../../android/library/src/main/cpp/BaseVideoRenderer.cpp; sourceTree = "<group>"; };
 		C00474591E76CA5E006C5A2B /* iOSNativeRenderer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = iOSNativeRenderer.cpp; path = ../../../android/library/src/main/cpp/iOSNativeRenderer.cpp; sourceTree = "<group>"; };
 		C004745A1E76CA5E006C5A2B /* EAGLVideoRenderer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = EAGLVideoRenderer.cpp; path = ../../../android/library/src/main/cpp/EAGLVideoRenderer.cpp; sourceTree = "<group>"; };
 		C01458A91E53896700D1C973 /* libunity-bridge.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libunity-bridge.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		C01458B51E538E3700D1C973 /* voxImplantIosSDK.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = voxImplantIosSDK.mm; sourceTree = "<group>"; };
+		C01458B51E538E3700D1C973 /* VIClientBridge.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VIClientBridge.mm; sourceTree = "<group>"; };
+		C055D5241EA96052006E7F66 /* unity-bridge-fake.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "unity-bridge-fake.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C055D5271EA96052006E7F66 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		C055D5291EA96052006E7F66 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		C055D52A1EA96052006E7F66 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		C055D52C1EA96052006E7F66 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		C055D52D1EA96052006E7F66 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		C055D5301EA96052006E7F66 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C055D5321EA96052006E7F66 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C055D5351EA96052006E7F66 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		C055D5371EA96052006E7F66 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C5F7A909F52D4A8FDCCDA515 /* Pods-unity-bridge-fake-unity-bridge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unity-bridge-fake-unity-bridge.release.xcconfig"; path = "Pods/Target Support Files/Pods-unity-bridge-fake-unity-bridge/Pods-unity-bridge-fake-unity-bridge.release.xcconfig"; sourceTree = "<group>"; };
 		D62AA016361E5CB5B0E7E1F8 /* IUnityInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IUnityInterface.h; sourceTree = "<group>"; };
 		D62AA0D52E6FFFAB2F61F24A /* iOSNativeRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSNativeRenderer.h; sourceTree = "<group>"; };
 		D62AA18F6B97C9597832E344 /* EGLVideoRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EGLVideoRenderer.cpp; sourceTree = "<group>"; };
@@ -49,27 +82,30 @@
 		D62AA33589737E9520E40BAC /* BaseImports.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseImports.h; sourceTree = "<group>"; };
 		D62AA389A9D64DFECBA35ADB /* BaseOGLVideoRenderer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = BaseOGLVideoRenderer.cpp; sourceTree = "<group>"; };
 		D62AA4698C602BA7FA87D1B1 /* IUnityGraphicsD3D11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IUnityGraphicsD3D11.h; sourceTree = "<group>"; };
-		D62AA507CF13C0D3D18CA18F /* EAGLRendererHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLRendererHolder.h; sourceTree = "<group>"; };
+		D62AA507CF13C0D3D18CA18F /* VIEAGLRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIEAGLRenderer.h; sourceTree = "<group>"; };
 		D62AA54C04AFF6053C52C9D2 /* IUnityGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IUnityGraphics.h; sourceTree = "<group>"; };
 		D62AA560FB7BEECF7F4D80B7 /* EGLVideoRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGLVideoRenderer.h; sourceTree = "<group>"; };
-		D62AA57DC25614AE5AE91420 /* BlocksThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlocksThread.h; sourceTree = "<group>"; };
-		D62AA5CE48FAA1DDBD4E565E /* MetalRendererHolder.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MetalRendererHolder.mm; sourceTree = "<group>"; };
-		D62AA6906A632A6D3201F78D /* JsonDic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JsonDic.m; sourceTree = "<group>"; };
+		D62AA57AC0CFB8D21E0B13D3 /* BaseTextureBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTextureBridge.h; sourceTree = "<group>"; };
+		D62AA57DC25614AE5AE91420 /* VIBlocksThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIBlocksThread.h; sourceTree = "<group>"; };
+		D62AA5CE48FAA1DDBD4E565E /* VIMetalRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VIMetalRenderer.mm; sourceTree = "<group>"; };
+		D62AA6906A632A6D3201F78D /* VIJsonDic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIJsonDic.m; sourceTree = "<group>"; };
 		D62AA863E8DC5127434DF2E5 /* BaseOGLVideoRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseOGLVideoRenderer.h; sourceTree = "<group>"; };
 		D62AA918220C7C19B0676C86 /* AndroidNativeRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AndroidNativeRenderer.cpp; sourceTree = "<group>"; };
 		D62AA970F6C27690ECD7CC5F /* DestroyList.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DestroyList.hpp; sourceTree = "<group>"; };
 		D62AA979E01CF3EE085EBD1F /* MetalVideoRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MetalVideoRenderer.mm; sourceTree = "<group>"; };
 		D62AAA0449A98B51452AC7F0 /* DestroyList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DestroyList.h; sourceTree = "<group>"; };
 		D62AAB1A0FA639E00A997CE8 /* IUnityGraphicsD3D12.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IUnityGraphicsD3D12.h; sourceTree = "<group>"; };
-		D62AAC0D71CF9E97DFD34321 /* MetalRendererHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetalRendererHolder.h; sourceTree = "<group>"; };
-		D62AAC22C1E2E6346F95CBC2 /* voxImplantIosSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voxImplantIosSDK.h; sourceTree = "<group>"; };
-		D62AAD11FB0CCD818D96E6F5 /* EAGLRendererHolder.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EAGLRendererHolder.mm; sourceTree = "<group>"; };
-		D62AAD7DBC816D9C4CEC0124 /* BlocksThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlocksThread.m; sourceTree = "<group>"; };
+		D62AAC0D71CF9E97DFD34321 /* VIMetalRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMetalRenderer.h; sourceTree = "<group>"; };
+		D62AAC22C1E2E6346F95CBC2 /* VIClientBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIClientBridge.h; sourceTree = "<group>"; };
+		D62AAD033DCE404D1610B0F5 /* BaseTextureBridge.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BaseTextureBridge.mm; sourceTree = "<group>"; };
+		D62AAD11FB0CCD818D96E6F5 /* VIEAGLRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VIEAGLRenderer.mm; sourceTree = "<group>"; };
+		D62AAD7DBC816D9C4CEC0124 /* VIBlocksThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIBlocksThread.m; sourceTree = "<group>"; };
 		D62AAEDE90E33D76FCDF3711 /* MetalVideoRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetalVideoRenderer.h; sourceTree = "<group>"; };
 		D62AAF4E192B333DA4AFA332 /* IUnityGraphicsMetal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IUnityGraphicsMetal.h; sourceTree = "<group>"; };
 		D62AAF4E84AC63A7FB0E73F3 /* LockGuard.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LockGuard.hpp; sourceTree = "<group>"; };
-		D62AAFB3F3EF6FEC07956A23 /* JsonDic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JsonDic.h; sourceTree = "<group>"; };
+		D62AAFB3F3EF6FEC07956A23 /* VIJsonDic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIJsonDic.h; sourceTree = "<group>"; };
 		D62AAFE308110A17A30C3DB4 /* IUnityGraphicsD3D9.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IUnityGraphicsD3D9.h; sourceTree = "<group>"; };
+		E94E30E28B1877B2315E248D /* libPods-unity-bridge-fake-unity-bridge.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-unity-bridge-fake-unity-bridge.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC99EEA9D89ACB34B8C4E14F /* libPods-unity-bridge.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-unity-bridge.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -82,6 +118,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C055D5211EA96052006E7F66 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9816A46C21F43C61ACC79A55 /* libPods-unity-bridge-fake.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -89,6 +133,8 @@
 			isa = PBXGroup;
 			children = (
 				FC99EEA9D89ACB34B8C4E14F /* libPods-unity-bridge.a */,
+				B5E4BC458CECCC8E60536758 /* libPods-unity-bridge-fake.a */,
+				E94E30E28B1877B2315E248D /* libPods-unity-bridge-fake-unity-bridge.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -98,6 +144,10 @@
 			children = (
 				5106FEF89F8342BFE716941F /* Pods-unity-bridge.debug.xcconfig */,
 				521C30A3D8F1E517389E78E1 /* Pods-unity-bridge.release.xcconfig */,
+				8C63EC150F03654D38C5C506 /* Pods-unity-bridge-fake.debug.xcconfig */,
+				0D29EBB8FFB49E93086C87D7 /* Pods-unity-bridge-fake.release.xcconfig */,
+				02A87990C6CBEE71CD733BC8 /* Pods-unity-bridge-fake-unity-bridge.debug.xcconfig */,
+				C5F7A909F52D4A8FDCCDA515 /* Pods-unity-bridge-fake-unity-bridge.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -106,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				C01458AB1E53896700D1C973 /* unity-bridge */,
+				C055D5251EA96052006E7F66 /* unity-bridge-fake */,
 				C01458AA1E53896700D1C973 /* Products */,
 				2CF304433E9CC0D16C53F3AB /* Pods */,
 				06BD3AEABFBE71E1E249C2C9 /* Frameworks */,
@@ -116,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				C01458A91E53896700D1C973 /* libunity-bridge.a */,
+				C055D5241EA96052006E7F66 /* unity-bridge-fake.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -123,21 +175,45 @@
 		C01458AB1E53896700D1C973 /* unity-bridge */ = {
 			isa = PBXGroup;
 			children = (
-				D62AA57DC25614AE5AE91420 /* BlocksThread.h */,
-				D62AAD7DBC816D9C4CEC0124 /* BlocksThread.m */,
-				D62AA507CF13C0D3D18CA18F /* EAGLRendererHolder.h */,
-				D62AAD11FB0CCD818D96E6F5 /* EAGLRendererHolder.mm */,
-				D62AAFB3F3EF6FEC07956A23 /* JsonDic.h */,
-				D62AA6906A632A6D3201F78D /* JsonDic.m */,
-				D62AAC0D71CF9E97DFD34321 /* MetalRendererHolder.h */,
-				D62AA5CE48FAA1DDBD4E565E /* MetalRendererHolder.mm */,
+				D62AA57DC25614AE5AE91420 /* VIBlocksThread.h */,
+				D62AAD7DBC816D9C4CEC0124 /* VIBlocksThread.m */,
+				D62AA507CF13C0D3D18CA18F /* VIEAGLRenderer.h */,
+				D62AAD11FB0CCD818D96E6F5 /* VIEAGLRenderer.mm */,
+				D62AAFB3F3EF6FEC07956A23 /* VIJsonDic.h */,
+				D62AA6906A632A6D3201F78D /* VIJsonDic.m */,
+				D62AAC0D71CF9E97DFD34321 /* VIMetalRenderer.h */,
+				D62AA5CE48FAA1DDBD4E565E /* VIMetalRenderer.mm */,
 				D62AAEDE90E33D76FCDF3711 /* MetalVideoRenderer.h */,
 				D62AA979E01CF3EE085EBD1F /* MetalVideoRenderer.mm */,
 				D62AAD77B5AA2204BF309BBB /* Render */,
-				D62AAC22C1E2E6346F95CBC2 /* voxImplantIosSDK.h */,
-				C01458B51E538E3700D1C973 /* voxImplantIosSDK.mm */,
+				D62AAC22C1E2E6346F95CBC2 /* VIClientBridge.h */,
+				C01458B51E538E3700D1C973 /* VIClientBridge.mm */,
 			);
 			path = "unity-bridge";
+			sourceTree = "<group>";
+		};
+		C055D5251EA96052006E7F66 /* unity-bridge-fake */ = {
+			isa = PBXGroup;
+			children = (
+				C055D5291EA96052006E7F66 /* AppDelegate.h */,
+				C055D52A1EA96052006E7F66 /* AppDelegate.m */,
+				C055D52C1EA96052006E7F66 /* ViewController.h */,
+				C055D52D1EA96052006E7F66 /* ViewController.m */,
+				C055D52F1EA96052006E7F66 /* Main.storyboard */,
+				C055D5321EA96052006E7F66 /* Assets.xcassets */,
+				C055D5341EA96052006E7F66 /* LaunchScreen.storyboard */,
+				C055D5371EA96052006E7F66 /* Info.plist */,
+				C055D5261EA96052006E7F66 /* Supporting Files */,
+			);
+			path = "unity-bridge-fake";
+			sourceTree = "<group>";
+		};
+		C055D5261EA96052006E7F66 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C055D5271EA96052006E7F66 /* main.m */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		D62AA042B972F96C52D75F20 /* Unity */ = {
@@ -151,6 +227,15 @@
 				D62AAF4E192B333DA4AFA332 /* IUnityGraphicsMetal.h */,
 			);
 			path = Unity;
+			sourceTree = "<group>";
+		};
+		D62AA49F05031D7851C66C28 /* Texture Bridge */ = {
+			isa = PBXGroup;
+			children = (
+				D62AA57AC0CFB8D21E0B13D3 /* BaseTextureBridge.h */,
+				D62AAD033DCE404D1610B0F5 /* BaseTextureBridge.mm */,
+			);
+			path = "Texture Bridge";
 			sourceTree = "<group>";
 		};
 		D62AAD77B5AA2204BF309BBB /* Render */ = {
@@ -172,6 +257,7 @@
 				D62AA0D52E6FFFAB2F61F24A /* iOSNativeRenderer.h */,
 				D62AAF4E84AC63A7FB0E73F3 /* LockGuard.hpp */,
 				D62AA042B972F96C52D75F20 /* Unity */,
+				D62AA49F05031D7851C66C28 /* Texture Bridge */,
 			);
 			path = Render;
 			sourceTree = "<group>";
@@ -198,6 +284,27 @@
 			productReference = C01458A91E53896700D1C973 /* libunity-bridge.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		C055D5231EA96052006E7F66 /* unity-bridge-fake */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C055D53A1EA96052006E7F66 /* Build configuration list for PBXNativeTarget "unity-bridge-fake" */;
+			buildPhases = (
+				E3E183D66F78F6CADD078617 /* [CP] Check Pods Manifest.lock */,
+				C055D5201EA96052006E7F66 /* Sources */,
+				C055D5211EA96052006E7F66 /* Frameworks */,
+				C055D5221EA96052006E7F66 /* Resources */,
+				8FD3CB737D9479CD1CB90F1C /* [CP] Embed Pods Frameworks */,
+				CAFA3A2D4DBD27EE59ACE4D2 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C055D53C1EA96090006E7F66 /* PBXTargetDependency */,
+			);
+			name = "unity-bridge-fake";
+			productName = "unity-bridge-fake";
+			productReference = C055D5241EA96052006E7F66 /* unity-bridge-fake.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -211,6 +318,10 @@
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
 					};
+					C055D5231EA96052006E7F66 = {
+						CreatedOnToolsVersion = 8.3.2;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = C01458A41E53896700D1C973 /* Build configuration list for PBXProject "unity-bridge" */;
@@ -219,6 +330,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = C01458A01E53896700D1C973;
 			productRefGroup = C01458AA1E53896700D1C973 /* Products */;
@@ -226,9 +338,23 @@
 			projectRoot = "";
 			targets = (
 				C01458A81E53896700D1C973 /* unity-bridge */,
+				C055D5231EA96052006E7F66 /* unity-bridge-fake */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C055D5221EA96052006E7F66 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C055D5361EA96052006E7F66 /* LaunchScreen.storyboard in Resources */,
+				C055D5331EA96052006E7F66 /* Assets.xcassets in Resources */,
+				C055D5311EA96052006E7F66 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		1D6AAA0CCA3730FADA569E5E /* [CP] Check Pods Manifest.lock */ = {
@@ -243,7 +369,52 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		8FD3CB737D9479CD1CB90F1C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-unity-bridge-fake/Pods-unity-bridge-fake-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CAFA3A2D4DBD27EE59ACE4D2 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-unity-bridge-fake/Pods-unity-bridge-fake-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E3E183D66F78F6CADD078617 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		E8269BAE97D08E8ED00C8A45 /* [CP] Copy Pods Resources */ = {
@@ -258,7 +429,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-unity-bridge/Pods-unity-bridge-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-unity-bridge-fake-unity-bridge/Pods-unity-bridge-fake-unity-bridge-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -270,19 +441,57 @@
 			files = (
 				C004745B1E76CA5E006C5A2B /* BaseVideoRenderer.cpp in Sources */,
 				C004745C1E76CA5E006C5A2B /* iOSNativeRenderer.cpp in Sources */,
-				C01458B61E538E3700D1C973 /* voxImplantIosSDK.mm in Sources */,
-				D62AAF7ED6A3626FC6E389EC /* JsonDic.m in Sources */,
+				C01458B61E538E3700D1C973 /* VIClientBridge.mm in Sources */,
+				D62AAF7ED6A3626FC6E389EC /* VIJsonDic.m in Sources */,
 				D62AA2C853092596D7C6192F /* EGLVideoRenderer.cpp in Sources */,
 				D62AAEC001C1890612320059 /* BaseOGLVideoRenderer.cpp in Sources */,
-				D62AA78480F0CE9BE005C8AC /* EAGLRendererHolder.mm in Sources */,
-				D62AAD6C924F5A2CF25FDC00 /* BlocksThread.m in Sources */,
-				D62AA7E192F6B827A7C646AB /* MetalRendererHolder.mm in Sources */,
+				D62AA78480F0CE9BE005C8AC /* VIEAGLRenderer.mm in Sources */,
+				D62AAD6C924F5A2CF25FDC00 /* VIBlocksThread.m in Sources */,
+				D62AA7E192F6B827A7C646AB /* VIMetalRenderer.mm in Sources */,
 				D62AA237945BDE20F51E268B /* MetalVideoRenderer.mm in Sources */,
 				C004745D1E76CA5E006C5A2B /* EAGLVideoRenderer.cpp in Sources */,
+				D62AA316C50E8769A3647B76 /* BaseTextureBridge.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C055D5201EA96052006E7F66 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C055D52E1EA96052006E7F66 /* ViewController.m in Sources */,
+				C055D52B1EA96052006E7F66 /* AppDelegate.m in Sources */,
+				C055D5281EA96052006E7F66 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C055D53C1EA96090006E7F66 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C01458A81E53896700D1C973 /* unity-bridge */;
+			targetProxy = C055D53B1EA96090006E7F66 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		C055D52F1EA96052006E7F66 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C055D5301EA96052006E7F66 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		C055D5341EA96052006E7F66 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C055D5351EA96052006E7F66 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		C01458B01E53896700D1C973 /* Debug */ = {
@@ -377,7 +586,7 @@
 		};
 		C01458B31E53896700D1C973 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5106FEF89F8342BFE716941F /* Pods-unity-bridge.debug.xcconfig */;
+			baseConfigurationReference = 02A87990C6CBEE71CD733BC8 /* Pods-unity-bridge-fake-unity-bridge.debug.xcconfig */;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -386,10 +595,44 @@
 		};
 		C01458B41E53896700D1C973 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 521C30A3D8F1E517389E78E1 /* Pods-unity-bridge.release.xcconfig */;
+			baseConfigurationReference = C5F7A909F52D4A8FDCCDA515 /* Pods-unity-bridge-fake-unity-bridge.release.xcconfig */;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		C055D5381EA96052006E7F66 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8C63EC150F03654D38C5C506 /* Pods-unity-bridge-fake.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				COPY_PHASE_STRIP = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "unity-bridge-fake/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.voximplant.unity-bridge-fake";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		C055D5391EA96052006E7F66 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0D29EBB8FFB49E93086C87D7 /* Pods-unity-bridge-fake.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				COPY_PHASE_STRIP = NO;
+				INFOPLIST_FILE = "unity-bridge-fake/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.voximplant.unity-bridge-fake";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -410,6 +653,15 @@
 			buildConfigurations = (
 				C01458B31E53896700D1C973 /* Debug */,
 				C01458B41E53896700D1C973 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C055D53A1EA96052006E7F66 /* Build configuration list for PBXNativeTarget "unity-bridge-fake" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C055D5381EA96052006E7F66 /* Debug */,
+				C055D5391EA96052006E7F66 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

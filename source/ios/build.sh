@@ -40,6 +40,6 @@ cp ./build/libVoxImplant-bridge.a ../../package/Assets/Plugins/iOS
 # Copy framework dependencies
 
 cp -R ./Pods/VoxImplantWebRTC/WebRTC.framework ../../package/Assets/Plugins/iOS
-cp -R ./VoxImplantSDK/VoxImplant.framework ../../package/Assets/Plugins/iOS
+cp -R ./Pods/VoxImplantSDK/VoxImplant.framework ../../package/Assets/Plugins/iOS
 
 cd -
