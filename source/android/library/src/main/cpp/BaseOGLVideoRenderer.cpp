@@ -301,7 +301,7 @@ void BaseOGLVideoRenderer::RenderBuffer(const uint8_t *yPlane, int yStride,
 
 static void uploadPlane(GLsizei width, GLsizei height, int stride, const uint8_t *plane) {
     if (stride == width) {
-        // Yay!  We can upload the entire plane in a single GL call.
+        // Yay!  We can upload the entire plane in a single GL createCall.
         glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height, GL_LUMINANCE,
                         GL_UNSIGNED_BYTE,
                         static_cast<const GLvoid*>(plane));

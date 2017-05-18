@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
@@ -96,12 +95,12 @@ namespace Voximplant
         public event SIPInfoReceivedInCallEvent SIPInfoReceivedInCall;
 
         /**
-        Called when Voximplant directs a new call to a user logged in from this SDK instance. SDK can handle multiple incoming and/or outgoing calls at once and target specified call via the 'callId' string returned by 'call()' method and received by this event
+        Called when Voximplant directs a new call to a user logged in from this SDK instance. SDK can handle multiple incoming and/or outgoing calls at once and target specified createCall via the 'callId' string returned by 'createCall()' method and received by this event
         @event IncomingCall
         @param {string} callId Call identifier
         @param {string} from Caller SIP URI
         @param {string} name Caller display name
-        @param {bool} isVideo 'true' if incoming call is a video call. Video can be enabled or disabled during a call
+        @param {bool} isVideo 'true' if incoming call is a video createCall. Video can be enabled or disabled during a createCall
         @param {Dictionary} headers Optional SIP headers that was set by a caller
         */
         public event IncomingCallEvent IncomingCall;
@@ -124,10 +123,10 @@ namespace Voximplant
         public event CallFailedEvent CallFailed;
 
         /**
-        Called when Voximplant cloud sends RINGING SIP notificatoin via 'call.ring()' method. As response to that event client can play some "ringing" sounds or inform user about "call in progress" some other way
+        Called when Voximplant cloud sends RINGING SIP notificatoin via 'call.ring()' method. As response to that event client can play some "ringing" sounds or inform user about "createCall in progress" some other way
         @event CallRinging
         @param {string} callId Call identifier, previously returned by the call() function
-        @param {Dictionary} headers Optional SIP headers that was sent by Voximplant as an argument to the 'call.ring()' method call
+        @param {Dictionary} headers Optional SIP headers that was sent by Voximplant as an argument to the 'call.ring()' method createCall
         */
         public event CallRingingEvent CallRinging;
 
@@ -140,9 +139,9 @@ namespace Voximplant
         public event CallDisconnectedEvent CallDisconnected;
 
         /**
-        Called after call() method successfully established a call with the Voximplant cloud
+        Called after call() method successfully established a createCall with the Voximplant cloud
         @event CallConnected
-        @param {string} callId Connected call identifier. It's same identifier returned by the call() function and it can be used in other function to specify one of multiple calls
+        @param {string} callId Connected call identifier. It's same identifier returned by the createCall() function and it can be used in other function to specify one of multiple calls
         @param {Dictionary} headers Optional SIP headers that was sent by Voximplant while accepting the call
         */
         public event CallConnectedEvent CallConnected;
@@ -245,6 +244,7 @@ namespace Voximplant
 
         protected virtual void OnCallDisconnected(string callId, Dictionary<string, string> headers)
         {
+            endSendingVideoStreamForCall(callId);
             if (CallDisconnected != null) {
                 CallDisconnected(callId, headers);
             }
@@ -341,15 +341,22 @@ namespace Voximplant
         public abstract void login(string username, string password);
 
         /**
-        Start a new outgoing call
-        "OnCallConnected" will be called on call success, or "OnCallFailed" will be called if Voximplant cloud rejects a call or network error occur
-        @method call
+        Creates new call
+        @method createCall
         @param {string} number Number to call. For SIP compatibility reasons number should be a non-empty string even if the number itself is not used by a Voximplant cloud scenario
-        @param {bool} videoCall If 'true', video will will be sent and received for the call. Video can also be enabled or disabled dynamically during the call
+        @param {bool} videoCall If 'true', video will will be sent and received for the call. Video can also be enabled or disabled dynamically during the createCall
         @param {string} customData Custom data to send alongside call into Voximplant JavaScript cloud scenario
+        @return callId of created call
+        */
+        public abstract string createCall(string number, bool videoCall, string customData);
+
+        /**
+        Start outgoing call
+        @method startCall
+        @param {string} callId Call identifier
         @param {Dictionary<string, string>} headers Optional SIP headers to send alongside the call
         */
-        public abstract void call(string number, bool videoCall, string customData, Dictionary<string, string> headers = null);
+        public abstract void startCall(string callId, Dictionary<string, string> headers = null);
 
         /**
         Answer incoming call. Should be called from the "OnIncomingCall" handler
@@ -622,6 +629,47 @@ namespace Voximplant
                 videoStreamCallbacks.Remove(descriptor);
             }
         }
+
+        #region Local video stream
+
+        public void useCameraVideoStreamForCall(string callId, UnityEngine.Camera streamCamera)
+        {
+            var newBehaviour = streamCamera.gameObject.AddComponent<LocalStreamCameraBehaviour>();
+            var behaviours = new List<LocalStreamCameraBehaviour>();
+            var localStreamCameraBehaviours = _behavioursByCallId.ContainsKey(callId) ? _behavioursByCallId[callId] : null;
+            if (localStreamCameraBehaviours != null) {
+                behaviours.InsertRange(0, localStreamCameraBehaviours);
+            }
+            behaviours.Insert(behaviours.Count, newBehaviour);
+            _behavioursByCallId[callId] = behaviours.ToArray();
+
+            newBehaviour.OnTextureCreated = texture => {
+                beginCallVideoStream(callId, texture.GetNativeTexturePtr(), (uint) texture.width, (uint) texture.height);
+            };
+            newBehaviour.OnTextureRendered = texture => {
+                callVideoStreamTextureUpdated(callId);
+            };
+            newBehaviour.OnTextureDestroyed = texture => {
+                endCallVideoStream(callId, texture.GetNativeTexturePtr());
+            };
+
+            newBehaviour.EnsureTexture();
+        }
+
+        public void endSendingVideoStreamForCall(string callId)
+        {
+            foreach (var behaviour in _behavioursByCallId[callId]) {
+                Destroy(behaviour);
+            }
+        }
+
+        private readonly Dictionary<string, LocalStreamCameraBehaviour[]> _behavioursByCallId = new Dictionary<string, LocalStreamCameraBehaviour[]>();
+
+        protected abstract void beginCallVideoStream(string pCallId, IntPtr pTexturePtr, uint width, uint height);
+        protected abstract void callVideoStreamTextureUpdated(string pCallId);
+        protected abstract void endCallVideoStream(string pCallId, IntPtr pTexturePtr);
+
+        #endregion
 
         protected static bool GraphicsDeviceIsSupported()
         {

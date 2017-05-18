@@ -30,10 +30,15 @@ namespace Voximplant
             iosSDKlogin(username, password);
         }
 
-        public override void call(string number, bool videoCall, string customData, Dictionary<string, string> header = null)
+        public override string createCall(string number, bool videoCall, string customData)
         {
-            var pairKeyValueArray = new PairKeyValueArray(Utils.GetDictionaryToArray(header));
-            iosSDKstartCall(number, videoCall, customData, JsonUtility.ToJson(pairKeyValueArray));
+            var idPtr = iosSDKcreateCall(number, videoCall, customData);
+            return Marshal.PtrToStringAnsi(idPtr);
+        }
+
+        public override void startCall(string callId, Dictionary<string, string> headers = null)
+        {
+            iosSDKstartCall(callId, JsonUtility.ToJson(new PairKeyValueArray(Utils.GetDictionaryToArray(headers))));
         }
 
         public override void answer(string pCallId, Dictionary<string, string> pHeader = null)
@@ -129,6 +134,35 @@ namespace Voximplant
 
         #endregion
 
+        #region Video Stream
+
+        protected override void beginCallVideoStream(string pCallId, IntPtr pTexturePtr, uint width, uint height)
+        {
+            registerCallVideoStream(pCallId, pTexturePtr, width, height);
+        }
+
+        protected override void callVideoStreamTextureUpdated(string pCallId)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void endCallVideoStream(string pCallId, IntPtr pTexturePtr)
+        {
+            unregisterCallVideoStream(pCallId, pTexturePtr);
+        }
+
+#if (UNITY_IPHONE || UNITY_WEBGL) && !UNITY_EDITOR
+        [DllImport ("__Internal")]
+#endif
+        private static extern void registerCallVideoStream(string pCallId, IntPtr pTexturePtr, uint width, uint height);
+
+#if (UNITY_IPHONE || UNITY_WEBGL) && !UNITY_EDITOR
+        [DllImport ("__Internal")]
+#endif
+        private static extern void unregisterCallVideoStream(string pCallId, IntPtr pTexturePtr);
+
+        #endregion
+
         #region Native
 
         [DllImport("__Internal")]
@@ -141,7 +175,10 @@ namespace Voximplant
         private static extern void iosSDKlogin(string pLogin, string pPass);
 
         [DllImport("__Internal")]
-        private static extern void iosSDKstartCall(string pUser, bool pWithVideo, string pCustomData, string pHeaderJson);
+        private static extern IntPtr iosSDKcreateCall(string pUser, bool pWithVideo, string pCustomData);
+
+        [DllImport("__Internal")]
+        private static extern void iosSDKstartCall(string pCallId, string pHeaderJson);
 
         [DllImport("__Internal")]
         private static extern void iosSDKanswerCall(string pCallId, string pHeaderJson);

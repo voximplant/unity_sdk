@@ -1,25 +1,24 @@
 //
 // Created by Aleksey Zinchenko on 07/03/2017.
-// Copyright (c) 2017 voximplant. All rights reserved.#import "BaseImports.h"
 //
 
-//
-// Created by Aleksey Zinchenko on 02/03/2017.
-//
+#import <cstdlib>
+#import <functional>
 
-#include <cstdlib>
+#import "BaseImports.h"
 
-#include "BaseImports.h"
-
-#include "IUnityGraphics.h"
-#include "EAGLVideoRenderer.h"
-#include "DestroyList.h"
+#import "IUnityGraphics.h"
+#import "EAGLVideoRenderer.h"
+#import "DestroyList.h"
 #import "iOSNativeRenderer.h"
+#import "VIClientBridge.h"
+#import "VIBaseVideoStreamSource.h"
 
 std::vector<BaseVideoRenderer *> *s_renderers;
 Mutex *s_renderersMutex;
 EAGLContext *s_unityContext;
 UnityGfxRenderer s_unityGFXRenderer;
+IUnityInterfaces *s_unityInterfaces;
 
 DestroyList<BaseVideoRenderer *> *s_destroyList;
 
@@ -57,6 +56,17 @@ GetRenderEventFunc()
     return OnRenderEvent;
 }
 
+static void UNITY_INTERFACE_API OnVideoStreamRenderEvent(int eventID) {
+    for (VIBaseVideoStreamSource *source in [s_bridge.localVideoStreamSources allValues]) {
+        [source onRenderEvent];
+    }
+}
+
+extern "C" UnityRenderingEvent UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API
+GetLocalVideoStreamRenderEventFunc() {
+    return OnVideoStreamRenderEvent;
+}
+
 extern "C" void UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API
 DestroyRenderer(void *textureId, EAGLContext *context) {
     s_destroyList->DestroyObject(textureId, (__bridge void *)context);
@@ -67,6 +77,7 @@ typedef void	(UNITY_INTERFACE_API *PluginUnloadFunc)();
 
 extern "C" void	UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API VoximplantPluginLoad(IUnityInterfaces* unityInterfaces)
 {
+    s_unityInterfaces = unityInterfaces;
     s_unityGFXRenderer = unityInterfaces->Get<IUnityGraphics>()->GetRenderer();
 }
 extern "C" void	UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API VoximplantPluginUnload() {};
