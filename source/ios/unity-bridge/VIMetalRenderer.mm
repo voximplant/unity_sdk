@@ -68,13 +68,17 @@
         newRendererCreated = true;
     }
 
+    if (frame.dataY == nil) {
+        frame = [frame newI420VideoFrame];
+    }
+
     _renderer->RenderBuffer(
-            frame.yPlane,
-            frame.yPitch,
-            frame.uPlane,
-            frame.uPitch,
-            frame.vPlane,
-            frame.vPitch,
+            frame.dataY,
+            frame.strideY,
+            frame.dataU,
+            frame.strideU,
+            frame.dataV,
+            frame.strideV,
             width,
             height,
             frame.rotation
@@ -90,9 +94,11 @@
 }
 
 - (void)destroyCurrentRenderer {
-    s_destroyList->AddObject((__bridge void *) _renderer->GetMetalTexture(), _renderer->GetMetalContext(), _renderer);
-
-    _renderer = NULL;
+    if (_renderer != NULL) {
+        s_destroyList->AddObject((__bridge void *) _renderer->GetMetalTexture(), _renderer->GetMetalContext(), _renderer);
+        
+        _renderer = NULL;
+    }
 }
 
 

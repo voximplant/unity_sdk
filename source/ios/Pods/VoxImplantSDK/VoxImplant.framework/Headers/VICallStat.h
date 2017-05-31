@@ -13,16 +13,16 @@
  warning, this Statistics API is not final right now, it may be changed in future releases
 */
 
-typedef enum{
+typedef NS_ENUM(NSUInteger,VIStreamDirection){
     VIStreamDirectionSend,
     VIStreamDirectionRecv
-}VIStreamDirection;
+};
 
-typedef enum{
+typedef NS_ENUM(NSUInteger,VIStreamType){
     VIStreamTypeUnknown,
     VIStreamTypeAudio,
     VIStreamTypeVideo
-}VIStreamType;
+};
 
 @class RTCLegacyStatsReport;
 @interface VIStreamStat : NSObject
@@ -70,7 +70,7 @@ typedef enum{
 // common video stat
 @property(nonatomic,strong,readonly) VIVideoStat* video;
 
-@property(nonatomic,strong,readonly) NSArray<VIEndPointStat*> *endPoints; // only local sendStreams
+@property(nonatomic,strong,readonly) NSArray<VIEndPointStat*> *endPoints; // remote EndPoints
 
 @property(nonatomic,strong,readonly) NSArray<VIStreamStat*> *localStreams; // only local sendStreams
 @property(nonatomic,strong,readonly) NSArray<VIStreamStat*> *streams; // all streams audio-send,audio-recv,video-send,video-recv in one array for convinience

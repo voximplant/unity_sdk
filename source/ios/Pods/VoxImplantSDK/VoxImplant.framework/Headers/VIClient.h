@@ -12,11 +12,17 @@
 @class VIClient;
 @class VICall;
 
-
-/*!
- @enum VILogLevel
- @abstract Log level
- */
+/**
+@enum VILogLevel
+@abstract Log level
+@constant VILogLevelDisabled Log verbosity level to disable logs.
+@constant VILogLevelError Log verbosity level to include only error messages.
+@constant VILogLevelWarning Log verbosity level to include warnings messages.
+@constant VILogLevelInfo Log verbosity level to include info messages.
+@constant VILogLevelDebug Log verbosity level to include debug messages.
+@constant VILogLevelVerbose Log verbosity level to include verbose messages.
+@constant VILogLevelMax Log verbosity level to include all types of messages.
+*/
 typedef NS_ENUM(NSUInteger, VILogLevel) {
     VILogLevelDisabled,
     VILogLevelError,
@@ -33,218 +39,253 @@ typedef NS_ENUM(NSUInteger, VILogLevel) {
  */
 @interface VIClient : NSObject
 
+/**
+Get client version
+@method clientVersion
+@static
+@return {NSString*} client version
+*/
 + (NSString*)clientVersion;
 
 /**
- Sets a verbosity level for log messages. Note that this method must be
- called before creating SDK object instance.
- @method setLogLevel:
- @static
- @param logLevel verbosity level
- */
+Set a verbosity level for log messages. This method must be called before creating SDK object instance.
+@method setLogLevel:
+@static
+@param {enum VILogLevel} logLevel Log verbosity level
+*/
 + (void)setLogLevel:(VILogLevel)logLevel;
 
-
 /**
- Create VIClient instance
- @method initWithDelegateQueue:
- @param queue All delegates methods will be called in this queue
- Warning! Queue must be ONLY SERIAL! not concurrent!!! (main queue possible)
- */
+Create VIClient instance
+@method initWithDelegateQueue:
+@param {dispatch_queue_t} queue All delegates methods will be called in this queue. Queue should be serial, but not concurrent (main queue is applicable).
+*/
 - (instancetype)initWithDelegateQueue:(dispatch_queue_t)queue;
 
 @end
 
+/**
+@protocol VIClientSessionDelegate
+@abstract Delegate for VIClient
+@discussion Delegate for VIClient to handle connection with VoxImplant Cloud events.
+*/
 @protocol VIClientSessionDelegate <NSObject>
 
 /**
- Triggered if Voximplant cloud was connected
- @method clientSessionDidConnect:
- @param client client instance
- */
+Triggered after connection to VoxImplant Cloud was established successfully.
+@method clientSessionDidConnect:
+@param {VIClient*} client VIClient instance
+*/
 - (void)clientSessionDidConnect:(VIClient*)client;
 
 /**
- Triggered if Voximplant cloud was disconnected
- @method clientSessionDidDisconnect:
- @param  client client instance
- */
+Triggered if connection to VoxImplant Cloud was closed
+@method clientSessionDidDisconnect:
+@param {VIClient*} client VIClient instance
+*/
 - (void)clientSessionDidDisconnect:(VIClient*)client;
 
 /**
- Triggered if Voximplant cloud was not successfully connected
- @method client:sessionDidFailConnectWithError:
- @param client client instance
- @param error error description
- */
+Triggered if connection to VoxImplant Cloud couldn't be established
+@method client:sessionDidFailConnectWithError:
+@param {VIClient*} client VIClient instance
+@param {NSError*} error Error description
+*/
 - (void)client:(VIClient*)client sessionDidFailConnectWithError:(NSError*)error;
 
 @end
 
 @interface VIClient(Session)
 
+/**
+Session delegate that handles events for connection with VoxImplant Cloud.
+@property sessionDelegate
+@type {id<VIClientSessionDelegate>}
+*/
 @property (nonatomic, weak) id<VIClientSessionDelegate> sessionDelegate;
 
 /**
- Connect to VoxImplant cloud
- @method connect
- */
+Connect to VoxImplant cloud
+@method connect
+*/
 - (void)connect;
 
 /**
- Connect to VoxImplant cloud
- @method connectWithConnectivityCheck:gateways:
- @param connectivityCheck Checks whether UDP traffic will flow correctly between device and VoxImplant cloud. This check reduces connection speed.
- @param gateways error description
- */
+Connect to VoxImplant cloud.
+@method connectWithConnectivityCheck:gateways:
+@param {BOOL} connectivityCheck Checks whether UDP traffic will flow correctly between device and VoxImplant cloud. This check reduces connection speed.
+@param {NSArray*} gateways Array of server names of particular media gateways for connection
+*/
 - (void)connectWithConnectivityCheck:(BOOL)connectivityCheck gateways:(NSArray*)gateways;
 
 /**
- Disconnect from VoxImplant cloud
- @method disconnect
- */
+Disconnect from VoxImplant cloud
+@method disconnect
+*/
 - (void)disconnect;
 
 @end
 
-
 /**
- Completion handler, called than logged in succefully
- @param displayName  DisplayName
- @param authParams   Auth params. Contains token strings and expire durations in seconds as <b>accessExpire</b>, <b>accessToken</b>, <b>refreshExpire</b> and <b>refreshToken</b>.
- */
+Completion handler, triggered when login operation is completed successfully.
+@param {NSString *} displayName  Display name of logged in user
+@param {NSDictionary*} authParams Auth parameters that can be used to login using access token.
+*/
 typedef void (^VILoginSuccess)(NSString * displayName, NSDictionary* authParams);
 
-
 /**
- Completion handler, called than error occurs during login
- @param  error  Error
- */
+Completion handler, triggered when login process failed.
+@param {NSError *} error  Error
+*/
 typedef void (^VILoginFailure)(NSError * error);
 
 /**
- Completion handler, called than one time key generated
- @param oneTimeKey  oneTimeKey
- */
+Completion handler, triggered when one time key generated by the login server.
+@param {NSString *} oneTimeKey  One time key
+*/
 typedef void (^VIOneTimeKeyResult)(NSString * oneTimeKey);
 
 /**
- Completion handler, called than logged in succefully
- @param error  may be nil if success
- @param authParams   Auth params. Contains token strings and expire durations in seconds as <b>accessExpire</b>, <b>accessToken</b>, <b>refreshExpire</b> and <b>refreshToken</b>.
- */
+Completion handler, triggered when refresh of login tokens completed.
+@param {NSError *} error Error if operation failed, nil otherwise
+@param {NSDictionary*} authParams Auth parameters that can be used to login using access token.
+*/
 typedef void (^VIRefreshTokenResult)(NSError *error, NSDictionary* authParams);
 
 
 @interface VIClient(Login)
 
 /**
- Login to VoxImplant cloud
- @method loginWithUser:password:success:failure
- @param user       Full user name, including app and account name, like <i>someuser@someapp.youraccount.voximplant.com</i>
- @param password   Password
- @param success called than logged in succeffuly
- @param failure called than failed to login
- */
+Login to VoxImplant cloud using password.
+@method loginWithUser:password:success:failure:
+@param {NSString*} user Full user name, including app and account name, like <i>someuser@someapp.youraccount.voximplant.com</i>
+@param {NSString*} password User password
+@param {VILoginSuccess} success Completion handler triggered if operation is completed successfully
+@param {VILoginFailure} failure Completion handler failure triggered if operation is failed
+*/
 - (void)loginWithUser:(NSString*)user
              password:(NSString*)password
               success:(VILoginSuccess)success
               failure:(VILoginFailure)failure;
 
 /**
- Login to VoxImplant cloud
- @method loginWithUser:token:success:failure
- @param  user  Full user name, including app and account name, like <i>someuser@someapp.youraccount.voximplant.com</i>
- @param  token Token
- @param  success called than logged in succeffuly
- @param  failure called than failed to login
- */
+Login to VoxImplant cloud using access token.
+@method loginWithUser:token:success:failure:
+@param {NSString*} user  Full user name, including app and account name, like <i>someuser@someapp.youraccount.voximplant.com</i>
+@param {NSString*} token Access token obtained from authParams
+@param {VILoginSuccess} success Completion handler triggered if operation is completed successfully
+@param {VILoginFailure} failure Completion handler failure triggered if operation is failed
+*/
 - (void)loginWithUser:(NSString*)user
                 token:(NSString*)token
               success:(VILoginSuccess)success
               failure:(VILoginFailure)failure;
 
 /**
- Login to VoxImplant cloud
- @method loginWithUser:token:success:failure:
- @param  user  Full user name, including app and account name, like <i>someuser@someapp.youraccount.voximplant.com</i>
- @param  oneTimeKey oneTimeKey
- @param  success called than logged in succeffuly
- @param  failure called than failed to login
- */
+Login to VoxImplant cloud using one time key.
+@method loginWithUser:oneTimeKey:success:failure:
+@param {NSString*} user Full user name, including app and account name, like <i>someuser@someapp.youraccount.voximplant.com</i>
+@param {NSString*} oneTimeKey Hash that was generated using following formula: <i>MD5(oneTimeKey+"|"+MD5(user+":voximplant.com:"+password))</i><br><b>Please note that here user is just a user name, without app name, account name or anything else after "@"</b>. So if you pass <i>myuser@myapp.myacc.voximplant.com</i> as a <b>username</b>, you should only use <i>myuser</i> while computing this hash
+@param {VILoginSuccess} success Completion handler triggered if operation is completed successfully
+@param {VILoginFailure} failure Completion handler failure triggered if operation is failed
+*/
 - (void)loginWithUser:(NSString*)user
            oneTimeKey:(NSString*)oneTimeKey
               success:(VILoginSuccess)success
               failure:(VILoginFailure)failure;
 
 /**
- Perform refresh of login tokens required for login using access token
- @method refreshTokenWithUser:token:result
- @param  user Full user name, including app and account name, like <i>someuser@someapp.youraccount.voximplant.com</i>
- @param  token refresh token that was obtained in the <b>onLoginSuccessfulWithDisplayName</b> callback as the <b>refreshToken</b> property of callback parameter object.
- @param  result Completion handler.
- */
+Perform refresh of login tokens required for login using access token
+@method refreshTokenWithUser:token:result:
+@param {NSString*} user Full user name, including app and account name, like <i>someuser@someapp.youraccount.voximplant.com</i>
+@param {NSString*} token Refresh token obtained from authParams
+@param {VIRefreshTokenResult} result Completion handler that is triggered when the operation is completed
+*/
 - (void)refreshTokenWithUser:(NSString *)user token:(NSString*)token result:(VIRefreshTokenResult)result;
 
 /**
- Generates one time login key to be used for automated login process. See <a href="http://voximplant.com/docs/quickstart/24/automated-login/">Information about automated login on VoxImplant website</a> and <b>loginUsingOneTimeKey</b>
- @method requestOneTimeKeyWithUser:result:
- @param  user Full user name, including app and account name, like <i>someuser@someapp.youraccount.voximplant.com</i>
- @param  result Completion handler.
- */
+Generates one time login key to be used for automated login process. See <a href="http://voximplant.com/docs/quickstart/24/automated-login/">Information about automated login on VoxImplant website</a> and <b>loginUsingOneTimeKey</b>
+@method requestOneTimeKeyWithUser:result:
+@param {NSString*} user Full user name, including app and account name, like <i>someuser@someapp.youraccount.voximplant.com</i>
+@param {VIOneTimeKeyResult} result Completion handler that is triggered when the operation is completed
+*/
 - (void)requestOneTimeKeyWithUser:(NSString *)user result:(VIOneTimeKeyResult)result;
 
 @end
 
-
+/**
+@protocol VIClientCallManagerDelegate
+@abstract Delegate for VIClient
+@discussion Delegate for VIClient to handle incoming calls.
+*/
 @protocol VIClientCallManagerDelegate <NSObject>
 
 /**
- Triggered on incoming call
- @method client:didReceiveIncomingCall:video:headers:
- @param  client VIClient instance
- @param  call Call instance
- @param  video incoming call offers video if true
- @param  headers Optional headers passed with event
- */
+Triggered on incoming call
+@method client:didReceiveIncomingCall:video:headers:
+@param {VIClient*} client VIClient instance
+@param {VICall*} call Call instance
+@param {BOOL} video True if incoming call offers video, false otherwise
+@param {NSDictionary*} headers Optional headers passed with event
+*/
 - (void)client:(VIClient*)client didReceiveIncomingCall:(VICall*)call video:(BOOL)video headers:(NSDictionary*)headers;
 
 @end
 
 @interface VIClient(CallManager)
 
+/**
+CallManager delegate that handles incoming calls.
+@property callManagerDelegate
+@type {id<VIClientCallManagerDelegate>}
+*/
 @property (nonatomic, weak) id<VIClientCallManagerDelegate> callManagerDelegate;
 
+/**
+Dictionary of actual calls with their ids.
+@property calls
+@type {NSDictionary<NSString*,VICall*>*}
+@readonly
+*/
 @property (nonatomic,strong,readonly) NSDictionary<NSString*,VICall*>*  calls; // callId to call dictionary
 
+/**
+Create new call instance. Call must be then started using startCall
+@method callToUser:customData:
+@param {NSString*} user SIP URI, username or phone number to make call to. Actual routing is then performed by VoxEngine scenario
+@param {NSString*} Optional custom data passed with call. Will be available in VoxEngine senario
+@return {NSString*} Pointer to VICall instance
+*/
 - (VICall*)callToUser:(NSString*)user customData:(NSString*)customData;
 
 @end
 
 @interface VIClient(Push)
 
-/** Register Apple Push Notifications token,
- after calling this function, application will receive push notifications from Voximplant Server
- @param token The APNS token which comes from:
+/**
+Register Apple Push Notifications token, after calling this function, application will receive push notifications from Voximplant Server
+@method registerPushNotificationsToken:
+@param {NSData *} token The APNS token which comes from:
  - (void)pushRegistry:(PKPushRegistry *)registry didUpdatePushCredentials:(PKPushCredentials *)credentials forType:(PKPushType)type;
- */
+*/
 - (void)registerPushNotificationsToken:(NSData *)token;
 
-/** Unregister Apple Push Notifications token,
- after calling this function, application stops receive push notifications from Voximplant Server
- @param token The APNS token which comes from:
+/**
+Unregister Apple Push Notifications token, after calling this function, application stops receive push notifications from Voximplant Server
+@method unregisterPushNotificationsToken:
+@param {NSData *} token The APNS token which comes from:
  - (void)pushRegistry:(PKPushRegistry *)registry didUpdatePushCredentials:(PKPushCredentials *)credentials forType:(PKPushType)type;
  credentials.token
- */
+*/
 - (void)unregisterPushNotificationsToken:(NSData *)token;
 
-/** Handle incoming push notification
- @param notification The incomming notification which comes from:
+/**
+Handle incoming push notification
+@method handlePushNotification:
+@param {NSDictionary *} notification The incomming notification which comes from:
  - (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(PKPushType)type {
  payload.dictionaryPayload
- */
+*/
 - (void)handlePushNotification:(NSDictionary *)notification;
 
 @end
-
-

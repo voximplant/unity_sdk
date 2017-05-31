@@ -8,12 +8,22 @@
 
 #import <WebRTC/WebRTC.h>
 
+/**
+@protocol VIVideoRenderer
+*/
 @protocol VIVideoRenderer <RTCVideoRenderer>
 
 @optional
-
+/**
+Triggered when the video renderer is started
+@method didStart
+*/
 - (void)didStart;
 
+/**
+Triggered when the video renderer is stopped
+@method didStop
+*/
 - (void)didStop;
 
 @end

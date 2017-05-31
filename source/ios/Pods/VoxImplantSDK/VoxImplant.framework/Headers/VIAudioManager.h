@@ -8,12 +8,26 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+@class VIAudioManager
+*/
 @interface VIAudioManager : NSObject
 
 - (instancetype)init NS_UNAVAILABLE;
 
+/**
+Obtain VIAudioManager instance
+@method sharedAudioManager
+@static
+@return {instancetype} VIAudioManager instance
+*/
 + (instancetype)sharedAudioManager;
 
+/**
+Enable or disable loudspeaker
+@property useLoudSpeaker
+@type {BOOL}
+*/
 @property(nonatomic,assign) BOOL useLoudSpeaker;
 
 @end

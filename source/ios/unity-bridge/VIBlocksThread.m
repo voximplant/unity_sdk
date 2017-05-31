@@ -54,9 +54,12 @@
         CFRunLoopAddSource(CFRunLoopGetCurrent(), source, kCFRunLoopDefaultMode);
         CFRelease(source);
 
-        while (![NSThread currentThread].isCancelled &&
-                [self.runLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]]) {
-
+        while (![NSThread currentThread].isCancelled) {
+            @autoreleasepool {
+                if (![self.runLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]]) {
+                    break;
+                }
+            }
         }
     }
 };

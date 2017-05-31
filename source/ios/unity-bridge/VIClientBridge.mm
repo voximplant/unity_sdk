@@ -5,6 +5,9 @@
 #import "VIClientBridge.h"
 #import "iOSNativeRenderer.h"
 #import "VIMetalRenderer.h"
+#import "VIBaseVideoStreamSource.h"
+#import "VIEAGLVideoStreamSource.h"
+#import "VIMetalVideoStreamSource.h"
 
 extern "C" void UnitySendMessage(const char *obj, const char *method, const char *msg);
 
@@ -12,7 +15,10 @@ static NSString *s_unityObjName;
 
 void CallUnityMethodWithString(NSString *methodName, NSString *parameters) {
     parameters = parameters ?: @"";
-    UnitySendMessage(s_unityObjName.UTF8String, methodName.UTF8String, parameters.UTF8String);
+
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UnitySendMessage(s_unityObjName.UTF8String, methodName.UTF8String, parameters.UTF8String);
+    });
 }
 
 void CallUnityMethod(NSString *methodName, id parameters) {
@@ -30,13 +36,15 @@ void CallUnityMethod(NSString *methodName, id parameters) {
     CallUnityMethodWithString(methodName, jsonString);
 }
 
-@interface VIClientBridge() <VIClientSessionDelegate, VICallDelegate, VIClientCallManagerDelegate, VIEndPointDelegate>
+@interface VIClientBridge () <VIClientSessionDelegate, VICallDelegate, VIClientCallManagerDelegate, VIEndPointDelegate>
 
 @property(nonatomic, strong, readwrite) VIClient *client;
 @property(nonatomic, strong, readwrite) UIAlertView *currentAlertView;
 
-@property(nonatomic, strong, readonly) NSMutableDictionary<NSString *, id<RTCVideoRenderer>> *localRenderers;
-@property(nonatomic, strong, readonly) NSMutableDictionary<NSString *, id<RTCVideoRenderer>> *remoteRenderers;
+@property(nonatomic, strong, readonly) NSMutableDictionary<NSString *, id <RTCVideoRenderer>> *localRenderers;
+@property(nonatomic, strong, readonly) NSMutableDictionary<NSString *, id <RTCVideoRenderer>> *remoteRenderers;
+
+@property(nonatomic, strong, readonly) NSMutableDictionary<NSString *, VIBaseVideoStreamSource *> *videoStreamSources;
 
 @end
 
@@ -52,6 +60,7 @@ void CallUnityMethod(NSString *methodName, id parameters) {
 
         _localRenderers = [NSMutableDictionary new];
         _remoteRenderers = [NSMutableDictionary new];
+        _videoStreamSources = [NSMutableDictionary new];
     }
 
     return self;
@@ -134,7 +143,7 @@ didDisconnectWithHeaders:(NSDictionary *)headers
 }
 
 - (void)call:(VICall *)call didAddLocalVideoStream:(VIVideoStream *)videoStream {
-    id<RTCVideoRenderer> renderer = self.localRenderers[call.callId];
+    id <RTCVideoRenderer> renderer = self.localRenderers[call.callId];
     if (renderer != nil) {
         [videoStream addRenderer:renderer];
     }
@@ -147,7 +156,7 @@ didDisconnectWithHeaders:(NSDictionary *)headers
 #pragma mark - VIEndPointDelegate
 
 - (void)endPoint:(VIEndPoint *)endPoint didAddRemoteVideoStream:(VIVideoStream *)videoStream {
-    id<RTCVideoRenderer> renderer = self.remoteRenderers[endPoint.call.callId];
+    id <RTCVideoRenderer> renderer = self.remoteRenderers[endPoint.call.callId];
     if (renderer != nil) {
         [videoStream addRenderer:renderer];
     }
@@ -159,7 +168,7 @@ didDisconnectWithHeaders:(NSDictionary *)headers
 
 #pragma mark - Utils
 
-- (void)callMethod:(NSString*) methodName {
+- (void)callMethod:(NSString *)methodName {
     CallUnityMethodWithString(methodName, nil);
 }
 
@@ -246,15 +255,28 @@ __used void iosSDKloginUsingOneTimeKey(const char *pUserName, const char *pOneTi
                            }];
 }
 
-__used void iosSDKstartCall(const char *pUserId, bool pWithVideo, const char *pCustom, const char *pHeaders) {
+__used const char *iosSDKcreateCall(const char *pUserId, bool pWithVideo, const char *pCustom) {
     NSString *userString = [NSString stringWithUTF8String:pUserId];
     NSString *customData = [[NSString alloc] initWithUTF8String:pCustom];
-    NSDictionary *headers = [[VIJsonDic alloc] initWithJSONString:[[NSString alloc] initWithUTF8String:pHeaders]].dic;
 
     VICall *call = [s_bridge.client callToUser:userString customData:customData];
     [call addDelegate:s_bridge];
     call.endPoints.firstObject.delegate = s_bridge;
-    [call startWithVideo:pWithVideo headers:headers];
+
+    return call.callId.UTF8String;
+}
+
+__used void iosSDKstartCall(const char *pCallId, const char *pHeaders) {
+    if (pCallId == nil) {
+        NSLog(@"Internal Inconsistency: trying to answer call with nil id");
+        return;
+    }
+
+    NSDictionary *headers = [[VIJsonDic alloc] initWithJSONString:[[NSString alloc] initWithUTF8String:pHeaders]].dic;
+    NSString *callIdString = [NSString stringWithUTF8String:pCallId];
+
+    VICall *call = s_bridge.client.calls[callIdString];
+    [call startWithVideo:YES headers:headers];
 
     CallUnityMethodWithString(@"fiosonOnStartCall", call.callId);
 }
@@ -352,7 +374,7 @@ __used void iosSDKsendMessage(const char *pCallId, const char *pMsg, const char 
     [s_bridge.client.calls[callIdString] sendMessage:message headers:headers];
 }
 
-__used void beginSendingVideoForStream(const char* pCallId, int stream) {
+__used void beginSendingVideoForStream(const char *pCallId, int stream) {
     if (pCallId == nil) {
         NSLog(@"Internal Inconsistency: trying to render video stream to texture in call with nil id");
         return;
@@ -361,17 +383,20 @@ __used void beginSendingVideoForStream(const char* pCallId, int stream) {
     NSString *callIdString = [NSString stringWithUTF8String:pCallId];
     VICall *call = s_bridge.client.calls[callIdString];
 
-    id<RTCVideoRenderer> renderer;
+    id <RTCVideoRenderer> renderer;
     if (s_unityGFXRenderer == kUnityGfxRendererMetal) {
         renderer = [[VIMetalRenderer alloc] initWithStream:stream
-                                         nativeTextureReport:^(id <MTLTexture> texture, void *pVoid, int width, int height) {
-                                             CallUnityMethod(@"fonNewNativeTexture", @[callIdString, @((long long)texture), @((long long)pVoid), @(width), @(height), @(stream)]);
-                                         }];
+                                       nativeTextureReport:^(id <MTLTexture> texture,
+                                               void *pVoid,
+                                               int width,
+                                               int height) {
+                                           CallUnityMethod(@"fonNewNativeTexture", @[callIdString, @((long long) texture), @((long long) pVoid), @(width), @(height), @(stream)]);
+                                       }];
     } else {
         renderer = [[VIEAGLRenderer alloc] initWithStream:stream
-                                        nativeTextureReport:^(GLuint textureId, void *context, int width, int height) {
-                                            CallUnityMethod(@"fonNewNativeTexture", @[callIdString, @(textureId), @((long long)context), @(width), @(height), @(stream)]);
-                                        }];
+                                      nativeTextureReport:^(GLuint textureId, void *context, int width, int height) {
+                                          CallUnityMethod(@"fonNewNativeTexture", @[callIdString, @(textureId), @((long long) context), @(width), @(height), @(stream)]);
+                                      }];
     }
 
     if (stream == 0) {
@@ -385,7 +410,62 @@ __used void beginSendingVideoForStream(const char* pCallId, int stream) {
     }
 }
 
-//__used void
+__used void registerCallVideoStream(const char *pCallId, unsigned int width, unsigned int height) {
+    if (pCallId == nil) {
+        NSLog(@"Internal Inconsistency: trying to render video stream to texture in call with nil id");
+        return;
+    }
+
+    NSString *callIdString = [NSString stringWithUTF8String:pCallId];
+    VICall *call = s_bridge.client.calls[callIdString];
+
+    VIBaseVideoStreamSource *streamSource;
+    if (s_unityGFXRenderer == kUnityGfxRendererOpenGLES20
+            || s_unityGFXRenderer == kUnityGfxRendererOpenGLES30) {
+        streamSource = [[VIEAGLVideoStreamSource alloc] initWithWidth:width height:height];
+    } else if (s_unityGFXRenderer == kUnityGfxRendererMetal) {
+        streamSource = [[VIMetalVideoStreamSource alloc] initWithWidth:width height:height];
+    }
+
+    call.videoSource = streamSource.videoSource;
+
+    s_bridge.videoStreamSources[callIdString] = streamSource;
+}
+
+__used void iosCallVideoStreamTextureUpdated(const char *pCallId, intptr_t texturePtr, unsigned int width, unsigned int height) {
+    if (pCallId == nil) {
+        NSLog(@"Internal Inconsistency: trying to render video stream to texture in call with nil id");
+        return;
+    }
+
+    NSString *callIdString = [NSString stringWithUTF8String:pCallId];
+    VICall *call = s_bridge.client.calls[callIdString];
+
+    VIBaseVideoStreamSource *source = s_bridge.videoStreamSources[callIdString];
+    [source sendVideoFrameFromTexture:texturePtr width:width height:height];
+}
+
+__used void unregisterCallVideoStream(const char *pCallId, void *pTexturePtr) {
+    if (pCallId == nil) {
+        NSLog(@"Internal Inconsistency: trying to render video stream to texture in call with nil id");
+        return;
+    }
+
+    NSString *callIdString = [NSString stringWithUTF8String:pCallId];
+    VICall *call = s_bridge.client.calls[callIdString];
+
+    [call setSendVideo:NO
+            completion:^(NSError *error) {
+
+                if (error != nil) {
+                    NSLog(@"Internal error: %@", [error localizedDescription]);
+                }
+
+                call.videoSource = nil;
+
+                [s_bridge.videoStreamSources removeObjectForKey:call.callId];
+            }];
+}
 
 __used void iosSDKsetUseLoudspeaker(bool pUseLoudspeaker) {
     [VIAudioManager sharedAudioManager].useLoudSpeaker = pUseLoudspeaker;

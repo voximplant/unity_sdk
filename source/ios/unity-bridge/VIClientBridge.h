@@ -8,10 +8,14 @@
 
 #import <VoxImplant/VoxImplant.h>
 
+@class VIBaseVideoStreamSource;
+
 @interface VIClientBridge : NSObject
 
 @property(nonatomic, strong, readonly) VIClient *client;
 
 @end
+
+extern VIClientBridge *s_bridge;
 
 #endif

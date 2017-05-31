@@ -22,6 +22,7 @@ FOUNDATION_EXPORT const unsigned char VoxImplantVersionString[];
 #import <VoxImplant/VICall.h>
 #import <VoxImplant/VIEndPoint.h>
 #import <VoxImplant/VIAudioManager.h>
+#import <VoxImplant/VIVideoSource.h>
 #import <VoxImplant/VICameraManager.h>
 #import <VoxImplant/VIVideoRenderer.h>
 #import <VoxImplant/VIVideoRendererView.h>

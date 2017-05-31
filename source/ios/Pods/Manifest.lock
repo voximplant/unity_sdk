@@ -15,21 +15,21 @@ PODS:
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
   - SocketRocket (0.5.1)
-  - VoxImplantSDK (2.2.2):
+  - VoxImplantSDK (2.4.0):
     - AFNetworking (~> 3.1.0)
     - SocketRocket (~> 0.5.1)
-    - VoxImplantWebRTC (~> 57.1.0)
-  - VoxImplantWebRTC (57.1.0)
+    - VoxImplantWebRTC (~> 58.1.0)
+  - VoxImplantWebRTC (58.1.0)
 
 DEPENDENCIES:
-  - VoxImplantSDK
+  - VoxImplantSDK (= 2.4.0)
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   SocketRocket: d57c7159b83c3c6655745cd15302aa24b6bae531
-  VoxImplantSDK: 71d0dc1920bd91e708160c5369f5a517d8481793
-  VoxImplantWebRTC: b6ff9ac85c89b18f39a6e8d829a6463283fc5585
+  VoxImplantSDK: d651940669c6494adb9992b342d97f190e036b54
+  VoxImplantWebRTC: eed21293a27841d8c5b8dbcb7f694191e62ba128
 
-PODFILE CHECKSUM: 9ed30c2ad4da7107db566cfea8314249e5abbb20
+PODFILE CHECKSUM: 2533b46f0ef4b7936794ec26bc1df696a340552f
 
 COCOAPODS: 1.2.1

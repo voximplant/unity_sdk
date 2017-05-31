@@ -73,13 +73,17 @@
         newRendererCreated = true;
     }
 
+    if (frame.dataY == nil) {
+        frame = [frame newI420VideoFrame];
+    }
+
     _renderer->RenderBuffer(
-            frame.yPlane,
-            frame.yPitch,
-            frame.uPlane,
-            frame.uPitch,
-            frame.vPlane,
-            frame.vPitch,
+            frame.dataY,
+            frame.strideY,
+            frame.dataU,
+            frame.strideU,
+            frame.dataV,
+            frame.strideV,
             width,
             height,
             frame.rotation

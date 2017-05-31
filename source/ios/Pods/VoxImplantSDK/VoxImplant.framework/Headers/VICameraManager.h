@@ -8,31 +8,51 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreVideo/CoreVideo.h>
+#import "VIVideoSource.h"
 
-typedef NS_ENUM(NSInteger,VIRotation) {
-    VIRotation_0 = 0,
-    VIRotation_90 = 90,
-    VIRotation_180 = 180,
-    VIRotation_270 = 270
-};
-
+/**
+@protocol VIVideoPreprocessDelegate
+*/
 @protocol VIVideoPreprocessDelegate <NSObject>
 
 @optional
-
+/**
+Triggered when new video frame is available for preprocessing.
+@method preprocessVideoFrame:rotation:
+@param {CVPixelBufferRef} pixelBuffer Video frame
+@param {VIRotation} rotation Video frame rotation
+*/
 - (void)preprocessVideoFrame:(CVPixelBufferRef)pixelBuffer rotation:(VIRotation)rotation;
 
 @end
 
-
-@interface VICameraManager : NSObject
+/**
+@class VICameraManager
+*/
+@interface VICameraManager : VIVideoSource
 
 - (instancetype)init NS_UNAVAILABLE;
 
+/**
+Obtain VICameraManager instance
+@method sharedCameraManager
+@static
+@return {instancetype} VICameraManager instance
+*/
 + (instancetype)sharedCameraManager;
 
+/**
+Video prepocessing delegate
+@property videoPreprocessDelegate
+@type {id<VIVideoPreprocessDelegate>}
+*/
 @property (nonatomic,weak) id<VIVideoPreprocessDelegate> videoPreprocessDelegate;
 
+/**
+A boolean value indicating if back camera should be used
+@property useBackCamera
+@type {BOOL}
+*/
 @property (nonatomic,assign) BOOL useBackCamera;
 
 @end
