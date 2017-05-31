@@ -136,30 +136,30 @@ namespace Voximplant
 
         #region Video Stream
 
-        protected override void beginCallVideoStream(string pCallId, IntPtr pTexturePtr, uint width, uint height)
+        protected override void beginCallVideoStream(string pCallId, uint width, uint height)
         {
-            registerCallVideoStream(pCallId, pTexturePtr, width, height);
+            registerCallVideoStream(pCallId, width, height);
         }
 
-        protected override void callVideoStreamTextureUpdated(string pCallId)
+        protected override void callVideoStreamTextureUpdated(string pCallId, IntPtr pTexturePtr, int width, int height)
         {
-            throw new NotImplementedException();
+            iosCallVideoStreamTextureUpdated(pCallId, pTexturePtr, (uint) width, (uint) height);
         }
 
-        protected override void endCallVideoStream(string pCallId, IntPtr pTexturePtr)
+        protected override void endCallVideoStream(string pCallId)
         {
-            unregisterCallVideoStream(pCallId, pTexturePtr);
+            unregisterCallVideoStream(pCallId);
         }
 
-#if (UNITY_IPHONE || UNITY_WEBGL) && !UNITY_EDITOR
         [DllImport ("__Internal")]
-#endif
-        private static extern void registerCallVideoStream(string pCallId, IntPtr pTexturePtr, uint width, uint height);
+        private static extern void registerCallVideoStream(string pCallId, uint width, uint height);
+        
+        [DllImport("__Internal")]
+        private static extern void iosCallVideoStreamTextureUpdated(string callId, IntPtr texturePtr, UInt32 width,
+            UInt32 height);
 
-#if (UNITY_IPHONE || UNITY_WEBGL) && !UNITY_EDITOR
         [DllImport ("__Internal")]
-#endif
-        private static extern void unregisterCallVideoStream(string pCallId, IntPtr pTexturePtr);
+        private static extern void unregisterCallVideoStream(string pCallId);
 
         #endregion
 
@@ -227,7 +227,7 @@ namespace Voximplant
 
         #region Native callbacks
 
-        protected void fiosonConnectionSuccessful()
+        protected void fiosonConnectionSuccessful(string p)
         {
             AddLog("fiosonConnectionSuccessful");
             OnConnectionSuccessful();
@@ -239,7 +239,7 @@ namespace Voximplant
             OnConnectionFailedWithError(p);
         }
 
-        protected void fiosonConnectionClosed()
+        protected void fiosonConnectionClosed(string p)
         {
             AddLog("fiosonConnectionClosed");
             CleanupAllVideoStreams();

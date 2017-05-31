@@ -568,7 +568,7 @@ namespace Voximplant
         protected void fonNewNativeTexture(String p)
         {
             Debug.Log(string.Format("new native texture {0}", p));
-
+            
             var paramList = Utils.GetParamList(p);
             var callId = paramList[0].Value;
             var textureId = paramList[1].AsLong;
@@ -576,7 +576,6 @@ namespace Voximplant
             var width = paramList[3].AsInt;
             int height = paramList[4].AsInt;
             int stream = paramList[5].AsInt;
-            var videoStream = (VideoStream) stream;
 
             var descriptor = new CallStreamDescriptor(callId, (VideoStream) stream);
 
@@ -643,17 +642,17 @@ namespace Voximplant
             behaviours.Insert(behaviours.Count, newBehaviour);
             _behavioursByCallId[callId] = behaviours.ToArray();
 
-            newBehaviour.OnTextureCreated = texture => {
-                beginCallVideoStream(callId, texture.GetNativeTexturePtr(), (uint) texture.width, (uint) texture.height);
+            newBehaviour.OnResolutionDidChange = (width, height) => {
+                beginCallVideoStream(callId, (uint) width, (uint) height);
             };
             newBehaviour.OnTextureRendered = texture => {
-                callVideoStreamTextureUpdated(callId);
+                callVideoStreamTextureUpdated(callId, texture.GetNativeTexturePtr(), texture.width, texture.height);
             };
-            newBehaviour.OnTextureDestroyed = texture => {
-                endCallVideoStream(callId, texture.GetNativeTexturePtr());
+            newBehaviour.OnResolutionWillChange = () => {
+                endCallVideoStream(callId);
             };
 
-            newBehaviour.EnsureTexture();
+            newBehaviour.EnsureTextures();
         }
 
         public void endSendingVideoStreamForCall(string callId)
@@ -665,9 +664,9 @@ namespace Voximplant
 
         private readonly Dictionary<string, LocalStreamCameraBehaviour[]> _behavioursByCallId = new Dictionary<string, LocalStreamCameraBehaviour[]>();
 
-        protected abstract void beginCallVideoStream(string pCallId, IntPtr pTexturePtr, uint width, uint height);
-        protected abstract void callVideoStreamTextureUpdated(string pCallId);
-        protected abstract void endCallVideoStream(string pCallId, IntPtr pTexturePtr);
+        protected abstract void beginCallVideoStream(string pCallId, uint width, uint height);
+        protected abstract void callVideoStreamTextureUpdated(string pCallId, IntPtr pTexturePtr, int width, int height);
+        protected abstract void endCallVideoStream(string pCallId);
 
         #endregion
 

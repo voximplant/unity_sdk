@@ -215,26 +215,26 @@ namespace Voximplant
         {
             Assert.IsTrue(GraphicsDeviceIsSupported());
 
-            jo.Call("beginSendingVideoForStream", (int)stream);
+            jo.Call("beginSendingVideoForStream", callId, (int)stream);
         }
 
         #endregion
 
         #region Video Source
 
-        protected override void beginCallVideoStream(string pCallId, IntPtr pTexturePtr, uint width, uint height)
+        protected override void beginCallVideoStream(string pCallId, uint width, uint height)
         {
-            jo.Call("registerCallVideoStream", pCallId, pTexturePtr.ToInt64(), (int)width, (int)height);
+            jo.Call("registerCallVideoStream", pCallId, (int)width, (int)height);
         }
 
-        protected override void callVideoStreamTextureUpdated(string pCallId)
+        protected override void callVideoStreamTextureUpdated(string pCallId, IntPtr pTexturePtr, int width, int height)
         {
-            jo.Call("callVideoStreamTextureUpdated", pCallId);
+            jo.Call("callVideoStreamTextureUpdated", pCallId, pTexturePtr.ToInt32());
         }
 
-        protected override void endCallVideoStream(string pCallId, IntPtr pTexturePtr)
+        protected override void endCallVideoStream(string pCallId)
         {
-            jo.Call("unregisterCallVideoStream", pCallId, pTexturePtr.ToInt64());
+            jo.Call("unregisterCallVideoStream", pCallId);
         }
 
         #endregion
