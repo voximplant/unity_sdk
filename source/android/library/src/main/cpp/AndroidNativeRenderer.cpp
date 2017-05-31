@@ -23,6 +23,7 @@ static DestroyList<std::unique_ptr<EGLVideoRenderer>> *s_destroyList;
 JNIEXPORT static void JNICALL
 Java_renderBufferFrame(JNIEnv *env,
                        jobject thiz,
+                       jstring callId,
                        jobject yPlane,
                        jint yStride,
                        jobject uPlane,
@@ -38,7 +39,7 @@ void invalidateAllRenderers();
 
 static const char* CLIENT_CLASS = "com/voximplant/sdk/AVoImClient";
 static JNINativeMethod CLIENT_METHODS[] = {
-        {"renderBufferFrame", "(Ljava/nio/ByteBuffer;ILjava/nio/ByteBuffer;ILjava/nio/ByteBuffer;IIIII)V", (void*)Java_renderBufferFrame},
+        {"renderBufferFrame", "(Ljava/lang/String;Ljava/nio/ByteBuffer;ILjava/nio/ByteBuffer;ILjava/nio/ByteBuffer;IIIII)V", (void*)Java_renderBufferFrame},
 };
 
 static JNIEnv* env;
@@ -78,6 +79,7 @@ static void UNITY_INTERFACE_API OnRenderEvent(int eventID) {
 JNIEXPORT static void JNICALL
 Java_renderBufferFrame(JNIEnv *env,
                        jobject thiz,
+                       jstring callId,
                        jobject yPlane,
                        jint yStride,
                        jobject uPlane,
@@ -124,8 +126,8 @@ Java_renderBufferFrame(JNIEnv *env,
 
     if (newRendererCreated) {
         jclass cls = env->FindClass(CLIENT_CLASS);
-        jmethodID methodID = env->GetMethodID(cls, "reportNewNativeTexture", "(JJIII)V");
-        env->CallVoidMethod(thiz, methodID, (jlong)renderer->GetTargetTextureId(), (jlong)renderer->GetOGLContext(), width, height, stream);
+        jmethodID methodID = env->GetMethodID(cls, "reportNewNativeTexture", "(Ljava/lang/String;JJIII)V");
+        env->CallVoidMethod(thiz, methodID, callId, (jlong)renderer->GetTargetTextureId(), (jlong)renderer->GetOGLContext(), width, height, stream);
     }
 }
 
