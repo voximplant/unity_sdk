@@ -11,8 +11,6 @@
 #import "EAGLVideoRenderer.h"
 #import "DestroyList.h"
 #import "iOSNativeRenderer.h"
-#import "VIClientBridge.h"
-#import "VIBaseVideoStreamSource.h"
 
 std::vector<BaseVideoRenderer *> *s_renderers;
 Mutex *s_renderersMutex;
@@ -54,17 +52,6 @@ extern "C" UnityRenderingEvent UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API
 GetRenderEventFunc()
 {
     return OnRenderEvent;
-}
-
-static void UNITY_INTERFACE_API OnVideoStreamRenderEvent(int eventID) {
-    for (VIBaseVideoStreamSource *source in [s_bridge.localVideoStreamSources allValues]) {
-        [source onRenderEvent];
-    }
-}
-
-extern "C" UnityRenderingEvent UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API
-GetLocalVideoStreamRenderEventFunc() {
-    return OnVideoStreamRenderEvent;
 }
 
 extern "C" void UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API
