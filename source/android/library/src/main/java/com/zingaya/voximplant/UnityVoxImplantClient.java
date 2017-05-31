@@ -12,10 +12,10 @@ import android.content.pm.PackageManager;
 import android.util.Log;
 
 import com.voximplant.sdk.call.ICallCompletionHandler;
-import com.voximplant.sdk.call.ICustomVideoSource;
 import com.voximplant.sdk.call.RenderScaleType;
 import com.voximplant.sdk.client.ClientConfig;
 import com.voximplant.sdk.client.IClient;
+import com.voximplant.sdk.hardware.ICustomVideoSource;
 import com.voximplant.sdk.hardware.VideoQuality;
 
 import org.webrtc.VideoRenderer;
@@ -632,14 +632,6 @@ public class UnityVoxImplantClient {
             imp().unregisterFromPushNotifications(pushRegistrationToken);
         }
     }
-
-    public ICustomVideoSource createCustomVideoSource(String callId) {
-		if (imp() != null) {
-			return imp().createCustomVideoSource(callId);
-		}
-
-		return null;
-	}
 
 	public void useCustomVideoSource(String callId, ICustomVideoSource customVideoSource) {
 		if (imp() != null) {

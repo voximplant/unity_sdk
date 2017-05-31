@@ -10,7 +10,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.unity3d.player.UnityPlayer;
-import com.voximplant.sdk.call.ICustomVideoSource;
+import com.voximplant.sdk.hardware.ICustomVideoSource;
 import com.zingaya.voximplant.UnityVoxImplantClient;
 import com.zingaya.voximplant.VoxImplantCallback;
 import com.zingaya.voximplant.VoxImplantClient;
@@ -337,20 +337,22 @@ public class AVoImClient implements VoxImplantCallback {
         }
     }
 
-    private native void renderBufferFrame(ByteBuffer yPlane, int yStride,
+    private native void renderBufferFrame(String callId,
+                                          ByteBuffer yPlane, int yStride,
                                           ByteBuffer uPlane, int uStride,
                                           ByteBuffer vPlane, int vStride,
                                           int width, int height,
                                           int stream,
                                           int degrees);
 
-    public void beginSendingVideoForStream(final int stream) {
+    public void beginSendingVideoForStream(final String callId, final int stream) {
         VideoStream videoStream = VideoStream.fromInteger(stream);
 
         NativeVideoRenderer videoRenderer = new NativeVideoRenderer(new NativeVideoRenderer.NativeVideoRendererCallbacks() {
             @Override
             public void onBufferFrameRender(ByteBuffer[] planes, int[] strides, int width, int height, int degrees) {
                 renderBufferFrame(
+                        callId,
                         planes[0], strides[0],
                         planes[1], strides[1],
                         planes[2], strides[2],
@@ -370,29 +372,35 @@ public class AVoImClient implements VoxImplantCallback {
         }
     }
 
-    public void reportNewNativeTexture(long textureId, long oglContext, int width, int height, int stream) {
+    public void reportNewNativeTexture(String callId, long textureId, long oglContext, int width, int height, int stream) {
         UnityPlayer.UnitySendMessage(sdkObjName,
                 "fonNewNativeTexture",
-                GetParamListToString(new ArrayList<Object>(Arrays.asList(textureId, oglContext, width, height, stream))));
+                GetParamListToString(new ArrayList<Object>(Arrays.asList(callId, textureId, oglContext, width, height, stream))));
     }
 
     private Dictionary<String, RGBATextureVideoSource> videoSources = new Hashtable<>();
-    public void registerCallVideoStream(String callId, long textureId, int width, int height) {
+    private Dictionary<String, ICustomVideoSource> customVideoSources = new Hashtable<>();
+
+    public void registerCallVideoStream(String callId, int width, int height) {
         Log.v(TAG, "registerCallVideoStream");
-        ICustomVideoSource customVideoSource = client.createCustomVideoSource(callId);
-        videoSources.put(callId, new RGBATextureVideoSource((int) textureId, width, height, customVideoSource));
+        ICustomVideoSource customVideoSource = customVideoSources.get(callId);
+        if (customVideoSource == null) {
+            customVideoSource = Voximplant.getCustomVideoSource();
+            customVideoSources.put(callId, customVideoSource);
+        }
+
+        videoSources.put(callId, new RGBATextureVideoSource(width, height, customVideoSource));
         client.useCustomVideoSource(callId, customVideoSource);
     }
 
-    public void callVideoStreamTextureUpdated(String callId) {
+    public void callVideoStreamTextureUpdated(String callId, int textureId) {
         RGBATextureVideoSource videoSource = videoSources.get(callId);
         if (videoSource != null) {
-            Log.v(TAG, "sendFrame for "+videoSource);
-            videoSource.SendFrame();
+            videoSource.SendFrame(textureId);
         }
     }
 
-    public void unregisterCallVideoStream(String callId, long textureId) {
+    public void unregisterCallVideoStream(String callId) {
         Log.v(TAG, "unregisterCallVideoStream " + callId);
         videoSources.remove(callId);
     }
@@ -415,10 +423,11 @@ public class AVoImClient implements VoxImplantCallback {
     }
 
     @Override
-    public void onCallDisconnected(String s, Map<String, String> map, boolean b) {
+    public void onCallDisconnected(String callId, Map<String, String> map, boolean b) {
+        customVideoSources.remove(callId);
         UnityPlayer.UnitySendMessage(sdkObjName,
                 "faonCallDisconnected",
-                GetParamListToString(new ArrayList<>(Arrays.asList(s, map))));
+                GetParamListToString(new ArrayList<>(Arrays.asList(callId, map))));
     }
 
     @Override

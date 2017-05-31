@@ -1,5 +1,6 @@
 package com.voximplant.sdk;
 
+import android.os.Looper;
 import android.util.Log;
 
 import org.webrtc.VideoRenderer;
@@ -30,7 +31,7 @@ public class NativeVideoRenderer implements VideoRenderer.Callbacks {
 
     @Override
     public void renderFrame(final VideoRenderer.I420Frame i420Frame) {
-        Future<?> future = executor.submit(new Runnable() {
+        Runnable runnable = new Runnable() {
             @Override
             public void run() {
                 if (i420Frame.yuvFrame) {
@@ -42,15 +43,11 @@ public class NativeVideoRenderer implements VideoRenderer.Callbacks {
                 } else {
                     Log.e("VOXIMPLANT", "not implemented texture based rendering");
                 }
+
+                VideoRenderer.renderFrameDone(i420Frame);
             }
-        });
+        };
 
-        try {
-            future.get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        VideoRenderer.renderFrameDone(i420Frame);
+        executor.submit(runnable);
     }
 }

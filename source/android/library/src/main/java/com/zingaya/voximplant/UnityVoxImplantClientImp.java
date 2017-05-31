@@ -11,8 +11,6 @@ import android.util.Log;
 
 import com.voximplant.sdk.call.CallException;
 import com.voximplant.sdk.call.CallStatistic;
-import com.voximplant.sdk.call.ICallCompletionHandler;
-import com.voximplant.sdk.call.ICustomVideoSource;
 import com.voximplant.sdk.call.IEndpoint;
 import com.voximplant.sdk.call.IEndpointListener;
 import com.voximplant.sdk.call.RenderScaleType;
@@ -29,6 +27,7 @@ import com.voximplant.sdk.client.IClientLoginListener;
 import com.voximplant.sdk.client.IClientSessionListener;
 import com.voximplant.sdk.call.IVideoStream;
 import com.voximplant.sdk.Voximplant;
+import com.voximplant.sdk.hardware.ICustomVideoSource;
 
 import org.webrtc.VideoRenderer;
 
@@ -690,19 +689,6 @@ class UnityVoxImplantClientImp implements IClientSessionListener,
 
     void unregisterFromPushNotifications(String pushRegistrationToken) {
         voxClient.unregisterFromPushNotifications(pushRegistrationToken);
-    }
-
-    ICustomVideoSource createCustomVideoSource(String callId) {
-        ICall call = calls.get(callId);
-        if (call == null && !calls.isEmpty()) {
-            call = calls.entrySet().iterator().next().getValue();
-        }
-
-        if (call != null) {
-            return call.createCustomVideoSource();
-        }
-
-        return null;
     }
 
     void useCustomVideoSource(String callId, final ICustomVideoSource customVideoSource) {
