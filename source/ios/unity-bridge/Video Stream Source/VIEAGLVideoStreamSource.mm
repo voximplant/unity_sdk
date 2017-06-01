@@ -95,6 +95,10 @@
         glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, self.textureBuffer.mutableBytes);
 
         CVPixelBufferLockBaseAddress(self.buffer, NULL);
+        libyuv::ARGBRotate(
+                (const uint8 *) self.textureBuffer.mutableBytes, 4 * width,
+                (uint8 *) self.textureBuffer.mutableBytes, 4 * width,
+                width, height, libyuv::RotationMode::kRotate180);
         libyuv::ARGBToNV21((const uint8 *) self.textureBuffer.mutableBytes, 4 * width,
                 (uint8 *) CVPixelBufferGetBaseAddressOfPlane(self.buffer, 0), (int) CVPixelBufferGetBytesPerRowOfPlane(self.buffer, 0),
                 (uint8 *) CVPixelBufferGetBaseAddressOfPlane(self.buffer, 1), (int) CVPixelBufferGetBytesPerRowOfPlane(self.buffer, 1),
@@ -102,7 +106,7 @@
         CVPixelBufferUnlockBaseAddress(self.buffer, NULL);
 
         [self.videoSource sendVideoFrame:self.buffer
-                                rotation:VIRotation_180];
+                                rotation:VIRotation_0];
 
         glBindFramebuffer(GL_FRAMEBUFFER, currentFBO);
     }];

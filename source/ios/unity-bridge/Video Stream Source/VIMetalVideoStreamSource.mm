@@ -70,13 +70,17 @@
         CVPixelBufferRef buffer = self.pixelBuffer;
 
         CVPixelBufferLockBaseAddress(buffer, NULL);
+        libyuv::ARGBRotate(
+                (const uint8 *) self.textureBuffer.mutableBytes, 4 * width,
+                (uint8 *) self.textureBuffer.mutableBytes, 4 * width,
+                width, height, libyuv::RotationMode::kRotate180);
         libyuv::ARGBToNV21((const uint8 *) self.textureBuffer.mutableBytes, 4 * width,
                 (uint8 *) CVPixelBufferGetBaseAddressOfPlane(buffer, 0), (int) CVPixelBufferGetBytesPerRowOfPlane(buffer, 0),
                 (uint8 *) CVPixelBufferGetBaseAddressOfPlane(buffer, 1), (int) CVPixelBufferGetBytesPerRowOfPlane(buffer, 1),
                 width, height);
         CVPixelBufferUnlockBaseAddress(buffer, NULL);
 
-        [self.videoSource sendVideoFrame:buffer rotation:VIRotation_180];
+        [self.videoSource sendVideoFrame:buffer rotation:VIRotation_0];
     }];
 }
 
