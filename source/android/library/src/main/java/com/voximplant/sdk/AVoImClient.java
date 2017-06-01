@@ -396,7 +396,11 @@ public class AVoImClient implements VoxImplantCallback {
     public void callVideoStreamTextureUpdated(String callId, int textureId) {
         RGBATextureVideoSource videoSource = videoSources.get(callId);
         if (videoSource != null) {
-            videoSource.SendFrame(textureId);
+            try {
+                videoSource.SendFrame(textureId);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

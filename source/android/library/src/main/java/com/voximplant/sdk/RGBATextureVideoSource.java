@@ -54,9 +54,13 @@ class RGBATextureVideoSource {
         }
     }
 
-    void SendFrame(final int textureId) {
+    void SendFrame(final int textureId) throws Exception {
         if (!_isStarted) {
             return;
+        }
+
+        if (_executor == null) {
+            throw new Exception("Failed to create ogl context");
         }
 
         _executor.submit(new Runnable() {
@@ -92,7 +96,7 @@ class RGBATextureVideoSource {
                 long start = System.currentTimeMillis();
                 _videoSource.sendFrame(_outputBuffer, _width, _height);
                 long time = System.currentTimeMillis() - start;
-                Log.d(TAG, "Spent " + time + "ms in SendFrame");
+                Log.v(TAG, "Spent " + time + "ms in SendFrame");
             }
         });
     }
@@ -128,13 +132,13 @@ class RGBATextureVideoSource {
             @Override
             public void run() {
                 try {
-                    _eglBase = EglBase.create(currentContext, EglBase.CONFIG_PIXEL_BUFFER);
-                    _eglBase.createDummyPbufferSurface();
-                    _eglBase.makeCurrent();
+                    _eglBase = EglBase.createAndMakeCurrent(currentContext, EglBase.CONFIG_PIXEL_BUFFER);
 
                     EnsureConvertUtils();
                 } catch (RuntimeException exception) {
-                    Log.e(TAG, exception.getLocalizedMessage());
+                    _executor = null;
+
+                    Log.e(TAG, _eglBase.toString() + " " + exception.getLocalizedMessage());
                     throw exception;
                 }
             }

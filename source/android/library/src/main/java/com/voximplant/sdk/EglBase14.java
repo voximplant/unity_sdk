@@ -44,12 +44,16 @@ public final class EglBase14 extends EglBase {
         }
     }
 
+    public EglBase14(EglBase14.Context sharedContext, int[] configAttributes){
+        this(sharedContext, configAttributes, 3);
+    }
+
     // Create a new context with the specified config type, sharing data with sharedContext.
     // |sharedContext| may be null.
-    public EglBase14(EglBase14.Context sharedContext, int[] configAttributes) {
+    public EglBase14(EglBase14.Context sharedContext, int[] configAttributes, int openGLVersion) {
         eglDisplay = getEglDisplay();
         eglConfig = getEglConfig(eglDisplay, configAttributes);
-        eglContext = createEglContext(sharedContext, eglDisplay, eglConfig);
+        eglContext = createEglContext(sharedContext, eglDisplay, eglConfig, openGLVersion);
     }
 
     // Create EGLSurface from the Android Surface.
@@ -236,13 +240,16 @@ public final class EglBase14 extends EglBase {
         return eglConfig;
     }
 
+    private static EGLContext createEglContext(EglBase14.Context sharedContext, EGLDisplay eglDisplay, EGLConfig eglConfig) {
+        return createEglContext(sharedContext, eglDisplay, eglConfig, 3);
+    }
+
     // Return an EGLConfig, or die trying.
-    private static EGLContext createEglContext(
-            EglBase14.Context sharedContext, EGLDisplay eglDisplay, EGLConfig eglConfig) {
+    private static EGLContext createEglContext(EglBase14.Context sharedContext, EGLDisplay eglDisplay, EGLConfig eglConfig, int openGLVersion) {
         if (sharedContext != null && sharedContext.egl14Context == EGL14.EGL_NO_CONTEXT) {
             throw new RuntimeException("Invalid sharedContext");
         }
-        int[] contextAttributes = {EGL14.EGL_CONTEXT_CLIENT_VERSION, 3, EGL14.EGL_NONE};
+        int[] contextAttributes = {EGL14.EGL_CONTEXT_CLIENT_VERSION, openGLVersion, EGL14.EGL_NONE};
         EGLContext rootContext =
                 sharedContext == null ? EGL14.EGL_NO_CONTEXT : sharedContext.egl14Context;
         EGLContext eglContext;
@@ -250,15 +257,8 @@ public final class EglBase14 extends EglBase {
             eglContext = EGL14.eglCreateContext(eglDisplay, eglConfig, rootContext, contextAttributes, 0);
         }
         if (eglContext == EGL14.EGL_NO_CONTEXT) {
-            contextAttributes[1] = 2;
-            synchronized (EglBase.lock) {
-                eglContext = EGL14.eglCreateContext(eglDisplay, eglConfig, rootContext, contextAttributes, 0);
-            }
-
-            if (eglContext == EGL14.EGL_NO_CONTEXT) {
-                throw new RuntimeException(
-                        "Failed to create EGL context: 0x" + Integer.toHexString(EGL14.eglGetError()));
-            }
+            throw new RuntimeException(
+                    "Failed to create EGL context: 0x" + Integer.toHexString(EGL14.eglGetError()));
         }
         return eglContext;
     }

@@ -79,6 +79,27 @@ public abstract class EglBase {
                 : new EglBase10((EglBase10.Context) sharedContext, configAttributes);
     }
 
+    public static EglBase createAndMakeCurrent(Context sharedContext, int[] configAttributes) {
+        boolean egl14 = EglBase14.isEGL14Supported()
+                && (sharedContext == null || sharedContext instanceof EglBase14.Context);
+        if (egl14) {
+            EglBase14 eglBase14;
+            try {
+                eglBase14 = new EglBase14((EglBase14.Context) sharedContext, configAttributes, 3);
+                eglBase14.createDummyPbufferSurface();
+                eglBase14.makeCurrent();
+            } catch (Exception ex) {
+                eglBase14 = new EglBase14((EglBase14.Context) sharedContext, configAttributes, 2);
+                eglBase14.createDummyPbufferSurface();
+                eglBase14.makeCurrent();
+            }
+
+            return eglBase14;
+        } else {
+            return new EglBase10((EglBase10.Context) sharedContext, configAttributes);
+        }
+    }
+
     public static EglBase create() {
         return create(null, CONFIG_PLAIN);
     }
