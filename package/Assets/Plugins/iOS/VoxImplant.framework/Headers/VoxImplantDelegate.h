@@ -174,5 +174,7 @@ struct VoxImplantNetworkInfo
 @optional
 - (void) onNetStatsReceivedInCall: (NSString *)callId withStats: (const struct VoxImplantNetworkInfo *)stats;
 
+@optional
+- (void) onPreprocessCameraCapturedVideo:(CVPixelBufferRef)pixelBuffer rotation:(int)rotation;
 
 @end

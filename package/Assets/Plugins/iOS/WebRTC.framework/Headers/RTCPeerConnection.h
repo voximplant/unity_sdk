@@ -12,6 +12,8 @@
 
 #import <WebRTC/RTCMacros.h>
 
+@class RTCDTMFSender;
+@class RTCAudioTrack;
 @class RTCConfiguration;
 @class RTCDataChannel;
 @class RTCDataChannelConfiguration;
@@ -187,6 +189,13 @@ RTC_EXPORT
 - (BOOL)startRtcEventLogWithFilePath:(NSString *)filePath
                       maxSizeInBytes:(int64_t)maxSizeInBytes;
 - (void)stopRtcEventLog;
+
+@end
+
+@interface RTCPeerConnection (DTMF)
+
+// Create a DTMF sender.
+- (RTCDTMFSender*)createDTMFSenderForTrack:(RTCAudioTrack*)audioTrack;
 
 @end
 
