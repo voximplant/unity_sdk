@@ -244,7 +244,7 @@ namespace Voximplant
 
         protected virtual void OnCallDisconnected(string callId, Dictionary<string, string> headers)
         {
-            endSendingVideoStreamForCall(callId);
+            endSendingCameraVideoStreamForCall(callId);
             if (CallDisconnected != null) {
                 CallDisconnected(callId, headers);
             }
@@ -535,7 +535,7 @@ namespace Voximplant
         protected Dictionary<CallStreamDescriptor, Action<Texture2D>> videoStreamCallbacks = new Dictionary<CallStreamDescriptor, Action<Texture2D>>();
 
         /**
-        Execute specified callback, passing it every frame received from a local video preview or a remote video stream. Frames are Unity textures that can be assigned to same object to represent video.
+        Execute specified callback, passing it every texture created for receiving local video preview or a remote video stream.
         @method beginUpdatingTextureWithVideoStream
         @param {string} callId Call identifier
         @param {VideoStream} stream "VoximplantSDK.VideoStream.Local" for a local camera preview video or "VoximplantSDK.VideoStream.Remote" for a remote video.
@@ -631,6 +631,12 @@ namespace Voximplant
 
         #region Local video stream
 
+        /**
+        Attach specified Unity camera as video source for not yet started call.
+        @method useCameraVideoStreamForCall
+        @param {string} callId Call identifier
+        @param {UnityEngine.Camera} Camera to be used as video source.
+        */
         public void useCameraVideoStreamForCall(string callId, UnityEngine.Camera streamCamera)
         {
             var newBehaviour = streamCamera.gameObject.AddComponent<LocalStreamCameraBehaviour>();
@@ -655,11 +661,17 @@ namespace Voximplant
             newBehaviour.EnsureTextures();
         }
 
-        public void endSendingVideoStreamForCall(string callId)
+        /**
+        Stop sending camera video stream to call.
+        @method endSendingCameraVideoStreamForCall
+        @param {string} callId Call identifier
+        */
+        public void endSendingCameraVideoStreamForCall(string callId)
         {
             foreach (var behaviour in _behavioursByCallId[callId]) {
                 Destroy(behaviour);
             }
+            _behavioursByCallId.Remove(callId);
         }
 
         private readonly Dictionary<string, LocalStreamCameraBehaviour[]> _behavioursByCallId = new Dictionary<string, LocalStreamCameraBehaviour[]>();
