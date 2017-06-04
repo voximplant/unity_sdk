@@ -16,9 +16,7 @@ static NSString *s_unityObjName;
 void CallUnityMethodWithString(NSString *methodName, NSString *parameters) {
     parameters = parameters ?: @"";
 
-    dispatch_async(dispatch_get_main_queue(), ^{
-        UnitySendMessage(s_unityObjName.UTF8String, methodName.UTF8String, parameters.UTF8String);
-    });
+    UnitySendMessage(s_unityObjName.UTF8String, methodName.UTF8String, parameters.UTF8String);
 }
 
 void CallUnityMethod(NSString *methodName, id parameters) {
