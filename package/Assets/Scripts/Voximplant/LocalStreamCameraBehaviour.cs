@@ -9,6 +9,16 @@ namespace Voximplant
 {
     internal class LocalStreamCameraBehaviour : MonoBehaviour
     {
+        private bool shouldBypasssRGBConversion()
+        {
+            switch (SystemInfo.graphicsDeviceType) {
+                case GraphicsDeviceType.Metal:
+                    return false;
+            }
+
+            return true;
+        }
+
         private UnityEngine.Camera _myCamera;
 
         private int _pipelineStage = 0;
@@ -27,7 +37,8 @@ namespace Voximplant
 
             _renderTextures = new RenderTexture[_pipelineLength];
             for (int i = 0; i < _pipelineLength; i++) {
-                _renderTextures[i] = new RenderTexture(_myCamera.pixelWidth, _myCamera.pixelHeight, 0);
+                _renderTextures[i] = new RenderTexture(_myCamera.pixelWidth, _myCamera.pixelHeight, 0,
+                    RenderTextureFormat.ARGB32, RenderTextureReadWrite.sRGB);
             }
 
             if (_texture2Ds != null) {
@@ -36,8 +47,9 @@ namespace Voximplant
 
             _texture2Ds = new Texture2D[_pipelineLength];
             for (int i = 0; i < _pipelineLength; i++) {
+                var shouldBypasssRgbConversion = shouldBypasssRGBConversion();
                 _texture2Ds[i] =
-                    new Texture2D(_myCamera.pixelWidth, _myCamera.pixelHeight, TextureFormat.RGBA32, false){
+                    new Texture2D(_myCamera.pixelWidth, _myCamera.pixelHeight, TextureFormat.RGBA32, false, shouldBypasssRgbConversion){
                         filterMode = FilterMode.Point
                     };
 
