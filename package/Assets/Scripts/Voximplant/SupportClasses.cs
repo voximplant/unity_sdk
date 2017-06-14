@@ -91,19 +91,12 @@ namespace Voximplant
 		public bool videoCall;
 		[JSONItem("customData", typeof(string))]
 		public string customData;
-		[JSONArray("headers",typeof(PairKeyValue))]
-		public PairKeyValue[] headers;
 
-		public CallClassParam(string pCallUser, bool pVideoCall, string pCustomData, Dictionary<string, string> pHeader = null)
+		public CallClassParam(string pCallUser, bool pVideoCall, string pCustomData)
 		{
 			userCall = pCallUser;
 			videoCall = pVideoCall;
 			customData = pCustomData;
-
-			if (pHeader != null)
-			{
-				headers = Utils.GetDictionaryToArray(pHeader);
-			}
 		}
 	}
 	[System.Serializable]
@@ -111,9 +104,9 @@ namespace Voximplant
     {
 		[JSONItem("callId", typeof(string))]
         public string callId;
-		[JSONItem("digit", typeof(int))]
-        public int digit;
-        public DTFMClassParam(string pCallId, int pDigit)
+		[JSONItem("digit", typeof(string))]
+        public string digit;
+        public DTFMClassParam(string pCallId, string pDigit)
         {
             callId = pCallId;
             digit = pDigit;

@@ -1,7 +1,7 @@
 platform :ios, '8.0'
 
-target 'unity-bridge' do
-
-	pod 'VoxImplantSDK', path: 'VoxImplantSDK'
-
+target 'unity-bridge-fake' do
+	target 'unity-bridge' do
+		pod 'VoxImplantSDK', '2.4.0'
+	end
 end

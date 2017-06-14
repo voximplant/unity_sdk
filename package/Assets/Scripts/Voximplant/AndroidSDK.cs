@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.Rendering;
-using Voximplant.Threading;
 
 namespace Voximplant
 {
@@ -84,6 +81,27 @@ namespace Voximplant
 #endif
         }
 
+        #region Java helpers
+
+        private static AndroidJavaObject buildMap(Dictionary<string, string> dictionary)
+        {
+            if (dictionary == null) {
+                return null;
+            }
+
+            var jmap = new AndroidJavaObject("java.util.HashMap");
+            foreach (KeyValuePair<string, string> kvp in dictionary) {
+                using (AndroidJavaObject k = new AndroidJavaObject("java.lang.String", kvp.Key)) {
+                    using (AndroidJavaObject v = new AndroidJavaObject("java.lang.String", kvp.Value)) {
+                        jmap.Call("put", k, v);
+                    }
+                }
+            }
+            return jmap;
+        }
+
+        #endregion
+
         public override void closeConnection()
         {
             jo.Call("closeConnection");
@@ -100,9 +118,14 @@ namespace Voximplant
             jo.Call("login", JsonUtility.ToJson(new LoginClassParam(username, password)));
         }
 
-        public override void call(string number, bool videoCall, string customData, Dictionary<string, string> headers = null)
+        public override string createCall(string number, bool videoCall, string customData)
         {
-            jo.Call<string>("call", JsonUtility.ToJson(new CallClassParam(number, videoCall, customData, headers)));
+            return jo.Call<string>("createCall", JsonUtility.ToJson(new CallClassParam(number, videoCall, customData)));
+        }
+
+        public override void startCall(string callId, Dictionary<string, string> headers = null)
+        {
+            jo.Call("startCall", callId, buildMap(headers));
         }
 
         public override void answer(string callId, Dictionary<string, string> headers = null)
@@ -161,7 +184,7 @@ namespace Voximplant
             jo.Call("requestOneTimeKey", JsonUtility.ToJson(new StringClassParam(pName)));
         }
 
-        public override void sendDTMF(string callId, int digit)
+        public override void sendDTMF(string callId, string digit)
         {
             jo.Call("sendDTMF", JsonUtility.ToJson(new DTFMClassParam(callId, digit)));
         }
@@ -188,11 +211,30 @@ namespace Voximplant
 
         #region Texture Rendering
 
-        protected override void startVideoStreamRendering(VideoStream stream)
+        protected override void startVideoStreamRendering(string callId, VideoStream stream)
         {
             Assert.IsTrue(GraphicsDeviceIsSupported());
 
-            jo.Call("beginSendingVideoForStream", (int)stream);
+            jo.Call("beginSendingVideoForStream", callId, (int)stream);
+        }
+
+        #endregion
+
+        #region Video Source
+
+        protected override void beginCallVideoStream(string pCallId, uint width, uint height)
+        {
+            jo.Call("registerCallVideoStream", pCallId, (int)width, (int)height);
+        }
+
+        protected override void callVideoStreamTextureUpdated(string pCallId, IntPtr pTexturePtr, int width, int height)
+        {
+            jo.Call("callVideoStreamTextureUpdated", pCallId, pTexturePtr.ToInt32());
+        }
+
+        protected override void endCallVideoStream(string pCallId)
+        {
+            jo.Call("unregisterCallVideoStream", pCallId);
         }
 
         #endregion

@@ -29,7 +29,7 @@ void DestroyList<T>::AddObject(void *textureId, void *contextId, T object) {
     LockGuard lock(m_mutex);
 
     DestroyKey key = (DestroyKey) { .contextId = contextId, .textureId = textureId };
-    m_map->insert(std::make_pair(key, object));
+    m_map->insert(std::make_pair(key, std::move(object)));
 }
 
 template <class T>
@@ -40,7 +40,7 @@ void DestroyList<T>::DestroyObject(void *textureId, void *contextId) {
     typedef typename std::map<DestroyKey, T>::iterator Iterator;
     const Iterator &it = m_map->find(key);
     if (it != m_map->end()) {
-        delete it->second;
+        it->second = nullptr;
         m_map->erase(it);
     }
 }

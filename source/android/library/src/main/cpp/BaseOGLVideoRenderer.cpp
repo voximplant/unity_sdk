@@ -9,12 +9,25 @@
 #include "BaseOGLVideoRenderer.h"
 
 bool testGLErrors(const char *checkpoint) {
+#if DEBUG
+    vxvprintf("DEBUG: %s", checkpoint);
+#endif
+
     GLenum error;
     bool anyError = false;
     while ((error = glGetError()) != GL_NO_ERROR) {
         vxeprintf("Error at %s with %d", checkpoint, error);
         anyError = true;
     }
+
+#if ANDROID
+    EGLint error2 = eglGetError();
+    if (error2 != EGL_SUCCESS) {
+        vxeprintf("EGL error at %s with %d", checkpoint, error2);
+        anyError = true;
+    }
+#endif
+    
     return anyError;
 }
 
@@ -291,17 +304,18 @@ void BaseOGLVideoRenderer::RenderBuffer(const uint8_t *yPlane, int yStride,
 
     glClearColor(1, 0, 0, 1);
     glClear(GL_COLOR_BUFFER_BIT);
-    
+
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, s_indices);
     testGLErrors("glDrawArrays");
 
-    glFinish();
+    glFlush();
     testGLErrors("Rendering finished");
 }
 
 static void uploadPlane(GLsizei width, GLsizei height, int stride, const uint8_t *plane) {
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     if (stride == width) {
-        // Yay!  We can upload the entire plane in a single GL call.
+        // Yay!  We can upload the entire plane in a single GL createCall.
         glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height, GL_LUMINANCE,
                         GL_UNSIGNED_BYTE,
                         static_cast<const GLvoid*>(plane));

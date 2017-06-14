@@ -7,265 +7,662 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		488D8126EA7A0FD348BC413D010ED9CA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */; };
-		AA107D544E52338BB62122F5471F044F /* Pods-unity-bridge-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 35F081B82284815C3515078728E688AF /* Pods-unity-bridge-dummy.m */; };
+		0214246CCB1FF7182F7222B9CCDF8FCB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B3281D37CB977EA6D9FB328E1566D73 /* Foundation.framework */; };
+		03FD456F5D068580610D2E89DAC4AFB5 /* Pods-unity-bridge-fake-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD89639B3015A1A30F3398BEA189688 /* Pods-unity-bridge-fake-dummy.m */; };
+		06603FD685D9F32F82BFAD15F986A2C7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B3281D37CB977EA6D9FB328E1566D73 /* Foundation.framework */; };
+		0AD31F6A10787A89701EFF89AF40C633 /* SocketRocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 14C8A04877FCF632551F70F962DCEC55 /* SocketRocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1341A7AC2439CB63D459D32EF985A414 /* UIImage+AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 86B93BFE46A6E1D4EDA062A50519CFFA /* UIImage+AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2579663181BFA8F7DA4B5D7CF8537FC0 /* UIActivityIndicatorView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = AC5C8F5AB2A28FFAC7CDC6CEC7CCBECD /* UIActivityIndicatorView+AFNetworking.m */; };
+		2EBAA518CB8B2DAF89A63637091D4615 /* UIButton+AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 38DB2C450D792DB83C665FE6E703A5C5 /* UIButton+AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		31ED9BD97AF9E62874AF3CDF2F8090CF /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7675074F7B4C6AB0E61A9CCEB2CB1FF2 /* AFNetworkActivityIndicatorManager.m */; };
+		46401F3C7FF0B0CFE2E9B14914780835 /* AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 853CE6D0AD90255F65074C74E15CFD46 /* AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		51A7C22D7DA97E6215A2107244BCD817 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B3281D37CB977EA6D9FB328E1566D73 /* Foundation.framework */; };
+		5719F06B809080CDEF7E6BC75DEA1A3C /* UIKit+AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = C87BC8A8E9B4E6404F8A9261C54CECE7 /* UIKit+AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5945033488F9995134DBB7014DE2412F /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = A17061CE9A3B1F091191A1E3FECAC68C /* AFURLRequestSerialization.m */; };
+		5C0696B2AD1DC23F6473F5A19FAB6296 /* AFImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 48E4E9B00EFED4456FCCBE51454B4251 /* AFImageDownloader.m */; };
+		62FDF4721C1DFC21AEAF9131A793F9DB /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1DDE2AACDF1840C5CFBC7B435351B3D /* Security.framework */; };
+		66635EAAE52FF5571DBCDC626FB8CA86 /* AFURLResponseSerialization.h in Headers */ = {isa = PBXBuildFile; fileRef = 78691324FB29AA0FAFBF69F1397367DE /* AFURLResponseSerialization.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		66E1040543AF7BA3DC3731FE17C85F5B /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E72915C5FA70895C0BB6835F3A84EC5 /* AFSecurityPolicy.m */; };
+		682B0E603612B6ADBCCF30580F9A4B09 /* UIActivityIndicatorView+AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = CD431A443E653E65AE9DD00AF2938A14 /* UIActivityIndicatorView+AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6B71CE5BA32574F407349C1DA20605B4 /* AFHTTPSessionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = FB1C68619D2C5D68A8E0172CEA242FDE /* AFHTTPSessionManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		707E818332E5033501DF2D7826C639DF /* AFImageDownloader.h in Headers */ = {isa = PBXBuildFile; fileRef = 2699D7E87545C9E1FB8BDB70A24514C0 /* AFImageDownloader.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		73811DA312BCB537D44D62EC6AD15766 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E3BDE2126691D3940B74234AC24AFF4 /* AFHTTPSessionManager.m */; };
+		775CE7A8107457BDE59F113D40020839 /* AFAutoPurgingImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 995B4D93F7AD5CC147027CE336DEFBC8 /* AFAutoPurgingImageCache.m */; };
+		8406CE88865ADE82E6ECFBB442754F27 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B3281D37CB977EA6D9FB328E1566D73 /* Foundation.framework */; };
+		85D30678FF4F0AB306399A368EAA46B2 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = B7675AC674A686E68B7F112F161B433C /* AFURLResponseSerialization.m */; };
+		8958F2453EEBAF71BFEBD78FB48986EC /* UIWebView+AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = E1FB5145FF4CBA760103E0D8C1001EE5 /* UIWebView+AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8DF1A35580D47C93DC06FE496EC29537 /* SRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = FF78D4F55D3B89378CB76BC736BEEFFB /* SRWebSocket.m */; };
+		8F144E1F8D4D778447AC5DE27B6699DA /* SRWebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EBD2450CE21A4FB6888F5B2B56DDFE2 /* SRWebSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		903158692A045396106CA22C0DD13BA6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13D2D76012584A025FE61E9450EC5643 /* SystemConfiguration.framework */; };
+		97A86FAAD4B1AD9B3292FF6AF1D8F82B /* AFNetworking-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3C7D9E09595EAF5EBAC20E2DC4FF70 /* AFNetworking-dummy.m */; };
+		9C3F58269DA76E3D80F6508CD958EB5B /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D42E0E68172D7B6F68EA5209E5C1274 /* CFNetwork.framework */; };
+		9F5BB6B4995BA4A3B2C6AEBA6C31A6DB /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1609961F555B66E8255A18EC508A9070 /* AFURLSessionManager.m */; };
+		A0577FBB645E128FFD5A2306C346CE76 /* SocketRocket-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E2E337E5BC2B0FC9B863CC21C58362E5 /* SocketRocket-dummy.m */; };
+		A277AD9070E44BED5A7DE0B1D64D6F15 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = E5CF228073C583EF456DF328B79F2922 /* UIImageView+AFNetworking.m */; };
+		A7F7FDCD36E2DD8D8E346DB19452CC03 /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D08FF68723A3B1E059B388FE6CD887B /* UIWebView+AFNetworking.m */; };
+		B40756412613B53C80EE77C4C223990F /* UIProgressView+AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 18EC0BA72EF92DA4316692D26D7E359A /* UIProgressView+AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B84CD33084C9867E67BD56E47B7BFC04 /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 5907E00898C795D42BBFD6935B2E3184 /* UIRefreshControl+AFNetworking.m */; };
+		C1C0D7C93BF3DE14A26757273598D0FA /* AFURLRequestSerialization.h in Headers */ = {isa = PBXBuildFile; fileRef = 643BC5B9F78E47D990BC546D13722A20 /* AFURLRequestSerialization.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CBCCEAD402645565401CA93924736979 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17322A3E6B312C526B2D7A53434DC936 /* CoreGraphics.framework */; };
+		D10CC46035F7A0C868C0955664A34609 /* UIButton+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 8901E95EFB36C9797A224817E579AC20 /* UIButton+AFNetworking.m */; };
+		D4AA4704CA7863CC86E22AAF88635836 /* UIProgressView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = F841D78E00F54F41710612F9B8A33A0D /* UIProgressView+AFNetworking.m */; };
+		D59FC98A74E440C4725B6FDC28F5951E /* AFSecurityPolicy.h in Headers */ = {isa = PBXBuildFile; fileRef = CC2698957D7807C2A4F53A6D729C6373 /* AFSecurityPolicy.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D5CB999FB5FC80FC126A38AB4DF12227 /* UIImageView+AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 87D5676CB532B1D00564A7AF63ED9EF3 /* UIImageView+AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DE31BBF6A7963C5871A19655EF5532BE /* AFNetworkReachabilityManager.h in Headers */ = {isa = PBXBuildFile; fileRef = FF7C65631F8A1A0F8F339AC72F6C3476 /* AFNetworkReachabilityManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DE825B8F32AB823F4BE5492CAC6FCB4B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1DDE2AACDF1840C5CFBC7B435351B3D /* Security.framework */; };
+		E0EF330DB2D3521ED26E67B2E8687A2E /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B54A9C2792A881C84B91BECE50AD3CFC /* AFNetworkReachabilityManager.m */; };
+		E7B0270BEDCBE116DDD853F76E27B0BA /* AFNetworkActivityIndicatorManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F13251B7D4E92DB7EE033BC1F54C0F5 /* AFNetworkActivityIndicatorManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F099E5987DD80E8D78E909AF81D3C587 /* UIRefreshControl+AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CF1DD39874922EEA4DA943CCD1BDE3F /* UIRefreshControl+AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F1F93EE1AA5E870F2CE81325CE9EB643 /* AFAutoPurgingImageCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC31C8B443F86E3BDA1326F34595DFE /* AFAutoPurgingImageCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F5CC06F3E0C232483A72DCCFAF393BE0 /* AFURLSessionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F97F3820FA8ABDF8BABA41BD58C52A48 /* AFURLSessionManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8DCA6C3C05A59B2C95A1B5F1CBD8C99 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC15AD67425A9C951318C2EB8447B9BC /* MobileCoreServices.framework */; };
+		FCEDB567CBC63BC7C0FCADF9649913AE /* Pods-unity-bridge-fake-unity-bridge-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 025D52965A5A92784DFF43280B18AA43 /* Pods-unity-bridge-fake-unity-bridge-dummy.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		1E5AFE6393A9DFAA11CDD578FBC9AAF6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9E033EDB5EC0819481B0546434FA577B;
+			remoteInfo = AFNetworking;
+		};
+		712E4FC2888B94C2197088429C71DBCA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A95E5AC230022F07569EA7C2C8EAAA65;
+			remoteInfo = SocketRocket;
+		};
+		AC2E1C35D46984F6EA0E5B85627191CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9E033EDB5EC0819481B0546434FA577B;
+			remoteInfo = AFNetworking;
+		};
+		F456114407DBE75A6C61EB96AB23CC5D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A95E5AC230022F07569EA7C2C8EAAA65;
+			remoteInfo = SocketRocket;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
-		00E096AE8CEFD75662BB58B5B79A9C1D /* RTCAudioSource.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCAudioSource.h; path = WebRTC.framework/Headers/RTCAudioSource.h; sourceTree = "<group>"; };
-		0406811D4651B78918DBDE567D63A4B5 /* RTCIceServer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCIceServer.h; path = WebRTC.framework/Headers/RTCIceServer.h; sourceTree = "<group>"; };
-		04F92F100492C8130F011055F9B691FE /* Pods-unity-bridge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-unity-bridge.release.xcconfig"; sourceTree = "<group>"; };
-		08A1C0BB26A11D34A4ED86022E7D4FD4 /* Pods-unity-bridge-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-unity-bridge-resources.sh"; sourceTree = "<group>"; };
-		0AB6610EE90B2A2870174AC6BF03805A /* RTCDataChannelConfiguration.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCDataChannelConfiguration.h; path = WebRTC.framework/Headers/RTCDataChannelConfiguration.h; sourceTree = "<group>"; };
-		0E2D8ADF4D64FC8432F02BC334BD1284 /* RTCFieldTrials.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCFieldTrials.h; path = WebRTC.framework/Headers/RTCFieldTrials.h; sourceTree = "<group>"; };
-		12850D7CB0C753C85079162D030F40DE /* RTCRtpCodecParameters.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCRtpCodecParameters.h; path = WebRTC.framework/Headers/RTCRtpCodecParameters.h; sourceTree = "<group>"; };
-		15F004E28DA2C120D3597646D037C9B4 /* RTCMediaSource.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCMediaSource.h; path = WebRTC.framework/Headers/RTCMediaSource.h; sourceTree = "<group>"; };
-		1CAC8854DBC6CE096C77A8753F206240 /* Pods-unity-bridge-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-unity-bridge-acknowledgements.plist"; sourceTree = "<group>"; };
-		1EF886EC2078FF9D3ECEB11016343D3F /* RTCPeerConnectionFactory.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCPeerConnectionFactory.h; path = WebRTC.framework/Headers/RTCPeerConnectionFactory.h; sourceTree = "<group>"; };
-		239BF7B3D0109CBCB2EFC8A807ED5B02 /* WebRTC.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WebRTC.h; path = WebRTC.framework/Headers/WebRTC.h; sourceTree = "<group>"; };
-		2D33B2E01FDCCD648CAD526303D2E1DB /* RTCTracing.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCTracing.h; path = WebRTC.framework/Headers/RTCTracing.h; sourceTree = "<group>"; };
-		2E821ADE88EDF1A6C9B375824568EAE1 /* RTCVideoRenderer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCVideoRenderer.h; path = WebRTC.framework/Headers/RTCVideoRenderer.h; sourceTree = "<group>"; };
-		2FACA7DA926BAA789A47E12F87788EEC /* VoxImplant+Renderers.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "VoxImplant+Renderers.h"; sourceTree = "<group>"; };
-		33BD5ADAC33A9FE88928129709B77726 /* VoxImplant.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = VoxImplant.framework; sourceTree = "<group>"; };
-		35F081B82284815C3515078728E688AF /* Pods-unity-bridge-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-unity-bridge-dummy.m"; sourceTree = "<group>"; };
-		3F8F4B03FDACFAC6C8C5C0A31C5F38E7 /* RTCPeerConnection.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCPeerConnection.h; path = WebRTC.framework/Headers/RTCPeerConnection.h; sourceTree = "<group>"; };
-		427AF239C086CA4BE13969548EA96569 /* Pods-unity-bridge-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-unity-bridge-acknowledgements.markdown"; sourceTree = "<group>"; };
-		460F13B8410C38493C32CF1F81513F24 /* RTCVideoSource.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCVideoSource.h; path = WebRTC.framework/Headers/RTCVideoSource.h; sourceTree = "<group>"; };
-		4C493F125265DB93F0F3B642267C1C40 /* RTCAVFoundationVideoSource.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCAVFoundationVideoSource.h; path = WebRTC.framework/Headers/RTCAVFoundationVideoSource.h; sourceTree = "<group>"; };
-		55C63C206648460EF259731738DAF5DB /* VoxImplant.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = VoxImplant.h; sourceTree = "<group>"; };
-		55EA00931213DA03AD0B87AF0A9267F9 /* RTCRtpReceiver.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCRtpReceiver.h; path = WebRTC.framework/Headers/RTCRtpReceiver.h; sourceTree = "<group>"; };
-		59BD76F1E93240D35CEBE77471E323FB /* RTCLegacyStatsReport.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCLegacyStatsReport.h; path = WebRTC.framework/Headers/RTCLegacyStatsReport.h; sourceTree = "<group>"; };
-		6B17D575A104BAB78D202363A3BED4B2 /* RTCFileLogger.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCFileLogger.h; path = WebRTC.framework/Headers/RTCFileLogger.h; sourceTree = "<group>"; };
-		73397022F46BEB5F905B9FA4946F9994 /* libPods-unity-bridge.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-unity-bridge.a"; path = "libPods-unity-bridge.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		73A0C1D5D84D06C488ABEF5E3003D3E2 /* RTCRtpEncodingParameters.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCRtpEncodingParameters.h; path = WebRTC.framework/Headers/RTCRtpEncodingParameters.h; sourceTree = "<group>"; };
-		7F478875E796B8415E18C362C429A4BD /* RTCMetricsSampleInfo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCMetricsSampleInfo.h; path = WebRTC.framework/Headers/RTCMetricsSampleInfo.h; sourceTree = "<group>"; };
-		8322669E77A8CFAE65E03143139B64C2 /* RTCMacros.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCMacros.h; path = WebRTC.framework/Headers/RTCMacros.h; sourceTree = "<group>"; };
-		87593AB3BE411506ECB7144D0C44EDAF /* Pods-unity-bridge-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-unity-bridge-frameworks.sh"; sourceTree = "<group>"; };
-		8BF277F4AEB6FD97B3C7DCAAE7EE0754 /* RTCEAGLVideoView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCEAGLVideoView.h; path = WebRTC.framework/Headers/RTCEAGLVideoView.h; sourceTree = "<group>"; };
-		9021AF3DE251DDAD710943AB5C185517 /* RTCConfiguration.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCConfiguration.h; path = WebRTC.framework/Headers/RTCConfiguration.h; sourceTree = "<group>"; };
+		0096FF32FF5626AEF3E3C04A1DB16F63 /* libPods-unity-bridge-fake.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-unity-bridge-fake.a"; path = "libPods-unity-bridge-fake.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		025D52965A5A92784DFF43280B18AA43 /* Pods-unity-bridge-fake-unity-bridge-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-unity-bridge-fake-unity-bridge-dummy.m"; sourceTree = "<group>"; };
+		0485E21E01C1A1F265B74327FA1B69FF /* libSocketRocket.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libSocketRocket.a; path = libSocketRocket.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		0B62DB4CB21B28258501C114D8F062E2 /* RTCRtpReceiver.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCRtpReceiver.h; path = WebRTC.framework/Headers/RTCRtpReceiver.h; sourceTree = "<group>"; };
+		0D08FF68723A3B1E059B388FE6CD887B /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIWebView+AFNetworking.m"; path = "UIKit+AFNetworking/UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
+		1026FE28CCCFE04A084F73C6955D4780 /* RTCRtpEncodingParameters.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCRtpEncodingParameters.h; path = WebRTC.framework/Headers/RTCRtpEncodingParameters.h; sourceTree = "<group>"; };
+		13D2D76012584A025FE61E9450EC5643 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
+		14C8A04877FCF632551F70F962DCEC55 /* SocketRocket.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SocketRocket.h; path = SocketRocket/SocketRocket.h; sourceTree = "<group>"; };
+		1595413FD2CE6C49CFDEBB2FEEC864F1 /* RTCSSLAdapter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCSSLAdapter.h; path = WebRTC.framework/Headers/RTCSSLAdapter.h; sourceTree = "<group>"; };
+		1609961F555B66E8255A18EC508A9070 /* AFURLSessionManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFURLSessionManager.m; path = AFNetworking/AFURLSessionManager.m; sourceTree = "<group>"; };
+		17145615A8DE36D0967B3363F5150B59 /* RTCFileLogger.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCFileLogger.h; path = WebRTC.framework/Headers/RTCFileLogger.h; sourceTree = "<group>"; };
+		17322A3E6B312C526B2D7A53434DC936 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
+		176850AC3630E6F9E8FDC5EC10EA6DBF /* VoxImplant.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VoxImplant.h; path = VoxImplant.framework/Headers/VoxImplant.h; sourceTree = "<group>"; };
+		18EC0BA72EF92DA4316692D26D7E359A /* UIProgressView+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIProgressView+AFNetworking.h"; path = "UIKit+AFNetworking/UIProgressView+AFNetworking.h"; sourceTree = "<group>"; };
+		18F161E2582A348E2C0EB58784885303 /* RTCMediaConstraints.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCMediaConstraints.h; path = WebRTC.framework/Headers/RTCMediaConstraints.h; sourceTree = "<group>"; };
+		1962F56DA018B1740927D9C72337DE8C /* VIVideoRenderer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VIVideoRenderer.h; path = VoxImplant.framework/Headers/VIVideoRenderer.h; sourceTree = "<group>"; };
+		1979BCD0E05A8F5CFBC1343A6772BFEA /* Pods-unity-bridge-fake.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-unity-bridge-fake.release.xcconfig"; sourceTree = "<group>"; };
+		1AC31C8B443F86E3BDA1326F34595DFE /* AFAutoPurgingImageCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFAutoPurgingImageCache.h; path = "UIKit+AFNetworking/AFAutoPurgingImageCache.h"; sourceTree = "<group>"; };
+		1C0AC755C9E0FF40E431EEC1F4481C6C /* Pods-unity-bridge-fake-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-unity-bridge-fake-acknowledgements.plist"; sourceTree = "<group>"; };
+		1EB92AB95170C904C3F3878B681C7439 /* VIVideoStream.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VIVideoStream.h; path = VoxImplant.framework/Headers/VIVideoStream.h; sourceTree = "<group>"; };
+		1EBC586BF66ED60CF0915D443D660BBD /* RTCAudioTrack.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCAudioTrack.h; path = WebRTC.framework/Headers/RTCAudioTrack.h; sourceTree = "<group>"; };
+		1F3C7D9E09595EAF5EBAC20E2DC4FF70 /* AFNetworking-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "AFNetworking-dummy.m"; sourceTree = "<group>"; };
+		1F51E19916778D4C7DDC1B3EA08DCF43 /* RTCMediaSource.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCMediaSource.h; path = WebRTC.framework/Headers/RTCMediaSource.h; sourceTree = "<group>"; };
+		226397DBEA3DBB9A36E94C90EF6FF197 /* Pods-unity-bridge-fake-unity-bridge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-unity-bridge-fake-unity-bridge.debug.xcconfig"; sourceTree = "<group>"; };
+		2626E5FFC99B8A373CDD42747A5CBFA3 /* Pods-unity-bridge-fake-unity-bridge-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-unity-bridge-fake-unity-bridge-resources.sh"; sourceTree = "<group>"; };
+		2699D7E87545C9E1FB8BDB70A24514C0 /* AFImageDownloader.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFImageDownloader.h; path = "UIKit+AFNetworking/AFImageDownloader.h"; sourceTree = "<group>"; };
+		2EF8235D9C758AB9EFCEE0FAF429F65C /* RTCMetrics.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCMetrics.h; path = WebRTC.framework/Headers/RTCMetrics.h; sourceTree = "<group>"; };
+		30D9FED7E2A376E6E926F93B46845C82 /* RTCLogging.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCLogging.h; path = WebRTC.framework/Headers/RTCLogging.h; sourceTree = "<group>"; };
+		31C9375430AC20F381D126422EDCD2F5 /* RTCMTLVideoView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCMTLVideoView.h; path = WebRTC.framework/Headers/RTCMTLVideoView.h; sourceTree = "<group>"; };
+		38DB2C450D792DB83C665FE6E703A5C5 /* UIButton+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIButton+AFNetworking.h"; path = "UIKit+AFNetworking/UIButton+AFNetworking.h"; sourceTree = "<group>"; };
+		3BD89639B3015A1A30F3398BEA189688 /* Pods-unity-bridge-fake-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-unity-bridge-fake-dummy.m"; sourceTree = "<group>"; };
+		3FF3F16CFB2F57D71EB04552062D9FA2 /* RTCAudioSource.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCAudioSource.h; path = WebRTC.framework/Headers/RTCAudioSource.h; sourceTree = "<group>"; };
+		4031DC7F07856613CED92333BD63EA7D /* RTCCustomVideoSource.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCCustomVideoSource.h; path = WebRTC.framework/Headers/RTCCustomVideoSource.h; sourceTree = "<group>"; };
+		445FDFA230A7A1857399EABF1EFA5359 /* RTCIceServer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCIceServer.h; path = WebRTC.framework/Headers/RTCIceServer.h; sourceTree = "<group>"; };
+		4497B011B3BE687E69F52CA3C90FBF91 /* RTCVideoSource.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCVideoSource.h; path = WebRTC.framework/Headers/RTCVideoSource.h; sourceTree = "<group>"; };
+		48E4E9B00EFED4456FCCBE51454B4251 /* AFImageDownloader.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFImageDownloader.m; path = "UIKit+AFNetworking/AFImageDownloader.m"; sourceTree = "<group>"; };
+		4B73D8CEFF39FCC5876C0811048FC65E /* RTCRtpParameters.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCRtpParameters.h; path = WebRTC.framework/Headers/RTCRtpParameters.h; sourceTree = "<group>"; };
+		4E3BDE2126691D3940B74234AC24AFF4 /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFHTTPSessionManager.m; path = AFNetworking/AFHTTPSessionManager.m; sourceTree = "<group>"; };
+		4F13251B7D4E92DB7EE033BC1F54C0F5 /* AFNetworkActivityIndicatorManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFNetworkActivityIndicatorManager.h; path = "UIKit+AFNetworking/AFNetworkActivityIndicatorManager.h"; sourceTree = "<group>"; };
+		4FC3A2D6C8AB265935CDCE1067444E09 /* RTCVideoFrame.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCVideoFrame.h; path = WebRTC.framework/Headers/RTCVideoFrame.h; sourceTree = "<group>"; };
+		5907E00898C795D42BBFD6935B2E3184 /* UIRefreshControl+AFNetworking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIRefreshControl+AFNetworking.m"; path = "UIKit+AFNetworking/UIRefreshControl+AFNetworking.m"; sourceTree = "<group>"; };
+		5D42E0E68172D7B6F68EA5209E5C1274 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/CFNetwork.framework; sourceTree = DEVELOPER_DIR; };
+		5E3783C1B0FB6068745CF8990F55981C /* RTCLegacyStatsReport.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCLegacyStatsReport.h; path = WebRTC.framework/Headers/RTCLegacyStatsReport.h; sourceTree = "<group>"; };
+		5E72915C5FA70895C0BB6835F3A84EC5 /* AFSecurityPolicy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFSecurityPolicy.m; path = AFNetworking/AFSecurityPolicy.m; sourceTree = "<group>"; };
+		5EBEFFF2A52738CFFB2FCAC4155CF87D /* RTCPeerConnection.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCPeerConnection.h; path = WebRTC.framework/Headers/RTCPeerConnection.h; sourceTree = "<group>"; };
+		5F6B5CA47686DF319D9A57397F06815D /* RTCMediaStreamTrack.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCMediaStreamTrack.h; path = WebRTC.framework/Headers/RTCMediaStreamTrack.h; sourceTree = "<group>"; };
+		61ED3654432F5A28FB765BC4C1816495 /* RTCEAGLVideoView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCEAGLVideoView.h; path = WebRTC.framework/Headers/RTCEAGLVideoView.h; sourceTree = "<group>"; };
+		63EB3259C8FD2D85F7130A30F905415B /* libPods-unity-bridge-fake-unity-bridge.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-unity-bridge-fake-unity-bridge.a"; path = "libPods-unity-bridge-fake-unity-bridge.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		643BC5B9F78E47D990BC546D13722A20 /* AFURLRequestSerialization.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFURLRequestSerialization.h; path = AFNetworking/AFURLRequestSerialization.h; sourceTree = "<group>"; };
+		6660E1A5CA1C7E180F21B3F410CBF09D /* VoxImplant.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = VoxImplant.framework; sourceTree = "<group>"; };
+		6690E2711E43D4A8053A6E0F9C140BB7 /* VoxImplantDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VoxImplantDelegate.h; path = VoxImplant.framework/Headers/VoxImplantDelegate.h; sourceTree = "<group>"; };
+		66D97E8EDECE46AEE89024998D0F11DE /* VIVideoRendererView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VIVideoRendererView.h; path = VoxImplant.framework/Headers/VIVideoRendererView.h; sourceTree = "<group>"; };
+		6707AB606725942E5712DF84831BEBD2 /* Pods-unity-bridge-fake-unity-bridge-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-unity-bridge-fake-unity-bridge-acknowledgements.markdown"; sourceTree = "<group>"; };
+		67DB9558E9AC834244BC583445774223 /* Pods-unity-bridge-fake-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-unity-bridge-fake-frameworks.sh"; sourceTree = "<group>"; };
+		686302A104CAE90FAEF5B09A8E2E53AB /* VIAudioManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VIAudioManager.h; path = VoxImplant.framework/Headers/VIAudioManager.h; sourceTree = "<group>"; };
+		6CF1DD39874922EEA4DA943CCD1BDE3F /* UIRefreshControl+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIRefreshControl+AFNetworking.h"; path = "UIKit+AFNetworking/UIRefreshControl+AFNetworking.h"; sourceTree = "<group>"; };
+		75B913CAB6CFDA33591F4F6D7832B543 /* RTCTracing.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCTracing.h; path = WebRTC.framework/Headers/RTCTracing.h; sourceTree = "<group>"; };
+		7675074F7B4C6AB0E61A9CCEB2CB1FF2 /* AFNetworkActivityIndicatorManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFNetworkActivityIndicatorManager.m; path = "UIKit+AFNetworking/AFNetworkActivityIndicatorManager.m"; sourceTree = "<group>"; };
+		784B86E92B3BFEE40A4890C51B511369 /* RTCConfiguration.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCConfiguration.h; path = WebRTC.framework/Headers/RTCConfiguration.h; sourceTree = "<group>"; };
+		78691324FB29AA0FAFBF69F1397367DE /* AFURLResponseSerialization.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFURLResponseSerialization.h; path = AFNetworking/AFURLResponseSerialization.h; sourceTree = "<group>"; };
+		803ABA25B2CC46340224B2A3F0FBDC23 /* VIVideoSource.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VIVideoSource.h; path = VoxImplant.framework/Headers/VIVideoSource.h; sourceTree = "<group>"; };
+		81099F0FAB12EB4137021BB2CE674D0A /* RTCAVFoundationVideoSource.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCAVFoundationVideoSource.h; path = WebRTC.framework/Headers/RTCAVFoundationVideoSource.h; sourceTree = "<group>"; };
+		811150718E4FCF39B1104709596CBABD /* RTCMacros.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCMacros.h; path = WebRTC.framework/Headers/RTCMacros.h; sourceTree = "<group>"; };
+		81B5A6ED9968EC0C3588A5B350779933 /* RTCPeerConnectionFactory+VideoPreProcess.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "RTCPeerConnectionFactory+VideoPreProcess.h"; path = "WebRTC.framework/Headers/RTCPeerConnectionFactory+VideoPreProcess.h"; sourceTree = "<group>"; };
+		837A20DB8C47F751185DCB15BA2ADB1D /* UIDevice+RTCDevice.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIDevice+RTCDevice.h"; path = "WebRTC.framework/Headers/UIDevice+RTCDevice.h"; sourceTree = "<group>"; };
+		853CE6D0AD90255F65074C74E15CFD46 /* AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFNetworking.h; path = AFNetworking/AFNetworking.h; sourceTree = "<group>"; };
+		8563D8B5C4899B867CF68AEFC72496A7 /* VIEndPoint.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VIEndPoint.h; path = VoxImplant.framework/Headers/VIEndPoint.h; sourceTree = "<group>"; };
+		86B93BFE46A6E1D4EDA062A50519CFFA /* UIImage+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImage+AFNetworking.h"; path = "UIKit+AFNetworking/UIImage+AFNetworking.h"; sourceTree = "<group>"; };
+		8770C6328AE5485CCFEC1F952D889715 /* AFNetworking.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AFNetworking.xcconfig; sourceTree = "<group>"; };
+		87911A06784007D2C289D896CAB327DB /* Pods-unity-bridge-fake-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-unity-bridge-fake-resources.sh"; sourceTree = "<group>"; };
+		87D5676CB532B1D00564A7AF63ED9EF3 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImageView+AFNetworking.h"; path = "UIKit+AFNetworking/UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
+		8901E95EFB36C9797A224817E579AC20 /* UIButton+AFNetworking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIButton+AFNetworking.m"; path = "UIKit+AFNetworking/UIButton+AFNetworking.m"; sourceTree = "<group>"; };
+		8D391BCCF4A72853F1A9013BC57077BD /* SocketRocket.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SocketRocket.xcconfig; sourceTree = "<group>"; };
+		8EBD2450CE21A4FB6888F5B2B56DDFE2 /* SRWebSocket.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SRWebSocket.h; path = SocketRocket/SRWebSocket.h; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		966A4DADD3E019175A9E0780A535757D /* RTCAudioTrack.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCAudioTrack.h; path = WebRTC.framework/Headers/RTCAudioTrack.h; sourceTree = "<group>"; };
-		A8EECAFE81F0552E2621C97CC4B66774 /* RTCMediaConstraints.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCMediaConstraints.h; path = WebRTC.framework/Headers/RTCMediaConstraints.h; sourceTree = "<group>"; };
-		B1A36480BBB629C4358D4B9698E5CB05 /* RTCSessionDescription.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCSessionDescription.h; path = WebRTC.framework/Headers/RTCSessionDescription.h; sourceTree = "<group>"; };
-		B4E4136D237C29AB3BA77799779C1299 /* RTCSSLAdapter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCSSLAdapter.h; path = WebRTC.framework/Headers/RTCSSLAdapter.h; sourceTree = "<group>"; };
-		B7D00005ABBF3F4F93836277A516B2C5 /* RTCIceCandidate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCIceCandidate.h; path = WebRTC.framework/Headers/RTCIceCandidate.h; sourceTree = "<group>"; };
-		BA174CABC6419AFD2E4AD4FD58ADA094 /* RTCMetrics.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCMetrics.h; path = WebRTC.framework/Headers/RTCMetrics.h; sourceTree = "<group>"; };
-		BAC74A347E94999BDDFA0E4B0715784D /* RTCVideoTrack.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCVideoTrack.h; path = WebRTC.framework/Headers/RTCVideoTrack.h; sourceTree = "<group>"; };
-		BD5384D8E03DC5ABE27045F11AB9D5B1 /* RTCMediaStream.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCMediaStream.h; path = WebRTC.framework/Headers/RTCMediaStream.h; sourceTree = "<group>"; };
-		C21F76B5A4B5A3A023766FB764CF1014 /* RTCRtpParameters.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCRtpParameters.h; path = WebRTC.framework/Headers/RTCRtpParameters.h; sourceTree = "<group>"; };
-		C5BC3111FABF6F11283B34558FFE8C7D /* RTCRtpSender.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCRtpSender.h; path = WebRTC.framework/Headers/RTCRtpSender.h; sourceTree = "<group>"; };
-		C621F094D0ED782683290B309DD14080 /* RTCMediaStreamTrack.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCMediaStreamTrack.h; path = WebRTC.framework/Headers/RTCMediaStreamTrack.h; sourceTree = "<group>"; };
-		CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		DB0EDE1D96CF65EAB4E2B2D6A0350B97 /* RTCDataChannel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCDataChannel.h; path = WebRTC.framework/Headers/RTCDataChannel.h; sourceTree = "<group>"; };
-		DE50661D05660E1BDBCB412208F12990 /* UIDevice+RTCDevice.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIDevice+RTCDevice.h"; path = "WebRTC.framework/Headers/UIDevice+RTCDevice.h"; sourceTree = "<group>"; };
-		DFF170E6245A88F6D1EDDCB3300AE7FD /* VoxImplantDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = VoxImplantDelegate.h; sourceTree = "<group>"; };
-		E11FA9979C8FDFB8A4D67D471AD21E26 /* RTCCameraPreviewView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCCameraPreviewView.h; path = WebRTC.framework/Headers/RTCCameraPreviewView.h; sourceTree = "<group>"; };
-		E412B85662CFB086C1E566E677E1D007 /* RTCLogging.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCLogging.h; path = WebRTC.framework/Headers/RTCLogging.h; sourceTree = "<group>"; };
-		E5225FF6E3F6D9E0C054D42822797EAD /* WebRTC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WebRTC.framework; sourceTree = "<group>"; };
-		E67F3152C6EEB99AC87C47565979AE84 /* VXRendererHolder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = VXRendererHolder.h; sourceTree = "<group>"; };
-		FC35D96010962A36A6FADD37A425B120 /* RTCVideoFrame.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCVideoFrame.h; path = WebRTC.framework/Headers/RTCVideoFrame.h; sourceTree = "<group>"; };
-		FCF8C1B96E01F8DC274CC91B66258C82 /* Pods-unity-bridge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-unity-bridge.debug.xcconfig"; sourceTree = "<group>"; };
-		FF56BD73D36033F777175B4F643ACC16 /* RTCDispatcher.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCDispatcher.h; path = WebRTC.framework/Headers/RTCDispatcher.h; sourceTree = "<group>"; };
+		965D0A822891C87C6601F219EA06567E /* WebRTC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WebRTC.framework; sourceTree = "<group>"; };
+		995B4D93F7AD5CC147027CE336DEFBC8 /* AFAutoPurgingImageCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFAutoPurgingImageCache.m; path = "UIKit+AFNetworking/AFAutoPurgingImageCache.m"; sourceTree = "<group>"; };
+		9B3281D37CB977EA6D9FB328E1566D73 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		9BBEA92E35B07356608990EA8298714F /* LegacyAPI.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = LegacyAPI.h; path = VoxImplant.framework/Headers/LegacyAPI.h; sourceTree = "<group>"; };
+		A17061CE9A3B1F091191A1E3FECAC68C /* AFURLRequestSerialization.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFURLRequestSerialization.m; path = AFNetworking/AFURLRequestSerialization.m; sourceTree = "<group>"; };
+		A3BBF2646A02A2DEBF530B1CF53790AA /* RTCRtpSender.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCRtpSender.h; path = WebRTC.framework/Headers/RTCRtpSender.h; sourceTree = "<group>"; };
+		A7C2917C0AF91171CD408D3F0B71F3B2 /* RTCVideoTrack.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCVideoTrack.h; path = WebRTC.framework/Headers/RTCVideoTrack.h; sourceTree = "<group>"; };
+		AC5C8F5AB2A28FFAC7CDC6CEC7CCBECD /* UIActivityIndicatorView+AFNetworking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIActivityIndicatorView+AFNetworking.m"; path = "UIKit+AFNetworking/UIActivityIndicatorView+AFNetworking.m"; sourceTree = "<group>"; };
+		AD009EEE6B14BB88087B881584CD3394 /* libAFNetworking.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libAFNetworking.a; path = libAFNetworking.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD1BE1AAD59E90ABCD1F984610316704 /* RTCCameraPreviewView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCCameraPreviewView.h; path = WebRTC.framework/Headers/RTCCameraPreviewView.h; sourceTree = "<group>"; };
+		AFE8BCCFFB3FDBA505377A3DC61B4356 /* Pods-unity-bridge-fake-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-unity-bridge-fake-acknowledgements.markdown"; sourceTree = "<group>"; };
+		B27BE684431F1DDD5705C76EFED6D27F /* RTCRtpCodecParameters.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCRtpCodecParameters.h; path = WebRTC.framework/Headers/RTCRtpCodecParameters.h; sourceTree = "<group>"; };
+		B3C53C082295A65E7BC21877CE266CB5 /* RTCDTMFSender.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCDTMFSender.h; path = WebRTC.framework/Headers/RTCDTMFSender.h; sourceTree = "<group>"; };
+		B54A9C2792A881C84B91BECE50AD3CFC /* AFNetworkReachabilityManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFNetworkReachabilityManager.m; path = AFNetworking/AFNetworkReachabilityManager.m; sourceTree = "<group>"; };
+		B7675AC674A686E68B7F112F161B433C /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFURLResponseSerialization.m; path = AFNetworking/AFURLResponseSerialization.m; sourceTree = "<group>"; };
+		B7FD65039385D949837EC007B2C886D9 /* RTCDataChannel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCDataChannel.h; path = WebRTC.framework/Headers/RTCDataChannel.h; sourceTree = "<group>"; };
+		B843EA675721F477D1925B55CE526C42 /* AFNetworking-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AFNetworking-prefix.pch"; sourceTree = "<group>"; };
+		B95E9402DFDF0D31CB42E0E11D1C475E /* RTCDispatcher.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCDispatcher.h; path = WebRTC.framework/Headers/RTCDispatcher.h; sourceTree = "<group>"; };
+		BACFA27975AA4C1B38628789E6800CC0 /* RTCMetricsSampleInfo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCMetricsSampleInfo.h; path = WebRTC.framework/Headers/RTCMetricsSampleInfo.h; sourceTree = "<group>"; };
+		BC15AD67425A9C951318C2EB8447B9BC /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/MobileCoreServices.framework; sourceTree = DEVELOPER_DIR; };
+		BF0D105522AACC028516E1871B03565C /* RTCDataChannelConfiguration.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCDataChannelConfiguration.h; path = WebRTC.framework/Headers/RTCDataChannelConfiguration.h; sourceTree = "<group>"; };
+		C18813714D3186B49552F9F965CB5734 /* Pods-unity-bridge-fake.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-unity-bridge-fake.debug.xcconfig"; sourceTree = "<group>"; };
+		C55205223215EF1592278B82F9C0CFD2 /* RTCIceCandidate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCIceCandidate.h; path = WebRTC.framework/Headers/RTCIceCandidate.h; sourceTree = "<group>"; };
+		C57F25B89B6A229D126DFB5C5296E008 /* Pods-unity-bridge-fake-unity-bridge-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-unity-bridge-fake-unity-bridge-acknowledgements.plist"; sourceTree = "<group>"; };
+		C87BC8A8E9B4E6404F8A9261C54CECE7 /* UIKit+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIKit+AFNetworking.h"; path = "UIKit+AFNetworking/UIKit+AFNetworking.h"; sourceTree = "<group>"; };
+		CC2698957D7807C2A4F53A6D729C6373 /* AFSecurityPolicy.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFSecurityPolicy.h; path = AFNetworking/AFSecurityPolicy.h; sourceTree = "<group>"; };
+		CD431A443E653E65AE9DD00AF2938A14 /* UIActivityIndicatorView+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIActivityIndicatorView+AFNetworking.h"; path = "UIKit+AFNetworking/UIActivityIndicatorView+AFNetworking.h"; sourceTree = "<group>"; };
+		D1DDE2AACDF1840C5CFBC7B435351B3D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		DA3EB76735B836F39B902E1ED314FFC6 /* Pods-unity-bridge-fake-unity-bridge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-unity-bridge-fake-unity-bridge.release.xcconfig"; sourceTree = "<group>"; };
+		DEF102A7F757757F572CF8E5DBD1B3BE /* RTCMediaStream.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCMediaStream.h; path = WebRTC.framework/Headers/RTCMediaStream.h; sourceTree = "<group>"; };
+		DF757E3F42E10D5B918A9E1E697DDDD6 /* RTCFieldTrials.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCFieldTrials.h; path = WebRTC.framework/Headers/RTCFieldTrials.h; sourceTree = "<group>"; };
+		E1FB5145FF4CBA760103E0D8C1001EE5 /* UIWebView+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIWebView+AFNetworking.h"; path = "UIKit+AFNetworking/UIWebView+AFNetworking.h"; sourceTree = "<group>"; };
+		E2E337E5BC2B0FC9B863CC21C58362E5 /* SocketRocket-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SocketRocket-dummy.m"; sourceTree = "<group>"; };
+		E50E0201213144F0AF4B99CFA387304D /* RTCPeerConnectionFactory.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCPeerConnectionFactory.h; path = WebRTC.framework/Headers/RTCPeerConnectionFactory.h; sourceTree = "<group>"; };
+		E5CF228073C583EF456DF328B79F2922 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+AFNetworking.m"; path = "UIKit+AFNetworking/UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
+		EF4EAE322110D24AFA6CAE8216E91852 /* WebRTC.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WebRTC.h; path = WebRTC.framework/Headers/WebRTC.h; sourceTree = "<group>"; };
+		EF6E082804F1FCF00CAA8EA7D9217FBF /* RTCVideoRenderer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCVideoRenderer.h; path = WebRTC.framework/Headers/RTCVideoRenderer.h; sourceTree = "<group>"; };
+		F3130D4B035F27ACD90F878632AC06B1 /* SocketRocket-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SocketRocket-prefix.pch"; sourceTree = "<group>"; };
+		F351D6011CB30600194012E1AD0A01AC /* VIClient.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VIClient.h; path = VoxImplant.framework/Headers/VIClient.h; sourceTree = "<group>"; };
+		F5AB29DC74E839F0063AB761A148A924 /* VICallStat.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VICallStat.h; path = VoxImplant.framework/Headers/VICallStat.h; sourceTree = "<group>"; };
+		F78CE0D7FB0F137AEF8B16D4C6EE971E /* VICall.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VICall.h; path = VoxImplant.framework/Headers/VICall.h; sourceTree = "<group>"; };
+		F841D78E00F54F41710612F9B8A33A0D /* UIProgressView+AFNetworking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIProgressView+AFNetworking.m"; path = "UIKit+AFNetworking/UIProgressView+AFNetworking.m"; sourceTree = "<group>"; };
+		F9006592DD83EA44F5FD574BF02647DF /* RTCSessionDescription.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTCSessionDescription.h; path = WebRTC.framework/Headers/RTCSessionDescription.h; sourceTree = "<group>"; };
+		F97F3820FA8ABDF8BABA41BD58C52A48 /* AFURLSessionManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFURLSessionManager.h; path = AFNetworking/AFURLSessionManager.h; sourceTree = "<group>"; };
+		FB1C68619D2C5D68A8E0172CEA242FDE /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFHTTPSessionManager.h; path = AFNetworking/AFHTTPSessionManager.h; sourceTree = "<group>"; };
+		FF78D4F55D3B89378CB76BC736BEEFFB /* SRWebSocket.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SRWebSocket.m; path = SocketRocket/SRWebSocket.m; sourceTree = "<group>"; };
+		FF7C65631F8A1A0F8F339AC72F6C3476 /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFNetworkReachabilityManager.h; path = AFNetworking/AFNetworkReachabilityManager.h; sourceTree = "<group>"; };
+		FFCFD3C1F9ECD2AD378EBC7498A82F8F /* VICameraManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VICameraManager.h; path = VoxImplant.framework/Headers/VICameraManager.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		2D4956FF0FA3258974C8679AF5D47AFB /* Frameworks */ = {
+		0E239757D206C35A22BD0EEB447E911B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				488D8126EA7A0FD348BC413D010ED9CA /* Foundation.framework in Frameworks */,
+				9C3F58269DA76E3D80F6508CD958EB5B /* CFNetwork.framework in Frameworks */,
+				06603FD685D9F32F82BFAD15F986A2C7 /* Foundation.framework in Frameworks */,
+				62FDF4721C1DFC21AEAF9131A793F9DB /* Security.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7EC6D4126C41240D8C4102955438822E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8406CE88865ADE82E6ECFBB442754F27 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8EC47C139296D4E2B8598062A19F0881 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				51A7C22D7DA97E6215A2107244BCD817 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F3284DBE3CA8932733932AD2A48445B2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CBCCEAD402645565401CA93924736979 /* CoreGraphics.framework in Frameworks */,
+				0214246CCB1FF7182F7222B9CCDF8FCB /* Foundation.framework in Frameworks */,
+				F8DCA6C3C05A59B2C95A1B5F1CBD8C99 /* MobileCoreServices.framework in Frameworks */,
+				DE825B8F32AB823F4BE5492CAC6FCB4B /* Security.framework in Frameworks */,
+				903158692A045396106CA22C0DD13BA6 /* SystemConfiguration.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0B5D62203436A4D5DBEE86501E0DBC39 /* Targets Support Files */ = {
+		0AD2786D2E8CD2764D0618D87A9018D4 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				5DB024C03D7C618E649DA8FD8651D6BE /* Pods-unity-bridge */,
+				8D391BCCF4A72853F1A9013BC57077BD /* SocketRocket.xcconfig */,
+				E2E337E5BC2B0FC9B863CC21C58362E5 /* SocketRocket-dummy.m */,
+				F3130D4B035F27ACD90F878632AC06B1 /* SocketRocket-prefix.pch */,
 			);
-			name = "Targets Support Files";
+			name = "Support Files";
+			path = "../Target Support Files/SocketRocket";
 			sourceTree = "<group>";
 		};
-		1EC41C265EC7CBC9D59B4F01E7743288 /* Products */ = {
+		0F75DF6C7C5F002280EC53F48E80B587 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				73397022F46BEB5F905B9FA4946F9994 /* libPods-unity-bridge.a */,
+				9F398C40C1A092B09FEB94A58DD0FF13 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3028A817216A946701FCF7D812598E13 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				8770C6328AE5485CCFEC1F952D889715 /* AFNetworking.xcconfig */,
+				1F3C7D9E09595EAF5EBAC20E2DC4FF70 /* AFNetworking-dummy.m */,
+				B843EA675721F477D1925B55CE526C42 /* AFNetworking-prefix.pch */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/AFNetworking";
+			sourceTree = "<group>";
+		};
+		3CD45865ECE4D93FC65CE394201F7980 /* VoxImplantSDK */ = {
+			isa = PBXGroup;
+			children = (
+				9BBEA92E35B07356608990EA8298714F /* LegacyAPI.h */,
+				686302A104CAE90FAEF5B09A8E2E53AB /* VIAudioManager.h */,
+				F78CE0D7FB0F137AEF8B16D4C6EE971E /* VICall.h */,
+				F5AB29DC74E839F0063AB761A148A924 /* VICallStat.h */,
+				FFCFD3C1F9ECD2AD378EBC7498A82F8F /* VICameraManager.h */,
+				F351D6011CB30600194012E1AD0A01AC /* VIClient.h */,
+				8563D8B5C4899B867CF68AEFC72496A7 /* VIEndPoint.h */,
+				1962F56DA018B1740927D9C72337DE8C /* VIVideoRenderer.h */,
+				66D97E8EDECE46AEE89024998D0F11DE /* VIVideoRendererView.h */,
+				803ABA25B2CC46340224B2A3F0FBDC23 /* VIVideoSource.h */,
+				1EB92AB95170C904C3F3878B681C7439 /* VIVideoStream.h */,
+				176850AC3630E6F9E8FDC5EC10EA6DBF /* VoxImplant.h */,
+				6690E2711E43D4A8053A6E0F9C140BB7 /* VoxImplantDelegate.h */,
+				D258F9A1405D4A53F834FAB0A799B39D /* Frameworks */,
+			);
+			name = VoxImplantSDK;
+			path = VoxImplantSDK;
+			sourceTree = "<group>";
+		};
+		4A759100680E5FD12663A16CA9DCAC1D /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				FF7C65631F8A1A0F8F339AC72F6C3476 /* AFNetworkReachabilityManager.h */,
+				B54A9C2792A881C84B91BECE50AD3CFC /* AFNetworkReachabilityManager.m */,
+			);
+			name = Reachability;
+			sourceTree = "<group>";
+		};
+		71EBF12BE21B5A6E35654F81C8FF3F28 /* Pods-unity-bridge-fake-unity-bridge */ = {
+			isa = PBXGroup;
+			children = (
+				6707AB606725942E5712DF84831BEBD2 /* Pods-unity-bridge-fake-unity-bridge-acknowledgements.markdown */,
+				C57F25B89B6A229D126DFB5C5296E008 /* Pods-unity-bridge-fake-unity-bridge-acknowledgements.plist */,
+				025D52965A5A92784DFF43280B18AA43 /* Pods-unity-bridge-fake-unity-bridge-dummy.m */,
+				2626E5FFC99B8A373CDD42747A5CBFA3 /* Pods-unity-bridge-fake-unity-bridge-resources.sh */,
+				226397DBEA3DBB9A36E94C90EF6FF197 /* Pods-unity-bridge-fake-unity-bridge.debug.xcconfig */,
+				DA3EB76735B836F39B902E1ED314FFC6 /* Pods-unity-bridge-fake-unity-bridge.release.xcconfig */,
+			);
+			name = "Pods-unity-bridge-fake-unity-bridge";
+			path = "Target Support Files/Pods-unity-bridge-fake-unity-bridge";
+			sourceTree = "<group>";
+		};
+		75C5CC7BBB363F53D41450B454A99ECA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AD009EEE6B14BB88087B881584CD3394 /* libAFNetworking.a */,
+				0096FF32FF5626AEF3E3C04A1DB16F63 /* libPods-unity-bridge-fake.a */,
+				63EB3259C8FD2D85F7130A30F905415B /* libPods-unity-bridge-fake-unity-bridge.a */,
+				0485E21E01C1A1F265B74327FA1B69FF /* libSocketRocket.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		261D164CA3D25552FCCA12FCD32F1F7E /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				E5225FF6E3F6D9E0C054D42822797EAD /* WebRTC.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		46A4FAE469A2E9D92E638D6EFCF7EFC0 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				33BD5ADAC33A9FE88928129709B77726 /* VoxImplant.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		49CB7F89B6A435E92ACBF211CBA1A470 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				8C5F741F43C686F5E32D2BD7DD32A220 /* VoxImplantWebRTC */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		5DB024C03D7C618E649DA8FD8651D6BE /* Pods-unity-bridge */ = {
-			isa = PBXGroup;
-			children = (
-				427AF239C086CA4BE13969548EA96569 /* Pods-unity-bridge-acknowledgements.markdown */,
-				1CAC8854DBC6CE096C77A8753F206240 /* Pods-unity-bridge-acknowledgements.plist */,
-				35F081B82284815C3515078728E688AF /* Pods-unity-bridge-dummy.m */,
-				87593AB3BE411506ECB7144D0C44EDAF /* Pods-unity-bridge-frameworks.sh */,
-				08A1C0BB26A11D34A4ED86022E7D4FD4 /* Pods-unity-bridge-resources.sh */,
-				FCF8C1B96E01F8DC274CC91B66258C82 /* Pods-unity-bridge.debug.xcconfig */,
-				04F92F100492C8130F011055F9B691FE /* Pods-unity-bridge.release.xcconfig */,
-			);
-			name = "Pods-unity-bridge";
-			path = "Target Support Files/Pods-unity-bridge";
-			sourceTree = "<group>";
-		};
-		7531C8F8DE19F1AA3C8A7AC97A91DC29 /* iOS */ = {
-			isa = PBXGroup;
-			children = (
-				CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */,
-			);
-			name = iOS;
 			sourceTree = "<group>";
 		};
 		7DB346D0F39D3F0E887471402A8071AB = {
 			isa = PBXGroup;
 			children = (
 				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
-				CB300D7A594AC38575A84026F23013A5 /* Development Pods */,
-				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
-				49CB7F89B6A435E92ACBF211CBA1A470 /* Pods */,
-				1EC41C265EC7CBC9D59B4F01E7743288 /* Products */,
-				0B5D62203436A4D5DBEE86501E0DBC39 /* Targets Support Files */,
+				0F75DF6C7C5F002280EC53F48E80B587 /* Frameworks */,
+				BB7AB9B5CFD95EDF19054C5B70D6959C /* Pods */,
+				75C5CC7BBB363F53D41450B454A99ECA /* Products */,
+				9DFA9902B8D401C583546A41066E8DCB /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
 		};
-		8109B4F7F8D1650EAC9CFA3B7E3BB60A /* Headers */ = {
+		7EA8227CE62D4BD0F45A6C0BC3171716 /* VoxImplantWebRTC */ = {
 			isa = PBXGroup;
 			children = (
-				55C63C206648460EF259731738DAF5DB /* VoxImplant.h */,
-				2FACA7DA926BAA789A47E12F87788EEC /* VoxImplant+Renderers.h */,
-				DFF170E6245A88F6D1EDDCB3300AE7FD /* VoxImplantDelegate.h */,
-				E67F3152C6EEB99AC87C47565979AE84 /* VXRendererHolder.h */,
-			);
-			name = Headers;
-			path = Headers;
-			sourceTree = "<group>";
-		};
-		8C5F741F43C686F5E32D2BD7DD32A220 /* VoxImplantWebRTC */ = {
-			isa = PBXGroup;
-			children = (
-				00E096AE8CEFD75662BB58B5B79A9C1D /* RTCAudioSource.h */,
-				966A4DADD3E019175A9E0780A535757D /* RTCAudioTrack.h */,
-				4C493F125265DB93F0F3B642267C1C40 /* RTCAVFoundationVideoSource.h */,
-				E11FA9979C8FDFB8A4D67D471AD21E26 /* RTCCameraPreviewView.h */,
-				9021AF3DE251DDAD710943AB5C185517 /* RTCConfiguration.h */,
-				DB0EDE1D96CF65EAB4E2B2D6A0350B97 /* RTCDataChannel.h */,
-				0AB6610EE90B2A2870174AC6BF03805A /* RTCDataChannelConfiguration.h */,
-				FF56BD73D36033F777175B4F643ACC16 /* RTCDispatcher.h */,
-				8BF277F4AEB6FD97B3C7DCAAE7EE0754 /* RTCEAGLVideoView.h */,
-				0E2D8ADF4D64FC8432F02BC334BD1284 /* RTCFieldTrials.h */,
-				6B17D575A104BAB78D202363A3BED4B2 /* RTCFileLogger.h */,
-				B7D00005ABBF3F4F93836277A516B2C5 /* RTCIceCandidate.h */,
-				0406811D4651B78918DBDE567D63A4B5 /* RTCIceServer.h */,
-				59BD76F1E93240D35CEBE77471E323FB /* RTCLegacyStatsReport.h */,
-				E412B85662CFB086C1E566E677E1D007 /* RTCLogging.h */,
-				8322669E77A8CFAE65E03143139B64C2 /* RTCMacros.h */,
-				A8EECAFE81F0552E2621C97CC4B66774 /* RTCMediaConstraints.h */,
-				15F004E28DA2C120D3597646D037C9B4 /* RTCMediaSource.h */,
-				BD5384D8E03DC5ABE27045F11AB9D5B1 /* RTCMediaStream.h */,
-				C621F094D0ED782683290B309DD14080 /* RTCMediaStreamTrack.h */,
-				BA174CABC6419AFD2E4AD4FD58ADA094 /* RTCMetrics.h */,
-				7F478875E796B8415E18C362C429A4BD /* RTCMetricsSampleInfo.h */,
-				3F8F4B03FDACFAC6C8C5C0A31C5F38E7 /* RTCPeerConnection.h */,
-				1EF886EC2078FF9D3ECEB11016343D3F /* RTCPeerConnectionFactory.h */,
-				12850D7CB0C753C85079162D030F40DE /* RTCRtpCodecParameters.h */,
-				73A0C1D5D84D06C488ABEF5E3003D3E2 /* RTCRtpEncodingParameters.h */,
-				C21F76B5A4B5A3A023766FB764CF1014 /* RTCRtpParameters.h */,
-				55EA00931213DA03AD0B87AF0A9267F9 /* RTCRtpReceiver.h */,
-				C5BC3111FABF6F11283B34558FFE8C7D /* RTCRtpSender.h */,
-				B1A36480BBB629C4358D4B9698E5CB05 /* RTCSessionDescription.h */,
-				B4E4136D237C29AB3BA77799779C1299 /* RTCSSLAdapter.h */,
-				2D33B2E01FDCCD648CAD526303D2E1DB /* RTCTracing.h */,
-				FC35D96010962A36A6FADD37A425B120 /* RTCVideoFrame.h */,
-				2E821ADE88EDF1A6C9B375824568EAE1 /* RTCVideoRenderer.h */,
-				460F13B8410C38493C32CF1F81513F24 /* RTCVideoSource.h */,
-				BAC74A347E94999BDDFA0E4B0715784D /* RTCVideoTrack.h */,
-				DE50661D05660E1BDBCB412208F12990 /* UIDevice+RTCDevice.h */,
-				239BF7B3D0109CBCB2EFC8A807ED5B02 /* WebRTC.h */,
-				261D164CA3D25552FCCA12FCD32F1F7E /* Frameworks */,
+				3FF3F16CFB2F57D71EB04552062D9FA2 /* RTCAudioSource.h */,
+				1EBC586BF66ED60CF0915D443D660BBD /* RTCAudioTrack.h */,
+				81099F0FAB12EB4137021BB2CE674D0A /* RTCAVFoundationVideoSource.h */,
+				AD1BE1AAD59E90ABCD1F984610316704 /* RTCCameraPreviewView.h */,
+				784B86E92B3BFEE40A4890C51B511369 /* RTCConfiguration.h */,
+				4031DC7F07856613CED92333BD63EA7D /* RTCCustomVideoSource.h */,
+				B7FD65039385D949837EC007B2C886D9 /* RTCDataChannel.h */,
+				BF0D105522AACC028516E1871B03565C /* RTCDataChannelConfiguration.h */,
+				B95E9402DFDF0D31CB42E0E11D1C475E /* RTCDispatcher.h */,
+				B3C53C082295A65E7BC21877CE266CB5 /* RTCDTMFSender.h */,
+				61ED3654432F5A28FB765BC4C1816495 /* RTCEAGLVideoView.h */,
+				DF757E3F42E10D5B918A9E1E697DDDD6 /* RTCFieldTrials.h */,
+				17145615A8DE36D0967B3363F5150B59 /* RTCFileLogger.h */,
+				C55205223215EF1592278B82F9C0CFD2 /* RTCIceCandidate.h */,
+				445FDFA230A7A1857399EABF1EFA5359 /* RTCIceServer.h */,
+				5E3783C1B0FB6068745CF8990F55981C /* RTCLegacyStatsReport.h */,
+				30D9FED7E2A376E6E926F93B46845C82 /* RTCLogging.h */,
+				811150718E4FCF39B1104709596CBABD /* RTCMacros.h */,
+				18F161E2582A348E2C0EB58784885303 /* RTCMediaConstraints.h */,
+				1F51E19916778D4C7DDC1B3EA08DCF43 /* RTCMediaSource.h */,
+				DEF102A7F757757F572CF8E5DBD1B3BE /* RTCMediaStream.h */,
+				5F6B5CA47686DF319D9A57397F06815D /* RTCMediaStreamTrack.h */,
+				2EF8235D9C758AB9EFCEE0FAF429F65C /* RTCMetrics.h */,
+				BACFA27975AA4C1B38628789E6800CC0 /* RTCMetricsSampleInfo.h */,
+				31C9375430AC20F381D126422EDCD2F5 /* RTCMTLVideoView.h */,
+				5EBEFFF2A52738CFFB2FCAC4155CF87D /* RTCPeerConnection.h */,
+				E50E0201213144F0AF4B99CFA387304D /* RTCPeerConnectionFactory.h */,
+				81B5A6ED9968EC0C3588A5B350779933 /* RTCPeerConnectionFactory+VideoPreProcess.h */,
+				B27BE684431F1DDD5705C76EFED6D27F /* RTCRtpCodecParameters.h */,
+				1026FE28CCCFE04A084F73C6955D4780 /* RTCRtpEncodingParameters.h */,
+				4B73D8CEFF39FCC5876C0811048FC65E /* RTCRtpParameters.h */,
+				0B62DB4CB21B28258501C114D8F062E2 /* RTCRtpReceiver.h */,
+				A3BBF2646A02A2DEBF530B1CF53790AA /* RTCRtpSender.h */,
+				F9006592DD83EA44F5FD574BF02647DF /* RTCSessionDescription.h */,
+				1595413FD2CE6C49CFDEBB2FEEC864F1 /* RTCSSLAdapter.h */,
+				75B913CAB6CFDA33591F4F6D7832B543 /* RTCTracing.h */,
+				4FC3A2D6C8AB265935CDCE1067444E09 /* RTCVideoFrame.h */,
+				EF6E082804F1FCF00CAA8EA7D9217FBF /* RTCVideoRenderer.h */,
+				4497B011B3BE687E69F52CA3C90FBF91 /* RTCVideoSource.h */,
+				A7C2917C0AF91171CD408D3F0B71F3B2 /* RTCVideoTrack.h */,
+				837A20DB8C47F751185DCB15BA2ADB1D /* UIDevice+RTCDevice.h */,
+				EF4EAE322110D24AFA6CAE8216E91852 /* WebRTC.h */,
+				C0E5C2A0F840D8B71CB9A46B558DEF49 /* Frameworks */,
 			);
 			name = VoxImplantWebRTC;
 			path = VoxImplantWebRTC;
 			sourceTree = "<group>";
 		};
-		BC2A489AC999F53772028AED245A7D68 /* VoxImplant.framework */ = {
+		91D85AEA537672F4B5244141131B4AA2 /* Serialization */ = {
 			isa = PBXGroup;
 			children = (
-				8109B4F7F8D1650EAC9CFA3B7E3BB60A /* Headers */,
+				643BC5B9F78E47D990BC546D13722A20 /* AFURLRequestSerialization.h */,
+				A17061CE9A3B1F091191A1E3FECAC68C /* AFURLRequestSerialization.m */,
+				78691324FB29AA0FAFBF69F1397367DE /* AFURLResponseSerialization.h */,
+				B7675AC674A686E68B7F112F161B433C /* AFURLResponseSerialization.m */,
 			);
-			name = VoxImplant.framework;
-			path = VoxImplant.framework;
+			name = Serialization;
 			sourceTree = "<group>";
 		};
-		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
+		9DFA9902B8D401C583546A41066E8DCB /* Targets Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				7531C8F8DE19F1AA3C8A7AC97A91DC29 /* iOS */,
+				DD64B924FB8A657293E80FE1B61F0FF4 /* Pods-unity-bridge-fake */,
+				71EBF12BE21B5A6E35654F81C8FF3F28 /* Pods-unity-bridge-fake-unity-bridge */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		9F398C40C1A092B09FEB94A58DD0FF13 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				5D42E0E68172D7B6F68EA5209E5C1274 /* CFNetwork.framework */,
+				17322A3E6B312C526B2D7A53434DC936 /* CoreGraphics.framework */,
+				9B3281D37CB977EA6D9FB328E1566D73 /* Foundation.framework */,
+				BC15AD67425A9C951318C2EB8447B9BC /* MobileCoreServices.framework */,
+				D1DDE2AACDF1840C5CFBC7B435351B3D /* Security.framework */,
+				13D2D76012584A025FE61E9450EC5643 /* SystemConfiguration.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		A1EF17D6F7096F89BC0752C12A62A683 /* NSURLSession */ = {
+			isa = PBXGroup;
+			children = (
+				FB1C68619D2C5D68A8E0172CEA242FDE /* AFHTTPSessionManager.h */,
+				4E3BDE2126691D3940B74234AC24AFF4 /* AFHTTPSessionManager.m */,
+				F97F3820FA8ABDF8BABA41BD58C52A48 /* AFURLSessionManager.h */,
+				1609961F555B66E8255A18EC508A9070 /* AFURLSessionManager.m */,
+			);
+			name = NSURLSession;
+			sourceTree = "<group>";
+		};
+		AE3FB3618468AF8B916DB7D08B930376 /* AFNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				853CE6D0AD90255F65074C74E15CFD46 /* AFNetworking.h */,
+				A1EF17D6F7096F89BC0752C12A62A683 /* NSURLSession */,
+				4A759100680E5FD12663A16CA9DCAC1D /* Reachability */,
+				B6581263DC817A8EF214A84B67D3C7A7 /* Security */,
+				91D85AEA537672F4B5244141131B4AA2 /* Serialization */,
+				3028A817216A946701FCF7D812598E13 /* Support Files */,
+				C1D985C0F7E59C8F5A2F49A2014AF6E3 /* UIKit */,
+			);
+			name = AFNetworking;
+			path = AFNetworking;
+			sourceTree = "<group>";
+		};
+		B6581263DC817A8EF214A84B67D3C7A7 /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				CC2698957D7807C2A4F53A6D729C6373 /* AFSecurityPolicy.h */,
+				5E72915C5FA70895C0BB6835F3A84EC5 /* AFSecurityPolicy.m */,
+			);
+			name = Security;
+			sourceTree = "<group>";
+		};
+		BB7AB9B5CFD95EDF19054C5B70D6959C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				AE3FB3618468AF8B916DB7D08B930376 /* AFNetworking */,
+				DBFCE5F3CDB4D396E6FB9E4FA6371E0F /* SocketRocket */,
+				3CD45865ECE4D93FC65CE394201F7980 /* VoxImplantSDK */,
+				7EA8227CE62D4BD0F45A6C0BC3171716 /* VoxImplantWebRTC */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		C0E5C2A0F840D8B71CB9A46B558DEF49 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				965D0A822891C87C6601F219EA06567E /* WebRTC.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		CB300D7A594AC38575A84026F23013A5 /* Development Pods */ = {
+		C1D985C0F7E59C8F5A2F49A2014AF6E3 /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
-				EE3204390023635CA6FD1BD3988FBB5D /* VoxImplantSDK */,
+				1AC31C8B443F86E3BDA1326F34595DFE /* AFAutoPurgingImageCache.h */,
+				995B4D93F7AD5CC147027CE336DEFBC8 /* AFAutoPurgingImageCache.m */,
+				2699D7E87545C9E1FB8BDB70A24514C0 /* AFImageDownloader.h */,
+				48E4E9B00EFED4456FCCBE51454B4251 /* AFImageDownloader.m */,
+				4F13251B7D4E92DB7EE033BC1F54C0F5 /* AFNetworkActivityIndicatorManager.h */,
+				7675074F7B4C6AB0E61A9CCEB2CB1FF2 /* AFNetworkActivityIndicatorManager.m */,
+				CD431A443E653E65AE9DD00AF2938A14 /* UIActivityIndicatorView+AFNetworking.h */,
+				AC5C8F5AB2A28FFAC7CDC6CEC7CCBECD /* UIActivityIndicatorView+AFNetworking.m */,
+				38DB2C450D792DB83C665FE6E703A5C5 /* UIButton+AFNetworking.h */,
+				8901E95EFB36C9797A224817E579AC20 /* UIButton+AFNetworking.m */,
+				86B93BFE46A6E1D4EDA062A50519CFFA /* UIImage+AFNetworking.h */,
+				87D5676CB532B1D00564A7AF63ED9EF3 /* UIImageView+AFNetworking.h */,
+				E5CF228073C583EF456DF328B79F2922 /* UIImageView+AFNetworking.m */,
+				C87BC8A8E9B4E6404F8A9261C54CECE7 /* UIKit+AFNetworking.h */,
+				18EC0BA72EF92DA4316692D26D7E359A /* UIProgressView+AFNetworking.h */,
+				F841D78E00F54F41710612F9B8A33A0D /* UIProgressView+AFNetworking.m */,
+				6CF1DD39874922EEA4DA943CCD1BDE3F /* UIRefreshControl+AFNetworking.h */,
+				5907E00898C795D42BBFD6935B2E3184 /* UIRefreshControl+AFNetworking.m */,
+				E1FB5145FF4CBA760103E0D8C1001EE5 /* UIWebView+AFNetworking.h */,
+				0D08FF68723A3B1E059B388FE6CD887B /* UIWebView+AFNetworking.m */,
 			);
-			name = "Development Pods";
+			name = UIKit;
 			sourceTree = "<group>";
 		};
-		EE3204390023635CA6FD1BD3988FBB5D /* VoxImplantSDK */ = {
+		D258F9A1405D4A53F834FAB0A799B39D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				46A4FAE469A2E9D92E638D6EFCF7EFC0 /* Frameworks */,
-				BC2A489AC999F53772028AED245A7D68 /* VoxImplant.framework */,
+				6660E1A5CA1C7E180F21B3F410CBF09D /* VoxImplant.framework */,
 			);
-			name = VoxImplantSDK;
-			path = ../VoxImplantSDK;
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DBFCE5F3CDB4D396E6FB9E4FA6371E0F /* SocketRocket */ = {
+			isa = PBXGroup;
+			children = (
+				14C8A04877FCF632551F70F962DCEC55 /* SocketRocket.h */,
+				8EBD2450CE21A4FB6888F5B2B56DDFE2 /* SRWebSocket.h */,
+				FF78D4F55D3B89378CB76BC736BEEFFB /* SRWebSocket.m */,
+				0AD2786D2E8CD2764D0618D87A9018D4 /* Support Files */,
+			);
+			name = SocketRocket;
+			path = SocketRocket;
+			sourceTree = "<group>";
+		};
+		DD64B924FB8A657293E80FE1B61F0FF4 /* Pods-unity-bridge-fake */ = {
+			isa = PBXGroup;
+			children = (
+				AFE8BCCFFB3FDBA505377A3DC61B4356 /* Pods-unity-bridge-fake-acknowledgements.markdown */,
+				1C0AC755C9E0FF40E431EEC1F4481C6C /* Pods-unity-bridge-fake-acknowledgements.plist */,
+				3BD89639B3015A1A30F3398BEA189688 /* Pods-unity-bridge-fake-dummy.m */,
+				67DB9558E9AC834244BC583445774223 /* Pods-unity-bridge-fake-frameworks.sh */,
+				87911A06784007D2C289D896CAB327DB /* Pods-unity-bridge-fake-resources.sh */,
+				C18813714D3186B49552F9F965CB5734 /* Pods-unity-bridge-fake.debug.xcconfig */,
+				1979BCD0E05A8F5CFBC1343A6772BFEA /* Pods-unity-bridge-fake.release.xcconfig */,
+			);
+			name = "Pods-unity-bridge-fake";
+			path = "Target Support Files/Pods-unity-bridge-fake";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		0A1C2B07813030B0D51EB1D804A4439E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F1F93EE1AA5E870F2CE81325CE9EB643 /* AFAutoPurgingImageCache.h in Headers */,
+				6B71CE5BA32574F407349C1DA20605B4 /* AFHTTPSessionManager.h in Headers */,
+				707E818332E5033501DF2D7826C639DF /* AFImageDownloader.h in Headers */,
+				E7B0270BEDCBE116DDD853F76E27B0BA /* AFNetworkActivityIndicatorManager.h in Headers */,
+				46401F3C7FF0B0CFE2E9B14914780835 /* AFNetworking.h in Headers */,
+				DE31BBF6A7963C5871A19655EF5532BE /* AFNetworkReachabilityManager.h in Headers */,
+				D59FC98A74E440C4725B6FDC28F5951E /* AFSecurityPolicy.h in Headers */,
+				C1C0D7C93BF3DE14A26757273598D0FA /* AFURLRequestSerialization.h in Headers */,
+				66635EAAE52FF5571DBCDC626FB8CA86 /* AFURLResponseSerialization.h in Headers */,
+				F5CC06F3E0C232483A72DCCFAF393BE0 /* AFURLSessionManager.h in Headers */,
+				682B0E603612B6ADBCCF30580F9A4B09 /* UIActivityIndicatorView+AFNetworking.h in Headers */,
+				2EBAA518CB8B2DAF89A63637091D4615 /* UIButton+AFNetworking.h in Headers */,
+				1341A7AC2439CB63D459D32EF985A414 /* UIImage+AFNetworking.h in Headers */,
+				D5CB999FB5FC80FC126A38AB4DF12227 /* UIImageView+AFNetworking.h in Headers */,
+				5719F06B809080CDEF7E6BC75DEA1A3C /* UIKit+AFNetworking.h in Headers */,
+				B40756412613B53C80EE77C4C223990F /* UIProgressView+AFNetworking.h in Headers */,
+				F099E5987DD80E8D78E909AF81D3C587 /* UIRefreshControl+AFNetworking.h in Headers */,
+				8958F2453EEBAF71BFEBD78FB48986EC /* UIWebView+AFNetworking.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DE7781AA9655BF2C1846ABEC48617721 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0AD31F6A10787A89701EFF89AF40C633 /* SocketRocket.h in Headers */,
+				8F144E1F8D4D778447AC5DE27B6699DA /* SRWebSocket.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
-		15441CBBE4C741360A3EB1AA6BA8518D /* Pods-unity-bridge */ = {
+		772CC144F60FC1C00B56965D0476F1A2 /* Pods-unity-bridge-fake-unity-bridge */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 42B61D8117C6C506CF35260E8A83A8BD /* Build configuration list for PBXNativeTarget "Pods-unity-bridge" */;
+			buildConfigurationList = E3327607CD42DE9A750353487C4668B5 /* Build configuration list for PBXNativeTarget "Pods-unity-bridge-fake-unity-bridge" */;
 			buildPhases = (
-				42C6D927B9CF7C09F37FCA4D8CB5F4E5 /* Sources */,
-				2D4956FF0FA3258974C8679AF5D47AFB /* Frameworks */,
+				0C064F4119EAE6A34747215EE832DC80 /* Sources */,
+				7EC6D4126C41240D8C4102955438822E /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3C9A0C963DEADD5824A6C1AF6CA01F5F /* PBXTargetDependency */,
+				2DB2DD3E40E526CBA3871F22297CA511 /* PBXTargetDependency */,
+			);
+			name = "Pods-unity-bridge-fake-unity-bridge";
+			productName = "Pods-unity-bridge-fake-unity-bridge";
+			productReference = 63EB3259C8FD2D85F7130A30F905415B /* libPods-unity-bridge-fake-unity-bridge.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		9E033EDB5EC0819481B0546434FA577B /* AFNetworking */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 483FBC4A668BF7F1A8767452E7E188AC /* Build configuration list for PBXNativeTarget "AFNetworking" */;
+			buildPhases = (
+				0068413C89BADAAF4691AA78AFE62C3E /* Sources */,
+				F3284DBE3CA8932733932AD2A48445B2 /* Frameworks */,
+				0A1C2B07813030B0D51EB1D804A4439E /* Headers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "Pods-unity-bridge";
-			productName = "Pods-unity-bridge";
-			productReference = 73397022F46BEB5F905B9FA4946F9994 /* libPods-unity-bridge.a */;
+			name = AFNetworking;
+			productName = AFNetworking;
+			productReference = AD009EEE6B14BB88087B881584CD3394 /* libAFNetworking.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		A95E5AC230022F07569EA7C2C8EAAA65 /* SocketRocket */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B4286F147E55CE513649F4D25BD4B9FD /* Build configuration list for PBXNativeTarget "SocketRocket" */;
+			buildPhases = (
+				58DA6A2D19651FB9785D2A382ECF40D0 /* Sources */,
+				0E239757D206C35A22BD0EEB447E911B /* Frameworks */,
+				DE7781AA9655BF2C1846ABEC48617721 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SocketRocket;
+			productName = SocketRocket;
+			productReference = 0485E21E01C1A1F265B74327FA1B69FF /* libSocketRocket.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		ACDFE19FE312E2E7066443888652D911 /* Pods-unity-bridge-fake */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A24971CC0DF3D9AC73FE9900F2510727 /* Build configuration list for PBXNativeTarget "Pods-unity-bridge-fake" */;
+			buildPhases = (
+				90BA435A5E906191049D4056FAE590EE /* Sources */,
+				8EC47C139296D4E2B8598062A19F0881 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EA9014994DBA85FFA06A08B487F576B4 /* PBXTargetDependency */,
+				AE7EFE5E288DEA3D9C293F6DCF3E553B /* PBXTargetDependency */,
+			);
+			name = "Pods-unity-bridge-fake";
+			productName = "Pods-unity-bridge-fake";
+			productReference = 0096FF32FF5626AEF3E3C04A1DB16F63 /* libPods-unity-bridge-fake.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -274,7 +671,7 @@
 		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0730;
+				LastSwiftUpdateCheck = 0830;
 				LastUpgradeCheck = 0700;
 			};
 			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
@@ -285,32 +682,126 @@
 				en,
 			);
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
-			productRefGroup = 1EC41C265EC7CBC9D59B4F01E7743288 /* Products */;
+			productRefGroup = 75C5CC7BBB363F53D41450B454A99ECA /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				15441CBBE4C741360A3EB1AA6BA8518D /* Pods-unity-bridge */,
+				9E033EDB5EC0819481B0546434FA577B /* AFNetworking */,
+				ACDFE19FE312E2E7066443888652D911 /* Pods-unity-bridge-fake */,
+				772CC144F60FC1C00B56965D0476F1A2 /* Pods-unity-bridge-fake-unity-bridge */,
+				A95E5AC230022F07569EA7C2C8EAAA65 /* SocketRocket */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		42C6D927B9CF7C09F37FCA4D8CB5F4E5 /* Sources */ = {
+		0068413C89BADAAF4691AA78AFE62C3E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA107D544E52338BB62122F5471F044F /* Pods-unity-bridge-dummy.m in Sources */,
+				775CE7A8107457BDE59F113D40020839 /* AFAutoPurgingImageCache.m in Sources */,
+				73811DA312BCB537D44D62EC6AD15766 /* AFHTTPSessionManager.m in Sources */,
+				5C0696B2AD1DC23F6473F5A19FAB6296 /* AFImageDownloader.m in Sources */,
+				31ED9BD97AF9E62874AF3CDF2F8090CF /* AFNetworkActivityIndicatorManager.m in Sources */,
+				97A86FAAD4B1AD9B3292FF6AF1D8F82B /* AFNetworking-dummy.m in Sources */,
+				E0EF330DB2D3521ED26E67B2E8687A2E /* AFNetworkReachabilityManager.m in Sources */,
+				66E1040543AF7BA3DC3731FE17C85F5B /* AFSecurityPolicy.m in Sources */,
+				5945033488F9995134DBB7014DE2412F /* AFURLRequestSerialization.m in Sources */,
+				85D30678FF4F0AB306399A368EAA46B2 /* AFURLResponseSerialization.m in Sources */,
+				9F5BB6B4995BA4A3B2C6AEBA6C31A6DB /* AFURLSessionManager.m in Sources */,
+				2579663181BFA8F7DA4B5D7CF8537FC0 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
+				D10CC46035F7A0C868C0955664A34609 /* UIButton+AFNetworking.m in Sources */,
+				A277AD9070E44BED5A7DE0B1D64D6F15 /* UIImageView+AFNetworking.m in Sources */,
+				D4AA4704CA7863CC86E22AAF88635836 /* UIProgressView+AFNetworking.m in Sources */,
+				B84CD33084C9867E67BD56E47B7BFC04 /* UIRefreshControl+AFNetworking.m in Sources */,
+				A7F7FDCD36E2DD8D8E346DB19452CC03 /* UIWebView+AFNetworking.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0C064F4119EAE6A34747215EE832DC80 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FCEDB567CBC63BC7C0FCADF9649913AE /* Pods-unity-bridge-fake-unity-bridge-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		58DA6A2D19651FB9785D2A382ECF40D0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A0577FBB645E128FFD5A2306C346CE76 /* SocketRocket-dummy.m in Sources */,
+				8DF1A35580D47C93DC06FE496EC29537 /* SRWebSocket.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		90BA435A5E906191049D4056FAE590EE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03FD456F5D068580610D2E89DAC4AFB5 /* Pods-unity-bridge-fake-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		2DB2DD3E40E526CBA3871F22297CA511 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SocketRocket;
+			target = A95E5AC230022F07569EA7C2C8EAAA65 /* SocketRocket */;
+			targetProxy = F456114407DBE75A6C61EB96AB23CC5D /* PBXContainerItemProxy */;
+		};
+		3C9A0C963DEADD5824A6C1AF6CA01F5F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AFNetworking;
+			target = 9E033EDB5EC0819481B0546434FA577B /* AFNetworking */;
+			targetProxy = 1E5AFE6393A9DFAA11CDD578FBC9AAF6 /* PBXContainerItemProxy */;
+		};
+		AE7EFE5E288DEA3D9C293F6DCF3E553B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SocketRocket;
+			target = A95E5AC230022F07569EA7C2C8EAAA65 /* SocketRocket */;
+			targetProxy = 712E4FC2888B94C2197088429C71DBCA /* PBXContainerItemProxy */;
+		};
+		EA9014994DBA85FFA06A08B487F576B4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AFNetworking;
+			target = 9E033EDB5EC0819481B0546434FA577B /* AFNetworking */;
+			targetProxy = AC2E1C35D46984F6EA0E5B85627191CF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
-		015A368F878AC3E2CEAE21DDE8026304 /* Debug */ = {
+		1381A8F9EA733EC01D4082862414FCEB /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DA3EB76735B836F39B902E1ED314FFC6 /* Pods-unity-bridge-fake-unity-bridge.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACH_O_TYPE = staticlib;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		34FE9531DA9AF2820790339988D5FF41 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -318,10 +809,172 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3EF660C3E28BD035052B1C1345B7154C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8D391BCCF4A72853F1A9013BC57077BD /* SocketRocket.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/SocketRocket/SocketRocket-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		72D1B831316303C2E356BBAC53FEF78A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8770C6328AE5485CCFEC1F952D889715 /* AFNetworking.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/AFNetworking/AFNetworking-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		81F79EEB4BC175EBA7B9C0E6D7A59B1D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C18813714D3186B49552F9F965CB5734 /* Pods-unity-bridge-fake.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACH_O_TYPE = staticlib;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		8B0069C6CAF5866702364E6B310CAD12 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8D391BCCF4A72853F1A9013BC57077BD /* SocketRocket.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/SocketRocket/SocketRocket-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		A6EFEB0FE1FB0E050D2578806AFC5CAF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 226397DBEA3DBB9A36E94C90EF6FF197 /* Pods-unity-bridge-fake-unity-bridge.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACH_O_TYPE = staticlib;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		C104F7F091290C3D1E248192F07FE689 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGNING_REQUIRED = NO;
@@ -350,72 +1003,9 @@
 			};
 			name = Debug;
 		};
-		0E8910B80456E12064CFF8BA6C6D0737 /* Debug */ = {
+		ED112BDA5D21C59514200A10BFC7F76B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FCF8C1B96E01F8DC274CC91B66258C82 /* Pods-unity-bridge.debug.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MACH_O_TYPE = staticlib;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		44CDBB6D11DE06DB64D6268622BDC47E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGNING_REQUIRED = NO;
-				COPY_PHASE_STRIP = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"POD_CONFIGURATION_RELEASE=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
-				STRIP_INSTALLED_PRODUCT = NO;
-				SYMROOT = "${SRCROOT}/../build";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		E64DFA169C39F679FD14B9783DC9621B /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 04F92F100492C8130F011055F9B691FE /* Pods-unity-bridge.release.xcconfig */;
+			baseConfigurationReference = 1979BCD0E05A8F5CFBC1343A6772BFEA /* Pods-unity-bridge-fake.release.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -436,23 +1026,73 @@
 			};
 			name = Release;
 		};
+		FF778088B62C05BE1205DAE628D151DF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8770C6328AE5485CCFEC1F952D889715 /* AFNetworking.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/AFNetworking/AFNetworking-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
 		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				015A368F878AC3E2CEAE21DDE8026304 /* Debug */,
-				44CDBB6D11DE06DB64D6268622BDC47E /* Release */,
+				C104F7F091290C3D1E248192F07FE689 /* Debug */,
+				34FE9531DA9AF2820790339988D5FF41 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		42B61D8117C6C506CF35260E8A83A8BD /* Build configuration list for PBXNativeTarget "Pods-unity-bridge" */ = {
+		483FBC4A668BF7F1A8767452E7E188AC /* Build configuration list for PBXNativeTarget "AFNetworking" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				0E8910B80456E12064CFF8BA6C6D0737 /* Debug */,
-				E64DFA169C39F679FD14B9783DC9621B /* Release */,
+				FF778088B62C05BE1205DAE628D151DF /* Debug */,
+				72D1B831316303C2E356BBAC53FEF78A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A24971CC0DF3D9AC73FE9900F2510727 /* Build configuration list for PBXNativeTarget "Pods-unity-bridge-fake" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				81F79EEB4BC175EBA7B9C0E6D7A59B1D /* Debug */,
+				ED112BDA5D21C59514200A10BFC7F76B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B4286F147E55CE513649F4D25BD4B9FD /* Build configuration list for PBXNativeTarget "SocketRocket" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3EF660C3E28BD035052B1C1345B7154C /* Debug */,
+				8B0069C6CAF5866702364E6B310CAD12 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E3327607CD42DE9A750353487C4668B5 /* Build configuration list for PBXNativeTarget "Pods-unity-bridge-fake-unity-bridge" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A6EFEB0FE1FB0E050D2578806AFC5CAF /* Debug */,
+				1381A8F9EA733EC01D4082862414FCEB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

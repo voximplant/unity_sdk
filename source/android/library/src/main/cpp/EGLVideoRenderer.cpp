@@ -13,7 +13,7 @@
 
 EGLVideoRenderer::EGLVideoRenderer(int width, int height, EGLContext sharedContext) :
         BaseOGLVideoRenderer(width, height),
-        m_display(0),
+        m_display(EGL_NO_DISPLAY),
         m_context(EGL_NO_CONTEXT),
 
         m_sharingContext(sharedContext)
@@ -54,6 +54,7 @@ bool EGLVideoRenderer::ChooseConfigAndCreateContext(EGLDisplay display) {
 
         if (redSize < 8 || greenSize < 8 || blueSize < 8)
             continue;
+
 
         do {
             EGLint ctxAttr[] = {
@@ -109,7 +110,7 @@ bool EGLVideoRenderer::ChooseConfigAndCreateContext(EGLDisplay display) {
 }
 
 void EGLVideoRenderer::SetupEGL() {
-    if (m_context != 0) {
+    if (m_context != EGL_NO_CONTEXT) {
         return;
     }
 
@@ -119,6 +120,11 @@ void EGLVideoRenderer::SetupEGL() {
     }
 
     m_display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
+
+    if (m_display == EGL_NO_DISPLAY || testGLErrors("default display")) {
+        return;
+    }
+
     EGLint major, minor;
     eglInitialize(m_display, &major, &minor);
     eglBindAPI(EGL_OPENGL_ES_API);

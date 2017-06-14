@@ -30,10 +30,15 @@ namespace Voximplant
             iosSDKlogin(username, password);
         }
 
-        public override void call(string number, bool videoCall, string customData, Dictionary<string, string> header = null)
+        public override string createCall(string number, bool videoCall, string customData)
         {
-            var pairKeyValueArray = new PairKeyValueArray(Utils.GetDictionaryToArray(header));
-            iosSDKstartCall(number, videoCall, customData, JsonUtility.ToJson(pairKeyValueArray));
+            var idPtr = iosSDKcreateCall(number, videoCall, customData);
+            return Marshal.PtrToStringAnsi(idPtr);
+        }
+
+        public override void startCall(string callId, Dictionary<string, string> headers = null)
+        {
+            iosSDKstartCall(callId, JsonUtility.ToJson(new PairKeyValueArray(Utils.GetDictionaryToArray(headers))));
         }
 
         public override void answer(string pCallId, Dictionary<string, string> pHeader = null)
@@ -48,7 +53,7 @@ namespace Voximplant
 
         public override void hangup(string pCallId, Dictionary<string, string> pHeader = null)
         {
-            iosSDKHungup(pCallId, JsonUtility.ToJson(new PairKeyValueArray(Utils.GetDictionaryToArray(pHeader))));
+            iosSDKDecline(pCallId, JsonUtility.ToJson(new PairKeyValueArray(Utils.GetDictionaryToArray(pHeader))));
         }
 
         public override void setMute(Boolean pState)
@@ -68,7 +73,7 @@ namespace Voximplant
 
         public override void disableTls()
         {
-            iosSDKdisableTls();
+            AddLog("TLS deactivation is unsupported on iOS");
         }
 
         public override void disconnectCall(string p, Dictionary<string, string> pHeader = null)
@@ -91,7 +96,7 @@ namespace Voximplant
             iosSDKrequestOneTimeKey(pName);
         }
 
-        public override void sendDTMF(string callId, int digit)
+        public override void sendDTMF(string callId, string digit)
         {
             iosSDKsendDTFM(callId, digit);
         }
@@ -110,7 +115,7 @@ namespace Voximplant
 
         public override void setCameraResolution(int width, int height)
         {
-            iosSDKsetCameraResolution(width, height);
+            AddLog("Camera resolution settings are unavailable on iOS");
         }
 
         public override void setUseLoudspeaker(bool pUseLoudSpeaker)
@@ -120,12 +125,41 @@ namespace Voximplant
 
         #region Texture Rendering
 
-        protected override void startVideoStreamRendering(VideoStream stream)
+        protected override void startVideoStreamRendering(string callId, VideoStream stream)
         {
             Assert.IsTrue(GraphicsDeviceIsSupported());
 
-            beginSendingVideoForStream((int) stream);
+            beginSendingVideoForStream(callId, (int) stream);
         }
+
+        #endregion
+
+        #region Video Stream
+
+        protected override void beginCallVideoStream(string pCallId, uint width, uint height)
+        {
+            registerCallVideoStream(pCallId, width, height);
+        }
+
+        protected override void callVideoStreamTextureUpdated(string pCallId, IntPtr pTexturePtr, int width, int height)
+        {
+            iosCallVideoStreamTextureUpdated(pCallId, pTexturePtr, (uint) width, (uint) height);
+        }
+
+        protected override void endCallVideoStream(string pCallId)
+        {
+            unregisterCallVideoStream(pCallId);
+        }
+
+        [DllImport ("__Internal")]
+        private static extern void registerCallVideoStream(string pCallId, uint width, uint height);
+        
+        [DllImport("__Internal")]
+        private static extern void iosCallVideoStreamTextureUpdated(string callId, IntPtr texturePtr, UInt32 width,
+            UInt32 height);
+
+        [DllImport ("__Internal")]
+        private static extern void unregisterCallVideoStream(string pCallId);
 
         #endregion
 
@@ -140,14 +174,14 @@ namespace Voximplant
         [DllImport("__Internal")]
         private static extern void iosSDKlogin(string pLogin, string pPass);
 
-        [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        private static extern void iosSDKstartCall(string pId, bool pWithVideo, string pCustomData, string pHeaderJson);
+        [DllImport("__Internal")]
+        private static extern IntPtr iosSDKcreateCall(string pUser, bool pWithVideo, string pCustomData);
+
+        [DllImport("__Internal")]
+        private static extern void iosSDKstartCall(string pCallId, string pHeaderJson);
 
         [DllImport("__Internal")]
         private static extern void iosSDKanswerCall(string pCallId, string pHeaderJson);
-
-        [DllImport("__Internal")]
-        private static extern void iosSDKHungup(string pCallId, string pHeaderJson);
 
         [DllImport("__Internal")]
         private static extern void iosSDKDecline(string pCallId, string pHeaderJson);
@@ -162,9 +196,6 @@ namespace Voximplant
         private static extern void iosSDKsetCamera(bool pSetFront);
 
         [DllImport("__Internal")]
-        private static extern void iosSDKdisableTls();
-
-        [DllImport("__Internal")]
         private static extern void iosSDKdisconnectCall(string pCallId, string pHeaderJson);
 
         [DllImport("__Internal")]
@@ -174,7 +205,7 @@ namespace Voximplant
         private static extern void iosSDKrequestOneTimeKey(string pUserName);
 
         [DllImport("__Internal")]
-        private static extern void iosSDKsendDTFM(string pCallId, int pDigit);
+        private static extern void iosSDKsendDTFM(string pCallId, string pDigit);
 
         [DllImport("__Internal")]
         private static extern void iosSDKsendInfo(string pCallId, string pWithType, string pContent,
@@ -184,22 +215,19 @@ namespace Voximplant
         private static extern void iosSDKsendMessage(string pCallId, string pMsg, string pHeaderJson);
 
         [DllImport("__Internal")]
-        private static extern void iosSDKsetCameraResolution(int pWidth, int pHeight);
-
-        [DllImport("__Internal")]
         private static extern void iosSDKsetUseLoudspeaker(bool pUseLoudspeaker);
 
         [DllImport("__Internal")]
         private static extern void iosSDKCloseConnection();
 
         [DllImport("__Internal")]
-        private static extern void beginSendingVideoForStream(int stream);
+        private static extern void beginSendingVideoForStream(string callId, int stream);
 
         #endregion
 
         #region Native callbacks
 
-        protected void fiosonConnectionSuccessful()
+        protected void fiosonConnectionSuccessful(string p)
         {
             AddLog("fiosonConnectionSuccessful");
             OnConnectionSuccessful();
@@ -211,7 +239,7 @@ namespace Voximplant
             OnConnectionFailedWithError(p);
         }
 
-        protected void fiosonConnectionClosed()
+        protected void fiosonConnectionClosed(string p)
         {
             AddLog("fiosonConnectionClosed");
             CleanupAllVideoStreams();
@@ -264,7 +292,7 @@ namespace Voximplant
         {
             AddLog("fiosonCallFailed: " + p);
             JSONNode node = Utils.GetParamList(p);
-            OnCallFailed(node[0].Value, node[1].AsInt, node[2].Value, node[3].AsDictionary);
+            OnCallFailed(node[0].Value, 0, node[1].Value, node[2].AsDictionary);
         }
 
         protected void fiosonCallAudioStarted(string p)

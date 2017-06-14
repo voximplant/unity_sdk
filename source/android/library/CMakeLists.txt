@@ -11,6 +11,7 @@ cmake_minimum_required(VERSION 3.4.1)
 # automatically packages shared libraries with your APK.
 
 add_compile_options(-x c++)
+add_compile_options(-fno-stack-protector)
 add_definitions(-DANDROID)
 
 add_library( # Specifies the name of the library.
