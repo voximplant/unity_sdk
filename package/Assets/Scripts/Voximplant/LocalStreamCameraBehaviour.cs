@@ -23,12 +23,20 @@ namespace Voximplant
 
         private int _pipelineStage = 0;
 
-        private const int _pipelineLength = 3;
+        private int _pipelineLength = 0;
         private RenderTexture[] _renderTextures;
         private Texture2D[] _texture2Ds;
 
         private bool _hasFastCopy;
 
+        private int GetPipelineLength() {
+            switch (SystemInfo.graphicsDeviceType)
+            {
+                case GraphicsDeviceType.Metal: return 3;
+                default: return 5;
+            }
+        }
+        
         public void EnsureTextures()
         {
             if (_texture2Ds != null) {
@@ -62,14 +70,15 @@ namespace Voximplant
         private void Awake()
         {
             _hasFastCopy = (SystemInfo.copyTextureSupport & CopyTextureSupport.RTToTexture) != 0;
+            _pipelineLength = GetPipelineLength();
             
             Debug.Log(string.Format("copyTextureSupport {0}", SystemInfo.copyTextureSupport));
+            Debug.Log(string.Format("Pipeline length {0}", _pipelineLength));
             
             _myCamera = GetComponent<UnityEngine.Camera>();
             Assert.IsNotNull(_myCamera);
             
             _isRunning = true;
-            StartCoroutine(NativeRender());
         }
 
         private void OnPreRender()
@@ -85,40 +94,36 @@ namespace Voximplant
 
             Graphics.Blit(src, _renderTextures[_pipelineStage]);
             _pipelineStage = (_pipelineStage + 1) % _pipelineLength;
+            
+            NativeRender();
         }
 
         private bool _isRunning;
 
-        private IEnumerator NativeRender()
-        {
-            while (_isRunning) {
-                yield return new WaitForEndOfFrame();
-                
-                if (Input.touchCount > 0) {
-                    continue;
-                }
+        private void NativeRender() {
+            var stage = _pipelineStage;
 
-                var stage = _pipelineStage;
-                
-                Profiler.BeginSample("Read Pixels");
-                var currentTexture = _texture2Ds[stage];
-                if (_hasFastCopy) {
-                    Graphics.CopyTexture(_renderTextures[stage], currentTexture);
-                } else {
-                    RenderTexture.active = _renderTextures[stage];
-                    _texture2Ds[stage].ReadPixels(new Rect(0, 0, _myCamera.pixelWidth, _myCamera.pixelHeight), 0, 0, false);
-                    _texture2Ds[stage].Apply();
-                }
-                Profiler.EndSample();
-                
-                stage = (stage + 1) % _pipelineLength;
-
-                stage = (stage + 1) % _pipelineLength;
-
-                Profiler.BeginSample("Native Render");
-                OnTextureRendered(_texture2Ds[stage]);
-                Profiler.EndSample();
+            Profiler.BeginSample("Read Pixels");
+            var currentTexture = _texture2Ds[stage];
+            if (_hasFastCopy)
+            {
+                Graphics.CopyTexture(_renderTextures[stage], currentTexture);
             }
+            else
+            {
+                RenderTexture.active = _renderTextures[stage];
+                currentTexture.ReadPixels(new Rect(0, 0, _myCamera.pixelWidth, _myCamera.pixelHeight), 0, 0, false);
+                currentTexture.Apply();
+            }
+            Profiler.EndSample();
+
+            stage = (stage + 1) % _pipelineLength;
+
+            stage = (stage + 1) % _pipelineLength;
+
+            Profiler.BeginSample("Native Render");
+            OnTextureRendered(_texture2Ds[stage]);
+            Profiler.EndSample();
         }
 
         private void OnDestroy()

@@ -23,7 +23,7 @@ namespace Voximplant
                     jc = new AndroidJavaClass("com.voximplant.sdk.AVoImClient");
                 }
                 catch (UnityException e) {
-                    Debug.logger.Log("JC Error: " + e.Message);
+                    Debug.unityLogger.Log("JC Error: " + e.Message);
                     initCallback(false);
                     return;
                 }
@@ -32,7 +32,7 @@ namespace Voximplant
                     jo = jc.CallStatic<AndroidJavaObject>("instance");
                 }
                 catch (AndroidJavaException e) {
-                    Debug.logger.Log("JO Error: " + e.Message);
+                    Debug.unityLogger.Log("JO Error: " + e.Message);
                     initCallback(false);
                     return;
                 }
