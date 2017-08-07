@@ -41,4 +41,8 @@ cp ./build/libVoxImplant-bridge.a ../../package/Assets/Plugins/iOS
 cp -Rf ./Pods/VoxImplantWebRTC/WebRTC.framework ../../package/Assets/Plugins/iOS
 cp -Rf ./Pods/VoxImplantSDK/VoxImplant.framework ../../package/Assets/Plugins/iOS
 
+cp -Rf ./build/Build/Products/Release-iphoneos/CocoaLumberjack/CocoaLumberjack.framework ../../package/Assets/Plugins/iOS
+cp -Rf ./build/Build/Products/Release-iphoneos/AFNetworking/AFNetworking.framework ../../package/Assets/Plugins/iOS
+cp -Rf ./build/Build/Products/Release-iphoneos/SocketRocket/SocketRocket.framework ../../package/Assets/Plugins/iOS
+
 cd -
