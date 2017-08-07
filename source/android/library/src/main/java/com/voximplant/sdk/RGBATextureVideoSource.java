@@ -10,8 +10,11 @@ import com.voximplant.sdk.hardware.ICustomVideoSourceListener;
 import org.webrtc.RendererCommon;
 
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import javax.microedition.khronos.egl.EGL10;
 import javax.microedition.khronos.egl.EGLContext;
@@ -31,6 +34,9 @@ class RGBATextureVideoSource {
 
     private ExecutorService _executor;
     private EglBase _eglBase;
+
+    private List<Future<?>> _futuresQueue = new ArrayList<>();
+    private int _queueLength = 2;
 
     @Override
     protected void finalize() throws Throwable {
@@ -63,7 +69,13 @@ class RGBATextureVideoSource {
             throw new Exception("Failed to create ogl context");
         }
 
-        _executor.submit(new Runnable() {
+        while (_futuresQueue.size() >= _queueLength) {
+            Future<?> future = _futuresQueue.get(0);
+            future.get();
+            _futuresQueue.remove(0);
+        }
+
+        Future<?> sendFrame = _executor.submit(new Runnable() {
             @Override
             public void run() {
                 EnsureConvertUtils();
@@ -99,6 +111,8 @@ class RGBATextureVideoSource {
                 Log.v(TAG, "Spent " + time + "ms in SendFrame");
             }
         });
+
+        _futuresQueue.add(sendFrame);
     }
 
     @SuppressLint("NewApi")
