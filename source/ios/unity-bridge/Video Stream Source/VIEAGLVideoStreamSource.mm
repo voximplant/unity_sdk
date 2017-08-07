@@ -16,6 +16,7 @@
 @property(nonatomic, assign, readonly) GLuint fbo;
 @property(nonatomic, assign, readwrite) BOOL initialzedFBO;
 @property(nonatomic, strong, readonly) NSMutableData *textureBuffer;
+@property(nonatomic, strong, readonly) NSMutableData *mirrorBuffer;
 
 @property(nonatomic, strong, readonly) VIBlocksThread *thread;
 @property(nonatomic, strong, readwrite) EAGLContext *glContext;
@@ -32,7 +33,7 @@
         return self;
     }
 
-    _thread = [VIBlocksThread new];
+    _thread = [[VIBlocksThread alloc] initWithQueueLimit:2];
 
     return self;
 }
@@ -47,8 +48,9 @@
     if (self.buffer == nil
             || CVPixelBufferGetWidth(self.buffer) != width
             || CVPixelBufferGetHeight(self.buffer) != height) {
-        [self.thread enqueueBlockAndWait:^{
+        [self.thread enqueueBlock:^{
             _textureBuffer = [NSMutableData dataWithLength:4 * width * height];
+            _mirrorBuffer = [NSMutableData dataWithLength:4 * width * height];
 
             if (self.buffer != nil) {
                 CVPixelBufferRelease(self.buffer);
@@ -63,7 +65,6 @@
     }
 
     [self.thread enqueueBlock:^{
-
         [self ensureContext];
 
         GLuint currentFBO;
@@ -95,11 +96,15 @@
         glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, self.textureBuffer.mutableBytes);
 
         CVPixelBufferLockBaseAddress(self.buffer, NULL);
-        libyuv::ARGBRotate(
+        libyuv::ARGBMirror(
                 (const uint8 *) self.textureBuffer.mutableBytes, 4 * width,
-                (uint8 *) self.textureBuffer.mutableBytes, 4 * width,
-                width, height, libyuv::RotationMode::kRotate180);
-        libyuv::ARGBToNV21((const uint8 *) self.textureBuffer.mutableBytes, 4 * width,
+                (uint8 *) self.mirrorBuffer.mutableBytes, 4 * width,
+                width, height);
+        libyuv::ARGBRotate(
+                (const uint8 *) self.mirrorBuffer.mutableBytes, 4 * width,
+                (uint8 *) self.mirrorBuffer.mutableBytes, 4 * width,
+                width, height, libyuv::kRotate180);
+        libyuv::ARGBToNV21((const uint8 *) self.mirrorBuffer.mutableBytes, 4 * width,
                 (uint8 *) CVPixelBufferGetBaseAddressOfPlane(self.buffer, 0), (int) CVPixelBufferGetBytesPerRowOfPlane(self.buffer, 0),
                 (uint8 *) CVPixelBufferGetBaseAddressOfPlane(self.buffer, 1), (int) CVPixelBufferGetBytesPerRowOfPlane(self.buffer, 1),
                 width, height);
