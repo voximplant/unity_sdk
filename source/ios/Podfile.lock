@@ -14,22 +14,43 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
+  - CocoaLumberjack (3.2.0):
+    - CocoaLumberjack/Default (= 3.2.0)
+    - CocoaLumberjack/Extensions (= 3.2.0)
+  - CocoaLumberjack/Default (3.2.0)
+  - CocoaLumberjack/Extensions (3.2.0):
+    - CocoaLumberjack/Default
+  - CocoaLumberjack/Swift (3.2.0):
+    - CocoaLumberjack/Default
   - SocketRocket (0.5.1)
-  - VoxImplantSDK (2.4.0):
+  - VoxImplantSDK (2.4.1):
     - AFNetworking (~> 3.1.0)
+    - CocoaLumberjack/Swift (~> 3.2.0)
     - SocketRocket (~> 0.5.1)
     - VoxImplantWebRTC (~> 58.1.0)
   - VoxImplantWebRTC (58.1.0)
 
 DEPENDENCIES:
-  - VoxImplantSDK (= 2.4.0)
+  - CocoaLumberjack (from `git@github.com:CocoaLumberjack/CocoaLumberjack.git`, commit `acc32864538c5d75b41a4bfa364b1431cf89954d`)
+  - VoxImplantSDK (= 2.4.1)
+
+EXTERNAL SOURCES:
+  CocoaLumberjack:
+    :commit: acc32864538c5d75b41a4bfa364b1431cf89954d
+    :git: git@github.com:CocoaLumberjack/CocoaLumberjack.git
+
+CHECKOUT OPTIONS:
+  CocoaLumberjack:
+    :commit: acc32864538c5d75b41a4bfa364b1431cf89954d
+    :git: git@github.com:CocoaLumberjack/CocoaLumberjack.git
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  CocoaLumberjack: 0d8cb05e834c1b391771fb3397d9a553accd33a9
   SocketRocket: d57c7159b83c3c6655745cd15302aa24b6bae531
-  VoxImplantSDK: d651940669c6494adb9992b342d97f190e036b54
+  VoxImplantSDK: e335849a0a946bad5851419fbc9335291b1c07a9
   VoxImplantWebRTC: eed21293a27841d8c5b8dbcb7f694191e62ba128
 
-PODFILE CHECKSUM: 2533b46f0ef4b7936794ec26bc1df696a340552f
+PODFILE CHECKSUM: 79d7ba79d9557695de16e26af25b901abbb678ab
 
 COCOAPODS: 1.2.1

@@ -1,10 +1,11 @@
-FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/VoxImplantSDK" "${PODS_ROOT}/VoxImplantWebRTC"
+EMBEDDED_CONTENT_CONTAINS_SWIFT = YES
+FRAMEWORK_SEARCH_PATHS = $(inherited) "$PODS_CONFIGURATION_BUILD_DIR/AFNetworking" "$PODS_CONFIGURATION_BUILD_DIR/CocoaLumberjack" "$PODS_CONFIGURATION_BUILD_DIR/SocketRocket" "${PODS_ROOT}/VoxImplantSDK" "${PODS_ROOT}/VoxImplantWebRTC"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/AFNetworking" "${PODS_ROOT}/Headers/Public/SocketRocket" "${PODS_ROOT}/Headers/Public/VoxImplantSDK" "${PODS_ROOT}/Headers/Public/VoxImplantWebRTC"
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/VoxImplantSDK" "${PODS_ROOT}/Headers/Public/VoxImplantWebRTC"
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
-LIBRARY_SEARCH_PATHS = $(inherited) "$PODS_CONFIGURATION_BUILD_DIR/AFNetworking" "$PODS_CONFIGURATION_BUILD_DIR/SocketRocket"
-OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/AFNetworking" -isystem "${PODS_ROOT}/Headers/Public/SocketRocket" -isystem "${PODS_ROOT}/Headers/Public/VoxImplantSDK" -isystem "${PODS_ROOT}/Headers/Public/VoxImplantWebRTC"
-OTHER_LDFLAGS = $(inherited) -ObjC -l"AFNetworking" -l"SocketRocket" -l"icucore" -framework "CFNetwork" -framework "CoreGraphics" -framework "MobileCoreServices" -framework "Security" -framework "SystemConfiguration" -framework "VoxImplant" -framework "WebRTC"
+OTHER_CFLAGS = $(inherited) -iquote "$PODS_CONFIGURATION_BUILD_DIR/AFNetworking/AFNetworking.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/CocoaLumberjack/CocoaLumberjack.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/SocketRocket/SocketRocket.framework/Headers" -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/VoxImplantSDK" -isystem "${PODS_ROOT}/Headers/Public/VoxImplantWebRTC"
+OTHER_LDFLAGS = $(inherited) -framework "AFNetworking" -framework "CocoaLumberjack" -framework "SocketRocket" -framework "VoxImplant" -framework "WebRTC"
+OTHER_SWIFT_FLAGS = $(inherited) "-D" "COCOAPODS"
 PODS_BUILD_DIR = $BUILD_DIR
 PODS_CONFIGURATION_BUILD_DIR = $PODS_BUILD_DIR/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
 PODS_PODFILE_DIR_PATH = ${SRCROOT}/.

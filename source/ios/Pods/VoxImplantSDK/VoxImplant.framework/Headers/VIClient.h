@@ -55,6 +55,12 @@ Set a verbosity level for log messages. This method must be called before creati
 */
 + (void)setLogLevel:(VILogLevel)logLevel;
 
+/*!
+ Enables save logs to file. Log files located at: Library/Caches/Logs
+ This method must be called before creating SDK object instance.
+ */
++(void) saveLogToFileEnable;
+
 /**
 Create VIClient instance
 @method initWithDelegateQueue:
