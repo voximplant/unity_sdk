@@ -392,7 +392,7 @@ public class UnityVoxImplantClient {
 	@Deprecated
 	public void answerCall(String callId, Map<String, String> headers) {
 		Log.i(TAG, "UnityVoxImplantClient: answerCall(callId = " + callId + ", headers = " + headers + ")");
-		imp().answerCall(callId, headers);
+		imp().answerCall(callId, null, headers);
 	}
 
 	/**
@@ -404,7 +404,7 @@ public class UnityVoxImplantClient {
 	@Deprecated
 	public void answerCall(String callId) {
 		Log.i(TAG, "UnityVoxImplantClient: answerCall()");
-		imp().answerCall(callId, null);
+		imp().answerCall(callId, null, null);
 	}
 
 	/**

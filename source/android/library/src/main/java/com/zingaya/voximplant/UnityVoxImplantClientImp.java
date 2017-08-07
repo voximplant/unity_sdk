@@ -40,7 +40,24 @@ import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 
-import static com.voximplant.sdk.internal.constants.CallConstants.*;
+class HardwareConstants {
+    static final int CAMERA_WIDTH_640 = 640;
+    static final int CAMERA_HEIGHT_480 = 480;
+    static final int CAMERA_WIDTH_320 = 320;
+    static final int CAMERA_HEIGHT_240 = 240;
+    static final int CAMERA_WIDTH_1280 = 1280;
+    static final int CAMERA_HEIGHT_720 = 720;
+    static final int CAMERA_FPS_DEFAULT = 30;
+    static final int CAMERA_FRONT_FACING = 1;
+    static final int CAMERA_BACK_FACING = 0;
+    static final int CAMERA_UNDEFINED = -1;
+    static final int CAMERA_STATE_IDLE = 0;
+    static final int CAMERA_STATE_OPENING = 1;
+    static final int CAMERA_STATE_RUNNING = 2;
+
+    HardwareConstants() {
+    }
+}
 
 class UnityVoxImplantClientImp implements IClientSessionListener,
         IClientLoginListener,
@@ -55,9 +72,9 @@ class UnityVoxImplantClientImp implements IClientSessionListener,
     private ICameraManager cameraManager = null;
     private Map<String, ICall> calls = new LinkedHashMap<>();
     private Map<String, IEndpoint> endpointMap = new ConcurrentHashMap<>();
-    private int captureWidth = CAMERA_WIDTH_640;
-    private int captureHeight = CAMERA_HEIGHT_480;
-    private int cameraType = CAMERA_FRONT_FACING;
+    private int captureWidth = HardwareConstants.CAMERA_WIDTH_640;
+    private int captureHeight = HardwareConstants.CAMERA_HEIGHT_480;
+    private int cameraType = HardwareConstants.CAMERA_FRONT_FACING;
     private ConcurrentHashMap<String, Timer> callStatistics = new ConcurrentHashMap<>();
 
     //renderer
@@ -143,11 +160,11 @@ class UnityVoxImplantClientImp implements IClientSessionListener,
         return false;
     }
 
-    void answerCall(String callId, Map<String, String> headers) {
+    void answerCall(String callId, String customData, Map<String, String> headers) {
         ICall call = calls.get(callId);
         if (call != null) {
             try {
-                call.answer(headers);
+                call.answer(customData, headers);
             } catch (CallException e) {
                 e.printStackTrace();
             }
@@ -677,6 +694,16 @@ class UnityVoxImplantClientImp implements IClientSessionListener,
         }
         Log.v(TAG,
                 "UnityVoxImplantClientImp: onRemoteVideoStreamRemoved: remoteView = " + remoteView + ", remoteRenders = " + remoteRenders.toString());
+    }
+
+    @Override
+    public void onICETimeout(ICall iCall) {
+        //FIXME:
+    }
+
+    @Override
+    public void onICECompleted(ICall iCall) {
+        //FIXME:
     }
 
     void handlePushNotification(Map<String, String> notification) {
