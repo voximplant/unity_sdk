@@ -23,6 +23,7 @@ namespace Voximplant
             var unityTargetGuid = targets.First();
 
             foreach (var target in targets) {
+                proj.SetBuildProperty(target, "ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES", "YES");
                 proj.SetBuildProperty(target, "ENABLE_BITCODE", "NO");
                 proj.SetBuildProperty(target, "LD_RUNPATH_SEARCH_PATHS", "$(inherited) @executable_path/Frameworks");
             }
@@ -32,11 +33,14 @@ namespace Voximplant
 
             proj.AddDynamicFramework(unityTargetGuid, "Frameworks/Plugins/iOS/WebRTC.framework");
             proj.AddDynamicFramework(unityTargetGuid, "Frameworks/Plugins/iOS/VoxImplant.framework");
+            proj.AddDynamicFramework(unityTargetGuid, "Frameworks/Plugins/iOS/CocoaLumberjack.framework");
+            proj.AddDynamicFramework(unityTargetGuid, "Frameworks/Plugins/iOS/AFNetworking.framework");
+            proj.AddDynamicFramework(unityTargetGuid, "Frameworks/Plugins/iOS/SocketRocket.framework");
+            
 
             proj.AddFrameworkToProject(unityTargetGuid, "Metal.framework", true);
 
             proj.WriteToFile(projectPath);
         }
-
     }
 }
