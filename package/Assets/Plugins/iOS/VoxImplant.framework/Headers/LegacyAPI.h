@@ -68,6 +68,12 @@ enum VoxImplantLogLevel
 
 
 /*!
+ Enables save logs to file. Log files located at: Library/Caches/Logs
+ Note that this method must be called before creating SDK object instance.
+ */
++(void) saveLogToFileEnable;
+
+/*!
  Returns single SDK object instance
  */
 +(VoxImplant *) getInstance;
