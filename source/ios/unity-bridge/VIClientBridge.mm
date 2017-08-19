@@ -34,7 +34,7 @@ void CallUnityMethod(NSString *methodName, id parameters) {
     CallUnityMethodWithString(methodName, jsonString);
 }
 
-@interface VIClientBridge () <VIClientSessionDelegate, VICallDelegate, VIClientCallManagerDelegate, VIEndPointDelegate>
+@interface VIClientBridge () <VIClientSessionDelegate, VICallDelegate, VIClientCallManagerDelegate, VIEndpointDelegate>
 
 @property(nonatomic, strong, readwrite) VIClient *client;
 @property(nonatomic, strong, readwrite) UIAlertView *currentAlertView;
@@ -82,11 +82,11 @@ void CallUnityMethod(NSString *methodName, id parameters) {
 
 - (void)        client:(VIClient *)client
 didReceiveIncomingCall:(VICall *)call
-                 video:(BOOL)video
+     withIncomingVideo:(BOOL)video
                headers:(NSDictionary *)headers {
-    VIEndPoint *otherParty = [[call endPoints] firstObject];
+    VIEndpoint *otherParty = [[call endpoints] firstObject];
     [call addDelegate:self];
-    call.endPoints.firstObject.delegate = self;
+    call.endpoints.firstObject.delegate = self;
 
     [self callMethod:@"fiosonIncomingCall" withJSONParameter:@[
             call.callId,
@@ -95,7 +95,6 @@ didReceiveIncomingCall:(VICall *)call
             video ? @"true" : @"false",
             headers]];
 }
-
 
 #pragma mark - VICallDelegate
 
@@ -153,14 +152,14 @@ didDisconnectWithHeaders:(NSDictionary *)headers
 
 #pragma mark - VIEndPointDelegate
 
-- (void)endPoint:(VIEndPoint *)endPoint didAddRemoteVideoStream:(VIVideoStream *)videoStream {
+- (void)endPoint:(VIEndpoint *)endPoint didAddRemoteVideoStream:(VIVideoStream *)videoStream {
     id <RTCVideoRenderer> renderer = self.remoteRenderers[endPoint.call.callId];
     if (renderer != nil) {
         [videoStream addRenderer:renderer];
     }
 }
 
-- (void)endPoint:(VIEndPoint *)endPoint didRemoveRemoteVideoStream:(VIVideoStream *)videoStream {
+- (void)endPoint:(VIEndpoint *)endPoint didRemoveRemoteVideoStream:(VIVideoStream *)videoStream {
     [self.remoteRenderers removeObjectForKey:endPoint.call.callId];
 }
 
@@ -179,7 +178,7 @@ didDisconnectWithHeaders:(NSDictionary *)headers
 - (void)addRemoteRenderer:(id <RTCVideoRenderer>)renderer toCall:(VICall *)call {
     self.remoteRenderers[call.callId] = renderer;
 
-    [call.endPoints.firstObject.remoteVideoStreams.firstObject addRenderer:renderer];
+    [call.endpoints.firstObject.remoteVideoStreams.firstObject addRenderer:renderer];
 }
 
 - (void)addLocalRenderer:(id <RTCVideoRenderer>)renderer toCall:(VICall *)call {
@@ -189,8 +188,8 @@ didDisconnectWithHeaders:(NSDictionary *)headers
 }
 
 - (void)removeRemoteRendererFromCall:(VICall *)call {
-    for (VIEndPoint *endPoint in call.endPoints) {
-        for (VIVideoStream *stream in endPoint.remoteVideoStreams) {
+    for (VIEndpoint *endpoint in call.endpoints) {
+        for (VIVideoStream *stream in endpoint.remoteVideoStreams) {
             [stream removeAllRenderers];
         }
     }
@@ -257,9 +256,9 @@ __used const char *iosSDKcreateCall(const char *pUserId, bool pWithVideo, const 
     NSString *userString = [NSString stringWithUTF8String:pUserId];
     NSString *customData = [[NSString alloc] initWithUTF8String:pCustom];
 
-    VICall *call = [s_bridge.client callToUser:userString customData:customData];
+    VICall *call = [s_bridge.client callToUser:userString withSendVideo:pWithVideo receiveVideo:pWithVideo customData:customData];
     [call addDelegate:s_bridge];
-    call.endPoints.firstObject.delegate = s_bridge;
+    call.endpoints.firstObject.delegate = s_bridge;
 
     return call.callId.UTF8String;
 }
@@ -274,7 +273,7 @@ __used void iosSDKstartCall(const char *pCallId, const char *pHeaders) {
     NSString *callIdString = [NSString stringWithUTF8String:pCallId];
 
     VICall *call = s_bridge.client.calls[callIdString];
-    [call startWithVideo:YES headers:headers];
+    [call startWithHeaders:headers];
 
     CallUnityMethodWithString(@"fiosonOnStartCall", call.callId);
 }
@@ -290,7 +289,7 @@ __used void iosSDKanswerCall(const char *pCallId, const char *pHeaders) {
 
     VICall *call = s_bridge.client.calls[callIdString];
     NSLog(@"Answering %@, with id: %@", call, callIdString);
-    [call startWithVideo:YES headers:headers];
+    [call startWithHeaders:headers];
 }
 
 __used void iosSDKDecline(const char *pCallId, const char *pHeaders) {
