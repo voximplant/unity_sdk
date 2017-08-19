@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.util.Log;
 
+import com.voximplant.sdk.call.CallException;
 import com.voximplant.sdk.call.ICallCompletionHandler;
 import com.voximplant.sdk.call.RenderScaleType;
 import com.voximplant.sdk.client.ClientConfig;
@@ -300,7 +301,7 @@ public class UnityVoxImplantClient {
 	 * @deprecated Use {@link com.voximplant.sdk.call.ICall#start(Map)} instead
 	 */
 	@Deprecated
-	public boolean startCall(String callId, Map<String, String> headers) {
+	public boolean startCall(String callId, Map<String, String> headers) throws CallException {
 		Log.i(TAG, "UnityVoxImplantClient: startCall(callId = " + callId + ", headers = " + headers + ")");
 		return imp().startCall(callId, headers);
 	}
@@ -314,7 +315,7 @@ public class UnityVoxImplantClient {
 	 * @deprecated Use {@link com.voximplant.sdk.call.ICall#start(Map)} instead
 	 */
 	@Deprecated
-	public boolean startCall(String callId) {
+	public boolean startCall(String callId) throws CallException {
 		Log.i(TAG, "UnityVoxImplantClient: startCall()");
 		return startCall(callId, null);
 	}

@@ -10,6 +10,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.unity3d.player.UnityPlayer;
+import com.voximplant.sdk.call.CallException;
 import com.voximplant.sdk.hardware.ICustomVideoSource;
 import com.zingaya.voximplant.UnityVoxImplantClient;
 import com.zingaya.voximplant.VoxImplantCallback;
@@ -224,7 +225,7 @@ public class AVoImClient implements VoxImplantCallback {
         return client.createCall(param.userCall, param.videoCall, param.customData);
     }
 
-    public void startCall(String callId, Map<String, String> headers) {
+    public void startCall(String callId, Map<String, String> headers) throws CallException {
         client.startCall(callId, headers);
         onStartCall(callId);
     }

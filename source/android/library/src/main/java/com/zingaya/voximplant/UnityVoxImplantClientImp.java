@@ -14,6 +14,7 @@ import com.voximplant.sdk.call.CallStatistic;
 import com.voximplant.sdk.call.IEndpoint;
 import com.voximplant.sdk.call.IEndpointListener;
 import com.voximplant.sdk.call.RenderScaleType;
+import com.voximplant.sdk.call.VideoFlags;
 import com.voximplant.sdk.client.AuthParams;
 import com.voximplant.sdk.client.ClientConfig;
 import com.voximplant.sdk.client.LoginError;
@@ -139,7 +140,7 @@ class UnityVoxImplantClientImp implements IClientSessionListener,
     }
 
     String createCall(String to, boolean video, String customData) {
-        ICall call = voxClient.callTo(to, video, customData);
+        ICall call = voxClient.callTo(to, new VideoFlags(video, video), customData);
         String callId = null;
         if (call != null) {
             callId = call.getCallId();
@@ -149,7 +150,7 @@ class UnityVoxImplantClientImp implements IClientSessionListener,
         return callId;
     }
 
-    boolean startCall(String callId, Map<String, String> headers) {
+    boolean startCall(String callId, Map<String, String> headers) throws CallException {
         ICall call = calls.get(callId);
         if (call != null) {
             call.addCallListener(this);
@@ -164,7 +165,7 @@ class UnityVoxImplantClientImp implements IClientSessionListener,
         ICall call = calls.get(callId);
         if (call != null) {
             try {
-                call.answer(customData, headers);
+                call.answer(customData, new VideoFlags(true, true), headers);
             } catch (CallException e) {
                 e.printStackTrace();
             }
@@ -451,7 +452,7 @@ class UnityVoxImplantClientImp implements IClientSessionListener,
     }
 
     @Override
-    public void onIncomingCall(final ICall call, final Map<String, String> headers) {
+    public void onIncomingCall(final ICall call, final boolean hasVideo, final Map<String, String> headers) {
         Log.d(TAG, "UnityVoxImplantClientImp: onIncomingCall(call = " + call + ", headers = " + headers + ")");
         final UnityVoxImplantClientImp self = this;
         runOnUIThread(new Runnable() {
@@ -465,7 +466,7 @@ class UnityVoxImplantClientImp implements IClientSessionListener,
                 callback.onIncomingCall(callId,
                         call.getEndpoints().get(0).getUserName(),
                         call.getEndpoints().get(0).getUserDisplayName(),
-                        call.isVideoEnabled(),
+                        hasVideo,
                         headers);
             }
         });
