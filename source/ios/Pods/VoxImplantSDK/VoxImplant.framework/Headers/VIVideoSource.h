@@ -3,38 +3,36 @@
 //  VoxImplant
 //
 //  Created by Andrey Syvrachev (asyvrachev@zingaya.com) on 04.04.17.
-//  Copyright © 2017 Zingaya. All rights reserved.
+//  Copyright © 2017 VoxImplant (www.voximplant.com). All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreVideo/CoreVideo.h>
 
 /**
-Enum of supported video rotation modes
-*/
+ @enum VIRotation
+ @contstant VIRotation_0
+ @contstant VIRotation_90
+ @contstant VIRotation_180
+ @contstant VIRotation_270
+ */
 typedef NS_ENUM(NSInteger,VIRotation) {
-    /** No rotation */
     VIRotation_0 = 0,
-    /** 90 degrees clockwise rotation */
     VIRotation_90 = 90,
-    /** 180 degrees clockwise rotation */
     VIRotation_180 = 180,
-    /** 270 degrees clockwise rotation */
     VIRotation_270 = 270
 };
 
 /**
-Base class for all video sources
-*/
-@interface VIVideoSource: NSObject
+ Base class for all video sources
+ @class VICameraManager
+ */
+@interface  VIVideoSource: NSObject
 @end
 
 
 @interface VIVideoFormat: NSObject
 
-/**
-Frame size
-*/
 @property(nonatomic,assign,readonly) CGSize frame;
 @property(nonatomic,assign,readonly) NSUInteger interval;
 
