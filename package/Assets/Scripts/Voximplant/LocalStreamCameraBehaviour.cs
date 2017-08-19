@@ -83,8 +83,6 @@ namespace Voximplant
             
             _myCamera = GetComponent<UnityEngine.Camera>();
             Assert.IsNotNull(_myCamera);
-            
-            _isRunning = true;
         }
 
         private void OnPreRender()
@@ -108,8 +106,6 @@ namespace Voximplant
             
             NativeRender();
         }
-
-        private bool _isRunning;
 
         private void NativeRender() {
             var stage = _pipelineStage;
