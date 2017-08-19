@@ -36,6 +36,10 @@ namespace Voximplant
                 default: return 5;
             }
         }
+
+        private int CurrentWidth() {
+            return ((_myCamera.pixelWidth / 8) + 1) * 8;
+        }
         
         public void EnsureTextures()
         {
@@ -43,9 +47,11 @@ namespace Voximplant
                 return;
             }
 
+            var newWidth = CurrentWidth();
+
             _renderTextures = new RenderTexture[_pipelineLength];
             for (int i = 0; i < _pipelineLength; i++) {
-                _renderTextures[i] = new RenderTexture(_myCamera.pixelWidth, _myCamera.pixelHeight, 0,
+                _renderTextures[i] = new RenderTexture(newWidth, _myCamera.pixelHeight, 0,
                     RenderTextureFormat.ARGB32, RenderTextureReadWrite.sRGB);
             }
 
@@ -57,14 +63,14 @@ namespace Voximplant
             for (int i = 0; i < _pipelineLength; i++) {
                 var shouldBypasssRgbConversion = shouldBypasssRGBConversion();
                 _texture2Ds[i] =
-                    new Texture2D(_myCamera.pixelWidth, _myCamera.pixelHeight, TextureFormat.RGBA32, false, shouldBypasssRgbConversion){
+                    new Texture2D(newWidth, _myCamera.pixelHeight, TextureFormat.RGBA32, false, shouldBypasssRgbConversion){
                         filterMode = FilterMode.Point
                     };
 
                 _texture2Ds[i].Apply();
             }
 
-            OnResolutionDidChange(_myCamera.pixelWidth, _myCamera.pixelHeight);
+            OnResolutionDidChange(newWidth, _myCamera.pixelHeight);
         }
 
         private void Awake()
@@ -90,6 +96,11 @@ namespace Voximplant
         {
             Graphics.Blit(src, dest);
 
+            if (_myCamera.stereoActiveEye == UnityEngine.Camera.MonoOrStereoscopicEye.Right)
+            {
+                return;
+            }
+            
             EnsureTextures();
 
             Graphics.Blit(src, _renderTextures[_pipelineStage]);
@@ -112,7 +123,7 @@ namespace Voximplant
             else
             {
                 RenderTexture.active = _renderTextures[stage];
-                currentTexture.ReadPixels(new Rect(0, 0, _myCamera.pixelWidth, _myCamera.pixelHeight), 0, 0, false);
+                currentTexture.ReadPixels(new Rect(0, 0, RenderTexture.active.width, RenderTexture.active.height), 0, 0, false);
                 currentTexture.Apply();
             }
             Profiler.EndSample();
