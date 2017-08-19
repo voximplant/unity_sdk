@@ -4,7 +4,7 @@ inhibit_all_warnings!
 
 target 'unity-bridge-fake' do
 	target 'unity-bridge' do
-		pod 'VoxImplantSDK', '2.4.1'
+		pod 'VoxImplantSDK', '2.7.0'
     pod 'CocoaLumberjack', :git => 'git@github.com:CocoaLumberjack/CocoaLumberjack.git', :commit => 'acc32864538c5d75b41a4bfa364b1431cf89954d'
 	end
 end
