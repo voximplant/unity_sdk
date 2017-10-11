@@ -11,7 +11,7 @@ namespace Voximplant
         private AndroidJavaClass jc;
         private AndroidJavaObject jo;
 
-        public override void init(Action<bool> initCallback)
+        public override void init(Action<bool> initCallback, bool preferH264)
         {
             Action finishInit = () => {
                 initCallback(true);
@@ -29,7 +29,7 @@ namespace Voximplant
                 }
 
                 try {
-                    jo = jc.CallStatic<AndroidJavaObject>("instance");
+                    jo = jc.CallStatic<AndroidJavaObject>("instance", preferH264);
                 }
                 catch (AndroidJavaException e) {
                     Debug.unityLogger.Log("JO Error: " + e.Message);

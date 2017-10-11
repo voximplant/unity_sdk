@@ -7,7 +7,7 @@ using UnityEngine.Rendering;
 
 namespace Voximplant
 {
-    internal class LocalStreamCameraBehaviour : MonoBehaviour
+    internal class StreamingCameraBehaviour : MonoBehaviour
     {
         private bool shouldBypasssRGBConversion()
         {
@@ -29,6 +29,10 @@ namespace Voximplant
 
         private bool _hasFastCopy;
 
+        public bool MainCameraMode = true;
+        public int desiredWidth = 0;
+        public int desiredHeight = 0;
+
         private int GetPipelineLength() {
             switch (SystemInfo.graphicsDeviceType)
             {
@@ -37,8 +41,34 @@ namespace Voximplant
             }
         }
 
-        private int CurrentWidth() {
-            return ((_myCamera.pixelWidth / 8) + 1) * 8;
+        private int RenderWidth() {
+            int width;
+            if (MainCameraMode)
+            {
+                width = _myCamera.pixelWidth;
+            }
+            else
+            {
+                width = desiredWidth;
+            }
+            Assert.IsTrue(width > 0);
+            return ((width / 8) + 1) * 8;
+        }
+
+        private int RenderHeight() {
+            if (MainCameraMode)
+            {
+                return _myCamera.pixelHeight;
+            }
+            
+            return desiredHeight;
+        }
+
+        public void Reset() {
+            _texture2Ds = null;
+            OnResolutionWillChange = null;
+            OnResolutionDidChange = null;
+            OnTextureRendered = null;
         }
         
         public void EnsureTextures()
@@ -46,12 +76,15 @@ namespace Voximplant
             if (_texture2Ds != null) {
                 return;
             }
+            
+            Debug.Log("EnsureTextures");
 
-            var newWidth = CurrentWidth();
+            var newWidth = RenderWidth();
+            var newHeight = RenderHeight();
 
             _renderTextures = new RenderTexture[_pipelineLength];
             for (int i = 0; i < _pipelineLength; i++) {
-                _renderTextures[i] = new RenderTexture(newWidth, _myCamera.pixelHeight, 0,
+                _renderTextures[i] = new RenderTexture(newWidth, newHeight, 0,
                     RenderTextureFormat.ARGB32, RenderTextureReadWrite.sRGB);
             }
 
@@ -63,14 +96,14 @@ namespace Voximplant
             for (int i = 0; i < _pipelineLength; i++) {
                 var shouldBypasssRgbConversion = shouldBypasssRGBConversion();
                 _texture2Ds[i] =
-                    new Texture2D(newWidth, _myCamera.pixelHeight, TextureFormat.RGBA32, false, shouldBypasssRgbConversion){
+                    new Texture2D(newWidth, newHeight, TextureFormat.RGBA32, false, shouldBypasssRgbConversion){
                         filterMode = FilterMode.Point
                     };
 
                 _texture2Ds[i].Apply();
             }
 
-            OnResolutionDidChange(newWidth, _myCamera.pixelHeight);
+            OnResolutionDidChange(newWidth, newHeight);
         }
 
         private void Awake()
@@ -87,12 +120,37 @@ namespace Voximplant
 
         private void OnPreRender()
         {
-            RenderTexture.active = null;
+            if (MainCameraMode)
+            {
+                RenderTexture.active = null;
+            }
+            else
+            {
+                EnsureTextures();
+            
+                _myCamera.targetTexture = _renderTextures[_pipelineStage];
+            }
+        }
+
+        private void OnPostRender() {
+            if (MainCameraMode)
+            {
+                return;
+            }
+            
+            _pipelineStage = (_pipelineStage + 1) % _pipelineLength;
+            
+            NativeRender();
         }
 
         private void OnRenderImage(RenderTexture src, RenderTexture dest)
         {
             Graphics.Blit(src, dest);
+
+            if (!MainCameraMode)
+            {
+                return;
+            }
 
             if (_myCamera.stereoActiveEye == UnityEngine.Camera.MonoOrStereoscopicEye.Right)
             {
@@ -106,7 +164,7 @@ namespace Voximplant
             
             NativeRender();
         }
-
+        
         private void NativeRender() {
             var stage = _pipelineStage;
 
@@ -118,9 +176,13 @@ namespace Voximplant
             }
             else
             {
+                var oldTexture = RenderTexture.active;
+                
                 RenderTexture.active = _renderTextures[stage];
                 currentTexture.ReadPixels(new Rect(0, 0, RenderTexture.active.width, RenderTexture.active.height), 0, 0, false);
                 currentTexture.Apply();
+                
+                RenderTexture.active = oldTexture;
             }
             Profiler.EndSample();
 
@@ -148,5 +210,20 @@ namespace Voximplant
         internal Action<int, int> OnResolutionDidChange = (x, y) => { };
 
         internal Action<Texture> OnTextureRendered = texture => { };
+
+        internal static GameObject StreamingCameraObject(int width, int height) {
+            var go = new GameObject("Streaming Camera");
+            var camera = go.AddComponent<UnityEngine.Camera>();
+
+            camera.fieldOfView = 120;
+            camera.aspect = 4 / 3f;
+            camera.stereoTargetEye = StereoTargetEyeMask.None;
+            
+            var streaming = go.AddComponent<StreamingCameraBehaviour>();
+            streaming.MainCameraMode = false;
+            streaming.desiredWidth = width;
+            streaming.desiredHeight = height;
+            return go;
+        }
     }
 }
