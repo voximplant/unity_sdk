@@ -1,17 +1,41 @@
-package com.voximplant.sdk;
+/*
+ *  Copyright 2015 The WebRTC project authors. All Rights Reserved.
+ *
+ *  Use of this source code is governed by a BSD-style license
+ *  that can be found in the LICENSE file in the root of the source
+ *  tree. An additional intellectual property rights grant can be found
+ *  in the file PATENTS.  All contributing project authors may
+ *  be found in the AUTHORS file in the root of the source tree.
+ */
 
+package com.voximplant.sdk.render;
+
+import android.annotation.SuppressLint;
 import android.graphics.SurfaceTexture;
+import android.opengl.EGL14;
 import android.view.Surface;
 
 import javax.microedition.khronos.egl.EGL10;
+import javax.microedition.khronos.egl.EGLContext;
 
 /**
  * Holds EGL state and utility methods for handling an egl 1.0 EGLContext, an EGLDisplay,
  * and an EGLSurface.
  */
+@SuppressWarnings("StaticOrDefaultInterfaceMethod")
 public abstract class EglBase {
     // EGL wrapper for an actual EGLContext.
-    public static class Context {}
+    public static class Context {
+        @SuppressLint("NewApi")
+        public static Context getCurrent() {
+            if (EglBase14.isEGL14Supported()) {
+                return new EglBase14.Context(EGL14.eglGetCurrentContext());
+            } else {
+                EGL10 egl = (EGL10) EGLContext.getEGL();
+                return new EglBase10.Context(egl.eglGetCurrentContext());
+            }
+        }
+    }
 
     // According to the documentation, EGL can be used from multiple threads at the same time if each
     // thread has its own EGLContext, but in practice it deadlocks on some devices when doing this.
@@ -23,9 +47,9 @@ public abstract class EglBase {
     // https://android.googlesource.com/platform/frameworks/base/+/master/opengl/java/android/opengl/EGL14.java
     // This is similar to how GlSurfaceView does:
     // http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/5.1.1_r1/android/opengl/GLSurfaceView.java#760
-    private static final int EGL_OPENGL_ES2_BIT = 4;
+    public static final int EGL_OPENGL_ES2_BIT = 4;
     // Android-specific extension.
-    private static final int EGL_RECORDABLE_ANDROID = 0x3142;
+    public static final int EGL_RECORDABLE_ANDROID = 0x3142;
 
     // clang-format off
     public static final int[] CONFIG_PLAIN = {
@@ -70,8 +94,11 @@ public abstract class EglBase {
     };
     // clang-format on
 
-    // Create a new context with the specified config attributes, sharing data with sharedContext.
-    // |sharedContext| can be null.
+    /**
+     * Create a new context with the specified config attributes, sharing data with |sharedContext|.
+     * If |sharedContext| is null, a root context is created. This function will try to create an EGL
+     * 1.4 context if possible, and an EGL 1.0 context otherwise.
+     */
     public static EglBase create(Context sharedContext, int[] configAttributes) {
         return (EglBase14.isEGL14Supported()
                 && (sharedContext == null || sharedContext instanceof EglBase14.Context))
@@ -79,7 +106,24 @@ public abstract class EglBase {
                 : new EglBase10((EglBase10.Context) sharedContext, configAttributes);
     }
 
-    public static EglBase createAndMakeCurrent(Context sharedContext, int[] configAttributes) {
+    public static EglBase createAdaptive(Context sharedContext, int[] configAttributes) {
+        boolean egl14 = EglBase14.isEGL14Supported()
+                && (sharedContext == null || sharedContext instanceof EglBase14.Context);
+        if (egl14) {
+            EglBase14 eglBase14;
+            try {
+                eglBase14 = new EglBase14((EglBase14.Context) sharedContext, configAttributes, 3);
+            } catch (Exception ex) {
+                eglBase14 = new EglBase14((EglBase14.Context) sharedContext, configAttributes, 2);
+            }
+
+            return eglBase14;
+        } else {
+            return new EglBase10((EglBase10.Context) sharedContext, configAttributes);
+        }
+    }
+
+    public static EglBase createAdaptiveAndMakeCurrent(Context sharedContext, int[] configAttributes) {
         boolean egl14 = EglBase14.isEGL14Supported()
                 && (sharedContext == null || sharedContext instanceof EglBase14.Context);
         if (egl14) {
@@ -100,12 +144,53 @@ public abstract class EglBase {
         }
     }
 
+
+    /**
+     * Helper function for creating a plain root context. This function will try to create an EGL 1.4
+     * context if possible, and an EGL 1.0 context otherwise.
+     */
     public static EglBase create() {
-        return create(null, CONFIG_PLAIN);
+        return create(null /* shaderContext */, CONFIG_PLAIN);
     }
 
+    /**
+     * Helper function for creating a plain context, sharing data with |sharedContext|. This function
+     * will try to create an EGL 1.4 context if possible, and an EGL 1.0 context otherwise.
+     */
     public static EglBase create(Context sharedContext) {
         return create(sharedContext, CONFIG_PLAIN);
+    }
+
+    /**
+     * Explicitly create a root EGl 1.0 context with the specified config attributes.
+     */
+    public static EglBase createEgl10(int[] configAttributes) {
+        return new EglBase10(null /* shaderContext */, configAttributes);
+    }
+
+    /**
+     * Explicitly create a root EGl 1.0 context with the specified config attributes
+     * and shared context.
+     */
+    public static EglBase createEgl10(
+            javax.microedition.khronos.egl.EGLContext sharedContext, int[] configAttributes) {
+        return new EglBase10(new EglBase10.Context(sharedContext), configAttributes);
+    }
+
+    /**
+     * Explicitly create a root EGl 1.4 context with the specified config attributes.
+     */
+    public static EglBase createEgl14(int[] configAttributes) {
+        return new EglBase14(null /* shaderContext */, configAttributes);
+    }
+
+    /**
+     * Explicitly create a root EGl 1.4 context with the specified config attributes
+     * and shared context.
+     */
+    public static EglBase createEgl14(
+            android.opengl.EGLContext sharedContext, int[] configAttributes) {
+        return new EglBase14(new EglBase14.Context(sharedContext), configAttributes);
     }
 
     public abstract void createSurface(Surface surface);
@@ -136,4 +221,6 @@ public abstract class EglBase {
     public abstract void detachCurrent();
 
     public abstract void swapBuffers();
+
+    public abstract void swapBuffers(long presentationTimeStampNs);
 }

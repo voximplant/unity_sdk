@@ -1,30 +1,25 @@
-package com.voximplant.sdk;
+/*
+ *  Copyright 2015 The WebRTC project authors. All Rights Reserved.
+ *
+ *  Use of this source code is governed by a BSD-style license
+ *  that can be found in the LICENSE file in the root of the source
+ *  tree. An additional intellectual property rights grant can be found
+ *  in the file PATENTS.  All contributing project authors may
+ *  be found in the AUTHORS file in the root of the source tree.
+ */
 
-import android.annotation.SuppressLint;
-import android.bluetooth.BluetoothClass;
+package com.voximplant.sdk.render;
+
+import android.opengl.GLES11Ext;
 import android.opengl.GLES20;
-import android.opengl.GLES30;
-import android.os.Build;
-import android.util.Log;
-
-import org.webrtc.GlShader;
-import org.webrtc.GlTextureFrameBuffer;
-import org.webrtc.GlUtil;
-import org.webrtc.RendererCommon;
-import org.webrtc.ThreadUtils;
 
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import static android.opengl.GLES10.GL_VERSION;
-import static android.opengl.GLES20.GL_ARRAY_BUFFER;
 
 /**
- * Created by zintus on 18/05/2017.
+ * Class for converting OES textures to a YUV ByteBuffer. It should be constructed on a thread with
+ * an active EGL context, and only be used from that thread.
  */
-
 class YuvConverter {
     // Vertex coordinates in Normalized Device Coordinates, i.e.
     // (-1, -1) is bottom-left and (1, 1) is top-right.
@@ -57,10 +52,11 @@ class YuvConverter {
                     + "}\n";
 
     private static final String FRAGMENT_SHADER =
-            "precision mediump float;\n"
+            "#extension GL_OES_EGL_image_external : require\n"
+                    + "precision mediump float;\n"
                     + "varying vec2 interp_tc;\n"
                     + "\n"
-                    + "uniform sampler2D oesTex;\n"
+                    + "uniform samplerExternalOES oesTex;\n"
                     // Difference in texture coordinate corresponding to one
                     // sub-pixel in the x direction.
                     + "uniform vec2 xUnit;\n"
@@ -93,38 +89,28 @@ class YuvConverter {
     private final ThreadUtils.ThreadChecker threadChecker = new ThreadUtils.ThreadChecker();
     private boolean released = false;
 
-    private final int majorVersion;
-
     /**
      * This class should be constructed on a thread that has an active EGL context.
      */
     public YuvConverter() {
         threadChecker.checkIsOnValidThread();
         textureFrameBuffer = new GlTextureFrameBuffer(GLES20.GL_RGBA);
-
-        Matcher versionMatcher = Pattern.compile("\\s(\\d)\\.\\d\\s").matcher(GLES20.glGetString(GL_VERSION));
-        if (versionMatcher.find()) {
-            majorVersion = Integer.parseInt(versionMatcher.group(1));
-        } else {
-            throw new IllegalStateException("YuvConverter failed to parse GL version");
-        }
-
         shader = new GlShader(VERTEX_SHADER, FRAGMENT_SHADER);
         shader.useProgram();
         texMatrixLoc = shader.getUniformLocation("texMatrix");
         xUnitLoc = shader.getUniformLocation("xUnit");
         coeffsLoc = shader.getUniformLocation("coeffs");
+        GLES20.glUniform1i(shader.getUniformLocation("oesTex"), 0);
         GlUtil.checkNoGLES2Error("Initialize fragment shader uniform values.");
+        // Initialize vertex shader attributes.
+        shader.setVertexAttribArray("in_pos", 2, DEVICE_RECTANGLE);
+        // If the width is not a multiple of 4 pixels, the texture
+        // will be scaled up slightly and clipped at the right border.
+        shader.setVertexAttribArray("in_tc", 2, TEXTURE_RECTANGLE);
     }
 
-    public static int BufferCapacityForFrame(int width, int height, int stride) {
-        int uv_height = (height + 1) / 2;
-        int total_height = height + uv_height;
-        return stride * total_height;
-    }
-
-    @SuppressLint("NewApi")
-    public void convert(ByteBuffer buf, int width, int height, int stride, int srcTextureId, float[] transformMatrix) {
+    public void convert(ByteBuffer buf, int width, int height, int stride, int srcTextureId,
+                        float[] transformMatrix) {
         threadChecker.checkIsOnValidThread();
         if (released) {
             throw new IllegalStateException("YuvConverter.convert called on released object");
@@ -172,26 +158,13 @@ class YuvConverter {
         int total_height = height + uv_height;
         int size = stride * total_height;
 
-        Log.v("YuvConverter", "size is "+size+" capacity is "+buf.capacity());
         if (buf.capacity() < size) {
             throw new IllegalArgumentException("YuvConverter.convert called with too small buffer");
         }
-
-        shader.useProgram();
-
-        if (majorVersion == 3) {
-            GLES30.glBindVertexArray(0);
-        }
-
-        GLES20.glBindBuffer(GL_ARRAY_BUFFER, 0);
-        GlUtil.checkNoGLES2Error("YuvConverter.unbind buffers");
-
-        shader.setVertexAttribArray("in_pos", 2, DEVICE_RECTANGLE);
-        shader.setVertexAttribArray("in_tc", 2, TEXTURE_RECTANGLE);
-
         // Produce a frame buffer starting at top-left corner, not
         // bottom-left.
-        transformMatrix = RendererCommon.multiplyMatrices(transformMatrix, RendererCommon.verticalFlipMatrix());
+        transformMatrix =
+                RendererCommon.multiplyMatrices(transformMatrix, RendererCommon.verticalFlipMatrix());
 
         final int frameBufferWidth = stride / 4;
         final int frameBufferHeight = total_height;
@@ -202,15 +175,8 @@ class YuvConverter {
         GlUtil.checkNoGLES2Error("glBindFramebuffer");
 
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
-        GLES20.glUniform1i(shader.getUniformLocation("oesTex"), 0);
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, srcTextureId);
-        GlUtil.checkNoGLES2Error("YuvConverter.active texture 0");
-
+        GLES20.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, srcTextureId);
         GLES20.glUniformMatrix4fv(texMatrixLoc, 1, false, transformMatrix, 0);
-        GlUtil.checkNoGLES2Error("YuvConverter.uniform matrix4f");
-
-        GLES20.glClearColor(0.1f, 0.1f, 0.1f, 0.1f);
-        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
 
         // Draw Y
         GLES20.glViewport(0, 0, y_width, height);
@@ -222,28 +188,31 @@ class YuvConverter {
         GLES20.glUniform4f(coeffsLoc, 0.299f, 0.587f, 0.114f, 0.0f);
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4);
 
-        GlUtil.checkNoGLES2Error("YuvConverter.draw y");
-
         // Draw U
         GLES20.glViewport(0, height, uv_width, uv_height);
         // Matrix * (1;0;0;0) / (width / 2). Note that opengl uses column major order.
-        GLES20.glUniform2f(xUnitLoc, 2.0f * transformMatrix[0] / width, 2.0f * transformMatrix[1] / width);
+        GLES20.glUniform2f(
+                xUnitLoc, 2.0f * transformMatrix[0] / width, 2.0f * transformMatrix[1] / width);
         GLES20.glUniform4f(coeffsLoc, -0.169f, -0.331f, 0.499f, 0.5f);
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4);
-
-        GlUtil.checkNoGLES2Error("YuvConverter.draw u");
 
         // Draw V
         GLES20.glViewport(stride / 8, height, uv_width, uv_height);
         GLES20.glUniform4f(coeffsLoc, 0.499f, -0.418f, -0.0813f, 0.5f);
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4);
 
-        GlUtil.checkNoGLES2Error("YuvConverter.draw v");
-
-        GLES20.glPixelStorei(GLES20.GL_PACK_ALIGNMENT, 1);
-        GLES20.glReadPixels(0, 0, frameBufferWidth, frameBufferHeight, GLES20.GL_RGBA, GLES20.GL_UNSIGNED_BYTE, buf);
+        GLES20.glReadPixels(
+                0, 0, frameBufferWidth, frameBufferHeight, GLES20.GL_RGBA, GLES20.GL_UNSIGNED_BYTE, buf);
 
         GlUtil.checkNoGLES2Error("YuvConverter.convert");
+
+        // Restore normal framebuffer.
+        GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, 0);
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0);
+
+        // Unbind texture. Reportedly needed on some devices to get
+        // the texture updated from the camera.
+        GLES20.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, 0);
     }
 
     public void release() {

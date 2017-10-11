@@ -1,4 +1,15 @@
-package com.voximplant.sdk;
+
+/*
+ *  Copyright 2015 The WebRTC project authors. All Rights Reserved.
+ *
+ *  Use of this source code is governed by a BSD-style license
+ *  that can be found in the LICENSE file in the root of the source
+ *  tree. An additional intellectual property rights grant can be found
+ *  in the file PATENTS.  All contributing project authors may
+ *  be found in the AUTHORS file in the root of the source tree.
+ */
+
+package com.voximplant.sdk.render;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -16,7 +27,7 @@ import javax.microedition.khronos.egl.EGLSurface;
  * Holds EGL state and utility methods for handling an egl 1.0 EGLContext, an EGLDisplay,
  * and an EGLSurface.
  */
-public final class EglBase10 extends EglBase {
+class EglBase10 extends EglBase {
     // This constant is taken from EGL14.EGL_CONTEXT_CLIENT_VERSION.
     private static final int EGL_CONTEXT_CLIENT_VERSION = 0x3098;
 
@@ -58,10 +69,12 @@ public final class EglBase10 extends EglBase {
             }
 
             @Override
-            public void addCallback(Callback callback) {}
+            public void addCallback(Callback callback) {
+            }
 
             @Override
-            public void removeCallback(Callback callback) {}
+            public void removeCallback(Callback callback) {
+            }
 
             @Override
             public boolean isCreating() {
@@ -70,19 +83,24 @@ public final class EglBase10 extends EglBase {
 
             @Deprecated
             @Override
-            public void setType(int i) {}
+            public void setType(int i) {
+            }
 
             @Override
-            public void setFixedSize(int i, int i2) {}
+            public void setFixedSize(int i, int i2) {
+            }
 
             @Override
-            public void setSizeFromLayout() {}
+            public void setSizeFromLayout() {
+            }
 
             @Override
-            public void setFormat(int i) {}
+            public void setFormat(int i) {
+            }
 
             @Override
-            public void setKeepScreenOn(boolean b) {}
+            public void setKeepScreenOn(boolean b) {
+            }
 
             @Override
             public Canvas lockCanvas() {
@@ -95,7 +113,8 @@ public final class EglBase10 extends EglBase {
             }
 
             @Override
-            public void unlockCanvasAndPost(Canvas canvas) {}
+            public void unlockCanvasAndPost(Canvas canvas) {
+            }
 
             @Override
             public Rect getSurfaceFrame() {
@@ -155,7 +174,7 @@ public final class EglBase10 extends EglBase {
     }
 
     @Override
-    public EglBase.Context getEglBaseContext() {
+    public Context getEglBaseContext() {
         return new EglBase10.Context(eglContext);
     }
 
@@ -240,6 +259,12 @@ public final class EglBase10 extends EglBase {
         synchronized (EglBase.lock) {
             egl.eglSwapBuffers(eglDisplay, eglSurface);
         }
+    }
+
+    @Override
+    public void swapBuffers(long timeStampNs) {
+        // Setting presentation time is not supported for EGL 1.0.
+        swapBuffers();
     }
 
     // Return an EGLDisplay, or die trying.

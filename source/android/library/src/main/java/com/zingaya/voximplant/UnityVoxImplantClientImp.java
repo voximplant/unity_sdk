@@ -86,14 +86,8 @@ class UnityVoxImplantClientImp implements IClientSessionListener,
     private VideoRenderer.Callbacks localView;
     private VideoRenderer.Callbacks remoteView;
 
-    UnityVoxImplantClientImp(Context context, UnityVoxImplantClient.VoxImplantClientConfig clientConfig) {
-        ClientConfig config = new ClientConfig();
-        config.enableVideo = clientConfig.enableVideo;
-        config.enableHWAcceleration = clientConfig.enableHWAcceleration;
-        config.provideLocalFramesInByteBuffers = clientConfig.provideLocalFramesInByteBuffers;
-        config.enableDebugLogging = clientConfig.enableDebugLogging;
-
-        voxClient = Voximplant.getClientInstance(Executors.newSingleThreadExecutor(), context, config);
+    UnityVoxImplantClientImp(Context context, ClientConfig clientConfig) {
+        voxClient = Voximplant.getClientInstance(Executors.newSingleThreadExecutor(), context, clientConfig);
         audioDevice = Voximplant.getAudioDeviceManager();
         cameraManager = Voximplant.getCameraManager(context);
     }

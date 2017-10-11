@@ -1,4 +1,15 @@
-package com.voximplant.sdk;
+
+/*
+ *  Copyright 2015 The WebRTC project authors. All Rights Reserved.
+ *
+ *  Use of this source code is governed by a BSD-style license
+ *  that can be found in the LICENSE file in the root of the source
+ *  tree. An additional intellectual property rights grant can be found
+ *  in the file PATENTS.  All contributing project authors may
+ *  be found in the AUTHORS file in the root of the source tree.
+ */
+
+package com.voximplant.sdk.render;
 
 import android.annotation.TargetApi;
 import android.graphics.SurfaceTexture;
@@ -8,18 +19,15 @@ import android.opengl.EGLContext;
 import android.opengl.EGLDisplay;
 import android.opengl.EGLExt;
 import android.opengl.EGLSurface;
+import android.util.Log;
 import android.view.Surface;
-
-import com.voximplant.sdk.EglBase;
-
-import org.webrtc.Logging;
 
 /**
  * Holds EGL state and utility methods for handling an EGL14 EGLContext, an EGLDisplay,
  * and an EGLSurface.
  */
 @TargetApi(18)
-public final class EglBase14 extends EglBase {
+class EglBase14 extends EglBase {
     private static final String TAG = "EglBase14";
     private static final int EGLExt_SDK_VERSION = android.os.Build.VERSION_CODES.JELLY_BEAN_MR2;
     private static final int CURRENT_SDK_VERSION = android.os.Build.VERSION.SDK_INT;
@@ -31,8 +39,9 @@ public final class EglBase14 extends EglBase {
     // EGL 1.4 is supported from API 17. But EGLExt that is used for setting presentation
     // time stamp on a surface is supported from 18 so we require 18.
     public static boolean isEGL14Supported() {
-        Logging.d(TAG, "SDK version: " + CURRENT_SDK_VERSION + ". isEGL14Supported: "
-                + (CURRENT_SDK_VERSION >= EGLExt_SDK_VERSION));
+        Log.d(TAG,
+                "SDK version: " + CURRENT_SDK_VERSION
+                        + ". isEGL14Supported: " + (CURRENT_SDK_VERSION >= EGLExt_SDK_VERSION));
         return (CURRENT_SDK_VERSION >= EGLExt_SDK_VERSION);
     }
 
@@ -44,7 +53,9 @@ public final class EglBase14 extends EglBase {
         }
     }
 
-    public EglBase14(EglBase14.Context sharedContext, int[] configAttributes){
+    // Create a new context with the specified config type, sharing data with sharedContext.
+    // |sharedContext| may be null.
+    public EglBase14(EglBase14.Context sharedContext, int[] configAttributes) {
         this(sharedContext, configAttributes, 3);
     }
 
@@ -55,6 +66,7 @@ public final class EglBase14 extends EglBase {
         eglConfig = getEglConfig(eglDisplay, configAttributes);
         eglContext = createEglContext(sharedContext, eglDisplay, eglConfig, openGLVersion);
     }
+
 
     // Create EGLSurface from the Android Surface.
     @Override
@@ -193,6 +205,7 @@ public final class EglBase14 extends EglBase {
         }
     }
 
+    @Override
     public void swapBuffers(long timeStampNs) {
         checkIsNotReleased();
         if (eglSurface == EGL14.EGL_NO_SURFACE) {
@@ -262,4 +275,5 @@ public final class EglBase14 extends EglBase {
         }
         return eglContext;
     }
+
 }
