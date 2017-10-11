@@ -183,9 +183,9 @@ enum VoxImplantLogLevel
  
  @param to         SIP URI, username or phone number to make call to. Actual routing is then performed by VoxEngine scenario
  @param video      Enable video support in call
- @param customData Custom data passed with call. Will be available in VoxEngine senario
+ @param customData Custom data passed with call. Will be available in VoxEngine scenario
  @return           Pointer to a string representation of the call id
- @warning          Deprecated. Use <[VIClient callToUser:customData:]> instead.
+ @warning          Deprecated. Use <[VIClient callToUser:withSendVideo:receiveVideo:customData:]> instead.
  */
 -(NSString *)createCall: (NSString *) to withVideo: (bool) video  andCustomData: (NSString *) customData;
 
@@ -240,9 +240,9 @@ enum VoxImplantLogLevel
  Answers incoming alerting call
  
  @param callId     id of previously created call
- @param customData Optinal custom data passed with call. Will be available in VoxEngine scenario
+ @param customData Optional custom data passed with call. Will be available in VoxEngine scenario
  @param headers    Optional set of headers to be sent with message. Names must begin with "X-" to be processed by SDK
- @warning          Deprecated. Use <[VICall answerWithVideo:customData:headers:]> instead.
+ @warning          Deprecated. Use <[VICall answerWithSendVideo:receiveVideo:customData:headers:]> instead.
  */
 -(void)answerCall:(NSString*)callId withCustomData:(NSString*)customData headers: (NSDictionary*)headers;
 
@@ -312,7 +312,7 @@ enum VoxImplantLogLevel
  Stop/start sending video during the call
  
  @param doSend Specify if video should be sent
- @warning      Deprecated.
+ @warning      Deprecated. Use <[VICall setSendVideo:completion:]> instead.
  */
 -(void)sendVideo:(BOOL)doSend;
 
@@ -320,7 +320,7 @@ enum VoxImplantLogLevel
  Set container for local video preview
  
  @param view UIView
- @warning    Deprecated.
+ @warning    Deprecated. Use <[VIVideoStream addRenderer:]> instead.
  */
 -(void)setLocalPreview: (UIView *)view;
 
@@ -328,7 +328,7 @@ enum VoxImplantLogLevel
  Set container for remote video display
  
  @param view UIView
- @warning    Deprecated.
+ @warning    Deprecated. Use <[VIVideoStream addRenderer:]> instead.
  */
 -(void)setRemoteView: (UIView *) view;
 
@@ -337,7 +337,7 @@ enum VoxImplantLogLevel
  
  @param view   UIView
  @param callId id of the call
- @warning      Deprecated.
+ @warning      Deprecated. Use <[VIVideoStream addRenderer:]> instead.
  */
 -(void)setRemoteView: (UIView *) view forCall: (NSString*) callId;
 
@@ -346,7 +346,7 @@ enum VoxImplantLogLevel
  
  @param width  Camera resolution width
  @param height Camera resolution height
- @warning      Deprecated.
+ @warning      Deprecated. 
  */
 -(void)setResolution: (int) width andHeight: (int) height;
 
@@ -354,14 +354,14 @@ enum VoxImplantLogLevel
  Connect to particular VoxImplant media gateway
  
  @param host Server name of particular media gateway for connection
- @warning    Deprecated.
+ @warning    Deprecated. Use <[VIClient connectWithConnectivityCheck:gateways:]> instead.
  */
 -(void)connectTo:(NSString *)host;
 
 /**
  Check if device has front facing camera
  
- @return  True if device has front acing camera, false otherwise
+ @return  True if device has front facing camera, false otherwise
  @warning Deprecated.
  */
 -(BOOL) hasFrontFacingCamera;
@@ -371,9 +371,17 @@ enum VoxImplantLogLevel
  
  @param position Capture device position
  @return         True in case of success, false otherwise
- @warning        Deprecated.
+ @warning        Deprecated. Use <[VICameraManager useBackCamera]>
  */
 -(BOOL) switchToCameraWithPosition: (AVCaptureDevicePosition) position;
+
+/**
+ Hold/unhold the call
+ 
+ @param hold   True if the call should be put on hold, false otherwise
+ @param callId The call id
+ */
+- (void)setHold:(BOOL)hold forCall:(NSString*)callId;
 
 @end
 
@@ -381,22 +389,25 @@ enum VoxImplantLogLevel
 
 /**
  Register Apple Push Notifications token,
- after calling this function, application will receive push notifications from Voximplant Server
+ after calling this function, application will receive push notifications from Voximplant Server.
  
  @param token The APNS token which comes from:
- - (void)pushRegistry:(PKPushRegistry *)registry didUpdatePushCredentials:(PKPushCredentials *)credentials forType:(PKPushType)type;
- @warning     Deprecated.
+ 
+     - (void)pushRegistry:(PKPushRegistry *)registry didUpdatePushCredentials:(PKPushCredentials *)credentials forType:(PKPushType)type;
+ 
+ @warning     Deprecated. Use <[VIClient registerPushNotificationsToken:imToken:]> instead.
  */
 - (void)registerPushNotificationsToken:(NSData *)token;
 
 /**
  Unregister Apple Push Notifications token,
- after calling this function, application stops receive push notifications from Voximplant Server
+ after calling this function, application stops receive push notifications from Voximplant Server.
  
  @param token The APNS token which comes from:
- - (void)pushRegistry:(PKPushRegistry *)registry didUpdatePushCredentials:(PKPushCredentials *)credentials forType:(PKPushType)type;
- credentials.token
- @warning     Deprecated.
+ 
+     - (void)pushRegistry:(PKPushRegistry *)registry didUpdatePushCredentials:(PKPushCredentials *)credentials forType:(PKPushType)type;
+
+ @warning     Deprecated. Use <[VIClient unregisterPushNotificationsToken:imToken:]> instead.
  */
 - (void)unregisterPushNotificationsToken:(NSData *)token;
 
@@ -404,10 +415,11 @@ enum VoxImplantLogLevel
  Handle incoming push notification
  
  @param  notification The incomming notification which comes from:
- - (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(PKPushType)type { ... }
- @warning             Deprecated.
+ 
+     - (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(PKPushType)type { ... }
+ 
+ @warning             Deprecated. Use <[VIClient handlePushNotification:]> instead.
  */
 - (void)handlePushNotification:(NSDictionary *)notification;
 
-- (void)setHold:(BOOL)hold forCall:(NSString*)callId;
 @end

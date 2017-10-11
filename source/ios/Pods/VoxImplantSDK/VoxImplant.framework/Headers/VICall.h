@@ -13,7 +13,7 @@
 @class VICallStat;
 @class VIEndpoint;
 
-/** VICallDelegate */
+/** Delegate that may be used to handle call events. */
 @protocol VICallDelegate <NSObject>
 
 @optional
@@ -129,32 +129,39 @@ typedef void (^VICompletionBlock)(NSError* error);
 @class UIView;
 @class VIVideoSource;
 
-/** VICall */
+/**
+ Interface that may be used for call operations like answer, reject, hang up and mid-call operations like hold, start/stop video and others.
+ */
 @interface VICall : NSObject
 
+/**
+ @warning NS_UNAVAILABLE
+ */
 - (instancetype)init NS_UNAVAILABLE;
 
 /**
- Preferred video codec, for example: @"H264". Nil by default.  Must be set before using "startWithHeaders:", if needed
+ Preferred video codec, for example: @"H264". Nil by default. 
+ Must be set before using <-startWithHeaders:>, if needed.
  */
 @property(nonatomic,strong) NSString* preferredVideoCodec;
 
 /**
- Video source.By default "[VICameraManager sharedCameraManager]" (gets video from back or front camera). Must be set before using "startWithHeaders:", if needed
+ Video source. By default <[VICameraManager sharedCameraManager]> is used that gets video from back or front camera.
+ Must be set before using <-startWithHeaders:>, if needed.
  */
 @property(nonatomic,strong) VIVideoSource* videoSource;
 
 /**
  Add call delegate to handle call events.
  
- @param delegate Call delegate
+ @param delegate Instance of <VICallDelegate> delegate
  */
 - (void)addDelegate:(id<VICallDelegate>)delegate;
 
 /**
  Remove previously added call delegate.
  
- @param delegate Call delegate
+ @param delegate Instance of <VICallDelegate> delegate
  */
 - (void)removeDelegate:(id<VICallDelegate>)delegate;
 
@@ -193,7 +200,7 @@ typedef void (^VICompletionBlock)(NSError* error);
 - (void)startWithHeaders:(NSDictionary*)headers;
 
 /**
- Terminate established or outgoing processing call, or reject incoming processing call.
+ Terminate established or outgoing processing call.
  
  @param headers Optional set of headers to be sent with message. Names must begin with "X-" to be processed by SDK
  */
@@ -202,7 +209,7 @@ typedef void (^VICompletionBlock)(NSError* error);
 /**
  Start or stop sending video for the call.
  
- @param video  True if video should be sent, false otherwise
+ @param video      True if video should be sent, false otherwise
  @param completion Completion block to handle the result of the operation
  */
 - (void)setSendVideo:(BOOL)video completion:(VICompletionBlock)completion;
@@ -210,7 +217,7 @@ typedef void (^VICompletionBlock)(NSError* error);
 /**
  Hold or unhold the call
  
- @param hold True if the call should be put on hold, false for unhold
+ @param hold       True if the call should be put on hold, false for unhold
  @param completion Completion block to handle the result of the operation
  */
 - (void)setHold:(BOOL)hold completion:(VICompletionBlock)completion;
@@ -223,7 +230,8 @@ typedef void (^VICompletionBlock)(NSError* error);
 - (void)startReceiveVideoWithCompletion:(VICompletionBlock)completion;
 
 /**
- Send message within the call. Implemented atop SIP INFO for communication between call endpoint and Voximplant cloud, and is separated from Voximplant messaging API.
+ Send message within the call. 
+ Implemented atop SIP INFO for communication between call endpoint and Voximplant cloud, and is separated from Voximplant messaging API.
  
  @param message Message text
  @param headers Optional set of headers to be sent with message. Names must begin with "X-" to be processed by SDK
@@ -233,9 +241,9 @@ typedef void (^VICompletionBlock)(NSError* error);
 /**
  Send INFO message within the call
  
- @param body Custom string data
+ @param body     Custom string data
  @param mimeType MIME type of info
- @param headers Optional set of headers to be sent with message. Names must begin with "X-" to be processed by SDK
+ @param headers  Optional set of headers to be sent with message. Names must begin with "X-" to be processed by SDK
  */
 - (void)sendInfo:(NSString*)body mimeType:(NSString*)mimeType headers:(NSDictionary*)headers;
 
@@ -243,17 +251,17 @@ typedef void (^VICompletionBlock)(NSError* error);
  Send DTMF within the call
  
  @param dtmf DTMFs
- @return True if DTMFs are sent successfully, false otherwise
+ @return     True if DTMFs are sent successfully, false otherwise
  */
 - (BOOL)sendDTMF:(NSString*)dtmf;
 
 /**
  Answer incoming call.
  
- @param sendVideo Specify if video receive is enabled for a call
+ @param sendVideo    Specify if video send is enabled for a call
  @param receiveVideo Specify if video receive is enabled for a call
- @param customData Optinal custom data passed with call. Will be available in VoxEngine scenario
- @param headers Optional set of headers to be sent with message. Names must begin with "X-" to be processed by SDK
+ @param customData   Optional custom data passed with call. Will be available in VoxEngine scenario
+ @param headers      Optional set of headers to be sent with message. Names must begin with "X-" to be processed by SDK
  */
 - (void)answerWithSendVideo:(BOOL)sendVideo
                receiveVideo:(BOOL)receiveVideo

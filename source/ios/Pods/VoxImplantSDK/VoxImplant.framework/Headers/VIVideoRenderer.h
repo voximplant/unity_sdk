@@ -8,7 +8,6 @@
 
 #import <WebRTC/WebRTC.h>
 
-/** VIVideoRenderer */
 @protocol VIVideoRenderer <RTCVideoRenderer>
 
 @optional

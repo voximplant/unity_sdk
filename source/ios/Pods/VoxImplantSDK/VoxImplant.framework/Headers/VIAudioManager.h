@@ -8,9 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-/** VIAudioManager interface */
+/** Interface that may be used to manage audio devices on iOS device. */
 @interface VIAudioManager : NSObject
 
+/**
+ @warning NS_UNAVAILABLE
+ */
 - (instancetype)init NS_UNAVAILABLE;
 
 /** Obtain VIAudioManager instance */

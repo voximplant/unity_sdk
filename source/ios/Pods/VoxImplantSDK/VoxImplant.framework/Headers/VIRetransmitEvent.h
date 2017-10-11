@@ -8,6 +8,13 @@
 
 #import "VIMessengerEvent.h"
 
+/**
+ Interface that represents messenger event for <[VIConversation retransmitEventsFrom:to:]> method call result.
+ */
 @interface VIRetransmitEvent : VIMessengerEvent
+
+/**
+ Array of event objects that was retransmitted.
+ */
 @property(nonatomic,strong,readonly) NSArray<VIMessengerEventSeq*>* events;
 @end
