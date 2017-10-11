@@ -9,6 +9,14 @@
 #import "VIMessengerEvent.h"
 
 @class VIMessage;
+
+/**
+ Interface that represents messenger events related to messages.
+ */
 @interface VIMessageEvent : VIMessengerEventSeq
+
+/**
+ <VIMessage> instance with message information
+ */
 @property(nonatomic,strong,readonly) VIMessage* message;
 @end

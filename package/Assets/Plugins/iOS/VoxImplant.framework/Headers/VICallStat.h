@@ -10,7 +10,7 @@
 #import <CoreGraphics/CoreGraphics.h>
 
 /**
- Enum of supported video stream directions
+ Enum of supported audio/video stream directions
  */
 typedef NS_ENUM(NSUInteger, VIStreamDirection) {
     /** Stream is directed from this SDK toward the Voximplant cloud or toward another SDK in Peer-to-Peer mode */
@@ -33,11 +33,11 @@ typedef NS_ENUM(NSUInteger,VIStreamType){
 
 @class RTCLegacyStatsReport;
 
-/** VIStreamStat */
+/** Stream statistics */
 @interface VIStreamStat : NSObject
 
 /**
- Unique stream id as a string, same as "streamId" for <b>VIVideoStream</b>
+ Unique stream id as a string, same as "streamId" for <VIVideoStream>
  */
 @property(nonatomic,copy,readonly)   NSString* streamId;
 
@@ -48,7 +48,7 @@ typedef NS_ENUM(NSUInteger,VIStreamType){
 
 /**
  Stream direction: VIStreamDirectionSend for streams directed from this device,
- VIStreamDirectionRecv for streams directred to this device
+ VIStreamDirectionRecv for streams directed to this device
  */
 @property(nonatomic,assign,readonly) VIStreamDirection dir;
 
@@ -59,12 +59,12 @@ typedef NS_ENUM(NSUInteger,VIStreamType){
 @property(nonatomic,assign,readonly) VIStreamType type;
 
 /**
- Number of bytes transfered through stream
+ Number of bytes transferred through stream
  */
 @property(nonatomic,assign,readonly) NSInteger bytes;
 
 /**
- Number of packets transfered through stream
+ Number of packets transferred through stream
  */
 @property(nonatomic,assign,readonly) NSInteger packets;
 
@@ -105,7 +105,7 @@ typedef NS_ENUM(NSUInteger,VIStreamType){
 
 @end
 
-/** VIVideoStat */
+/** Video statistics */
 @interface VIVideoStat: NSObject
 
 /**
@@ -125,7 +125,7 @@ typedef NS_ENUM(NSUInteger,VIStreamType){
 
 @end
 
-/** VIEndpointStat */
+/** Endpoint statistics */
 @interface VIEndpointStat : NSObject
 
 /**
@@ -135,7 +135,7 @@ typedef NS_ENUM(NSUInteger,VIStreamType){
 
 @end
 
-/** VICallStat */
+/** Call staticstics */
 @interface VICallStat : NSObject
 
 /**

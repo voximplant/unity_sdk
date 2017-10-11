@@ -10,7 +10,6 @@
 #import <CoreVideo/CoreVideo.h>
 #import "VIVideoSource.h"
 
-/** VIVideoPreprocessDelegate */
 @protocol VIVideoPreprocessDelegate <NSObject>
 
 @optional
@@ -18,7 +17,7 @@
  Triggered when new video frame is available for preprocessing.
  
  @param pixelBuffer Video frame
- @param rotation Video frame rotation
+ @param rotation    <VIRotation> video frame rotation
  */
 - (void)preprocessVideoFrame:(CVPixelBufferRef)pixelBuffer rotation:(VIRotation)rotation;
 
@@ -27,6 +26,9 @@
 /** VICameraManager */
 @interface VICameraManager : VIVideoSource
 
+/**
+ @warning NS_UNAVAILABLE
+ */
 - (instancetype)init NS_UNAVAILABLE;
 
 /**

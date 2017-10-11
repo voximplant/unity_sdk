@@ -14,7 +14,7 @@
 @interface VIVideoStream : NSObject
 
 /**
- Video renderers associated with the stream. UI elements of <b>RTCVideoRenderer</b> type are used to display local preview or remote video.
+ Video renderers associated with the stream. UI elements of **RTCVideoRenderer** type are used to display local preview or remote video.
  */
 @property (nonatomic,strong,readonly) NSSet<id<RTCVideoRenderer>> *renderers;
 
@@ -28,17 +28,20 @@
  */
 @property (nonatomic,copy, readonly)  NSString* streamId;
 
+/**
+ @warning NS_UNAVAILABLE
+ */
 - (instancetype)init NS_UNAVAILABLE;
 
 /**
- Add new video renderer to the video stream. UI elements of <b>RTCVideoRenderer</b> type are used to display local preview or remote video.
+ Add new video renderer to the video stream. UI elements of **RTCVideoRenderer** type are used to display local preview or remote video.
  
  @param renderer New video renderer to be added
  */
 - (void)addRenderer:(id<RTCVideoRenderer>)renderer;
 
 /**
- Remove previously added video renderer from the video stream. UI elements of <b>RTCVideoRenderer</b> type are used to display local preview or remote video.
+ Remove previously added video renderer from the video stream. UI elements of **RTCVideoRenderer** type are used to display local preview or remote video.
  
  @param renderer Previously added video renderer
  */

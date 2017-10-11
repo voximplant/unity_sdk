@@ -14,7 +14,7 @@
 @class VIEndpointStat;
 
 /**
- Interface that mey be used to handle endpoint events
+ Delegate that may be used to handle endpoint events
  */
 @protocol VIEndpointDelegate<NSObject>
 
@@ -24,7 +24,7 @@
  Triggered after endpoint added video stream to the call.
  Triggered always on the main thread, even delegateQueue is not the main thread
  
- @param endpoint Endpoint triggered this event
+ @param endpoint    <VIEndpoint> that triggered this event
  @param videoStream Remote video stream added to the call
  */
 - (void)endpoint:(VIEndpoint*)endpoint didAddRemoteVideoStream:(VIVideoStream*)videoStream;
@@ -33,7 +33,7 @@
  Triggered after endpoint removed video stream from the call.
  Triggered always on the main thread, even delegateQueue is not the main thread
  
- @param endpoint Endpoint triggered this event
+ @param endpoint    <VIEndpoint> that triggered this event
  @param videoStream Remote video stream removed from the call
  */
 - (void)endpoint:(VIEndpoint*)endpoint didRemoveRemoteVideoStream:(VIVideoStream*)videoStream;
@@ -44,7 +44,7 @@
 @interface VIEndpoint : NSObject
 
 /**
- Delegate to handle the endpoint events.
+ <VIEndpointDelegate> delegate to handle the endpoint events.
  */
 @property(nonatomic,weak) id<VIEndpointDelegate> delegate;
 

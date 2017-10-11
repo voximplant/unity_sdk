@@ -9,7 +9,15 @@
 #import "VIMessengerEvent.h"
 
 @class VIUser;
+
+/**
+ Interface that represents messenger events related to user, such as get or edit user.
+ */
 @interface VIUserEvent : VIMessengerEvent
+
+/**
+ <VIUser> instance with user information
+ */
 @property(nonatomic,strong,readonly) VIUser* user;
 @end
 
