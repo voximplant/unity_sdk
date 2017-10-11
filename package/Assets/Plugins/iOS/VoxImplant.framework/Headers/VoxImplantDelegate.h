@@ -175,6 +175,14 @@ struct VoxImplantNetworkInfo
 - (void) onNetStatsReceivedInCall: (NSString *)callId withStats: (const struct VoxImplantNetworkInfo *)stats;
 
 @optional
+
+/**
+ Triggered when new video frame is available for preprocessing.
+
+ @param pixelBuffer Video frame pixel buffer
+ @param rotation    Video rotation
+ @warning Deprecated. Use <[VIVideoPreprocessDelegate preprocessVideoFrame:rotation:]> instead.
+ */
 - (void) onPreprocessCameraCapturedVideo:(CVPixelBufferRef)pixelBuffer rotation:(int)rotation;
 
 @end

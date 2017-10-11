@@ -9,9 +9,9 @@ namespace Voximplant
 {
     internal sealed class iOSSDK : VoximplantSDK
     {
-        public override void init(Action<bool> initCallback)
+        public override void init(Action<bool> initCallback, bool preferH264)
         {
-            iosSDKinit(gameObject.name);
+            iosSDKinit(gameObject.name, preferH264);
             initCallback(true);
         }
 
@@ -166,7 +166,7 @@ namespace Voximplant
         #region Native
 
         [DllImport("__Internal")]
-        private static extern void iosSDKinit(string pUnityObj);
+        private static extern void iosSDKinit(string pUnityObj, Boolean preferH264);
 
         [DllImport("__Internal")]
         private static extern void iosSDKconnect();

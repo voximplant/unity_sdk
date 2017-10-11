@@ -1,33 +1,26 @@
 //
 //  VIAudioManager.h
-//  Pods
+//  VoxImplant
 //
 //  Created by Andrey Syvrachev (asyvrachev@zingaya.com) on 04.04.17.
-//  Copyright © 2017 VoxImplant (www.voximplant.com). All rights reserved.
+//  Copyright © 2017 Zingaya. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-/**
-@class VIAudioManager
-*/
+/** Interface that may be used to manage audio devices on iOS device. */
 @interface VIAudioManager : NSObject
 
+/**
+ @warning NS_UNAVAILABLE
+ */
 - (instancetype)init NS_UNAVAILABLE;
 
-/**
-Obtain VIAudioManager instance
-@method sharedAudioManager
-@static
-@return {instancetype} VIAudioManager instance
-*/
+/** Obtain VIAudioManager instance */
 + (instancetype)sharedAudioManager;
 
-/**
-Enable or disable loudspeaker
-@property useLoudSpeaker
-@type {BOOL}
-*/
+/** Enable or disable loudspeaker */
 @property(nonatomic,assign) BOOL useLoudSpeaker;
 
 @end
+

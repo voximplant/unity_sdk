@@ -318,7 +318,7 @@ namespace Voximplant
         @method init
         @param {Action<bool>} callback This callback will be called after SDK is initialized. It receives 'true' boolean argument if initialization is successful.
         */
-        public abstract void init(Action<bool> callback);
+        public abstract void init(Action<bool> callback, bool preferH264);
 
         /**
         Close connection to the Voximplant cloud that was previously established via 'connect' call
@@ -639,8 +639,11 @@ namespace Voximplant
         */
         public void useCameraVideoStreamForCall(string callId, UnityEngine.Camera streamCamera)
         {
-            var newBehaviour = streamCamera.gameObject.AddComponent<LocalStreamCameraBehaviour>();
-            var behaviours = new List<LocalStreamCameraBehaviour>();
+            Debug.Log(string.Format("useCameraVideoStreamForCall {0}", callId));
+            
+            var newBehaviour = streamCamera.gameObject.GetComponent<StreamingCameraBehaviour>() 
+                ?? streamCamera.gameObject.AddComponent<StreamingCameraBehaviour>(); 
+            var behaviours = new List<StreamingCameraBehaviour>();
             var localStreamCameraBehaviours = _behavioursByCallId.ContainsKey(callId) ? _behavioursByCallId[callId] : null;
             if (localStreamCameraBehaviours != null) {
                 behaviours.InsertRange(0, localStreamCameraBehaviours);
@@ -648,6 +651,7 @@ namespace Voximplant
             behaviours.Insert(behaviours.Count, newBehaviour);
             _behavioursByCallId[callId] = behaviours.ToArray();
 
+            newBehaviour.Reset();
             newBehaviour.OnResolutionDidChange = (width, height) => {
                 beginCallVideoStream(callId, (uint) width, (uint) height);
             };
@@ -674,7 +678,7 @@ namespace Voximplant
             _behavioursByCallId.Remove(callId);
         }
 
-        private readonly Dictionary<string, LocalStreamCameraBehaviour[]> _behavioursByCallId = new Dictionary<string, LocalStreamCameraBehaviour[]>();
+        private readonly Dictionary<string, StreamingCameraBehaviour[]> _behavioursByCallId = new Dictionary<string, StreamingCameraBehaviour[]>();
 
         protected abstract void beginCallVideoStream(string pCallId, uint width, uint height);
         protected abstract void callVideoStreamTextureUpdated(string pCallId, IntPtr pTexturePtr, int width, int height);

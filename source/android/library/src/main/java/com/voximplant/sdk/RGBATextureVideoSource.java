@@ -1,11 +1,11 @@
 package com.voximplant.sdk;
 
 import android.annotation.SuppressLint;
-import android.opengl.EGL14;
 import android.util.Log;
 
 import com.voximplant.sdk.hardware.ICustomVideoSource;
 import com.voximplant.sdk.hardware.ICustomVideoSourceListener;
+import com.voximplant.sdk.render.EglBase;
 
 import org.webrtc.RendererCommon;
 
@@ -15,9 +15,6 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-
-import javax.microedition.khronos.egl.EGL10;
-import javax.microedition.khronos.egl.EGLContext;
 
 class RGBATextureVideoSource {
 
@@ -46,17 +43,17 @@ class RGBATextureVideoSource {
     }
 
     private void EnsureConvertUtils() {
-        int yuvSize = 3 * _width * _height / 2;
+        int bufferSize = YuvConverter.BufferCapacityForFrame(_width, _height, _width);
         if (_convertBuffer == null
-                || _convertBuffer.capacity() != yuvSize) {
-            _convertBuffer = ByteBuffer.allocateDirect(yuvSize);
+                || _convertBuffer.capacity() != bufferSize) {
+            _convertBuffer = ByteBuffer.allocateDirect(bufferSize);
         }
         if (_converter == null) {
             _converter = new YuvConverter();
         }
         if (_outputBuffer == null
-                || _outputBuffer.length != yuvSize) {
-            _outputBuffer = new byte[yuvSize];
+                || _outputBuffer.length != bufferSize) {
+            _outputBuffer = new byte[bufferSize];
         }
     }
 
@@ -134,19 +131,14 @@ class RGBATextureVideoSource {
 
         _executor = Executors.newSingleThreadExecutor();
 
-        final EglBase.Context currentContext;
-        if (EglBase14.isEGL14Supported()) {
-            currentContext = new EglBase14.Context(EGL14.eglGetCurrentContext());
-        } else {
-            EGL10 egl = (EGL10) EGLContext.getEGL();
-            currentContext = new EglBase10.Context(egl.eglGetCurrentContext());
-        }
+        final EglBase.Context currentContext = EglBase.Context.getCurrent();
 
+        final Object source = this;
         _executor.submit(new Runnable() {
             @Override
             public void run() {
                 try {
-                    _eglBase = EglBase.createAndMakeCurrent(currentContext, EglBase.CONFIG_PIXEL_BUFFER);
+                    _eglBase = EglBase.createAdaptiveAndMakeCurrent(currentContext, EglBase.CONFIG_PIXEL_BUFFER);
 
                     EnsureConvertUtils();
                 } catch (RuntimeException exception) {
@@ -155,6 +147,8 @@ class RGBATextureVideoSource {
                     Log.e(TAG, _eglBase.toString() + " " + exception.getLocalizedMessage());
                     throw exception;
                 }
+
+                Log.v(TAG, "Created context for "+ source.toString());
             }
         });
     }

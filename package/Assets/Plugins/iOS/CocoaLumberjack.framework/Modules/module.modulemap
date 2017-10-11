@@ -4,7 +4,3 @@ framework module CocoaLumberjack {
   export *
   module * { export * }
 }
-
-module CocoaLumberjack.Swift {
-    header "CocoaLumberjack-Swift.h"
-}

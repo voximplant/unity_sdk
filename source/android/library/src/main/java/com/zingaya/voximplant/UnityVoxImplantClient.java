@@ -84,7 +84,7 @@ public class UnityVoxImplantClient {
 	private UnityVoxImplantClientImp unityVoxImplantClientImp = null;
 	private Context context = null;
 	private String firebaseToken = null;
-	private VoxImplantClientConfig clientConfig;
+	private ClientConfig clientConfig;
 
 
 	/**
@@ -113,18 +113,6 @@ public class UnityVoxImplantClient {
 	}
 
 	/**
-	 * Set Android context
-	 *
-	 * @param context Android context
-	 * @throws AccessControlException
-	 * @deprecated Android context is provided to SDK via {@link com.voximplant.sdk.Voximplant#getClientInstance(Executor, Context, ClientConfig)} instead
-	 */
-	@Deprecated
-	public void setAndroidContext(Context context) throws AccessControlException {
-		setAndroidContext(context, new VoxImplantClientConfig());
-	}
-
-	/**
 	 * Set Android context and UnityVoxImplantClient config
 	 *
 	 * @param context        Android context
@@ -134,7 +122,7 @@ public class UnityVoxImplantClient {
 	 * @deprecated Android context and client configuration are provided to SDK via {@link com.voximplant.sdk.Voximplant#getClientInstance(Executor, Context, ClientConfig)} instead
 	 */
 	@Deprecated
-	public void setAndroidContext(Context context, VoxImplantClientConfig clientConfig) throws AccessControlException {
+	public void setAndroidContext(Context context, ClientConfig clientConfig) throws AccessControlException {
 		this.context = context;
 		this.clientConfig = clientConfig;
 

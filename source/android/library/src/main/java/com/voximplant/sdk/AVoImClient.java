@@ -11,13 +11,18 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.unity3d.player.UnityPlayer;
 import com.voximplant.sdk.call.CallException;
+import com.voximplant.sdk.client.ClientConfig;
 import com.voximplant.sdk.hardware.ICustomVideoSource;
+import com.voximplant.sdk.render.EglBase;
+import com.voximplant.sdk.render.EglRenderer;
+import com.voximplant.sdk.render.GlRectDrawer;
 import com.zingaya.voximplant.UnityVoxImplantClient;
 import com.zingaya.voximplant.VoxImplantCallback;
 import com.zingaya.voximplant.VoxImplantClient;
 
+import org.webrtc.VideoRenderer;
+
 import java.lang.reflect.Type;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -29,9 +34,9 @@ import java.util.Map;
 public class AVoImClient implements VoxImplantCallback {
     private static AVoImClient inst = null;
 
-    public static AVoImClient instance() {
+    public static AVoImClient instance(boolean preferH264) {
         if (inst == null) {
-            inst = new AVoImClient();
+            inst = new AVoImClient(preferH264);
         }
 
         return inst;
@@ -182,14 +187,15 @@ public class AVoImClient implements VoxImplantCallback {
         }
     }
 
-    public AVoImClient() {
+    public AVoImClient(boolean preferH264) {
         Log.d(TAG, "Start init");
 
         client = UnityVoxImplantClient.instance();
 
-        UnityVoxImplantClient.VoxImplantClientConfig config = new UnityVoxImplantClient.VoxImplantClientConfig();
-        config.enableHWAcceleration = false;
+        ClientConfig config = new ClientConfig();
+        config.H264first = preferH264;
         config.provideLocalFramesInByteBuffers = true;
+        config.enableHWAccelerationForDecoding = false;
 
         client.setAndroidContext(UnityPlayer.currentActivity.getApplicationContext(), config);
         client.setCallback(this);
@@ -207,7 +213,7 @@ public class AVoImClient implements VoxImplantCallback {
     }
 
     public void connect() {
-        client.connect();
+        client.connect(false, null);
     }
 
     public void login(final String p) {
@@ -338,45 +344,46 @@ public class AVoImClient implements VoxImplantCallback {
         }
     }
 
-    private native void renderBufferFrame(String callId,
-                                          ByteBuffer yPlane, int yStride,
-                                          ByteBuffer uPlane, int uStride,
-                                          ByteBuffer vPlane, int vStride,
-                                          int width, int height,
-                                          int stream,
-                                          int degrees);
-
     public void beginSendingVideoForStream(final String callId, final int stream) {
         VideoStream videoStream = VideoStream.fromInteger(stream);
 
-        NativeVideoRenderer videoRenderer = new NativeVideoRenderer(new NativeVideoRenderer.NativeVideoRendererCallbacks() {
+        final TextureReporter reporter = new TextureReporter(callId, stream);
+        reporter.listener = new TextureReporter.TextureListener() {
             @Override
-            public void onBufferFrameRender(ByteBuffer[] planes, int[] strides, int width, int height, int degrees) {
-                renderBufferFrame(
-                        callId,
-                        planes[0], strides[0],
-                        planes[1], strides[1],
-                        planes[2], strides[2],
-                        width, height,
-                        stream,
-                        degrees);
+            public void onTexture(String callId, long textureId, int width, int height, int stream) {
+                reportNewNativeTexture(callId, textureId, width, height, stream);
             }
-        });
+        };
+
+        //TODO: call release at appropriate times
+        EglBase.Context sharedContext = EglBase.Context.getCurrent();
+        String prefix = videoStream == VideoStream.VideoStreamIncoming ? "Incoming" : "Outgoing";
+        final EglRenderer renderer = new EglRenderer(prefix + ": " + callId);
+        renderer.init(sharedContext, EglBase.CONFIG_PIXEL_BUFFER, new GlRectDrawer());
+
+        VideoRenderer.Callbacks proxyCallbacks = new VideoRenderer.Callbacks() {
+            @Override
+            public void renderFrame(VideoRenderer.I420Frame i420Frame) {
+                reporter.setTextureId(renderer.framebuffer.textureId);
+                reporter.setRect(i420Frame.width, i420Frame.height);
+                renderer.renderFrame(i420Frame);
+            }
+        };
 
         switch (videoStream) {
             case VideoStreamIncoming:
-                client.setRemoteView(videoRenderer);
+                client.setRemoteView(proxyCallbacks);
                 break;
             case VideoStreamOutgoing:
-                client.setLocalPreview(videoRenderer);
+                client.setLocalPreview(proxyCallbacks);
                 break;
         }
     }
 
-    public void reportNewNativeTexture(String callId, long textureId, long oglContext, int width, int height, int stream) {
+    public void reportNewNativeTexture(String callId, long textureId, int width, int height, int stream) {
         UnityPlayer.UnitySendMessage(sdkObjName,
                 "fonNewNativeTexture",
-                GetParamListToString(new ArrayList<Object>(Arrays.asList(callId, textureId, oglContext, width, height, stream))));
+                GetParamListToString(new ArrayList<Object>(Arrays.asList(callId, textureId, 0, width, height, stream))));
     }
 
     private Dictionary<String, RGBATextureVideoSource> videoSources = new Hashtable<>();
