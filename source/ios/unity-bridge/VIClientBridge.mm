@@ -49,12 +49,16 @@ void CallUnityMethod(NSString *methodName, id parameters) {
 @implementation VIClientBridge {
 }
 
-- (instancetype)init {
+- (instancetype)initWithPreferH264:(BOOL)h264 {
     self = [super init];
     if (self) {
         _client = [[VIClient alloc] initWithDelegateQueue:dispatch_get_main_queue()];
         self.client.sessionDelegate = self;
         self.client.callManagerDelegate = self;
+
+        if (h264) {
+            _preferrredVideoCodec = @"H264";
+        }
 
         _localRenderers = [NSMutableDictionary new];
         _remoteRenderers = [NSMutableDictionary new];
@@ -213,8 +217,8 @@ VIClientBridge *s_bridge;
 extern "C"
 {
 
-__used void iosSDKinit(const char *pUnityObjName) {
-    s_bridge = [VIClientBridge new];
+__used void iosSDKinit(const char *pUnityObjName, BOOL preferH264) {
+    s_bridge = [[VIClientBridge alloc] initWithPreferH264:preferH264];
     s_unityObjName = [[NSString alloc] initWithUTF8String:pUnityObjName];
 }
 
@@ -254,9 +258,10 @@ __used void iosSDKloginUsingOneTimeKey(const char *pUserName, const char *pOneTi
 
 __used const char *iosSDKcreateCall(const char *pUserId, bool pWithVideo, const char *pCustom) {
     NSString *userString = [NSString stringWithUTF8String:pUserId];
-    NSString *customData = [[NSString alloc] initWithUTF8String:pCustom];
+    NSString *customData = pCustom != NULL ? [NSString stringWithUTF8String:pCustom] : nil;
 
     VICall *call = [s_bridge.client callToUser:userString withSendVideo:pWithVideo receiveVideo:pWithVideo customData:customData];
+    call.preferredVideoCodec = s_bridge.preferrredVideoCodec;
     [call addDelegate:s_bridge];
     call.endpoints.firstObject.delegate = s_bridge;
 

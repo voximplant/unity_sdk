@@ -12,7 +12,13 @@
 
 @interface VIClientBridge : NSObject
 
+// TODO: Provide consistent factory methods
 @property(nonatomic, strong, readonly) VIClient *client;
+@property(nonatomic, strong, readonly, nullable) NSString *preferrredVideoCodec;
+
+- (instancetype)initWithPreferH264:(BOOL)h264 NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 @end
 
