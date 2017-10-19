@@ -11,6 +11,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithTarget:(id)target selector:(SEL)selector object:(nullable id)argument NS_UNAVAILABLE;
 
+- (instancetype)init;
+- (instancetype)initWithQueueLimit:(NSUInteger)queueLimit NS_DESIGNATED_INITIALIZER;
+
 - (void)enqueueBlock:(nullable void (^)())block;
 
 - (void)enqueueBlockAndWait:(void (^)())block;

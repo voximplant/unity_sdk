@@ -10,17 +10,29 @@
 @property(nonatomic, strong, readonly) NSCondition *threadStarted;
 @property(nonatomic, strong, readonly) NSCondition *submit;
 
+@property(nonatomic, strong, readonly) NSLock *queue;
+@property(nonatomic, assign, readwrite) NSUInteger queueLength;
+@property(nonatomic, assign, readonly) NSUInteger queueLimit;
+
 @end
 
 @implementation VIBlocksThread
 
 - (instancetype)init {
+    return [self initWithQueueLimit:NSUIntegerMax];
+}
+
+- (instancetype)initWithQueueLimit:(NSUInteger)queueLimit {
+    NSParameterAssert(queueLimit > 0);
+
     self = [super init];
     if (self == nil)
         return self;
 
+    _queueLimit = queueLimit;
     _threadStarted = [NSCondition new];
     _submit = [NSCondition new];
+    _queue = [NSLock new];
 
     [self.threadStarted lock];
     [self start];
@@ -29,6 +41,7 @@
 
     return self;
 }
+
 
 - (void)main {
     _runLoop = [NSRunLoop currentRunLoop];
@@ -64,12 +77,37 @@
     }
 };
 
+- (void)ensureQueueLength {
+    if (self.queueLimit != NSUIntegerMax) {
+        [self.queue lock];
+
+        while (self.queueLength >= self.queueLimit) {
+            [self.queue unlock];
+            CFRunLoopWakeUp(self.runLoop.getCFRunLoop);
+            [NSThread sleepForTimeInterval:0.005];
+            [self.queue lock];
+        }
+
+        self.queueLength++;
+        [self.queue unlock];
+    }
+}
+
 - (void)enqueueBlock:(void (^)())block {
     CFRunLoopRef const cfRunLoop = self.runLoop.getCFRunLoop;
+
+    [self ensureQueueLength];
 
     CFRunLoopPerformBlock(cfRunLoop, kCFRunLoopDefaultMode, ^{
         if (block) {
             block();
+        }
+
+        if (self.queueLimit != NSUIntegerMax) {
+            [self.queue lock];
+            NSParameterAssert(self.queueLength > 0);
+            self.queueLength--;
+            [self.queue unlock];
         }
     });
 
@@ -81,9 +119,18 @@
 
     [self.submit lock];
 
+    [self ensureQueueLength];
+
     CFRunLoopPerformBlock(cfRunLoop, kCFRunLoopDefaultMode, ^{
         if (block) {
             block();
+        }
+
+        if (self.queueLimit != NSUIntegerMax) {
+            [self.queue lock];
+            NSParameterAssert(self.queueLength > 0);
+            self.queueLength--;
+            [self.queue unlock];
         }
 
         [self.submit lock];

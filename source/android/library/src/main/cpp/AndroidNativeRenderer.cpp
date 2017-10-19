@@ -20,27 +20,7 @@ static EGLSurface s_unitySurface;
 
 static DestroyList<std::unique_ptr<EGLVideoRenderer>> *s_destroyList;
 
-JNIEXPORT static void JNICALL
-Java_renderBufferFrame(JNIEnv *env,
-                       jobject thiz,
-                       jstring callId,
-                       jobject yPlane,
-                       jint yStride,
-                       jobject uPlane,
-                       jint uStride,
-                       jobject vPlane,
-                       jint vStride,
-                       jint width,
-                       jint height,
-                       jint stream,
-                       jint degrees);
-
 void invalidateAllRenderers();
-
-static const char* CLIENT_CLASS = "com/voximplant/sdk/AVoImClient";
-static JNINativeMethod CLIENT_METHODS[] = {
-        {"renderBufferFrame", "(Ljava/lang/String;Ljava/nio/ByteBuffer;ILjava/nio/ByteBuffer;ILjava/nio/ByteBuffer;IIIII)V", (void*)Java_renderBufferFrame},
-};
 
 static JNIEnv* env;
 
@@ -76,79 +56,24 @@ static void UNITY_INTERFACE_API OnRenderEvent(int eventID) {
     }
 }
 
-JNIEXPORT static void JNICALL
-Java_renderBufferFrame(JNIEnv *env,
-                       jobject thiz,
-                       jstring callId,
-                       jobject yPlane,
-                       jint yStride,
-                       jobject uPlane,
-                       jint uStride,
-                       jobject vPlane,
-                       jint vStride,
-                       jint width,
-                       jint height,
-                       jint stream,
-                       jint degrees) {
-    LockGuard lock(s_renderersMutex);
-
-    if (s_unityContext == EGL_NO_CONTEXT
-        || s_unitySurface == EGL_NO_SURFACE) {
-        return;
-    }
-
-    bool newRendererCreated = false;
-    auto &renderer = (*s_renderers)[stream];
-    if (renderer && !renderer->IsValidForSize(width, height)) {
-        renderer->Detach();
-        if (renderer->GetOGLContext() != EGL_NO_CONTEXT) {
-            s_destroyList->AddObject((void *) renderer->GetTargetTextureId(), renderer->GetOGLContext(), std::move(renderer));
-        }
-        renderer = nullptr;
-    }
-    if (!renderer) {
-        (*s_renderers)[stream] = std::make_unique<EGLVideoRenderer>(width, height, s_unityContext);
-        renderer.swap((*s_renderers)[stream]);
-
-        newRendererCreated = true;
-    }
-
-    renderer->RenderBuffer((uint8_t *) env->GetDirectBufferAddress(yPlane),
-                           yStride,
-                           (uint8_t *) env->GetDirectBufferAddress(uPlane),
-                           uStride,
-                           (uint8_t *) env->GetDirectBufferAddress(vPlane),
-                           vStride,
-                           width,
-                           height,
-                           degrees
-    );
-
-    if (newRendererCreated) {
-        jclass cls = env->FindClass(CLIENT_CLASS);
-        jmethodID methodID = env->GetMethodID(cls, "reportNewNativeTexture", "(Ljava/lang/String;JJIII)V");
-        env->CallVoidMethod(thiz, methodID, callId, (jlong)renderer->GetTargetTextureId(), (jlong)renderer->GetOGLContext(), width, height, stream);
-    }
-}
-
 jint JNI_OnLoad(JavaVM* vm, void* reserved)
 {
     if (vm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6) != JNI_OK) {
         return -1;
     }
 
-    jclass cls = env->FindClass(CLIENT_CLASS);
-    if (cls == NULL) {
-        return JNI_ERR;
-    }
-
-    jint nRes = env->RegisterNatives(cls, CLIENT_METHODS, sizeof(CLIENT_METHODS)/sizeof(CLIENT_METHODS[0]));
-    if (nRes <0)
-    {
-        return JNI_ERR;
-    }
-
     return JNI_VERSION_1_6;
+}
+
+JNIEXPORT static void JNICALL
+Java_acquireRenderLock(JNIEnv *env,
+                       jobject thiz) {
+    s_renderersMutex->Acquire();
+}
+JNIEXPORT static void JNICALL
+Java_releaseRenderLock(JNIEnv *env,
+                       jobject thiz) {
+    s_renderersMutex->Release();
 }
 
 extern "C" UnityRenderingEvent UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API

@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4651DD99A11236695235E62E /* libPods-unity-bridge-fake-unity-bridge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA74111C96F69B14FAE7550 /* libPods-unity-bridge-fake-unity-bridge.a */; };
-		A52A962DFC997019AA169333 /* libPods-unity-bridge-fake.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AFD83937C9A77014256E7ED /* libPods-unity-bridge-fake.a */; };
+		34EA0B601009629687D9E477 /* Pods_unity_bridge_fake_unity_bridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE21CBE40A473D545DA5C95B /* Pods_unity_bridge_fake_unity_bridge.framework */; };
+		6C94E5D18B9A299330CB4B79 /* Pods_unity_bridge_fake.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD740AECCB760B9271B91F66 /* Pods_unity_bridge_fake.framework */; };
 		C004745B1E76CA5E006C5A2B /* BaseVideoRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00474581E76CA5E006C5A2B /* BaseVideoRenderer.cpp */; };
 		C004745C1E76CA5E006C5A2B /* iOSNativeRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C00474591E76CA5E006C5A2B /* iOSNativeRenderer.mm */; };
 		C004745D1E76CA5E006C5A2B /* EAGLVideoRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C004745A1E76CA5E006C5A2B /* EAGLVideoRenderer.cpp */; };
@@ -58,8 +58,8 @@
 		02A87990C6CBEE71CD733BC8 /* Pods-unity-bridge-fake-unity-bridge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unity-bridge-fake-unity-bridge.debug.xcconfig"; path = "Pods/Target Support Files/Pods-unity-bridge-fake-unity-bridge/Pods-unity-bridge-fake-unity-bridge.debug.xcconfig"; sourceTree = "<group>"; };
 		0D29EBB8FFB49E93086C87D7 /* Pods-unity-bridge-fake.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unity-bridge-fake.release.xcconfig"; path = "Pods/Target Support Files/Pods-unity-bridge-fake/Pods-unity-bridge-fake.release.xcconfig"; sourceTree = "<group>"; };
 		8C63EC150F03654D38C5C506 /* Pods-unity-bridge-fake.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unity-bridge-fake.debug.xcconfig"; path = "Pods/Target Support Files/Pods-unity-bridge-fake/Pods-unity-bridge-fake.debug.xcconfig"; sourceTree = "<group>"; };
-		8CA74111C96F69B14FAE7550 /* libPods-unity-bridge-fake-unity-bridge.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-unity-bridge-fake-unity-bridge.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		9AFD83937C9A77014256E7ED /* libPods-unity-bridge-fake.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-unity-bridge-fake.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE21CBE40A473D545DA5C95B /* Pods_unity_bridge_fake_unity_bridge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_unity_bridge_fake_unity_bridge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD740AECCB760B9271B91F66 /* Pods_unity_bridge_fake.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_unity_bridge_fake.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C00474581E76CA5E006C5A2B /* BaseVideoRenderer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = BaseVideoRenderer.cpp; path = ../../../android/library/src/main/cpp/BaseVideoRenderer.cpp; sourceTree = "<group>"; };
 		C00474591E76CA5E006C5A2B /* iOSNativeRenderer.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = iOSNativeRenderer.mm; path = ../../../android/library/src/main/cpp/iOSNativeRenderer.mm; sourceTree = "<group>"; };
 		C004745A1E76CA5E006C5A2B /* EAGLVideoRenderer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = EAGLVideoRenderer.cpp; path = ../../../android/library/src/main/cpp/EAGLVideoRenderer.cpp; sourceTree = "<group>"; };
@@ -141,7 +141,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C09E310D1EC70FE2005764CC /* libyuv.a in Frameworks */,
-				4651DD99A11236695235E62E /* libPods-unity-bridge-fake-unity-bridge.a in Frameworks */,
+				34EA0B601009629687D9E477 /* Pods_unity_bridge_fake_unity_bridge.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,7 +149,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A52A962DFC997019AA169333 /* libPods-unity-bridge-fake.a in Frameworks */,
+				6C94E5D18B9A299330CB4B79 /* Pods_unity_bridge_fake.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,8 +159,8 @@
 		06BD3AEABFBE71E1E249C2C9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				9AFD83937C9A77014256E7ED /* libPods-unity-bridge-fake.a */,
-				8CA74111C96F69B14FAE7550 /* libPods-unity-bridge-fake-unity-bridge.a */,
+				BD740AECCB760B9271B91F66 /* Pods_unity_bridge_fake.framework */,
+				AE21CBE40A473D545DA5C95B /* Pods_unity_bridge_fake_unity_bridge.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -437,13 +437,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-unity-bridge-fake-unity-bridge-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8FD3CB737D9479CD1CB90F1C /* [CP] Embed Pods Frameworks */ = {
@@ -452,9 +455,20 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-unity-bridge-fake/Pods-unity-bridge-fake-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
+				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
+				"${BUILT_PRODUCTS_DIR}/SocketRocket/SocketRocket.framework",
+				"${PODS_ROOT}/VoxImplantSDK/VoxImplant.framework",
+				"${PODS_ROOT}/VoxImplantWebRTC/WebRTC.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SocketRocket.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VoxImplant.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WebRTC.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -482,13 +496,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-unity-bridge-fake-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E8269BAE97D08E8ED00C8A45 /* [CP] Copy Pods Resources */ = {

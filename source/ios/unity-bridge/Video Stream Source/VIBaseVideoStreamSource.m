@@ -5,7 +5,7 @@
 
 #import "VIBaseVideoStreamSource.h"
 
-#import <VoxImplantSDK/VoxImplant/VoxImplant.h>
+#import "VoxImplant/VIVideoSource.h"
 
 @interface VIBaseVideoStreamSource () <VICustomVideoSourceDelegate>
 

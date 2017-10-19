@@ -13,6 +13,7 @@
 @interface VIMetalVideoStreamSource ()
 
 @property(nonatomic, strong, readonly) NSMutableData *textureBuffer;
+@property(nonatomic, strong, readonly) NSMutableData *mirrorBuffer;
 
 @property(nonatomic, assign, readonly) CVPixelBufferRef pixelBuffer;
 
@@ -31,6 +32,7 @@
 
 - (void)ensureBuffersWithWidth:(NSUInteger)width height:(NSUInteger)height {
     _textureBuffer = [NSMutableData dataWithLength:4 * width * height];
+    _mirrorBuffer = [NSMutableData dataWithLength:4 * width * height];
 
     if (self.pixelBuffer != nil) {
         CVPixelBufferRelease(self.pixelBuffer);
@@ -70,11 +72,15 @@
         CVPixelBufferRef buffer = self.pixelBuffer;
 
         CVPixelBufferLockBaseAddress(buffer, NULL);
-        libyuv::ARGBRotate(
+        libyuv::ARGBMirror(
                 (const uint8 *) self.textureBuffer.mutableBytes, 4 * width,
-                (uint8 *) self.textureBuffer.mutableBytes, 4 * width,
-                width, height, libyuv::RotationMode::kRotate180);
-        libyuv::ARGBToNV21((const uint8 *) self.textureBuffer.mutableBytes, 4 * width,
+                (uint8 *) self.mirrorBuffer.mutableBytes, 4 * width,
+                width, height);
+        libyuv::ARGBRotate(
+                (const uint8 *) self.mirrorBuffer.mutableBytes, 4 * width,
+                (uint8 *) self.mirrorBuffer.mutableBytes, 4 * width,
+                width, height, libyuv::kRotate180);
+        libyuv::ARGBToNV21((const uint8 *) self.mirrorBuffer.mutableBytes, 4 * width,
                 (uint8 *) CVPixelBufferGetBaseAddressOfPlane(buffer, 0), (int) CVPixelBufferGetBytesPerRowOfPlane(buffer, 0),
                 (uint8 *) CVPixelBufferGetBaseAddressOfPlane(buffer, 1), (int) CVPixelBufferGetBytesPerRowOfPlane(buffer, 1),
                 width, height);

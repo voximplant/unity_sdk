@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.util.Log;
 
+import com.voximplant.sdk.call.CallException;
 import com.voximplant.sdk.call.ICallCompletionHandler;
 import com.voximplant.sdk.call.RenderScaleType;
 import com.voximplant.sdk.client.ClientConfig;
@@ -83,7 +84,7 @@ public class UnityVoxImplantClient {
 	private UnityVoxImplantClientImp unityVoxImplantClientImp = null;
 	private Context context = null;
 	private String firebaseToken = null;
-	private VoxImplantClientConfig clientConfig;
+	private ClientConfig clientConfig;
 
 
 	/**
@@ -112,18 +113,6 @@ public class UnityVoxImplantClient {
 	}
 
 	/**
-	 * Set Android context
-	 *
-	 * @param context Android context
-	 * @throws AccessControlException
-	 * @deprecated Android context is provided to SDK via {@link com.voximplant.sdk.Voximplant#getClientInstance(Executor, Context, ClientConfig)} instead
-	 */
-	@Deprecated
-	public void setAndroidContext(Context context) throws AccessControlException {
-		setAndroidContext(context, new VoxImplantClientConfig());
-	}
-
-	/**
 	 * Set Android context and UnityVoxImplantClient config
 	 *
 	 * @param context        Android context
@@ -133,7 +122,7 @@ public class UnityVoxImplantClient {
 	 * @deprecated Android context and client configuration are provided to SDK via {@link com.voximplant.sdk.Voximplant#getClientInstance(Executor, Context, ClientConfig)} instead
 	 */
 	@Deprecated
-	public void setAndroidContext(Context context, VoxImplantClientConfig clientConfig) throws AccessControlException {
+	public void setAndroidContext(Context context, ClientConfig clientConfig) throws AccessControlException {
 		this.context = context;
 		this.clientConfig = clientConfig;
 
@@ -300,7 +289,7 @@ public class UnityVoxImplantClient {
 	 * @deprecated Use {@link com.voximplant.sdk.call.ICall#start(Map)} instead
 	 */
 	@Deprecated
-	public boolean startCall(String callId, Map<String, String> headers) {
+	public boolean startCall(String callId, Map<String, String> headers) throws CallException {
 		Log.i(TAG, "UnityVoxImplantClient: startCall(callId = " + callId + ", headers = " + headers + ")");
 		return imp().startCall(callId, headers);
 	}
@@ -314,7 +303,7 @@ public class UnityVoxImplantClient {
 	 * @deprecated Use {@link com.voximplant.sdk.call.ICall#start(Map)} instead
 	 */
 	@Deprecated
-	public boolean startCall(String callId) {
+	public boolean startCall(String callId) throws CallException {
 		Log.i(TAG, "UnityVoxImplantClient: startCall()");
 		return startCall(callId, null);
 	}
@@ -392,7 +381,7 @@ public class UnityVoxImplantClient {
 	@Deprecated
 	public void answerCall(String callId, Map<String, String> headers) {
 		Log.i(TAG, "UnityVoxImplantClient: answerCall(callId = " + callId + ", headers = " + headers + ")");
-		imp().answerCall(callId, headers);
+		imp().answerCall(callId, null, headers);
 	}
 
 	/**
@@ -404,7 +393,7 @@ public class UnityVoxImplantClient {
 	@Deprecated
 	public void answerCall(String callId) {
 		Log.i(TAG, "UnityVoxImplantClient: answerCall()");
-		imp().answerCall(callId, null);
+		imp().answerCall(callId, null, null);
 	}
 
 	/**

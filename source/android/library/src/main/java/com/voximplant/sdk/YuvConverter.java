@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothClass;
 import android.opengl.GLES20;
 import android.opengl.GLES30;
 import android.os.Build;
+import android.util.Log;
 
 import org.webrtc.GlShader;
 import org.webrtc.GlTextureFrameBuffer;
@@ -116,6 +117,12 @@ class YuvConverter {
         GlUtil.checkNoGLES2Error("Initialize fragment shader uniform values.");
     }
 
+    public static int BufferCapacityForFrame(int width, int height, int stride) {
+        int uv_height = (height + 1) / 2;
+        int total_height = height + uv_height;
+        return stride * total_height;
+    }
+
     @SuppressLint("NewApi")
     public void convert(ByteBuffer buf, int width, int height, int stride, int srcTextureId, float[] transformMatrix) {
         threadChecker.checkIsOnValidThread();
@@ -165,6 +172,7 @@ class YuvConverter {
         int total_height = height + uv_height;
         int size = stride * total_height;
 
+        Log.v("YuvConverter", "size is "+size+" capacity is "+buf.capacity());
         if (buf.capacity() < size) {
             throw new IllegalArgumentException("YuvConverter.convert called with too small buffer");
         }
@@ -196,7 +204,7 @@ class YuvConverter {
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
         GLES20.glUniform1i(shader.getUniformLocation("oesTex"), 0);
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, srcTextureId);
-        GlUtil.checkNoGLES2Error("YuvConverter.bind fbo");
+        GlUtil.checkNoGLES2Error("YuvConverter.active texture 0");
 
         GLES20.glUniformMatrix4fv(texMatrixLoc, 1, false, transformMatrix, 0);
         GlUtil.checkNoGLES2Error("YuvConverter.uniform matrix4f");
