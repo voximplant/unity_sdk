@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		34EA0B601009629687D9E477 /* Pods_unity_bridge_fake_unity_bridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE21CBE40A473D545DA5C95B /* Pods_unity_bridge_fake_unity_bridge.framework */; };
-		6C94E5D18B9A299330CB4B79 /* Pods_unity_bridge_fake.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD740AECCB760B9271B91F66 /* Pods_unity_bridge_fake.framework */; };
 		C004745B1E76CA5E006C5A2B /* BaseVideoRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00474581E76CA5E006C5A2B /* BaseVideoRenderer.cpp */; };
 		C004745C1E76CA5E006C5A2B /* iOSNativeRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C00474591E76CA5E006C5A2B /* iOSNativeRenderer.mm */; };
 		C004745D1E76CA5E006C5A2B /* EAGLVideoRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C004745A1E76CA5E006C5A2B /* EAGLVideoRenderer.cpp */; };
@@ -55,11 +53,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		02A87990C6CBEE71CD733BC8 /* Pods-unity-bridge-fake-unity-bridge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unity-bridge-fake-unity-bridge.debug.xcconfig"; path = "Pods/Target Support Files/Pods-unity-bridge-fake-unity-bridge/Pods-unity-bridge-fake-unity-bridge.debug.xcconfig"; sourceTree = "<group>"; };
-		0D29EBB8FFB49E93086C87D7 /* Pods-unity-bridge-fake.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unity-bridge-fake.release.xcconfig"; path = "Pods/Target Support Files/Pods-unity-bridge-fake/Pods-unity-bridge-fake.release.xcconfig"; sourceTree = "<group>"; };
-		8C63EC150F03654D38C5C506 /* Pods-unity-bridge-fake.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unity-bridge-fake.debug.xcconfig"; path = "Pods/Target Support Files/Pods-unity-bridge-fake/Pods-unity-bridge-fake.debug.xcconfig"; sourceTree = "<group>"; };
-		AE21CBE40A473D545DA5C95B /* Pods_unity_bridge_fake_unity_bridge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_unity_bridge_fake_unity_bridge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BD740AECCB760B9271B91F66 /* Pods_unity_bridge_fake.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_unity_bridge_fake.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C00474581E76CA5E006C5A2B /* BaseVideoRenderer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = BaseVideoRenderer.cpp; path = ../../../android/library/src/main/cpp/BaseVideoRenderer.cpp; sourceTree = "<group>"; };
 		C00474591E76CA5E006C5A2B /* iOSNativeRenderer.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = iOSNativeRenderer.mm; path = ../../../android/library/src/main/cpp/iOSNativeRenderer.mm; sourceTree = "<group>"; };
 		C004745A1E76CA5E006C5A2B /* EAGLVideoRenderer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = EAGLVideoRenderer.cpp; path = ../../../android/library/src/main/cpp/EAGLVideoRenderer.cpp; sourceTree = "<group>"; };
@@ -97,7 +90,6 @@
 		C09E310A1EC70FE2005764CC /* version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = version.h; sourceTree = "<group>"; };
 		C09E310B1EC70FE2005764CC /* video_common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_common.h; sourceTree = "<group>"; };
 		C09E310C1EC70FE2005764CC /* libyuv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libyuv.h; sourceTree = "<group>"; };
-		C5F7A909F52D4A8FDCCDA515 /* Pods-unity-bridge-fake-unity-bridge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unity-bridge-fake-unity-bridge.release.xcconfig"; path = "Pods/Target Support Files/Pods-unity-bridge-fake-unity-bridge/Pods-unity-bridge-fake-unity-bridge.release.xcconfig"; sourceTree = "<group>"; };
 		D62AA016361E5CB5B0E7E1F8 /* IUnityInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IUnityInterface.h; sourceTree = "<group>"; };
 		D62AA0D52E6FFFAB2F61F24A /* iOSNativeRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSNativeRenderer.h; sourceTree = "<group>"; };
 		D62AA18F6B97C9597832E344 /* EGLVideoRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EGLVideoRenderer.cpp; sourceTree = "<group>"; };
@@ -141,7 +133,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C09E310D1EC70FE2005764CC /* libyuv.a in Frameworks */,
-				34EA0B601009629687D9E477 /* Pods_unity_bridge_fake_unity_bridge.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,41 +140,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6C94E5D18B9A299330CB4B79 /* Pods_unity_bridge_fake.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		06BD3AEABFBE71E1E249C2C9 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				BD740AECCB760B9271B91F66 /* Pods_unity_bridge_fake.framework */,
-				AE21CBE40A473D545DA5C95B /* Pods_unity_bridge_fake_unity_bridge.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		2CF304433E9CC0D16C53F3AB /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				8C63EC150F03654D38C5C506 /* Pods-unity-bridge-fake.debug.xcconfig */,
-				0D29EBB8FFB49E93086C87D7 /* Pods-unity-bridge-fake.release.xcconfig */,
-				02A87990C6CBEE71CD733BC8 /* Pods-unity-bridge-fake-unity-bridge.debug.xcconfig */,
-				C5F7A909F52D4A8FDCCDA515 /* Pods-unity-bridge-fake-unity-bridge.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		C01458A01E53896700D1C973 = {
 			isa = PBXGroup;
 			children = (
 				C01458AB1E53896700D1C973 /* unity-bridge */,
 				C055D5251EA96052006E7F66 /* unity-bridge-fake */,
 				C01458AA1E53896700D1C973 /* Products */,
-				2CF304433E9CC0D16C53F3AB /* Pods */,
-				06BD3AEABFBE71E1E249C2C9 /* Frameworks */,
 				D62AAEB7CFE1F8F3B04BFD40 /* Third Party */,
 			);
 			sourceTree = "<group>";
@@ -343,11 +311,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C01458B21E53896700D1C973 /* Build configuration list for PBXNativeTarget "unity-bridge" */;
 			buildPhases = (
-				1D6AAA0CCA3730FADA569E5E /* [CP] Check Pods Manifest.lock */,
 				C01458A51E53896700D1C973 /* Sources */,
 				C01458A61E53896700D1C973 /* Frameworks */,
 				C01458A71E53896700D1C973 /* CopyFiles */,
-				E8269BAE97D08E8ED00C8A45 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -362,12 +328,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C055D53A1EA96052006E7F66 /* Build configuration list for PBXNativeTarget "unity-bridge-fake" */;
 			buildPhases = (
-				E3E183D66F78F6CADD078617 /* [CP] Check Pods Manifest.lock */,
 				C055D5201EA96052006E7F66 /* Sources */,
 				C055D5211EA96052006E7F66 /* Frameworks */,
 				C055D5221EA96052006E7F66 /* Resources */,
-				8FD3CB737D9479CD1CB90F1C /* [CP] Embed Pods Frameworks */,
-				CAFA3A2D4DBD27EE59ACE4D2 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -429,101 +392,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		1D6AAA0CCA3730FADA569E5E /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-unity-bridge-fake-unity-bridge-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8FD3CB737D9479CD1CB90F1C /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-unity-bridge-fake/Pods-unity-bridge-fake-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
-				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
-				"${BUILT_PRODUCTS_DIR}/SocketRocket/SocketRocket.framework",
-				"${PODS_ROOT}/VoxImplantSDK/VoxImplant.framework",
-				"${PODS_ROOT}/VoxImplantWebRTC/WebRTC.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SocketRocket.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VoxImplant.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WebRTC.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-unity-bridge-fake/Pods-unity-bridge-fake-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		CAFA3A2D4DBD27EE59ACE4D2 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-unity-bridge-fake/Pods-unity-bridge-fake-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E3E183D66F78F6CADD078617 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-unity-bridge-fake-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E8269BAE97D08E8ED00C8A45 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-unity-bridge-fake-unity-bridge/Pods-unity-bridge-fake-unity-bridge-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C01458A51E53896700D1C973 /* Sources */ = {
@@ -681,7 +549,6 @@
 		};
 		C01458B31E53896700D1C973 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 02A87990C6CBEE71CD733BC8 /* Pods-unity-bridge-fake-unity-bridge.debug.xcconfig */;
 			buildSettings = {
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -694,7 +561,6 @@
 		};
 		C01458B41E53896700D1C973 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C5F7A909F52D4A8FDCCDA515 /* Pods-unity-bridge-fake-unity-bridge.release.xcconfig */;
 			buildSettings = {
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -707,7 +573,6 @@
 		};
 		C055D5381EA96052006E7F66 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8C63EC150F03654D38C5C506 /* Pods-unity-bridge-fake.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -726,7 +591,6 @@
 		};
 		C055D5391EA96052006E7F66 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0D29EBB8FFB49E93086C87D7 /* Pods-unity-bridge-fake.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
