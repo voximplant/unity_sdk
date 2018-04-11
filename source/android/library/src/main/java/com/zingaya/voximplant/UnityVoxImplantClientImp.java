@@ -13,6 +13,7 @@ import com.voximplant.sdk.call.CallException;
 import com.voximplant.sdk.call.CallStatistic;
 import com.voximplant.sdk.call.IEndpoint;
 import com.voximplant.sdk.call.IEndpointListener;
+import com.voximplant.sdk.call.RejectMode;
 import com.voximplant.sdk.call.RenderScaleType;
 import com.voximplant.sdk.call.VideoFlags;
 import com.voximplant.sdk.client.AuthParams;
@@ -170,7 +171,7 @@ class UnityVoxImplantClientImp implements IClientSessionListener,
         ICall call = calls.get(callId);
         if (call != null) {
             try {
-                call.reject(headers);
+                call.reject(RejectMode.DECLINE, headers);
                 checkAndRemoveRenderers(call);
                 calls.remove(callId);
             } catch (CallException e) {
@@ -692,12 +693,27 @@ class UnityVoxImplantClientImp implements IClientSessionListener,
     }
 
     @Override
+    public void onEndpointRemoved(IEndpoint iEndpoint) {
+        //FIXME:
+    }
+
+    @Override
+    public void onEndpointInfoUpdated(IEndpoint iEndpoint) {
+        //FIXME:
+    }
+
+    @Override
     public void onICETimeout(ICall iCall) {
         //FIXME:
     }
 
     @Override
     public void onICECompleted(ICall iCall) {
+        //FIXME:
+    }
+
+    @Override
+    public void onEndpointAdded(ICall iCall, IEndpoint iEndpoint) {
         //FIXME:
     }
 
