@@ -1,4 +1,5 @@
 #! /bin/bash
+set -e
 
 cd "${0%/*}"
 
@@ -13,7 +14,7 @@ xcodebuild -workspace "unity-bridge.xcworkspace" \
 		   ONLY_ACTIVE_ARCH=NO\
 		   -sdk iphoneos\
 		   clean\
-		   build
+		   build | xcpretty
 
 xcodebuild -workspace "unity-bridge.xcworkspace" \
 		   -scheme unity-bridge\
@@ -24,7 +25,7 @@ xcodebuild -workspace "unity-bridge.xcworkspace" \
 		   -arch x86_64\
 		   -arch i386\
 		   clean\
-		   build
+		   build | xcpretty
 
 PRODUCTS_PATH="build/Build/Products"
 
@@ -38,11 +39,20 @@ cp ./build/libVoxImplant-bridge.a ../../package/Assets/Plugins/iOS
 
 # Copy framework dependencies
 
-cp -Rf ./Pods/VoxImplantWebRTC/WebRTC.framework ../../package/Assets/Plugins/iOS
-cp -Rf ./Pods/VoxImplantSDK/VoxImplant.framework ../../package/Assets/Plugins/iOS
+for deprecated in AFNetworking; do
+    if [ -d "../../package/Assets/Plugins/iOS/$deprecated.framework" ]; then
+		rm -rf "../../package/Assets/Plugins/iOS/$deprecated.framework"
+	fi
+done
 
-cp -Rf ./build/Build/Products/Release-iphoneos/CocoaLumberjack/CocoaLumberjack.framework ../../package/Assets/Plugins/iOS
-cp -Rf ./build/Build/Products/Release-iphoneos/AFNetworking/AFNetworking.framework ../../package/Assets/Plugins/iOS
-cp -Rf ./build/Build/Products/Release-iphoneos/SocketRocket/SocketRocket.framework ../../package/Assets/Plugins/iOS
+rm -rf "../../package/Assets/Plugins/iOS/VoxImplant.framework"
+rm -rf "../../package/Assets/Plugins/iOS/WebRTC.framework"
+cp -Rf "./Pods/VoxImplantSDK/VoxImplant.framework" "../../package/Assets/Plugins/iOS"
+cp -Rf "./Pods/VoxImplantWebRTC/WebRTC.framework" "../../package/Assets/Plugins/iOS"
+
+for framework in CocoaLumberjack SocketRocket; do
+    rm -rf "../../package/Assets/Plugins/iOS/$framework.framework"
+	cp -Rf "./build/Build/Products/Release-iphoneos/$framework/$framework.framework" "../../package/Assets/Plugins/iOS"
+done
 
 cd -

@@ -57,7 +57,7 @@ void CallUnityMethod(NSString *methodName, id parameters) {
         self.client.callManagerDelegate = self;
 
         if (h264) {
-            _preferrredVideoCodec = @"H264";
+            _preferredVideoCodec = @"H264";
         }
 
         _localRenderers = [NSMutableDictionary new];
@@ -261,7 +261,7 @@ __used const char *iosSDKcreateCall(const char *pUserId, bool pWithVideo, const 
     NSString *customData = pCustom != NULL ? [NSString stringWithUTF8String:pCustom] : nil;
 
     VICall *call = [s_bridge.client callToUser:userString withSendVideo:pWithVideo receiveVideo:pWithVideo customData:customData];
-    call.preferredVideoCodec = s_bridge.preferrredVideoCodec;
+    call.preferredVideoCodec = s_bridge.preferredVideoCodec;
     [call addDelegate:s_bridge];
     call.endpoints.firstObject.delegate = s_bridge;
 
@@ -306,7 +306,7 @@ __used void iosSDKDecline(const char *pCallId, const char *pHeaders) {
     NSDictionary *headers = [[VIJsonDic alloc] initWithJSONString:[[NSString alloc] initWithUTF8String:pHeaders]].dic;
     NSString *callIdString = [NSString stringWithUTF8String:pCallId];
 
-    [s_bridge.client.calls[callIdString] rejectWithHeaders:headers];
+    [s_bridge.client.calls[callIdString] rejectWithMode:VIRejectModeDecline headers:headers];
 }
 
 __used void iosSDKsetMute(bool pSetMute) {
@@ -373,7 +373,7 @@ __used void iosSDKsendMessage(const char *pCallId, const char *pMsg, const char 
     NSString *message = [NSString stringWithUTF8String:pMsg];
     NSDictionary *headers = [[VIJsonDic alloc] initWithJSONString:[[NSString alloc] initWithUTF8String:pAniHeaders]].dic;
 
-    [s_bridge.client.calls[callIdString] sendMessage:message headers:headers];
+    [s_bridge.client.calls[callIdString] sendMessage:message];
 }
 
 __used void beginSendingVideoForStream(const char *pCallId, int stream) {
@@ -470,7 +470,8 @@ __used void unregisterCallVideoStream(const char *pCallId, void *pTexturePtr) {
 }
 
 __used void iosSDKsetUseLoudspeaker(bool pUseLoudspeaker) {
-    [VIAudioManager sharedAudioManager].useLoudSpeaker = pUseLoudspeaker;
+    VIAudioDevice *audioDevice = pUseLoudspeaker ? [VIAudioDevice deviceWithType:VIAudioDeviceTypeSpeaker] : [VIAudioDevice deviceWithType:VIAudioDeviceTypeNone];
+    [[VIAudioManager sharedAudioManager] selectAudioDevice:audioDevice];
 }
 
 __used void iosSDKdisconnectCall(const char *pCallId, const char *pHeaders) {

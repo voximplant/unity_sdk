@@ -68,17 +68,18 @@
         newRendererCreated = true;
     }
 
-    if (frame.dataY == nil) {
+    if (![frame.buffer conformsToProtocol:@protocol(RTCI420Buffer)]) {
         frame = [frame newI420VideoFrame];
     }
 
+    id<RTCI420Buffer> buffer = static_cast<id <RTCI420Buffer>>(frame.buffer);
     _renderer->RenderBuffer(
-            frame.dataY,
-            frame.strideY,
-            frame.dataU,
-            frame.strideU,
-            frame.dataV,
-            frame.strideV,
+            buffer.dataY,
+            buffer.strideY,
+            buffer.dataU,
+            buffer.strideU,
+            buffer.dataV,
+            buffer.strideV,
             width,
             height,
             frame.rotation
