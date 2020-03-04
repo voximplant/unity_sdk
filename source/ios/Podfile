@@ -1,9 +1,0 @@
-platform :ios, '8.0'
-use_frameworks!
-inhibit_all_warnings!
-
-target 'unity-bridge-fake' do
-    target 'unity-bridge' do
-        pod 'VoxImplantSDK', '~> 2.13.0'
-    end
-end

@@ -1,7 +1,0 @@
-platform :ios, '8.0'
-
-target 'unity-bridge' do
-
-	pod 'VoxImplantSDK'
-
-end

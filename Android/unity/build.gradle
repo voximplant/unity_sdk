@@ -1,0 +1,51 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.kezong.fat-aar'
+apply from: '../../versions', to: ext
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 28
+        versionCode unityVersionCode
+        versionName unityVersion
+
+        resValue "string", "voximplant_unity_sdk_version", unityVersion
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+
+    libraryVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "voximplant-unity.aar"
+        }
+    }
+}
+
+dependencies {
+    compileOnly fileTree(dir: 'libs', include: ['*.jar'])
+
+    embed "com.voximplant:voximplant-sdk:$androidVersion"
+    embed "com.google.code.gson:gson:2.8.5"
+    embed "com.squareup.okhttp3:okhttp:3.12.1"
+    embed "com.squareup.okio:okio:1.15.0"
+
+    compileOnly 'androidx.appcompat:appcompat:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}

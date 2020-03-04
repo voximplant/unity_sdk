@@ -1,0 +1,2 @@
+rootProject.name='Unity Bridge'
+include ':unity'
