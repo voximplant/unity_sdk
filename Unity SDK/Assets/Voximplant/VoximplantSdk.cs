@@ -79,6 +79,7 @@ namespace Voximplant.Unity
         /// <param name="clientConfig">ClientConfig instance with configuration for IClient instance</param>
         public static void Initialize([CanBeNull] ClientConfig clientConfig = null)
         {
+            if (_instance != null) return;
             if (clientConfig == null)
             {
                 clientConfig = new ClientConfig();

@@ -166,9 +166,28 @@ namespace Voximplant.Unity.@internal.iOS
                 _targetTexture2D = new Texture2D(width, height, TextureFormat.BGRA32, false);
             }
 
-            _targetTexture2D.SetPixels32(texture2D.GetPixels32());
+            texture2D = FlipTexture(texture2D);
+            var pixels = texture2D.GetPixels32();
+            _targetTexture2D.SetPixels32(pixels);
+            Object.Destroy(texture2D);
             var rawTextureData = _targetTexture2D.GetRawTextureData();
             voximplant_call_custom_video_source_send_frame(rawTextureData, VideoSource.SourceId);
+        }
+
+        private static Texture2D FlipTexture(Texture2D original)
+        {
+            var flipped = new Texture2D(original.width, original.height);
+            var xN = original.width;
+            var yN = original.height;
+            for (var i = 0; i < xN; i++)
+            {
+                for (var j = 0; j < yN; j++)
+                {
+                    flipped.SetPixel(i, yN - j - 1, original.GetPixel(i, j));
+                }
+            }
+            flipped.Apply();
+            return flipped;
         }
 
         protected override void SetVideoSourceImpl()

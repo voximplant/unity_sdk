@@ -1,12 +1,12 @@
 PODS:
-  - VoxImplantSDK (2.29.0):
-    - VoxImplantSDK/Core (= 2.29.0)
-  - VoxImplantSDK/Core (2.29.0):
-    - VoxImplantWebRTC (= 78.2.0)
-  - VoxImplantWebRTC (78.2.0)
+  - VoxImplantSDK (2.32.0):
+    - VoxImplantSDK/Core (= 2.32.0)
+  - VoxImplantSDK/Core (2.32.0):
+    - VoxImplantWebRTC (= 78.3.0)
+  - VoxImplantWebRTC (78.3.0)
 
 DEPENDENCIES:
-  - VoxImplantSDK (= 2.29.0)
+  - VoxImplantSDK (= 2.32.0)
 
 SPEC REPOS:
   trunk:
@@ -14,9 +14,9 @@ SPEC REPOS:
     - VoxImplantWebRTC
 
 SPEC CHECKSUMS:
-  VoxImplantSDK: 9ade22fdad95b2cc247cf8831097fed900115d8f
-  VoxImplantWebRTC: 0f59be5f7362ed7af3de6718c9ed50735691ee99
+  VoxImplantSDK: 8cd6eb8cc8f46b1e540c8e62e321158dbcab47bf
+  VoxImplantWebRTC: b708efa4326db85a2cafe13b2e36bbdc614fc984
 
 PODFILE CHECKSUM: bec6fcfe2f280dd63675865a7fa2eafe2f20facb
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.9.2
