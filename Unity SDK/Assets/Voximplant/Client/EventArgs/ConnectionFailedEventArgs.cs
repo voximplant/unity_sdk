@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Voximplant.Unity.Client.EventArgs
 {
     /// <summary>
-    /// Event arguments for <see cref="IClient.ConnectionFailed"/>.
+    /// Provide data for the <see cref="IClient.ConnectionFailed"/> event.
     /// </summary>
     [Serializable]
     public class ConnectionFailedEventArgs : System.EventArgs

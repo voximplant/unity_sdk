@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Voximplant.Unity.Client.EventArgs
 {
     /// <summary>
-    /// Event arguments for <see cref="IClient.OneTimeKeyGenerated"/>.
+    /// Provide data for the <see cref="IClient.OneTimeKeyGenerated"/> event.
     /// </summary>
     [Serializable]
     public class OneTimeKeyGeneratedEventArgs : System.EventArgs

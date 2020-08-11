@@ -8,7 +8,7 @@ using Voximplant.Unity.@internal;
 namespace Voximplant.Unity.Call.EventArgs
 {
     /// <summary>
-    /// Event arguments for <see cref="ICall.LocalVideoStreamAdded"/>.
+    /// Provide data for the <see cref="ICall.LocalVideoStreamAdded"/> event.
     /// </summary>
     [Serializable]
     public class CallLocalVideoStreamAddedEventArgs : System.EventArgs

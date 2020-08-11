@@ -7,17 +7,17 @@ namespace Voximplant.Unity.Call
     public enum VideoCodec
     {
         /// <summary>
-        /// Video codec for call will be chosen automatically
+        /// Video codec for a call will be chosen automatically
         /// </summary>
         Auto,
 
         /// <summary>
-        /// Call will try to use VP8 video codec
+        /// VP8 video codec
         /// </summary>
         VP8,
 
         /// <summary>
-        /// Call will try to use H264 video codec
+        /// H264 video codec
         /// </summary>
         H264
     }

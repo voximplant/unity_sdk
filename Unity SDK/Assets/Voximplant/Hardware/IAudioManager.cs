@@ -20,12 +20,12 @@ namespace Voximplant.Unity.Hardware
         AudioDevice AudioDevice { get; }
 
         /// <summary>
-        /// Collection of available audio devices.
+        /// A collection of available audio devices.
         /// </summary>
         IReadOnlyCollection<AudioDevice> AvailableAudioDevices { get; }
 
         /// <summary>
-        /// Changes selection of the current active audio device. There are two cases:
+        /// Change the selection of the current active audio device. There are two cases:
         /// <list type="bullet">
         /// <item><description>before a call. The method doesn't <b>activate</b> an audio device, it just <b>selects</b> (i.e. points to) the audio device that will be activated.</description></item>
         /// <item><description>during a call. If the selected audio device is available, the method <b>activates</b> this audio device.</description></item>

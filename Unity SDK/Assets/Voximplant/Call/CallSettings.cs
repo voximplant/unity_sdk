@@ -32,12 +32,15 @@ namespace Voximplant.Unity.Call
         /// An optional set of headers to be sent to the Voximplant cloud. Names must begin with "X-" to be processed by SDK.
         /// </summary>
         public IDictionary<string, string> ExtraHeaders { get; set; }
+        
         /// <summary>
-        /// Specify video settings (send and receive) for the new call. Video is disabled by default.
+        /// Specify video settings (send and receive) for a new call. Video is disabled by default.
         /// </summary>
         public VideoFlags VideoFlags { get; set; }
+        
         /// <summary>
-        /// A preferred video codec for a particular call that this VICallSettings are applied to <see cref="VideoCodec.Auto"/> by default.
+        /// A preferred video codec for a particular call.
+        /// <see cref="VideoCodec.Auto"/> is applied by default.
         /// </summary>
         public VideoCodec VideoCodec { get; set; }
     }

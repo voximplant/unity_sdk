@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Voximplant.Unity.Hardware.EventArgs
 {
     /// <summary>
-    /// Event arguments for <see cref="IAudioManager.AudioDeviceUnavailable"/>.
+    /// Provide data for the <see cref="IAudioManager.AudioDeviceUnavailable"/> event.
     /// </summary>
     [Serializable]
     public class AudioDeviceUnavailableEventArgs : System.EventArgs

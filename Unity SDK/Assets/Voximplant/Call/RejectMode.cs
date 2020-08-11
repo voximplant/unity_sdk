@@ -10,7 +10,7 @@ namespace Voximplant.Unity.Call
     public enum RejectMode
     {
         /// <summary>
-        /// Indicates that user can't answer the call right now, and VoxEngine will terminate the call and any pending calls to other devices of current user.
+        /// Indicates that the user can't answer the call right now, and VoxEngine will terminate the call and any pending calls to other devices of the current user.
         /// </summary>
         Decline,
 

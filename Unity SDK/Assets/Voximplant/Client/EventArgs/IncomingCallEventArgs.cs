@@ -11,7 +11,7 @@ using Voximplant.Unity.@internal;
 namespace Voximplant.Unity.Client.EventArgs
 {
     /// <summary>
-    /// Event arguments for <see cref="IClient.IncomingCall"/>.
+    /// Provide data for the <see cref="IClient.IncomingCall"/> event.
     /// </summary>
     [Serializable]
     public class IncomingCallEventArgs : System.EventArgs
@@ -33,7 +33,7 @@ namespace Voximplant.Unity.Client.EventArgs
         public ICall Call { get; internal set; }
 
         /// <summary>
-        /// True if the caller initiated video call.
+        /// True if the caller initiated a video call.
         /// </summary>
         public bool HasIncomingVideo => incomingVideo;
 

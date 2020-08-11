@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Voximplant.Unity.Hardware.EventArgs
 {
     /// <summary>
-    /// Event arguments for <see cref="IAudioManager.AudioDeviceChanged"/>.
+    /// Provide data for the <see cref="IAudioManager.AudioDeviceChanged"/> event.
     /// </summary>
     [Serializable]
     public class AudioDeviceChangedEventArgs : System.EventArgs

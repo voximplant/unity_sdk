@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Voximplant.Unity.Call.EventArgs
 {
     /// <summary>
-    /// Event arguments for <see cref="ICall.LocalVideoStreamRemoved"/>.
+    /// Provide data for the <see cref="ICall.LocalVideoStreamRemoved"/> event.
     /// </summary>
     [Serializable]
     public class CallLocalVideoStreamRemovedEventArgs : System.EventArgs

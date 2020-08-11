@@ -9,7 +9,7 @@ using Voximplant.Unity.@internal;
 namespace Voximplant.Unity.Call.EventArgs
 {
     /// <summary>
-    /// Event arguments for <see cref="IEndpoint.RemoteVideoStreamRemoved"/>.
+    /// Provide data for the <see cref="IEndpoint.RemoteVideoStreamRemoved"/> event.
     /// </summary>
     [Serializable]
     public class EndpointRemoteVideoStreamRemovedEventArgs : System.EventArgs

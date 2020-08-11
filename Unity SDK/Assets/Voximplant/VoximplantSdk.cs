@@ -14,7 +14,7 @@ using Voximplant.Unity.@internal.UnityEditor;
 namespace Voximplant.Unity
 {
     /// <summary>
-    /// VoximplantSdk is primary interface of Voximplant SDK
+    /// VoximplantSdk is the primary interface of Voximplant Unity SDK
     /// </summary>
     public class VoximplantSdk : MonoBehaviour
     {
@@ -25,7 +25,7 @@ namespace Voximplant.Unity
         private @internal.Client _client;
 
         /// <summary>
-        /// Get Client instance to connect and login to Voximplant Cloud, make and receive calls.
+        /// Get Client instance to connect and login to the Voximplant Cloud, make and receive calls.
         /// </summary>
         /// <returns>Client instance.</returns>
         /// <exception cref="UninitializedException"><see cref="VoximplantSdk.Initialize(ClientConfig)"/> was not called.</exception>
@@ -77,6 +77,7 @@ namespace Voximplant.Unity
         /// Initialize SDK, must be called first.
         /// </summary>
         /// <param name="clientConfig">ClientConfig instance with configuration for IClient instance</param>
+        /// <exception cref="UnsupportedPlatformException">Current platform is not supported</exception>
         public static void Initialize([CanBeNull] ClientConfig clientConfig = null)
         {
             if (_instance != null) return;

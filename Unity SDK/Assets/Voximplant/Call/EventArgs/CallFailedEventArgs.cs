@@ -10,7 +10,7 @@ using Voximplant.Unity.@internal;
 namespace Voximplant.Unity.Call.EventArgs
 {
     /// <summary>
-    /// Event arguments for <see cref="ICall.Failed"/>.
+    /// Provide data for the <see cref="ICall.Failed"/> event.
     /// </summary>
     [Serializable]
     public class CallFailedEventArgs : System.EventArgs
@@ -26,10 +26,13 @@ namespace Voximplant.Unity.Call.EventArgs
         [SerializeField]
         private IList<string> headers = default;
 
+        /// <summary>
+        /// Details about an error occured. 
+        /// </summary>
         public Error Error => new Error(code, error);
 
         /// <summary>
-        /// Optional SIP headers received with message
+        /// Optional SIP headers received with message.
         /// </summary>
         public IReadOnlyDictionary<string, string> Headers =>
             _parsedHeaders ?? (_parsedHeaders = JsonHelper.FromList(headers));

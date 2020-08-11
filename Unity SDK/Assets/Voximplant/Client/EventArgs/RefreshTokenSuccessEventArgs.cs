@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Voximplant.Unity.Client.EventArgs
 {
     /// <summary>
-    /// Event arguments for <see cref="IClient.RefreshTokenSuccess"/>.
+    /// Provide data for the <see cref="IClient.RefreshTokenSuccess"/> event.
     /// </summary>
     [Serializable]
     public class RefreshTokenSuccessEventArgs : System.EventArgs
@@ -16,7 +16,7 @@ namespace Voximplant.Unity.Client.EventArgs
         private AuthParams authParams = default;
 
         /// <summary>
-        /// Auth parameters that can be used to login using access token.
+        /// Auth parameters that can be used to log in using <see cref="Voximplant.Unity.Client.AuthParams.AccessToken"/>.
         /// </summary>
         public AuthParams AuthParams => authParams;
     }

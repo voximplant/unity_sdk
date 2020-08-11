@@ -5,7 +5,7 @@
 namespace Voximplant.Unity.Call.EventArgs
 {
     /// <summary>
-    /// Event arguments for <see cref="IVideoStream.VideoStreamChanged"/>.
+    /// Provide data for the <see cref="IVideoStream.VideoStreamChanged"/> event.
     /// </summary>
     public class VideoStreamChangedEventArgs : System.EventArgs
     {

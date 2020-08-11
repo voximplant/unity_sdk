@@ -15,12 +15,12 @@ namespace Voximplant.Unity.Call
     public interface ICall
     {
         /// <summary>
-        /// The call id.
+        /// The identifier for the call.
         /// </summary>
         string CallId { get; }
 
         /// <summary>
-        /// An collection of the endpoints associated with the call.
+        /// A collection of the endpoints associated with the call.
         /// </summary>
         IReadOnlyCollection<IEndpoint> Endpoints { get; }
 
@@ -40,26 +40,26 @@ namespace Voximplant.Unity.Call
         void Start();
 
         /// <summary>
-        /// Answer incoming call.
+        /// Answer the incoming call.
         /// </summary>
         /// <param name="callSettings">Call settings with additional call parameters, such as preferred video codec, custom data, extra headers etc.</param>
         void Answer(CallSettings callSettings);
 
         /// <summary>
-        /// Reject incoming call.
+        /// Reject the incoming call.
         /// </summary>
         /// <param name="rejectMode">Specify mode of call rejection.</param>
-        /// <param name="headers">Optional set of headers to be sent with message. Names must begin with "X-" to be processed by SDK.</param>
+        /// <param name="headers">Optional set of headers to be sent. Names must begin with "X-" to be processed by SDK.</param>
         void Reject(RejectMode rejectMode, [CanBeNull] IDictionary<string, string> headers = null);
 
         /// <summary>
-        /// Terminates call. Call should be either established or outgoing progressing.
+        /// Terminate the call. Call should be either established or outgoing progressing.
         /// </summary>
-        /// <param name="headers">Optional set of headers to be sent with message. Names must begin with "X-" to be processed by SDK.</param>
+        /// <param name="headers">Optional set of headers to be sent. Names must begin with "X-" to be processed by SDK.</param>
         void Hangup([CanBeNull] IDictionary<string, string> headers = null);
 
         /// <summary>
-        /// Enables or disables audio transfer from microphone into the call.
+        /// Enable or disable audio transfer from microphone into the call.
         /// </summary>
         /// <param name="sendAudio">True if audio should be sent, false otherwise.</param>
         void SendAudio(bool sendAudio);
@@ -68,20 +68,20 @@ namespace Voximplant.Unity.Call
         /// Start or stop sending video for the call.
         /// </summary>
         /// <param name="sendVideo">True if video should be sent, false otherwise.</param>
-        /// <param name="completion">Completion to handle the result of the operation.</param>
+        /// <param name="completion"><see cref="Action"/> to handle the result of the operation.</param>
         void SendVideo(bool sendVideo, [CanBeNull] Action<Error?> completion = null);
 
         /// <summary>
         /// Hold or unhold the call.
         /// </summary>
         /// <param name="hold">True if the call should be put on hold, false for unhold.</param>
-        /// <param name="completion">Completion to handle the result of the operation.</param>
+        /// <param name="completion"><see cref="Action"/> to handle the result of the operation.</param>
         void Hold(bool hold, [CanBeNull] Action<Error?> completion = null);
 
         /// <summary>
         /// Start receive video if video receive was disabled before. Stop receiving video during the call is not supported.
         /// </summary>
-        /// <param name="completion">Completion to handle the result of the operation.</param>
+        /// <param name="completion"><see cref="Action"/> to handle the result of the operation.</param>
         void ReceiveVideo([CanBeNull] Action<Error?> completion = null);
 
         /// <summary>
@@ -95,25 +95,25 @@ namespace Voximplant.Unity.Call
         /// </summary>
         /// <param name="body">Custom string data.</param>
         /// <param name="mimeType">MIME type of info.</param>
-        /// <param name="headers">Optional set of headers to be sent with message. Names must begin with "X-" to be processed by SDK.</param>
+        /// <param name="headers">Optional set of headers to be sent. Names must begin with "X-" to be processed by SDK.</param>
         void SendInfo(string body, string mimeType, [CanBeNull] IDictionary<string, string> headers = null);
 
         /// <summary>
-        /// Send message within the call.
-        /// Implemented atop SIP INFO for communication between call endpoint and Voximplant cloud, and is separated from Voximplant messaging API.
+        /// Send a message within the call.
+        /// Implemented atop SIP INFO for communication between call endpoint and the Voximplant cloud, and is separated from Voximplant messaging API.
         /// </summary>
         /// <param name="message">Message text.</param>
         void SendMessage(string message);
 
         /// <summary>
-        /// Use <see cref="Camera"/> instance for the call to send video frames. It will be used instead of camera.
+        /// Use <see cref="Camera"/> instance for the call to send video frames. It will be used instead of the hardware camera.
         /// </summary>
         /// <param name="camera">Unity camera.</param>
         /// <param name="fps">Video frame rate.</param>
         void SetVideoSource([NotNull] Camera camera, float fps = 30);
         
         /// <summary>
-        /// Use <see cref="Camera"/> instance for the call to send video frames. It will be used instead of camera.
+        /// Use <see cref="Camera"/> instance for the call to send video frames. It will be used instead of the hardware camera.
         /// </summary>
         /// <param name="camera">Unity camera.</param>
         /// <param name="width">Video frame width.</param>
@@ -122,7 +122,7 @@ namespace Voximplant.Unity.Call
         void SetVideoSource([NotNull] Camera camera, int width, int height, float fps = 30);
 
         /// <summary>
-        /// Invoked after call was connected.
+        /// Invoked after the call was connected.
         /// </summary>
         event SdkEventHandler<ICall, CallConnectedEventArgs> Connected;
         /// <summary>
@@ -134,7 +134,7 @@ namespace Voximplant.Unity.Call
         /// </summary>
         event SdkEventHandler<ICall, CallRingingEventArgs> Ringing;
         /// <summary>
-        /// Invoked if call is failed.
+        /// Invoked if the call is failed.
         /// </summary>
         event SdkEventHandler<ICall, CallFailedEventArgs> Failed;
         /// <summary>
@@ -146,21 +146,21 @@ namespace Voximplant.Unity.Call
         /// </summary>
         event SdkEventHandler<ICall, CallSIPInfoReceivedEventArgs> SIPInfoReceived;
         /// <summary>
-        /// Invoked when message is received within the call.
+        /// Invoked when a message is received within the call.
         ///
-        /// Implemented atop SIP INFO for communication between call endpoint and Voximplant cloud, and is separated from Voximplant messaging API.
+        /// Implemented atop SIP INFO for communication between call endpoint and the Voximplant cloud, and is separated from Voximplant messaging API.
         /// </summary>
         event SdkEventHandler<ICall, CallMessageReceivedEventArgs> MessageReceived;
         /// <summary>
-        /// Invoked when local video is added to the call.
+        /// Invoked when a local video is added to the call.
         /// </summary>
         event SdkEventHandler<ICall, CallLocalVideoStreamAddedEventArgs> LocalVideoStreamAdded;
         /// <summary>
-        /// Invoked when local video is removed from the call.
+        /// Invoked when a local video is removed from the call.
         /// </summary>
         event SdkEventHandler<ICall, CallLocalVideoStreamRemovedEventArgs> LocalVideoStreamRemoved;
         /// <summary>
-        /// Invoked if connection was not established due to a network connection problem between 2 peers.
+        /// Invoked if the connection was not established due to a network connection problem between two peers.
         /// </summary>
         event SdkEventHandler<ICall> ICETimeout;
         /// <summary>
@@ -168,7 +168,7 @@ namespace Voximplant.Unity.Call
         /// </summary>
         event SdkEventHandler<ICall> ICECompleted;
         /// <summary>
-        ///  Invoked after endpoint is added to the call.
+        ///  Invoked after an endpoint is added to the call.
         /// </summary>
         event SdkEventHandler<ICall, CallEndpointAddedEventArgs> EndpointAdded;
     }

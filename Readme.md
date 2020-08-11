@@ -114,6 +114,6 @@ _call.Hold(true, error =>
 
 ## Limitations
 
-* Unity 2018
+* Unity 2018+
 * Android Multithreaded rendeding unsupported
 * iOS OpenGL rendering unsupported

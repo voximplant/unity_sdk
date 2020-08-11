@@ -5,7 +5,7 @@
 namespace Voximplant.Unity.Call
 {
     /// <summary>
-    /// Specifies video direction for call.
+    /// Specifies video direction for a call.
     /// </summary>
     public class VideoFlags
     {

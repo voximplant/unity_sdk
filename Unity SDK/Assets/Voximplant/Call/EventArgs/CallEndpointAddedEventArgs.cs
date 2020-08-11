@@ -9,7 +9,7 @@ using Voximplant.Unity.@internal;
 namespace Voximplant.Unity.Call.EventArgs
 {
     /// <summary>
-    /// Event arguments for <see cref="ICall.EndpointAdded"/>.
+    /// Provide data for the <see cref="ICall.EndpointAdded"/> event.
     /// </summary>
     [Serializable]
     public class CallEndpointAddedEventArgs : System.EventArgs

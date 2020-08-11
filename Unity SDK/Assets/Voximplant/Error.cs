@@ -4,7 +4,10 @@
 
 namespace Voximplant.Unity
 {
-    public struct Error
+    /// <summary>
+    /// Structure that contains the details about error occured.
+    /// </summary>
+    public readonly struct Error
     {
         internal Error(int code, string message)
         {

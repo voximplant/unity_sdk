@@ -11,7 +11,7 @@ using Voximplant.Unity.@internal;
 namespace Voximplant.Unity.Hardware.EventArgs
 {
     /// <summary>
-    /// Event arguments for <see cref="IAudioManager.AudioDevicesListChanged"/>.
+    /// Provide data for the <see cref="IAudioManager.AudioDevicesListChanged"/> event.
     /// </summary>
     [Serializable]
     public class AudioDeviceListChangedEventArgs : System.EventArgs
@@ -22,7 +22,7 @@ namespace Voximplant.Unity.Hardware.EventArgs
         private IList<int> devices = default;
 
         /// <summary>
-        /// Collection of newly available audio devices.
+        /// A collection with newly available audio devices.
         /// </summary>
         public IReadOnlyCollection<AudioDevice> Devices =>
             _audioDevices ?? (_audioDevices = devices.Select(device => (AudioDevice) device).ToList());

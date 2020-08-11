@@ -10,7 +10,7 @@ using Voximplant.Unity.@internal;
 namespace Voximplant.Unity.Call.EventArgs
 {
     /// <summary>
-    /// Event arguments for <see cref="ICall.SIPInfoReceived"/>.
+    /// Provide data for the <see cref="ICall.SIPInfoReceived"/> event.
     /// </summary>
     [Serializable]
     public class CallSIPInfoReceivedEventArgs : System.EventArgs

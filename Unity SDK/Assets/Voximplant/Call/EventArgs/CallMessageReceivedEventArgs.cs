@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Voximplant.Unity.Call.EventArgs
 {
     /// <summary>
-    /// Event arguments for <see cref="ICall.MessageReceived"/>.
+    /// Provide data for the <see cref="ICall.MessageReceived"/> event.
     /// </summary>
     [Serializable]
     public class CallMessageReceivedEventArgs : System.EventArgs

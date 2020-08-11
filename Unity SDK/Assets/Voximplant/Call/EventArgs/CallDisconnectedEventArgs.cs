@@ -10,7 +10,7 @@ using Voximplant.Unity.@internal;
 namespace Voximplant.Unity.Call.EventArgs
 {
     /// <summary>
-    /// Event arguments for <see cref="ICall.Disconnected"/>.
+    /// Provide data for the <see cref="ICall.Disconnected"/> event.
     /// </summary>
     [Serializable]
     public class CallDisconnectedEventArgs : System.EventArgs

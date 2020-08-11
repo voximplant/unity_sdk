@@ -11,7 +11,7 @@ using Voximplant.Unity.Client.EventArgs;
 namespace Voximplant.Unity.Client
 {
     /// <summary>
-    /// Interface that may be used to connect and login to Voximplant Cloud, and make and receive audio and video calls.
+    /// Interface that may be used to connect and login to the Voximplant Cloud, and make and receive audio and video calls.
     /// </summary>
     public interface IClient
     {
@@ -30,24 +30,24 @@ namespace Voximplant.Unity.Client
         /// <summary>
         /// Connect to the Voximplant cloud with additional configuration.
         /// </summary>
-        /// <param name="connectivityCheck">Checks whether UDP traffic will flow correctly between device and Voximplant cloud. This check reduces connection speed.</param>
-        /// <param name="gateways">Collection of server names of particular media gateways for connection.</param>
+        /// <param name="connectivityCheck">Checks whether UDP traffic will flow correctly between a device and the Voximplant cloud. This check reduces connection speed.</param>
+        /// <param name="gateways">A collection of server names of particular media gateways for connection.</param>
         void Connect(bool connectivityCheck, [CanBeNull] ICollection<string> gateways = null);
 
         /// <summary>
-        /// Closes connection with Voximplant Cloud.
+        /// Close the connection with the Voximplant Cloud.
         /// </summary>
         void Disconnect();
 
         /// <summary>
-        /// Login to specified Voximplant application with password.
+        /// Log in to the specified Voximplant application with password.
         /// </summary>
         /// <param name="username">Full user name, including app and account name, like someuser@someapp.youraccount.voximplant.com.</param>
         /// <param name="password">User password</param>
         void Login(string username, string password);
 
         /// <summary>
-        /// Perform login using specified username and access token.
+        /// Perform log in using the specified username and the <see cref="AuthParams.AccessToken"/>.
         /// </summary>
         /// <param name="username">Full user name, including app and account name, like someuser@someapp.youraccount.voximplant.com.</param>
         /// <param name="token">Access token that was obtained in <see cref="IClient.LoginSuccess"/> event.</param>
@@ -73,14 +73,14 @@ namespace Voximplant.Unity.Client
         void RequestOneTimeKey(string username);
 
         /// <summary>
-        /// Perform refresh of login tokens required for login using access token.
+        /// Perform refresh of the login tokens required for login using <see cref="AuthParams.AccessToken"/>.
         /// </summary>
         /// <param name="username">Full user name, including app and account name, like someuser@someapp.youraccount.voximplant.com.</param>
-        /// <param name="refreshToken">Refresh token that was obtained in <see cref="IClient.LoginSuccess"/> event.</param>
+        /// <param name="refreshToken"><see cref="AuthParams.RefreshToken"/> that was obtained in <see cref="IClient.LoginSuccess"/> event.</param>
         void RefreshToken(string username, string refreshToken);
 
         /// <summary>
-        /// Create a new call instance. Call must be then started using.
+        /// Create a new call instance. Call must be then started using <see cref="ICall.Start()"/>.
         /// </summary>
         /// <param name="username">SIP URI, username or phone number to make call to. Actual routing is then performed by VoxEngine scenario.</param>
         /// <param name="callSettings">Call settings with additional call parameters, such as preferred video codec, custom data, extra headers etc.</param>
@@ -89,9 +89,9 @@ namespace Voximplant.Unity.Client
         ICall Call(string username, CallSettings callSettings);
 
         /// <summary>
-        /// Create call to a dedicated conference without proxy session.
+        /// Create call to a dedicated conference without a proxy session.
         ///
-        /// For details see <a href='https://voximplant.com/blog/video-conference-through-voximplant-media-servers'>the video conferencing guide</a>.
+        /// For details see <a href="https://voximplant.com/docs/tutorials/video-conference-through-voximplant-media-servers">the video conferencing guide</a>.
         /// </summary>
         /// <param name="conference">The number to call. For SIP compatibility reasons it should be a non-empty string even if the number itself is not used by a Voximplant cloud scenario.</param>
         /// <param name="callSettings">Call settings with additional call parameters, such as preferred video codec, custom data, extra headers etc.</param>
@@ -100,17 +100,17 @@ namespace Voximplant.Unity.Client
         ICall CallConference(string conference, CallSettings callSettings);
 
         /// <summary>
-        /// Invoked after connection to Voximplant Cloud was established successfully.
+        /// Invoked after connection to the Voximplant Cloud was established successfully.
         /// </summary>
         event SdkEventHandler<IClient> Connected;
 
         /// <summary>
-        /// Invoked if connection to Voximplant Cloud couldn't be established.
+        /// Invoked if connection to then Voximplant Cloud couldn't be established.
         /// </summary>
         event SdkEventHandler<IClient, ConnectionFailedEventArgs> ConnectionFailed;
 
         /// <summary>
-        /// Invoked if connection to Voximplant Cloud was closed as a result of <see cref="IClient.Disconnect()"/> method call or due to network problems
+        /// Invoked if connection to the Voximplant Cloud was closed as a result of <see cref="IClient.Disconnect()"/> method call or due to network problems
         /// </summary>
         event SdkEventHandler<IClient> Disconnected;
 
@@ -135,7 +135,7 @@ namespace Voximplant.Unity.Client
         /// </summary>
         event SdkEventHandler<IClient, OneTimeKeyGeneratedEventArgs> OneTimeKeyGenerated;
         /// <summary>
-        /// Invoked when there is a new incoming call to current user.
+        /// Invoked when there is a new incoming call to the current user.
         /// </summary>
         event SdkEventHandler<IClient, IncomingCallEventArgs> IncomingCall;
     }

@@ -10,7 +10,7 @@ using Voximplant.Unity.@internal;
 namespace Voximplant.Unity.Call.EventArgs
 {
     /// <summary>
-    /// Event arguments for <see cref="ICall.Connected"/>.
+    /// Provide data for the <see cref="ICall.Connected"/> event.
     /// </summary>
     [Serializable]
     public class CallConnectedEventArgs : System.EventArgs

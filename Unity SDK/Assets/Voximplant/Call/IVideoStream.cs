@@ -12,12 +12,12 @@ using Object = UnityEngine.Object;
 namespace Voximplant.Unity.Call
 {
     /// <summary>
-    /// Interface representing local and remote video streams. It may be used to add or remove video renderers.
+    /// Interface that represents local and remote video streams. It may be used to add or remove video renderers.
     /// </summary>
     public interface IVideoStream : IDisposable
     {
         /// <summary>
-        /// The video stream id.
+        /// The identifier for the video stream.
         /// </summary>
         string StreamId { get; }
 
@@ -37,25 +37,25 @@ namespace Voximplant.Unity.Call
         int Rotation { get; }
 
         /// <summary>
-        /// Add new video renderer to video stream.
+        /// Add a new video renderer to video stream.
         /// </summary>
-        /// <param name="target">Target to apply video stream texture and shader.</param>
+        /// <param name="target">Target to apply the video stream texture and shader.</param>
         void AddRenderer(RawImage target);
 
         /// <summary>
-        /// Add new video renderer to video stream.
+        /// Add a new video renderer to video stream.
         /// </summary>
-        /// <param name="target">Target to apply video stream texture and shader.</param>
+        /// <param name="target">Target to apply the video stream texture and shader.</param>
         void AddRenderer(Material target);
 
         /// <summary>
-        /// Remove previously added video renderer.
+        /// Remove a previously added video renderer.
         /// </summary>
         /// <param name="target"><see cref="RawImage"/> or <see cref="Material"/></param>
         void RemoveRenderer(Object target);
 
         /// <summary>
-        /// Invoked when video frame size of rotation is changed.
+        /// Invoked when video frame size or rotation is changed.
         /// </summary>
         event SdkEventHandler<IVideoStream, VideoStreamChangedEventArgs> VideoStreamChanged;
     }

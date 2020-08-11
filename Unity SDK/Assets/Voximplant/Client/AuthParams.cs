@@ -25,25 +25,22 @@ namespace Voximplant.Unity.Client
         private string refreshToken = default;
 
         /// <summary>
-        /// Time in seconds to access token expire.
+        /// Seconds before the access token expiration.
         /// </summary>
         public int AccessExpire => accessExpired;
 
         /// <summary>
-        /// Access token to use with <see cref="IClient.LoginWithToken(string, string)"/>.
+        /// You can use this token for <see cref="IClient.LoginWithToken(string, string)"/> before <see cref="AccessExpire"/>.
         /// </summary>
         public string AccessToken => accessToken;
 
         /// <summary>
-        /// Time in seconds to refresh token expire
+        /// Seconds before the refresh token expiration.
         /// </summary>
         public int RefreshExpire => refreshExpired;
 
         /// <summary>
-        /// Refresh token to use with <see cref="IClient.RefreshToken(string, string)"/>.
-        ///
-        /// <seealso cref="IClient.RefreshTokenSuccess"/>
-        /// <seealso cref="IClient.RefreshTokenFailed"/>
+        /// You can use this token for <see cref="IClient.RefreshToken(string, string)"/> before <see cref="RefreshExpire"/>.
         /// </summary>
         public string RefreshToken => refreshToken;
     }

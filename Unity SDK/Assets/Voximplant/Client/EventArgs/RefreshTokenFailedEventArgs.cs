@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Voximplant.Unity.Client.EventArgs
 {
     /// <summary>
-    /// Event arguments for <see cref="IClient.RefreshTokenFailed"/>.
+    /// Provide data for the <see cref="IClient.RefreshTokenFailed"/> event.
     /// </summary>
     [Serializable]
     public class RefreshTokenFailedEventArgs : System.EventArgs
