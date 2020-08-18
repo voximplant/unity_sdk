@@ -8,7 +8,7 @@ using System.Runtime.Serialization;
 namespace Voximplant.Unity
 {
     /// <summary>
-    /// Current platform is not supported by the Voximplant Unity SDK
+    /// The exception that is thrown if the current platform is not supported by the Voximplant Unity SDK.
     /// </summary>
     public class UnsupportedPlatformException : Exception
     {

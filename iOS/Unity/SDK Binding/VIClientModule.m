@@ -58,11 +58,40 @@
     _loginFailure = ^(NSError *error) {
         [VIEmitter sendClientMessage:@"LoginFailed" payload:@{
                 @"code": @(error.code),
-                @"error": error.localizedDescription
+                @"error": [VIClientModule localizedDescriptionForCode:(VILoginErrorCode) error.code
+                                                          description:error.localizedDescription]
         }];
     };
 
     UnityRegisterRenderingPluginV5(&VoximplantPluginLoad, &VoximplantPluginUnload);
+}
+
++ (NSString *)localizedDescriptionForCode:(VILoginErrorCode)code description:(NSString *)description{
+    if (description && ![[description stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""])
+        return description;
+    switch (code) {
+        case VILoginErrorCodeInvalidPassword:
+            return @"Invalid login or password";
+        case VILoginErrorCodeMAUAccessDenied:
+            return @"Monthly Active Users (MAU) limit is reached. Payment is required.";
+        case VILoginErrorCodeAccountFrozen:
+            return @"Account frozen";
+        case VILoginErrorCodeInvalidUsername:
+            return @"Invalid username";
+        case VILoginErrorCodeTimeout:
+            return @"Timeout";
+        case VILoginErrorCodeConnectionClosed:
+            return @"Connection to the Voximplant Cloud is closed as a result of disconnect method call.";
+        case VILoginErrorCodeInvalidState:
+            return @"Invalid state";
+        case VILoginErrorCodeNetworkIssues:
+            return @"Network issues";
+        case VILoginErrorCodeTokenExpired:
+            return @"Token expired";
+        case VILoginErrorCodeInternalError:
+        default:
+            return @"Internal error";
+    }
 }
 
 #pragma mark - VIClient
@@ -88,7 +117,8 @@
         if (error) {
             [VIEmitter sendClientMessage:@"RefreshTokenFailed" payload:@{
                     @"code": @(error.code),
-                    @"error": error.localizedDescription
+                    @"error": [VIClientModule localizedDescriptionForCode:(VILoginErrorCode) error.code
+                                                              description:error.localizedDescription]
             }];
         } else {
             [VIEmitter sendClientMessage:@"RefreshTokenSuccess" payload:@{@"authParams": @{
@@ -106,7 +136,8 @@
         if (error) {
             [VIEmitter sendClientMessage:@"LoginFailed" payload:@{
                     @"code": @(error.code),
-                    @"error": error.localizedDescription
+                    @"error": [VIClientModule localizedDescriptionForCode:(VILoginErrorCode) error.code
+                                                              description:error.localizedDescription]
             }];
         } else {
             [VIEmitter sendClientMessage:@"OneTimeKeyGenerated" payload:@{@"oneTimeKey": oneTimeKey}];

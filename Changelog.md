@@ -1,4 +1,10 @@
-# Changelog
+# Voximplant Unity SDK changelog
+
+## 2.2.0
+
+* Updated Voximplant Android SDK to v2.20.1
+* Updated Voximplant iOS SDK to v2.34.1
+* Custom VideoSource used within a call is now preserved between scene changes
 
 ## 2.1.1
 

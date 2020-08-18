@@ -39,6 +39,10 @@ public class ErrorHelper {
                 errorPayload.put("code", 401);
                 errorPayload.put("error", "Invalid login or password");
                 break;
+            case MAU_ACCESS_DENIED:
+                errorPayload.put("code", 402);
+                errorPayload.put("error", "Monthly Active Users (MAU) limit is reached. Payment is required.");
+                break;
             case INVALID_USERNAME:
                 errorPayload.put("code", 404);
                 errorPayload.put("error", "Invalid username");

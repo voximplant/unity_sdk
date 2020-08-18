@@ -1,7 +1,8 @@
 /*
  *  Copyright (c) 2011-2020, Zingaya, Inc. All rights reserved.
  */
-﻿using System;
+
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Voximplant.Unity.Call;

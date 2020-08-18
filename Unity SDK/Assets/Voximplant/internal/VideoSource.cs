@@ -34,7 +34,7 @@ namespace Voximplant.Unity.@internal
         public void Dispose()
         {
             CancelInvoke();
-
+            Destroy(_camera);
             Destroy(this);
         }
 
@@ -42,6 +42,8 @@ namespace Voximplant.Unity.@internal
         {
             _unityCamera = unityCamera;
             _camera = gameObject.AddComponent<Camera>();
+            _camera.name = "Voximplant.VideoSource";
+            DontDestroyOnLoad(_camera);
             _camera.CopyFrom(_unityCamera);
             _camera.enabled = false;
 

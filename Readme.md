@@ -33,7 +33,7 @@ The `IClient.State` property is used to get the current state of connection to t
 ```csharp
 private void LoginWithPassword(string login, string password) {
     _login = login;
-    _password = _password;
+    _password = password;
     if (_client.State == ClientState.Disconnected)
     {
         _client.Connect();
@@ -114,6 +114,6 @@ _call.Hold(true, error =>
 
 ## Limitations
 
-* Unity 2018+
-* Android Multithreaded rendeding unsupported
-* iOS OpenGL rendering unsupported
+* Supported Unity versions 2020, 2019 (LTS) and 2018 (LTS)
+* Android Multithreaded and Vulkan rendering are unsupported
+* iOS OpenGL rendering is unsupported

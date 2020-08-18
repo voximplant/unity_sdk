@@ -1,10 +1,9 @@
 /temp*
 /*.apk
-
-/_site
 /.idea
+/_site
 /.vs
 /api/
 artifacts
-docfx_project
 /obj/
+
