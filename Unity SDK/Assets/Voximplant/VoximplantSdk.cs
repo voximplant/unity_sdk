@@ -100,7 +100,6 @@ namespace Voximplant.Unity
 
         private void SetImplementation(RuntimePlatform platform, ClientConfig clientConfig)
         {
-            Debug.Log(JsonUtility.ToJson(clientConfig));
             switch (platform)
             {
                 case RuntimePlatform.Android:
@@ -141,36 +140,28 @@ namespace Voximplant.Unity
         [UsedImplicitly]
         internal void OnClientEvent(string payload)
         {
-            UnityEngine.Debug.Log($"Message received: {payload}");
             var sdkEvent = JsonUtility.FromJson<SdkEvent>(payload);
-            Debug.Log($"Parsed: {sdkEvent.Event}");
             _client.OnEvent(sdkEvent);
         }
 
         [UsedImplicitly]
         internal void OnCallEvent(string payload)
         {
-            UnityEngine.Debug.Log($"Message received: {payload}");
             var sdkEvent = JsonUtility.FromJson<CallSdkEvent>(payload);
-            Debug.Log($"Parsed: {sdkEvent.Event}");
             _client.OnCallEvent(sdkEvent);
         }
 
         [UsedImplicitly]
         internal void OnEndpointEvent(string payload)
         {
-            Debug.Log($"Message received: {payload}");
             var sdkEvent = JsonUtility.FromJson<EndpointSdkEvent>(payload);
-            Debug.Log($"Parsed: {sdkEvent.Event}");
             _client.OnEndpointEvent(sdkEvent);
         }
 
         [UsedImplicitly]
         internal void OnAudioManagerEvent(string payload)
         {
-            Debug.Log($"Message received: {payload}");
             var sdkEvent = JsonUtility.FromJson<SdkEvent>(payload);
-            Debug.Log($"Parsed: {sdkEvent.Event}");
             _audioManager.OnEvent(sdkEvent);
         }
     }

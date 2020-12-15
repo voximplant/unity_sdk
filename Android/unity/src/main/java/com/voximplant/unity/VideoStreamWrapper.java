@@ -34,11 +34,7 @@ public class VideoStreamWrapper implements VideoSink {
     @CalledByUnity
     public int getWidth() {
         if (mLastFrame != null) {
-            if (mLastFrame.getRotation() == 90 || mLastFrame.getRotation() == 270) {
-                return mLastFrame.getRotatedWidth();
-            } else {
-                return mLastFrame.getRotatedHeight();
-            }
+            return mLastFrame.getRotatedWidth();
         }
         return 0;
     }
@@ -46,11 +42,7 @@ public class VideoStreamWrapper implements VideoSink {
     @CalledByUnity
     public int getHeight() {
         if (mLastFrame != null) {
-            if (mLastFrame.getRotation() == 90 || mLastFrame.getRotation() == 270) {
-                return mLastFrame.getRotatedHeight();
-            } else {
-                return mLastFrame.getRotatedWidth();
-            }
+            return mLastFrame.getRotatedHeight();
         }
         return 0;
     }

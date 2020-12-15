@@ -1,5 +1,11 @@
 # Voximplant Unity SDK changelog
 
+## 2.3.0
+
+* Updated Voximplant Android SDK to v2.21.1
+* Updated Voximplant iOS SDK to v2.35.0
+* Fix: IVideoStream now correctly reports video frame width and height on Android
+
 ## 2.2.0
 
 * Updated Voximplant Android SDK to v2.20.1
